@@ -3,22 +3,20 @@ package actions;
 import astronomy.Sector;
 import map.MapView;
 
-/*
- * author James Armstrong
- * input A Map View, and the sectors associated
- * function Adds functionality to escape button or x button saving the sectors and exiting the program.
+/**
+ * @author PlanetaryTennis
  */
 
 public class exit extends java.awt.event.WindowAdapter {
 	
-	/*
-	 * Mapview for funtionality
-	 * Secotrs to be saved.
-	 */
-	
 	MapView j;
 	Sector[] mySectors;
 	
+	/**
+	 * @author PlanetaryTennis
+	 * @param MapView who will be saved.
+	 * @param Sector who will be passed to MapView to be saved.
+	 */
 	public exit(MapView f, Sector[] mySectors){
 		j = f;
 		this.mySectors = mySectors;

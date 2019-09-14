@@ -8,11 +8,19 @@ import javax.swing.JFrame;
 
 import engine.SettingLauncher;
 
+/**
+ * @author PlanetaryTennis
+ */
 public class LauncherButton implements ActionListener {
 
 	JFrame my;
 	int dothing;
 	
+	/**
+	 * @author PlanetaryTennis
+	 * @param index [int] who will be used to determine the function of the button.
+	 * @param JFrame the GameLauncher so that it is closed after the function is completed.
+	 */
 	public LauncherButton(int index,JFrame GameLauncher){
 		my = GameLauncher;
 		dothing = index;
@@ -28,6 +36,7 @@ public class LauncherButton implements ActionListener {
 			return;
 		}else if(dothing == 2) {
 			SettingLauncher j = new SettingLauncher(true);
+			j.getClass();
 		}else {
 			return;
 		}

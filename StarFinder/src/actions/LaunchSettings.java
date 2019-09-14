@@ -11,6 +11,9 @@ import javax.swing.JSlider;
 
 import map.MapView;
 
+/**
+ * @author PlanetaryTennis
+ */
 public class LaunchSettings implements ActionListener {
 
 	boolean b;
@@ -28,6 +31,13 @@ public class LaunchSettings implements ActionListener {
 	JCheckBox relays;
 	JFrame LS;
 
+	/**
+	 * @author PlanetaryTennis
+	 * @see map.MapView
+	 * @param JFrame The settings JFrame to be closed with the launch.
+	 * @param b [boolean] determines if the view is opened in painter mode or not.
+	 * @param Sectors [JSlider] 
+	 */
 	public LaunchSettings(JFrame launchSettings, boolean b, JSlider sectors, JSlider regionsmin, JSlider regionsmax, JSlider zonemin,
 			JSlider zonemax, JSlider sysmin, JSlider sysmax, JSlider planetmax, JCheckBox special, JCheckBox multi,
 			JCheckBox name, JCheckBox relays) {
