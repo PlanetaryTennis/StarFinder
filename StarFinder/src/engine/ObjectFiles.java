@@ -38,6 +38,7 @@ public class ObjectFiles {
 
 	public static void main(String[] args) {
 		GameLauncher l = new GameLauncher();
+		l.getClass();
 //		System.out.println(b.getMyRadius());
 //		int num = 20;
 //		int number = 0;

@@ -73,7 +73,8 @@ public class MapView extends JFrame{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3099900992723694100L;
+	private static final long serialVersionUID = -3083279752317354841L;
+
 	private static final int TYPEVALUE = 6;
 	private static final int SPVALUE = 5;
 	private static final int POSITIONVALUE = 4;
@@ -81,12 +82,10 @@ public class MapView extends JFrame{
 	private static final int ZONEVALUE = 2;
 	private static final int REGIONVALUE = 1;
 	private static final int SECTORVALUE = 0;
+	
 	private JPanel myView;
 	private JMenu[] myMenus;
 	private JMenuItem Name;
-
-//	private Workbook mySave;
-//	private Sheet sheet;
 
 	private Sector[] mySectors;
 
@@ -100,180 +99,6 @@ public class MapView extends JFrame{
 	private Galaxy galaxy;
 
 	public int rS, rE, zS, zE, sS, sE, p;public boolean ss, ms, n;
-	
-	
-	
-	public JPanel getMyView() {
-		return myView;
-	}
-
-	public void setMyView(JPanel myView) {
-		this.myView = myView;
-	}
-
-	public JMenu[] getMyMenus() {
-		return myMenus;
-	}
-
-	public void setMyMenus(JMenu[] myMenus) {
-		this.myMenus = myMenus;
-	}
-
-//	public Workbook getMySave() {
-//		return mySave;
-//	}
-//
-//	public void setMySave(Workbook mySave) {
-//		this.mySave = mySave;
-//	}
-//
-//	public Sheet getSheet() {
-//		return sheet;
-//	}
-//
-//	public void setSheet(Sheet sheet) {
-//		this.sheet = sheet;
-//	}
-
-	public Sector getLasts() {
-		return lasts;
-	}
-
-	public void setLasts(Sector lasts) {
-		this.lasts = lasts;
-	}
-
-	public Region getLastr() {
-		return lastr;
-	}
-
-	public void setLastr(Region lastr) {
-		this.lastr = lastr;
-	}
-
-	public Zone getLastz() {
-		return lastz;
-	}
-
-	public void setLastz(Zone lastz) {
-		this.lastz = lastz;
-	}
-
-	public SolSystem getLastss() {
-		return lastss;
-	}
-
-	public void setLastss(SolSystem lastss) {
-		this.lastss = lastss;
-	}
-
-	public Planet getLastp() {
-		return lastp;
-	}
-
-	public void setLastp(Planet lastp) {
-		this.lastp = lastp;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	public Galaxy getGalaxy() {
-		return galaxy;
-	}
-
-	public void setGalaxy(Galaxy galaxy) {
-		this.galaxy = galaxy;
-	}
-
-	public int getrS() {
-		return rS;
-	}
-
-	public void setrS(int rS) {
-		this.rS = rS;
-	}
-
-	public int getrE() {
-		return rE;
-	}
-
-	public void setrE(int rE) {
-		this.rE = rE;
-	}
-
-	public int getzS() {
-		return zS;
-	}
-
-	public void setzS(int zS) {
-		this.zS = zS;
-	}
-
-	public int getzE() {
-		return zE;
-	}
-
-	public void setzE(int zE) {
-		this.zE = zE;
-	}
-
-	public int getsS() {
-		return sS;
-	}
-
-	public void setsS(int sS) {
-		this.sS = sS;
-	}
-
-	public int getsE() {
-		return sE;
-	}
-
-	public void setsE(int sE) {
-		this.sE = sE;
-	}
-
-	public int getP() {
-		return p;
-	}
-
-	public void setP(int p) {
-		this.p = p;
-	}
-
-	public boolean isSs() {
-		return ss;
-	}
-
-	public void setSs(boolean ss) {
-		this.ss = ss;
-	}
-
-	public boolean isMs() {
-		return ms;
-	}
-
-	public void setMs(boolean ms) {
-		this.ms = ms;
-	}
-
-	public boolean isN() {
-		return n;
-	}
-
-	public void setN(boolean n) {
-		this.n = n;
-	}
-
-	public void setMySectors(Sector[] mySectors) {
-		this.mySectors = mySectors;
-	}
 
 	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms, boolean n, boolean r){
 		super(name);
@@ -811,10 +636,6 @@ public class MapView extends JFrame{
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 
-	public Sector[] getMySectors() {
-		return mySectors;
-	}
-
 	public void backup() {
 		if(level == -3) {
 			viewGalaxy();
@@ -907,5 +728,181 @@ public class MapView extends JFrame{
 
 		this.setSize(this.getWidth()+1, this.getHeight()+1);
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
+	}
+	
+	public Sector[] getMySectors() {
+		return mySectors;
+	}
+	
+	public JPanel getMyView() {
+		return myView;
+	}
+
+	public void setMyView(JPanel myView) {
+		this.myView = myView;
+	}
+
+	public JMenu[] getMyMenus() {
+		return myMenus;
+	}
+
+	public void setMyMenus(JMenu[] myMenus) {
+		this.myMenus = myMenus;
+	}
+
+//	public Workbook getMySave() {
+//		return mySave;
+//	}
+//
+//	public void setMySave(Workbook mySave) {
+//		this.mySave = mySave;
+//	}
+//
+//	public Sheet getSheet() {
+//		return sheet;
+//	}
+//
+//	public void setSheet(Sheet sheet) {
+//		this.sheet = sheet;
+//	}
+
+	public Sector getLasts() {
+		return lasts;
+	}
+
+	public void setLasts(Sector lasts) {
+		this.lasts = lasts;
+	}
+
+	public Region getLastr() {
+		return lastr;
+	}
+
+	public void setLastr(Region lastr) {
+		this.lastr = lastr;
+	}
+
+	public Zone getLastz() {
+		return lastz;
+	}
+
+	public void setLastz(Zone lastz) {
+		this.lastz = lastz;
+	}
+
+	public SolSystem getLastss() {
+		return lastss;
+	}
+
+	public void setLastss(SolSystem lastss) {
+		this.lastss = lastss;
+	}
+
+	public Planet getLastp() {
+		return lastp;
+	}
+
+	public void setLastp(Planet lastp) {
+		this.lastp = lastp;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public Galaxy getGalaxy() {
+		return galaxy;
+	}
+
+	public void setGalaxy(Galaxy galaxy) {
+		this.galaxy = galaxy;
+	}
+
+	public int getrS() {
+		return rS;
+	}
+
+	public void setrS(int rS) {
+		this.rS = rS;
+	}
+
+	public int getrE() {
+		return rE;
+	}
+
+	public void setrE(int rE) {
+		this.rE = rE;
+	}
+
+	public int getzS() {
+		return zS;
+	}
+
+	public void setzS(int zS) {
+		this.zS = zS;
+	}
+
+	public int getzE() {
+		return zE;
+	}
+
+	public void setzE(int zE) {
+		this.zE = zE;
+	}
+
+	public int getsS() {
+		return sS;
+	}
+
+	public void setsS(int sS) {
+		this.sS = sS;
+	}
+
+	public int getsE() {
+		return sE;
+	}
+
+	public void setsE(int sE) {
+		this.sE = sE;
+	}
+
+	public int getP() {
+		return p;
+	}
+
+	public void setP(int p) {
+		this.p = p;
+	}
+
+	public boolean isSs() {
+		return ss;
+	}
+
+	public void setSs(boolean ss) {
+		this.ss = ss;
+	}
+
+	public boolean isMs() {
+		return ms;
+	}
+
+	public void setMs(boolean ms) {
+		this.ms = ms;
+	}
+
+	public boolean isN() {
+		return n;
+	}
+
+	public void setN(boolean n) {
+		this.n = n;
+	}
+
+	public void setMySectors(Sector[] mySectors) {
+		this.mySectors = mySectors;
 	}
 }
