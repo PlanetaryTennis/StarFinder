@@ -20,11 +20,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.Row;
+//import org.apache.poi.ss.usermodel.Sheet;
+//import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import actions.MoonView;
 import actions.NewRegion;
@@ -85,8 +85,8 @@ public class MapView extends JFrame{
 	private JMenu[] myMenus;
 	private JMenuItem Name;
 
-	private Workbook mySave;
-	private Sheet sheet;
+//	private Workbook mySave;
+//	private Sheet sheet;
 
 	private Sector[] mySectors;
 
@@ -119,21 +119,21 @@ public class MapView extends JFrame{
 		this.myMenus = myMenus;
 	}
 
-	public Workbook getMySave() {
-		return mySave;
-	}
-
-	public void setMySave(Workbook mySave) {
-		this.mySave = mySave;
-	}
-
-	public Sheet getSheet() {
-		return sheet;
-	}
-
-	public void setSheet(Sheet sheet) {
-		this.sheet = sheet;
-	}
+//	public Workbook getMySave() {
+//		return mySave;
+//	}
+//
+//	public void setMySave(Workbook mySave) {
+//		this.mySave = mySave;
+//	}
+//
+//	public Sheet getSheet() {
+//		return sheet;
+//	}
+//
+//	public void setSheet(Sheet sheet) {
+//		this.sheet = sheet;
+//	}
 
 	public Sector getLasts() {
 		return lasts;
