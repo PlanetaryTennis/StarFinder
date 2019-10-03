@@ -36,7 +36,10 @@ public class LaunchSettings implements ActionListener {
 	 * @see map.MapView
 	 * @param JFrame The settings JFrame to be closed with the launch.
 	 * @param b [boolean] determines if the view is opened in painter mode or not.
-	 * @param Sectors [JSlider] 
+	 * @param sectors [JSlider] determines the number of sectors the Galaxy is generated with.
+	 * @param regionsmin [JSlider] determines the minimum number of regions each sector is generated with.
+	 * @param regionsmax [JSlider] determines the number of aditional regions each sector is generated with.
+	 * 
 	 */
 	public LaunchSettings(JFrame launchSettings, boolean b, JSlider sectors, JSlider regionsmin, JSlider regionsmax, JSlider zonemin,
 			JSlider zonemax, JSlider sysmin, JSlider sysmax, JSlider planetmax, JCheckBox special, JCheckBox multi,

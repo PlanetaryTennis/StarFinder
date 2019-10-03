@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 
 import map.Sprite;
+import planetary.Colony;
 import units.SI;
 import units.sci;
 import units.sidensity;
@@ -23,10 +24,10 @@ public class Terrestrial extends Planet {
 	 * 
 	 */
 	private static final long serialVersionUID = 7913040733716806290L;
-	private double myAlbido;
-	private double myGreenHouse;
-	private double myWater;
-	private boolean isFrozen;
+	protected double myAlbido;
+	protected double myGreenHouse;
+	protected double myWater;
+	protected boolean isFrozen;
 	
 	public Terrestrial(Moon[] myMoons, sidensity myAtmosphere, sidistance myRadius,
 			simass myMass, double myEccentricity, sidistance myOrbit, Star myStar, double myAlbido, double myGreenHouse,
@@ -169,6 +170,7 @@ public class Terrestrial extends Planet {
 		}
 		
 		p.setMyName(SolSystem.randomName());
+		p.setMyColony(Colony.randomTerrestrial((Terrestrial)(p)));
 		
 		return p;
 	}

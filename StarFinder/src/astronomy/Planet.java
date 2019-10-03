@@ -13,8 +13,7 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
-import planetary.Tile;
-import relay.SecondaryRelay;
+import planetary.Colony;
 
 public abstract class Planet implements AstroObject {
 	
@@ -29,6 +28,8 @@ public abstract class Planet implements AstroObject {
 	private static final long serialVersionUID = 5195473902898182146L;
 
 	protected String myName;
+	
+	protected Colony myColony;
 	
 	protected Moon[] myMoons;
 	
@@ -56,8 +57,6 @@ public abstract class Planet implements AstroObject {
 	public int Moons;
 	public int Asteroids;
 	public int HabMoons;
-	
-	public Tile myTiles;
 	
 	public void count() {
 		Moons = 0;
@@ -126,6 +125,15 @@ public abstract class Planet implements AstroObject {
 		double completefactor = Math.sqrt((pifactor*distancefactor)/
 				(sci.convertToDouble(AstroObject.G)*massfactor));
 		return new sitime(completefactor);
+	}
+	
+
+	public Colony getMyColony() {
+		return myColony;
+	}
+
+	public void setMyColony(Colony myColony) {
+		this.myColony = myColony;
 	}
 
 	public Moon[] getMyMoons() {
