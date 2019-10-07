@@ -43,7 +43,7 @@ public class Colony {
 
 	public static Colony randomTerrestrial(Terrestrial t) {
 		
-		Colony c = new Colony(0,0,);
+		Colony c = new Colony(0,0,0, true, true, true, true, true, true, true, true, true, null, null);
 		return c;		
 	}
 

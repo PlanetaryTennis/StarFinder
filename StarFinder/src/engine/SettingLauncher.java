@@ -16,7 +16,7 @@ public class SettingLauncher {
 
 	public SettingLauncher(boolean b) {
 		JFrame LaunchSettings = new JFrame("Launch Settings");
-		LaunchSettings.setLayout(new GridLayout(11,3));
+		LaunchSettings.setLayout(new GridLayout(16,3));
 		
 		JTextPane sector = new JTextPane();
 		sector.setEditable(false);
@@ -147,6 +147,82 @@ public class SettingLauncher {
 		MultiStars.setEnabled(false);
 		LaunchSettings.add(MultiStars);
 		
+		JTextPane starspread = new JTextPane();
+		starspread.setEditable(false);
+		starspread.setText("Precent of Stars");
+		starspread.setToolTipText("These are how many stars of a given type are spawned.");
+		JSlider DwarfStar = new JSlider();
+		DwarfStar.setToolTipText("Red Phase Stars");
+		DwarfStar.setPaintLabels(true);
+		DwarfStar.setValue(600);
+		DwarfStar.setMinimum(0);
+		DwarfStar.setMaximum(1000);
+		DwarfStar.setMajorTickSpacing(100);
+		DwarfStar.setMajorTickSpacing(1);
+		DwarfStar.setPaintTicks(true);
+		JSlider ModerateStar = new JSlider();
+		ModerateStar.setToolTipText("Orange Phase Stars");
+		ModerateStar.setPaintLabels(true);
+		ModerateStar.setValue(200);
+		ModerateStar.setMinimum(0);
+		ModerateStar.setMaximum(1000);
+		ModerateStar.setMajorTickSpacing(100);
+		ModerateStar.setMajorTickSpacing(1);
+		ModerateStar.setPaintTicks(true);
+		JSlider GiantStar = new JSlider();
+		GiantStar.setToolTipText("Blue Phase Stars");
+		GiantStar.setPaintLabels(true);
+		GiantStar.setValue(100);
+		GiantStar.setMinimum(0);
+		GiantStar.setMaximum(1000);
+		GiantStar.setMajorTickSpacing(100);
+		GiantStar.setMajorTickSpacing(1);
+		GiantStar.setPaintTicks(true);
+		JSlider BrownDwarf = new JSlider();
+		BrownDwarf.setToolTipText("Brown Phase Stars");
+		BrownDwarf.setPaintLabels(true);
+		BrownDwarf.setValue(50);
+		BrownDwarf.setMinimum(0);
+		BrownDwarf.setMaximum(1000);
+		BrownDwarf.setMajorTickSpacing(100);
+		BrownDwarf.setMajorTickSpacing(1);
+		BrownDwarf.setPaintTicks(true);
+		JSlider WhiteDwarf = new JSlider();
+		WhiteDwarf.setToolTipText("White Phase Stars");
+		WhiteDwarf.setPaintLabels(true);
+		WhiteDwarf.setValue(25);
+		WhiteDwarf.setMinimum(0);
+		WhiteDwarf.setMaximum(1000);
+		WhiteDwarf.setMajorTickSpacing(100);
+		WhiteDwarf.setMajorTickSpacing(1);
+		WhiteDwarf.setPaintTicks(true);
+		JSlider Neutron = new JSlider();
+		Neutron.setToolTipText("Hyper Dense Remnants");
+		Neutron.setPaintLabels(true);
+		Neutron.setValue(20);
+		Neutron.setMinimum(0);
+		Neutron.setMaximum(1000);
+		Neutron.setMajorTickSpacing(100);
+		Neutron.setMajorTickSpacing(1);
+		Neutron.setPaintTicks(true);
+		JSlider BlackHole = new JSlider();
+		BlackHole.setToolTipText("Singularity");
+		BlackHole.setPaintLabels(true);
+		BlackHole.setValue(5);
+		BlackHole.setMinimum(0);
+		BlackHole.setMaximum(1000);
+		BlackHole.setMajorTickSpacing(100);
+		BlackHole.setMajorTickSpacing(1);
+		BlackHole.setPaintTicks(true);
+		LaunchSettings.add(starspread);
+		LaunchSettings.add(DwarfStar);
+		LaunchSettings.add(ModerateStar);
+		LaunchSettings.add(GiantStar);
+		LaunchSettings.add(BrownDwarf);
+		LaunchSettings.add(WhiteDwarf);
+		LaunchSettings.add(Neutron);
+		LaunchSettings.add(BlackHole);
+		
 		JCheckBox Names = new JCheckBox("Random Names");
 		Names.setSelected(false);
 		Names.setToolTipText("This will generate random names rather than leaving it in a serial form.");
@@ -161,7 +237,7 @@ public class SettingLauncher {
 		
 		JButton Make = new JButton("Make");
 		Make.addActionListener(new LaunchSettings(LaunchSettings,b,Sectors,RegionsMin,RegionsMax,
-				ZonesMin,ZonesMax,SystemsMin,SystemsMax,PlanetsNum,
+				ZonesMin,ZonesMax,ModerateStar,SystemsMax,PlanetsNum,
 				SpecialStars,MultiStars,Names,Relays));
 		LaunchSettings.add(Make);
 		
