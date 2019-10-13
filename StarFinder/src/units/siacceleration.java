@@ -13,6 +13,9 @@ public class siacceleration extends siunit{
 	}
 
 	public siacceleration(double d) {
+		if(!Double.isFinite(d)) {
+			d = d;
+		}
 		if(d == 0) {
 			value = sci.ZERO;
 			power = SI.BASE;

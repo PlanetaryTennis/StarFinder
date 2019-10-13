@@ -3,6 +3,7 @@ package astronomy;
 import java.io.Serializable;
 import java.util.Random;
 
+import map.SettingList;
 import utilities.RandomList;
 
 public class Sector implements Serializable{
@@ -87,13 +88,13 @@ public class Sector implements Serializable{
 	public static RandomList consonants = RandomList.zif(new String[] {"t","n","s","r","h","th","sh","tt","l","d","c","ch","m","nd","f","p","ph","g","ng","ch","w","y","wh","b","v","k","x","j","q","z"});
 	public static RandomList vowels = RandomList.zif(new String[]{"e","a","o","i","u","ee","oo","ie","ae","y","e","a","o","i","u","ee","oo","ie","ae","y","-","'"});
 	
-	public static Sector makeRandom(int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms, boolean n) {
+	public static Sector makeRandom(SettingList SL) {
 		Sector r = new Sector(Sector.randomName());
 		Random ran = new Random();
-		int total = ran.nextInt(rE+1)+rS;
+		int total = ran.nextInt(SL.getRegionsmax()+1)+SL.getRegionsmin();
 		for(int i = 0;i < total;i++) {
-			Region z = Region.makeRandom(r,zS,zE,sS,sE,p,ss,ms,n);
-			if(!n)z.setName(""+i);
+			Region z = Region.makeRandom(r,SL);
+			if(!SL.isName())z.setName(""+i);
 			r.Add(z);
 		}
 		return r;

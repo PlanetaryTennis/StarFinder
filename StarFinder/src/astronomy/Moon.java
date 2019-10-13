@@ -74,7 +74,7 @@ public class Moon extends Terrestrial implements OrbitObject {
 		
 		simass mass = AstroObject.LUNE.scale(sci.round((random.nextDouble()+0.01),4));
 		sidensity d = new sidensity(2000.0 + random.nextInt(3000));
-		sidistance moonradius = new sidistance(Math.cbrt((3/4)*(Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()))));
+		sidistance moonradius = new sidistance(Math.cbrt((3.0/4.0)*(Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()))));
 		sidistance lesserorbit = radius.scale(4).plus(radius.scale(sci.round(random.nextDouble()*4,4)));
 		
 		sitime month = monthcalculate(planetmass, mass, lesserorbit);
@@ -107,7 +107,7 @@ public class Moon extends Terrestrial implements OrbitObject {
 				
 		simass mass = AstroObject.EARTH.scale(sci.round((random.nextDouble()+0.01)/64,4));
 		sidensity d = new sidensity(2000.0 + random.nextInt(3000));
-		sidistance moonradius = new sidistance(Math.cbrt((3/4)*(Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()))));
+		sidistance moonradius = new sidistance(Math.cbrt((3.00/4.0)*(Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()))));
 		sidistance lesserorbit = radius.scale(4).plus(radius.scale(sci.round(random.nextDouble()*4+0.1,4)));
 		
 		sitime month = monthcalculate(planetmass, mass, lesserorbit);

@@ -100,9 +100,9 @@ public class MapView extends JFrame{
 
 	public SettingList mySettings;
 
-	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms, boolean n, boolean r){
+	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms, boolean n, int[] suns, boolean r){
 		super(name);
-		mySettings = new SettingList(s,rS,rE,zS,zE,sS,sE,p,ss,ms,n);
+		mySettings = new SettingList(s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,suns);
 		
 		this.setBackground(Color.BLACK);
 		this.setForeground(Color.BLACK);
@@ -112,7 +112,7 @@ public class MapView extends JFrame{
 		mySectors = new Sector[s];
 		for(int i = 0;i < myMenus.length;i++) {
 			myMenus[i] = new JMenu();
-			mySectors[i] = Sector.makeRandom(rS,rE,zS,zE,sS,sE,p,ss,ms,n);
+			mySectors[i] = Sector.makeRandom(mySettings);
 			if(!n)mySectors[i].setName(""+i);
 			myMenus[i] = (populateSectorMenu(mySectors[i], this));
 			bar.add(myMenus[i]);

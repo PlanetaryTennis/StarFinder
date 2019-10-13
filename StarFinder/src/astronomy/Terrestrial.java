@@ -121,7 +121,9 @@ public class Terrestrial extends Planet {
 		
 		simass mass = EARTH.scale(alter);
 		sidensity d = new sidensity(2000.0 + random.nextInt(3000));
-		sidistance radius = new sidistance(Math.cbrt((3/4)*(Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()))));
+		double pmd = (Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()));
+		double vol = (3.0/4.0)*pmd;
+		sidistance radius = new sidistance(Math.cbrt(vol));
 		double scale = ExtendedMathmatics.log(random.nextInt(499)+1, 1000)/16;
 		
 		for(int i = 0;i < moonnum;i++) {

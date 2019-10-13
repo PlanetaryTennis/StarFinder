@@ -41,8 +41,9 @@ public class Asteroid extends Moon {
 	 * @return Newly created Asteroid
 	 */
 	public static Moon makeRandom(double eccentricity, sidistance orbit, Star star) {
-		sidistance r = LUNERADI.scale(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
 		simass m = LUNE.scale(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
+		sidensity d = new sidensity(1000.0 + random.nextInt(2000));
+		sidistance r = new sidistance(Math.cbrt((3.0/4.0)*(Math.PI)*(sci.convertToDouble(m.getValue())/sci.convertToDouble(d.getValue()))));
 		sitime day = DAY.scale(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
 
 		return new Asteroid(r, m, eccentricity, orbit, star, day);
@@ -52,7 +53,7 @@ public class Asteroid extends Moon {
 
 		simass m = LUNE.scale(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
 		sidensity d = new sidensity(1000.0 + random.nextInt(2000));
-		sidistance r = new sidistance(Math.cbrt((3/4)*(Math.PI)*(sci.convertToDouble(m.getValue())/sci.convertToDouble(d.getValue()))));
+		sidistance r = new sidistance(Math.cbrt((3.0/4.0)*(Math.PI)*(sci.convertToDouble(m.getValue())/sci.convertToDouble(d.getValue()))));
 		sitime day = DAY.scale(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
 		
 		Asteroid out = new Asteroid(r, m, eccentricity, orbit, star, day);

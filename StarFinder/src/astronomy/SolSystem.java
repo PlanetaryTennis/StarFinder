@@ -121,6 +121,7 @@ public class SolSystem implements Serializable{
 	public static final int SIZETHREESTAR = 7;
 	
 	public static SolSystem makeRandom(Zone s, SettingList SL) {
+
 		SolSystem r = new SolSystem(null,SolSystem.randomName(),s);
 		Random ran = new Random();
 		int special = ran.nextInt(1000);
