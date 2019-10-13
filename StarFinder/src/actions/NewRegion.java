@@ -27,7 +27,7 @@ public class NewRegion implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		Region r;
 		if(isRandom) {
-			r = Region.makeRandom(mySector,myView.zS,myView.zE,myView.sS,myView.sE,myView.p,myView.ss,myView.ms,myView.n);
+			r = Region.makeRandom(mySector,myView.mySettings);
 		}else {
 			r = new Region(Region.randomName(),mySector);
 		}

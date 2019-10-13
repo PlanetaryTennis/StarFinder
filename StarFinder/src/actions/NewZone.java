@@ -28,7 +28,7 @@ public class NewZone implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		Zone r;
 		if(isRandom) {
-			r = Zone.makeRandom(myRegion,myView.sS,myView.sE,myView.p,myView.ss,myView.ms,myView.n);
+			r = Zone.makeRandom(myRegion,myView.mySettings);
 		}else {
 			r = new Zone(Zone.randomName(), myRegion);
 		}

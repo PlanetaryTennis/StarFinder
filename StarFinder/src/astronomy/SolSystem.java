@@ -3,6 +3,7 @@ package astronomy;
 import java.io.Serializable;
 import java.util.Random;
 
+import map.SettingList;
 import units.sidistance;
 import utilities.ARRAY;
 import utilities.RandomList;
@@ -119,14 +120,14 @@ public class SolSystem implements Serializable{
 	public static final int SIZETWOSTAR = 6;
 	public static final int SIZETHREESTAR = 7;
 	
-	public static SolSystem makeRandom(Zone s, int p, boolean ss, boolean ms, boolean n,int[] suns) {
+	public static SolSystem makeRandom(Zone s, SettingList SL) {
 		SolSystem r = new SolSystem(null,SolSystem.randomName(),s);
 		Random ran = new Random();
 		int special = ran.nextInt(1000);
-		if(suns==null||special <= suns[0]||!ss) {
-			r.setMyStar(Star.randomStar(r,suns));
+		if(SL.getSuns()==null||special <= SL.getSuns()[0]||!SL.isSpecial()) {
+			r.setMyStar(Star.randomStar(r,SL.getSuns()));
 			int k = ran.nextInt(3)+1;
-			int total = ran.nextInt(p+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			sidistance[] o = new sidistance[total+k];
 			Planet put;
 			sidistance[] hab = r.myStar.getHabitablezone();
@@ -163,16 +164,16 @@ public class SolSystem implements Serializable{
 					if(o[i].lessOrEqual(r.myStar.getMyRadius().scale(2.0))) {
 					}else if(o[i].equalTo(hab[0])) {
 						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!n)put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 						r.Add(put);
 					}else if(o[i].lessThan(hab[0])) {
 						z++;
 						put = Terrestrial.makeRandom(o[i], r.getMyStar());
-						if(!n)put.setMyName(""+(char)('a'+k++));
+						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 						r.Add(put);
 					}else if(o[i].equalTo(hab[1])) {
 						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!n)put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 						r.Add(put);
 					}else if(o[i].lessThan(hab[1])) {
 						z++;
@@ -182,11 +183,11 @@ public class SolSystem implements Serializable{
 						}else {
 							put = Jovian.makeRandom(o[i], r.getMyStar());
 						}
-						if(!n)put.setMyName(""+(char)('a'+k++));
+						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 						r.Add(put);
 					}else if(o[i].equalTo(frost)) {
 						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!n)put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 						r.Add(put);
 					}else if(o[i].lessThan(frost)) {
 						z++;
@@ -196,18 +197,18 @@ public class SolSystem implements Serializable{
 						}else {
 							put = Jovian.makeRandom(o[i], r.getMyStar());
 						}
-						if(!n)put.setMyName(""+(char)('a'+k++));
+						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 						r.Add(put);
 					}else {
 						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!n)put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 						r.Add(put);
 					}
 				}
 			}
-		}else if(special <= suns[1]) {
+		}else if(special <= SL.getSuns()[1]) {
 			r.setMyStar(BrownDwarf.randomStar(r));
-			int total = ran.nextInt(p+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			sidistance[] o = new sidistance[total];
 			
 			for(int i = 0;i < total;i++) {
@@ -220,34 +221,34 @@ public class SolSystem implements Serializable{
 			for(int i = 0;i < o.length;i++) {
 				if(i==0) {
 					put = Belt.makeRandom(o[i], r.getMyStar());
-					if(!n)put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 					r.Add(put);
 				}else {
 					int h = ran.nextInt(3);
 					switch(h) {
 					case 0:
 						put = Belt.makeRandom(o[i], r.getMyStar());
-						if(!n)put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 						r.Add(put);
 						break;
 					case 1:
 						z++;
 						put = Terrestrial.makeRandom(o[i], r.getMyStar());
-						if(!n)put.setMyName(""+(char)('a'+k++));
+						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 						r.Add(put);
 						break;
 					case 2:
 						z++;
 						put = Jovian.makeRandom(o[i], r.getMyStar());
-						if(!n)put.setMyName(""+(char)('a'+k++));
+						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 						r.Add(put);
 						break;
 					}
 				}
 			}
-		}else if(special <= suns[2]) {
+		}else if(special <= SL.getSuns()[2]) {
 			r.setMyStar(WhiteDwarf.randomStar(r));
-			int total = ran.nextInt(p+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			sidistance[] o = new sidistance[total];
 			for(int i = 0;i < total;i++) {
 				o[i] = AstroObject.AU.scale((double)(ran.nextInt(100)+1)/1000);
@@ -256,11 +257,11 @@ public class SolSystem implements Serializable{
 			for(int i = 0;i < o.length;i++) {
 				put = Belt.makeRandom(o[i],r.getMyStar());
 				r.Add(put);
-				if(!n) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
+				if(!SL.isName()) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
 			}
-		}else if(special<=suns[3]){
+		}else if(special<=SL.getSuns()[3]){
 			r.setMyStar(Neutron.randomStar(r));
-			int total = ran.nextInt(p+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			sidistance[] o = new sidistance[total];
 			for(int i = 0;i < total;i++) {
 				o[i] = AstroObject.AU.scale((double)(ran.nextInt(500)+1)/1000);
@@ -269,13 +270,13 @@ public class SolSystem implements Serializable{
 			for(int i = 0;i < o.length;i++) {
 				put = Belt.makeRandom(o[i],r.getMyStar());
 				r.Add(put);
-				if(!n) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
+				if(!SL.isName()) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
 			}			
 		}else{
 			r.setMyName(r.getMyName()+" Singularity");
 			System.out.println("Black Hole");
 			r.setMyStar(new BlackHole(ran.nextInt(100)+13, r));
-			int total = ran.nextInt(p+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			sidistance[] o = new sidistance[total];
 			for(int i = 0;i < total;i++) {
 				o[i] = AstroObject.AU.scale((double)(ran.nextInt(500)+1)/1000);
@@ -284,7 +285,7 @@ public class SolSystem implements Serializable{
 			for(int i = 0;i < o.length;i++) {
 					put = Belt.makeRandom(o[i],r.getMyStar());
 					r.Add(put);
-					if(!n) put.setMyName((Planet.ALPHA+i)+" Belt");
+					if(!SL.isName()) put.setMyName((Planet.ALPHA+i)+" Belt");
 				}
 		}
 		return r;

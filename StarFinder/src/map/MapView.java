@@ -98,20 +98,11 @@ public class MapView extends JFrame{
 	
 	private Galaxy galaxy;
 
-	public int rS, rE, zS, zE, sS, sE, p;public boolean ss, ms, n;
+	public SettingList mySettings;
 
 	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms, boolean n, boolean r){
 		super(name);
-		this.rS = rS;
-		this.rE = rE;
-		this.zS = zS;
-		this.zE = zE;
-		this.sS = sS;
-		this.sE = sE;
-		this.p = p;
-		this.ss = ss;
-		this.ms = ms;
-		this.n = n;
+		mySettings = new SettingList(s,rS,rE,zS,zE,sS,sE,p,ss,ms,n);
 		
 		this.setBackground(Color.BLACK);
 		this.setForeground(Color.BLACK);
@@ -820,86 +811,6 @@ public class MapView extends JFrame{
 
 	public void setGalaxy(Galaxy galaxy) {
 		this.galaxy = galaxy;
-	}
-
-	public int getrS() {
-		return rS;
-	}
-
-	public void setrS(int rS) {
-		this.rS = rS;
-	}
-
-	public int getrE() {
-		return rE;
-	}
-
-	public void setrE(int rE) {
-		this.rE = rE;
-	}
-
-	public int getzS() {
-		return zS;
-	}
-
-	public void setzS(int zS) {
-		this.zS = zS;
-	}
-
-	public int getzE() {
-		return zE;
-	}
-
-	public void setzE(int zE) {
-		this.zE = zE;
-	}
-
-	public int getsS() {
-		return sS;
-	}
-
-	public void setsS(int sS) {
-		this.sS = sS;
-	}
-
-	public int getsE() {
-		return sE;
-	}
-
-	public void setsE(int sE) {
-		this.sE = sE;
-	}
-
-	public int getP() {
-		return p;
-	}
-
-	public void setP(int p) {
-		this.p = p;
-	}
-
-	public boolean isSs() {
-		return ss;
-	}
-
-	public void setSs(boolean ss) {
-		this.ss = ss;
-	}
-
-	public boolean isMs() {
-		return ms;
-	}
-
-	public void setMs(boolean ms) {
-		this.ms = ms;
-	}
-
-	public boolean isN() {
-		return n;
-	}
-
-	public void setN(boolean n) {
-		this.n = n;
 	}
 
 	public void setMySectors(Sector[] mySectors) {

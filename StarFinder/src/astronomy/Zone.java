@@ -3,6 +3,7 @@ package astronomy;
 import java.io.Serializable;
 import java.util.Random;
 
+import map.SettingList;
 import utilities.RandomList;
 
 public class Zone implements Serializable{
@@ -142,13 +143,13 @@ public class Zone implements Serializable{
 		return s;
 	}
 
-	public static Zone makeRandom(Region s, int sS, int sE, int p, boolean ss, boolean ms, boolean n) {
+	public static Zone makeRandom(Region s, SettingList SL) {
 		Zone r = new Zone(Zone.randomName(),s);
 		Random ran = new Random();
-		int total = ran.nextInt(sE+1)+sS;
+		int total = ran.nextInt(SL.getSysmax()+1)+SL.getSysmin();
 		for(int i = 0;i < total;i++) {
-			SolSystem z = SolSystem.makeRandom(r,p,ss,ms,n,null);
-			if(!n)z.setMyName(""+i);
+			SolSystem z = SolSystem.makeRandom(r,SL);
+			if(!SL.isName())z.setMyName(""+i);
 			r.Add(z);
 		}
 		return r;

@@ -31,7 +31,7 @@ public class NewSystem implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		SolSystem r;
 		if(isRandom) {
-			r = SolSystem.makeRandom(myZone,myView.p,myView.ss,myView.ms,myView.n,null);
+			r = SolSystem.makeRandom(myZone,myView.mySettings);
 		}else {
 			r = new SolSystem(null,SolSystem.randomName(), myZone);
 			r.setMyStar(Star.randomStar(r, null));
