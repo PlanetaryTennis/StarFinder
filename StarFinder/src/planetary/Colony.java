@@ -158,3 +158,4 @@ public class Colony {
 	public void setMyDevelopments(SepcialDevelopments myDevelopments) {
 		this.myDevelopments = myDevelopments;
 	}
+}

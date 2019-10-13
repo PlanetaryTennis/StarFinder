@@ -237,7 +237,7 @@ public class SettingLauncher {
 		
 		JButton Make = new JButton("Make");
 		Make.addActionListener(new LaunchSettings(LaunchSettings,b,Sectors,RegionsMin,RegionsMax,
-				ZonesMin,ZonesMax,ModerateStar,SystemsMax,PlanetsNum,
+				ZonesMin,ZonesMax,SystemsMin,SystemsMax,PlanetsNum,
 				SpecialStars,MultiStars,Names,Relays));
 		LaunchSettings.add(Make);
 		
