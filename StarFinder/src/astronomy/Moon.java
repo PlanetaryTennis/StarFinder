@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 import map.Sprite;
+import planetary.Colony;
 import units.sci;
 import units.sidensity;
 import units.sidistance;
@@ -71,10 +72,9 @@ public class Moon extends Terrestrial implements OrbitObject {
 
 	public static Moon makeRandom(sidistance orbit, sitime sitime, simass planetmass, sidistance radius, 
 			double scale, Star star) {
-		
-		simass mass = AstroObject.LUNE.scale(sci.round((random.nextDouble()+0.01),4));
-		sidensity d = new sidensity(2000.0 + random.nextInt(3000));
-		sidistance moonradius = new sidistance(Math.cbrt((3.0/4.0)*(Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()))));
+		double alter = sci.round((random.nextDouble()+0.01),4);
+		simass mass = AstroObject.LUNE.scale(alter*10);
+		sidistance moonradius = LUNERADI.scale(Math.cbrt(alter));
 		sidistance lesserorbit = radius.scale(4).plus(radius.scale(sci.round(random.nextDouble()*4,4)));
 		
 		sitime month = monthcalculate(planetmass, mass, lesserorbit);
@@ -105,9 +105,10 @@ public class Moon extends Terrestrial implements OrbitObject {
 	
 	public static Moon makeRandomJovian(sidistance orbit, sitime sitime, simass planetmass, sidistance radius, double scale, Star star) {
 				
-		simass mass = AstroObject.EARTH.scale(sci.round((random.nextDouble()+0.01)/64,4));
-		sidensity d = new sidensity(2000.0 + random.nextInt(3000));
-		sidistance moonradius = new sidistance(Math.cbrt((3.00/4.0)*(Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()))));
+		double alter = sci.round((random.nextDouble()+0.01)/64,4);
+
+		simass mass = AstroObject.LUNE.scale(alter*10);
+		sidistance moonradius = LUNERADI.scale(Math.cbrt(alter));
 		sidistance lesserorbit = radius.scale(4).plus(radius.scale(sci.round(random.nextDouble()*4+0.1,4)));
 		
 		sitime month = monthcalculate(planetmass, mass, lesserorbit);
@@ -136,8 +137,10 @@ public class Moon extends Terrestrial implements OrbitObject {
 				mass.lessOrEqual(LUNE)||
 				mass.greaterOrEqual(EARTH.scale(5))) {
 			p = new Moon(atmosphere, moonradius, mass, scale, orbit, star, albido, greenhouse, water, day, month, lesserorbit, false);
+			p.setMyColony(Colony.randomMoon((Moon)p));
 		}else {
 			p = new HabitableMoon(atmosphere, moonradius, mass, scale, orbit, star, albido, greenhouse, water, day, month, lesserorbit);
+			p.setMyColony(Colony.randomHabMoon((HabitableMoon)p));
 		}
 		
 		return p;

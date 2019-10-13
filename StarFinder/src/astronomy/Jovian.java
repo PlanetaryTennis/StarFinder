@@ -103,7 +103,7 @@ public class Jovian extends Planet {
 		if(getMyMass().greaterOrEqual(AstroObject.JOVIAN.scale(0.5))) {
 			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.GASGIANT+"Gas-Giant-Yellow.png"));
 		}else {
-			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.PLANETS+"Gas-Giant-Blue.png"));
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.GASGIANT+"Gas-Giant-Blue.png"));
 		}
 	}
 }

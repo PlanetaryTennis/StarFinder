@@ -120,10 +120,7 @@ public class Terrestrial extends Planet {
 		double alter = sci.round((random.nextDouble()*15+0.01)/3,4);
 		
 		simass mass = EARTH.scale(alter);
-		sidensity d = new sidensity(2000.0 + random.nextInt(3000));
-		double pmd = (Math.PI)*(sci.convertToDouble(mass.getValue())/sci.convertToDouble(d.getValue()));
-		double vol = (3.0/4.0)*pmd;
-		sidistance radius = new sidistance(Math.cbrt(vol));
+		sidistance radius = EARTHRADI.scale(Math.cbrt(alter));
 		double scale = ExtendedMathmatics.log(random.nextInt(499)+1, 1000)/16;
 		
 		for(int i = 0;i < moonnum;i++) {
@@ -156,8 +153,10 @@ public class Terrestrial extends Planet {
 				mass.lessOrEqual(LUNE)||
 				mass.greaterOrEqual(EARTH.scale(5))) {
 			p = new Terrestrial(moons, atmosphere, radius, mass, scale, orbit, star, albido, greenhouse, water, day,false);
+			p.setMyColony(Colony.randomTerrestrial((Terrestrial) p));
 		}else {
 			p = new Habitable(moons, atmosphere, radius, mass, scale, orbit, star, albido, greenhouse, water, day);
+			p.setMyColony(Colony.randomHabtiable((Habitable) p));
 		}
 		
 		for(int i = 0;i < moonnum;i++) {

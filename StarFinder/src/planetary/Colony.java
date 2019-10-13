@@ -1,6 +1,13 @@
 package planetary;
 
+import java.util.Random;
+
+import astronomy.AstroObject;
+import astronomy.Habitable;
+import astronomy.HabitableMoon;
+import astronomy.Moon;
 import astronomy.Terrestrial;
+import units.sci;
 
 public class Colony {
 
@@ -40,10 +47,58 @@ public class Colony {
 		this.myEcosystem = myEcosystem;
 		this.myDevelopments = myDevelopments;
 	}
+	
+	static Random random = new Random(System.currentTimeMillis());
 
 	public static Colony randomTerrestrial(Terrestrial t) {
+		int HostilityIndex = 100;
+		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyTemps()[2].getValue())-283.15);
+		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
+		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
+
+		Colony c = new Colony(0,0,HostilityIndex, false, t.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
+				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), false, 
+				null, null);
+		return c;		
+	}
+
+	public static Colony randomHabtiable(Habitable p) {
+		int HostilityIndex = 100;
+		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyTemps()[2].getValue())-283.15);
+		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
+		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
+
+		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
 		
-		Colony c = new Colony(0,0,0, true, true, true, true, true, true, true, true, true, null, null);
+		Colony c = new Colony(0,0,HostilityIndex, true, p.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
+				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), true, 
+				biosphere, null);
+		return c;		
+	}
+
+	public static Colony randomHabMoon(HabitableMoon p) {
+		int HostilityIndex = 100;
+		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyTemps()[2].getValue())-283.15);
+		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
+		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
+
+		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
+		
+		Colony c = new Colony(0,0,HostilityIndex, true, p.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
+				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), true, 
+				biosphere, null);
+		return c;	
+	}
+
+	public static Colony randomMoon(Moon t) {
+		int HostilityIndex = 100;
+		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyTemps()[2].getValue())-283.15);
+		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
+		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
+
+		Colony c = new Colony(0,0,HostilityIndex, false, t.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
+				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), false, 
+				null, null);
 		return c;		
 	}
 

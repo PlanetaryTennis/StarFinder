@@ -37,6 +37,7 @@ import actions.SatilightView;
 import actions.SecondaryJump;
 import actions.SectorPanel;
 import actions.StarView;
+import actions.SurfaceView;
 import actions.SystemPanel;
 import actions.ZonePanel;
 import actions.back;
@@ -61,6 +62,9 @@ import astronomy.Star;
 import astronomy.Terrestrial;
 import astronomy.Zone;
 import engine.ObjectFiles;
+import planetary.Colony;
+import planetary.Ecosystem;
+import planetary.SepcialDevelopments;
 import relay.PrimaryRelay;
 import relay.RelayNetwork;
 import relay.SecondaryRelay;
@@ -564,6 +568,11 @@ public class MapView extends JFrame{
 			display += "Night Tempiture " + world.getMyTemps()[1] + "\n";
 			display += "Greenhouse " + world.getMyGreenHouse() + "\n";
 			display += "This world is habitable\n";
+			Moon moon = (Moon) planet;
+			display += "Month " + moon.getMyMonth().compair(AstroObject.MONTH) + " months\n";
+			display += "Distant to world " + moon
+					.getMyMoonOrbit()
+			.compair(AstroObject.LIGHTSECOND) + " light seconds\n";
 		}else {
 			Terrestrial world = (Terrestrial) planet;
 			display += "Radius " + world.getMyRadius().compair(AstroObject.EARTHRADI) + " Earths\n";
@@ -576,15 +585,14 @@ public class MapView extends JFrame{
 			display += "Minimum Night Tempiture " + world.getMyTemps()[5] + "\n";
 			display += "Day Tempiture " + world.getMyTemps()[0] + "\n";
 			display += "Night Tempiture " + world.getMyTemps()[1] + "\n";
-			display += "Greenhouse " + world.getMyGreenHouse() + "\n";			
-		}
-
-		if(planet.getClass() == Moon.class) {
-			Moon moon = (Moon) planet;
-			display += "Month " + moon.getMyMonth().compair(AstroObject.MONTH) + " months\n";
-			display += "Distant to world " + moon
-					.getMyMoonOrbit()
-			.compair(AstroObject.LIGHTSECOND) + " light seconds\n";
+			display += "Greenhouse " + world.getMyGreenHouse() + "\n";	
+			if(planet.getClass() == Moon.class) {
+				Moon moon = (Moon) planet;
+				display += "Month " + moon.getMyMonth().compair(AstroObject.MONTH) + " months\n";
+				display += "Distant to world " + moon
+						.getMyMoonOrbit()
+				.compair(AstroObject.LIGHTSECOND) + " light seconds\n";
+			}
 		}
 
 		//Add year data
@@ -617,7 +625,7 @@ public class MapView extends JFrame{
 		display += "Outer Orbit " + planet.getMyOuterOrbit().compair(AstroObject.AU) + " AU";
 
 		JButton Look = new JButton("Surface");
-		
+		Look.addActionListener(new SurfaceView(planet, this));
 		myView.add(Look);
 		
 		Print.setText(display);
@@ -638,8 +646,10 @@ public class MapView extends JFrame{
 			viewZone(lastz);
 		}else if(level == 1) {
 			viewSystem(lastss);
-		}else {
+		}else if(level == 2) {
 			viewPlanet(lastp);
+		}else if(level == 3) {
+			viewWorldData(lastp);
 		}
 	}
 
@@ -713,6 +723,40 @@ public class MapView extends JFrame{
 				myView.add(Look);
 			}
 		}
+		
+		Print.setText(display);
+		myView.add(Print);
+
+		this.setSize(this.getWidth()+1, this.getHeight()+1);
+		this.setSize(this.getWidth()-1, this.getHeight()-1);
+	}
+
+	public void viewSurface(Planet planet) {
+		Colony colony = planet.getMyColony();
+		level = 3;
+		Name.setText(planet.getMyName());
+		myView.removeAll();
+		myView.repaint();
+		myView.setLayout(new FlowLayout());
+		JTextArea Print = new JTextArea();
+		Print.setEditable(false);
+		String display = planet.getMyName() + "\n";
+		display += "Habitable: " + colony.isHab() + "\n";
+		display += "Water Present: " + colony.isHasWater() + "\n";
+		display += "Biosphere Present: " + colony.isHasBio() + "\n";
+		display += "Ezero Present: " + colony.isHasEzo() + "\n";
+		display += "Massive Metal Presence: " + colony.isHasMassiveMetal() + "\n";
+		display += "Massive Gasses Presence: " + colony.isHasMassiveGasses() + "\n";
+		display += "Radiotropics Present: " + colony.isHasRadiotropes() + "\n";
+		display += "Rare Metals Present: " + colony.isHasRareMetals() + "\n";
+		display += "Rare Gasses Present: " + colony.isHasRareGasses() + "\n";
+		display += "\n";
+		display += "Has a colony " + (colony.getSize()>0) + "\n";
+		if(colony.getSize()>0) {
+			display += "Colony Size: " + colony.getSize() + "\n";
+			display += "Colony Growth: " + colony.getScale()  + "\n";
+		}
+		display += "Planet Hostility: " + colony.getHostility();		
 		
 		Print.setText(display);
 		myView.add(Print);

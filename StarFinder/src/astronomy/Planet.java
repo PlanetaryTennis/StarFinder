@@ -102,7 +102,7 @@ public abstract class Planet implements AstroObject {
 				sci.convertToDouble(AstroObject.G)*
 				sci.convertToDouble(myMass.getValue())/
 				Math.pow(sci.convertToDouble(myRadius.getValue()),2));
-		myVolume = new sivolume(
+		myVolume = new sivolume (
 				Math.pow(sci.convertToDouble(myRadius.getValue()),3)*
 				(0.75*Math.PI)*1000);
 		myDensity = new sidensity(

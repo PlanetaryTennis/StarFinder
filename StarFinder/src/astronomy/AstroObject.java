@@ -36,6 +36,7 @@ public interface AstroObject extends Serializable{
 	final static siacceleration GRAVITYEARTH = new siacceleration(9.806,SI.BASE);
 	
 	static final sidensity BAR = new sidensity(1.200,SI.KILO);
+	static final sidensity TERRIAN = new sidensity(5.510,SI.KILO);
 	
 	final static sitime HOUR = new sitime(3.600,SI.KILO);
 	final static sitime DAY = new sitime(86.40,SI.KILO);
