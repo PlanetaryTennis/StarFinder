@@ -21,11 +21,6 @@ public abstract class Planet implements AstroObject {
 	public static final char OMEGA = (char)969;
 	public static final char BE = (char)1073;
 	public static final char YA = (char)1103;
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5195473902898182146L;
 
 	protected String myName;
 	

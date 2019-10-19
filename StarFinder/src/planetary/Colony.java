@@ -13,7 +13,6 @@ public class Colony {
 
 	private int size;
 	private int scale;
-	private int hostility;
 	
 	private boolean isHab;
 	private boolean hasWater;
@@ -28,13 +27,12 @@ public class Colony {
 	private Ecosystem myEcosystem;
 	private SepcialDevelopments myDevelopments;
 	
-	public Colony(int size, int scale, int hostility, boolean isHab, boolean hasWater, boolean hasEzo,
+	public Colony(int size, int scale, boolean isHab, boolean hasWater, boolean hasEzo,
 			boolean hasRareGasses, boolean hasRareMetals, boolean hasRadiotropes, boolean hasMassiveMetal,
 			boolean hasMassiveGasses, boolean hasBio, Ecosystem myEcosystem, SepcialDevelopments myDevelopments) {
 		super();
 		this.size = size;
 		this.scale = scale;
-		this.hostility = hostility;
 		this.isHab = isHab;
 		this.hasWater = hasWater;
 		this.hasEzo = hasEzo;
@@ -51,55 +49,75 @@ public class Colony {
 	static Random random = new Random(System.currentTimeMillis());
 
 	public static Colony randomTerrestrial(Terrestrial t) {
-		int HostilityIndex = 100;
-		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyTemps()[2].getValue())-283.15);
-		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
-		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
-
-		Colony c = new Colony(0,0,HostilityIndex, false, t.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
-				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), false, 
+		boolean Habitable = false;
+		boolean Water = t.getMyWater()>0.05;
+		boolean Ezo = random.nextBoolean();
+		boolean RareGas = random.nextBoolean();
+		boolean RareMetal = random.nextBoolean();
+		boolean Radio = random.nextBoolean();
+		boolean MassMetal = random.nextBoolean();
+		boolean MassGas = random.nextBoolean();
+		boolean Life = false;
+		
+		Colony c = new Colony(0,0, Habitable, Water, Ezo, RareGas, 
+				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null, null);
 		return c;		
 	}
 
 	public static Colony randomHabtiable(Habitable p) {
-		int HostilityIndex = 100;
-		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyTemps()[2].getValue())-283.15);
-		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
-		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
 
 		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
+		boolean Habitable = true;
+		boolean Water = p.getMyWater()>0.05;
+		boolean Ezo = random.nextBoolean();
+		boolean RareGas = random.nextBoolean();
+		boolean RareMetal = random.nextBoolean();
+		boolean Radio = random.nextBoolean();
+		boolean MassMetal = random.nextBoolean();
+		boolean MassGas = random.nextBoolean();
+		boolean Life = true;
 		
-		Colony c = new Colony(0,0,HostilityIndex, true, p.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
-				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), true, 
+		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+				RareMetal, Radio, MassMetal, MassGas, Life, 
 				biosphere, null);
 		return c;		
 	}
 
-	public static Colony randomHabMoon(HabitableMoon p) {
-		int HostilityIndex = 100;
-		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyTemps()[2].getValue())-283.15);
-		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
-		HostilityIndex += Math.abs(sci.convertToDouble(p.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
+	public static Colony randomHabMoon(HabitableMoon p) {	
 
 		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
+		boolean Habitable = true;
+		boolean Water = p.getMyWater()>0.05;
+		boolean Ezo = random.nextBoolean();
+		boolean RareGas = random.nextBoolean();
+		boolean RareMetal = random.nextBoolean();
+		boolean Radio = random.nextBoolean();
+		boolean MassMetal = random.nextBoolean();
+		boolean MassGas = random.nextBoolean();
+		boolean Life = true;
 		
-		Colony c = new Colony(0,0,HostilityIndex, true, p.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
-				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), true, 
+		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+				RareMetal, Radio, MassMetal, MassGas, Life, 
 				biosphere, null);
-		return c;	
+		return c;		
 	}
 
-	public static Colony randomMoon(Moon t) {
-		int HostilityIndex = 100;
-		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyTemps()[2].getValue())-283.15);
-		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyAtmosphere().minus(AstroObject.BAR).getValue()))/1000;
-		HostilityIndex += Math.abs(sci.convertToDouble(t.getMyGravity().minus(AstroObject.GRAVITYEARTH).getValue()))/10;		
-
-		Colony c = new Colony(0,0,HostilityIndex, false, t.getMyWater()>5, random.nextBoolean(), random.nextBoolean(), 
-				random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), false, 
+	public static Colony randomMoon(Moon t) {	
+		boolean Habitable = false;
+		boolean Water = t.getMyWater()>0.05;
+		boolean Ezo = random.nextBoolean();
+		boolean RareGas = random.nextBoolean();
+		boolean RareMetal = random.nextBoolean();
+		boolean Radio = random.nextBoolean();
+		boolean MassMetal = random.nextBoolean();
+		boolean MassGas = random.nextBoolean();
+		boolean Life = false;
+		
+		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null, null);
-		return c;		
+		return c;				
 	}
 
 	public int getSize() {
@@ -116,14 +134,6 @@ public class Colony {
 
 	public void setScale(int scale) {
 		this.scale = scale;
-	}
-
-	public int getHostility() {
-		return hostility;
-	}
-
-	public void setHostility(int hostility) {
-		this.hostility = hostility;
 	}
 
 	public boolean isHab() {

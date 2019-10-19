@@ -1,7 +1,6 @@
 package astronomy;
 
-import java.io.Serializable;
-
+import engine.Savable;
 import units.SI;
 import units.sci;
 import units.siacceleration;
@@ -13,7 +12,7 @@ import units.sispeed;
 import units.sitemperature;
 import units.sitime;
 
-public interface AstroObject extends Serializable{
+public interface AstroObject extends Savable{
 	
 	final static simass LUNE = new simass(73.47,SI.ZETTA);
 	final static simass EARTH = new simass(5.972,SI.YOTTA);

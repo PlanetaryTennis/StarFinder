@@ -172,7 +172,6 @@ public class Terrestrial extends Planet {
 		}
 		
 		p.setMyName(SolSystem.randomName());
-		p.setMyColony(Colony.randomTerrestrial((Terrestrial)(p)));
 		
 		return p;
 	}

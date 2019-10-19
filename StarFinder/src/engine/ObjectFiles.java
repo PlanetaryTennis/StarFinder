@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +24,9 @@ import astronomy.SolSystem;
 import astronomy.Star;
 import astronomy.Terrestrial;
 import map.MapView;
+import map.SettingList;
+import planetary.Colony;
+import planetary.Condition;
 import relay.RelayNetwork;
 import units.SI;
 import units.sci;
@@ -37,22 +42,86 @@ public class ObjectFiles {
 	public static final Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) {
-		GameLauncher l = new GameLauncher();
-		l.getClass();
-//		System.out.println(b.getMyRadius());
-//		int num = 20;
-//		int number = 0;
-//		int tempnum = 0;
-//		int[][] map;
-//			number = (int) ((num*1-1)*2);
-//			tempnum = (number/2);
-//			if(tempnum > ExtendedMathmatics.choose(num, 2)) tempnum = ExtendedMathmatics.choose(num, 2);
-//			number = tempnum * 2;
-//			System.out.println(tempnum + ":" + number);
-//			map = RelayNetwork.mapOut(tempnum,num);
-//		System.out.println(ARRAY.print(map,",","\n"));
-//		int[] depth = RelayNetwork.depthcluster(map, num);
-//		System.out.println(ARRAY.print(true,depth,"\n"));
+//		GameLauncher l = new GameLauncher();
+//		l.getClass();
+//		Scanner sc = new Scanner(System.in);
+//		while(true) {
+//			Star s = Star.randomStar(null, null);
+//			SolSystem ss = SolSystem.makeRandom(null, new SettingList(0, 0, 0, 0, 0, 0, 0, 4, true, true, true, null));
+//			for(int i = 0;i < ss.getMyObjects().length;i++) {
+//				if(ss.getMyObjects()[i].getClass()==Habitable.class) {
+//					Planet planet = ss.getMyObjects()[i];
+//					Colony colony = planet.getMyColony();
+//					String display = planet.getMyName() + "\n";
+//					display += "Habitable: " + colony.isHab() + "\n";
+//					display += "Water Present: " + colony.isHasWater() + "\n";
+//					display += "Biosphere Present: " + colony.isHasBio() + "\n";
+//					display += "Ezero Present: " + colony.isHasEzo() + "\n";
+//					display += "Massive Metal Presence: " + colony.isHasMassiveMetal() + "\n";
+//					display += "Massive Gasses Presence: " + colony.isHasMassiveGasses() + "\n";
+//					display += "Radiotropics Present: " + colony.isHasRadiotropes() + "\n";
+//					display += "Rare Metals Present: " + colony.isHasRareMetals() + "\n";
+//					display += "Rare Gasses Present: " + colony.isHasRareGasses() + "\n";
+//					display += "\n";
+//					display += "Has a colony " + (colony.getSize()>0) + "\n";
+//					if(colony.getSize()>0) {
+//						display += "Colony Size: " + colony.getSize() + "\n";
+//						display += "Colony Growth: " + colony.getScale()  + "\n";
+//					}
+//					
+//					Condition c = null;
+//					if(planet.getClass()==Habitable.class) {
+//						c = ((Habitable)planet).getMyCondition();
+//					}else if(planet.getClass()==HabitableMoon.class) {
+//						c = ((HabitableMoon)planet).getMyCondition();
+//					}
+//					
+//					if(c!=null) {
+//						display += "------------------------------\n";
+//						display += "Gravity Index "+c.getGravityIndex()+"\n";
+//						display += "Tempiture Index "+c.getTempitureIndex()+"\n";
+//						display += "Tempiture Variations "+c.getVarianceIndex()+"\n";
+//						display += "Pressure Index "+c.getAtmosphericIndex()+"\n";
+//						display += "Water Index "+c.getWaterIndex()+"\n";
+//						display += "Atmosphere Type ";
+//						switch(c.getAirIndex()) {
+//						case AMMONIA:
+//							display += "Ammonia";
+//							break;
+//						case METHANE:
+//							display += "Methane";
+//							break;
+//						default:
+//							display += "Nitrogen";
+//							break;
+//						}
+//						display += "\n";
+//						display += c.isDextros() ? "Dextro":"Levo";
+//						display += "-amino acid Biology";
+//						System.out.print(display);
+//						sc.nextLine();
+//					}
+//				}
+//			}
+//		}
+		String uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
+		uniqueID = UUID.randomUUID().toString();
+		System.out.println(uniqueID);
 	}
 	
     public static Object ReadObjectFromFile(String filepath) {

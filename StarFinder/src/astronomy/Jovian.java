@@ -17,6 +17,7 @@ import units.sitemperature;
 import units.sitime;
 import units.sivolume;
 import utilities.ExtendedMathmatics;
+import utilities.StringFundementals;
 
 public class Jovian extends Planet {
 
@@ -105,5 +106,27 @@ public class Jovian extends Planet {
 		}else {
 			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.GASGIANT+"Gas-Giant-Blue.png"));
 		}
+	}
+
+	@Override
+	public void loadString(String load) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public String saveString() {
+		String saver = "";
+		saver += this.myName + StringFundementals.ENDLINE;
+		saver += StringFundementals.MARK + StringFundementals.ENDLINE;
+		for(int i = 0;i < this.myMoons.length;i++) {
+			saver += myMoons[i].getMyName() + StringFundementals.ENDLINE;
+		}
+		saver += StringFundementals.MARK + StringFundementals.ENDLINE;
+		return saver;
+	}
+
+	@Override
+	public int getClassIndex() {
+		return 932813;
 	}
 }

@@ -63,6 +63,7 @@ import astronomy.Terrestrial;
 import astronomy.Zone;
 import engine.ObjectFiles;
 import planetary.Colony;
+import planetary.Condition;
 import planetary.Ecosystem;
 import planetary.SepcialDevelopments;
 import relay.PrimaryRelay;
@@ -756,7 +757,38 @@ public class MapView extends JFrame{
 			display += "Colony Size: " + colony.getSize() + "\n";
 			display += "Colony Growth: " + colony.getScale()  + "\n";
 		}
-		display += "Planet Hostility: " + colony.getHostility();		
+		
+		Condition c = null;
+		if(planet.getClass()==Habitable.class) {
+			c = ((Habitable)planet).getMyCondition();
+		}else if(planet.getClass()==HabitableMoon.class) {
+			c = ((HabitableMoon)planet).getMyCondition();
+		}
+		
+		if(c!=null) {
+			display += "------------------------------\n";
+			display += "Gravity Index "+c.getGravityIndex()+"\n";
+			display += "Tempiture Index "+c.getTempitureIndex()+"\n";
+			display += "Tempiture Variations "+c.getVarianceIndex()+"\n";
+			display += "Pressure Index "+c.getAtmosphericIndex()+"\n";
+			display += "Water Index "+c.getWaterIndex()+"\n";
+			display += "Atmosphere Type ";
+			switch(c.getAirIndex()) {
+			case AMMONIA:
+				display += "Ammonia";
+				break;
+			case METHANE:
+				display += "Methane";
+				break;
+			default:
+				display += "Nitrogen";
+				break;
+			}
+			display += "\n";
+			display += c.isDextros() ? "Dextro":"Levo";
+			display += "-amino acid Biology";
+		}
+		
 		
 		Print.setText(display);
 		myView.add(Print);

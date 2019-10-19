@@ -12,14 +12,21 @@ public class Ecosystem {
 	private Plant Primary;
 	private Plant Secondary;
 	
+	private Condition myConditions;
+	
 	public static Ecosystem randomEcosystem(Habitable p) {
-		// TODO Auto-generated method stub
+		Condition C = p.getMyCondition();
+		Animal AP = Animal.randomApexPreditor(C);
+		Animal S = Animal.randomStandard(C);
+		Animal P = Animal.randomPest(C);
+		
+		Plant Pr = Plant.random(C);
+		Plant Sc = Plant.random(C);
 		return null;
 	}
 
 	public static Ecosystem randomEcosystem(HabitableMoon p) {
-		// TODO Auto-generated method stub
+//		myConditions = p.getMyCondition();		
 		return null;
 	}
-	
 }

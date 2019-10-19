@@ -161,6 +161,9 @@ public class simass  extends siunit{
 			pow--;
 		}
 		int i = pow % 3;
+		if(i < 0) {
+			i = (3 + i)%3;
+		}
 		while(i != 0){
 			num = num * 10;
 			pow--;
