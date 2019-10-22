@@ -1,6 +1,7 @@
 package map;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -129,7 +130,7 @@ public class MapView extends JFrame{
 		}
 
 		JMenuItem save = new JMenuItem("Save");
-		save.addActionListener(new saver(mySectors));
+		save.addActionListener(new saver(this, galaxy));
 		bar.add(save);
 		
 		Name = new JMenuItem(galaxy.getMyName());
@@ -158,7 +159,57 @@ public class MapView extends JFrame{
 		
 		this.setSize(1000, 750);
 		this.add(sp);
-		this.addWindowListener(new exit(this,mySectors));
+		this.addWindowListener(new exit(this));
+		this.setVisible(true);
+	}
+
+	public MapView(String name,Galaxy g) {
+		super(name);
+		
+		this.setBackground(Color.BLACK);
+		this.setForeground(Color.BLACK);
+
+		JMenuBar bar = new JMenuBar();
+		
+		galaxy = g;
+		int s = galaxy.getMySectors().length
+		
+		myMenus = new JMenu[s];
+		mySectors = new Sector[s];
+		for(int i = 0;i < myMenus.length;i++) {
+			myMenus[i] = new JMenu();
+			mySectors[i] = galaxy.getMySectors()[i];
+			myMenus[i] = (populateSectorMenu(mySectors[i], this));
+			bar.add(myMenus[i]);
+		}
+
+		JMenuItem save = new JMenuItem("Save");
+		save.addActionListener(new saver(this, galaxy));
+		bar.add(save);
+		
+		Name = new JMenuItem(galaxy.getMyName());
+		bar.add(Name);
+		
+		JMenuItem editor = new JMenuItem("Editor");
+		editor.addActionListener(new editmenu(this));
+		bar.add(editor);
+
+		JMenuItem back = new JMenuItem("Back");
+		back.addActionListener(new back(this));
+		bar.add(back);
+
+		this.setJMenuBar(bar);
+		myView = new JPanel();
+		myView.setBackground(Color.BLACK);
+		JScrollPane sp = new JScrollPane(myView);
+		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		this.viewGalaxy();
+		
+		this.setSize(1000, 750);
+		this.add(sp);
+		this.addWindowListener(new exit(this));
 		this.setVisible(true);
 	}
 
@@ -171,11 +222,12 @@ public class MapView extends JFrame{
 		}
 	}
 
-	public static void save(Sector[] mySectors) {
-//		for(int i = 0;i < mySectors.length;i++) {
-//			System.out.println(mySectors[i].getName());
-//			ObjectFiles.WriteObjecttoFile(mySectors[i], mySectors[i].getName());
-//		}
+	public static void save(MapView view,Galaxy galaxy) {
+		Cursor c = view.getCursor();
+		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));;
+		ObjectFiles.WriteObjecttoFile(galaxy, galaxy.getMyName());
+		System.out.print("KILLME");
+		view.setCursor(c);
 
 		//		int tracker = 1;
 		//		Row row;

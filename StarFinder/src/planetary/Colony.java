@@ -1,16 +1,24 @@
 package planetary;
 
+import java.io.Serializable;
 import java.util.Random;
+import java.util.UUID;
 
 import astronomy.AstroObject;
 import astronomy.Habitable;
 import astronomy.HabitableMoon;
+import astronomy.Jovian;
 import astronomy.Moon;
 import astronomy.Terrestrial;
+import engine.Savable;
 import units.sci;
 
-public class Colony {
+public class Colony implements Savable, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3708609165970622356L;
 	private int size;
 	private int scale;
 	
@@ -44,6 +52,7 @@ public class Colony {
 		this.hasBio = hasBio;
 		this.myEcosystem = myEcosystem;
 		this.myDevelopments = myDevelopments;
+		myID = UUID.randomUUID().toString();;
 	}
 	
 	static Random random = new Random(System.currentTimeMillis());
@@ -118,6 +127,23 @@ public class Colony {
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null, null);
 		return c;				
+	}
+
+	public static Colony randomJovian(Jovian j) {	
+		boolean Habitable = false;
+		boolean Water = false;
+		boolean Ezo = false;
+		boolean RareGas = random.nextBoolean();
+		boolean RareMetal = false;
+		boolean Radio = false;
+		boolean MassMetal = false;
+		boolean MassGas = true;
+		boolean Life = false;
+		
+		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+				RareMetal, Radio, MassMetal, MassGas, Life, 
+				null, null);
+		return c;		
 	}
 
 	public int getSize() {
@@ -222,5 +248,30 @@ public class Colony {
 
 	public void setMyDevelopments(SepcialDevelopments myDevelopments) {
 		this.myDevelopments = myDevelopments;
+	}
+
+	@Override
+	public void loadString(String load) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String saveString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getClassIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	String myID;
+	
+	@Override
+	public String getID() {
+		return myID;
 	}
 }

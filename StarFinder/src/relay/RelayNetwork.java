@@ -1,11 +1,17 @@
 package relay;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import astronomy.Galaxy;
 import utilities.ExtendedMathmatics;
 
-public class RelayNetwork {
+public class RelayNetwork implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5106582796115738519L;
+
 	private Galaxy myGalaxy;
 
 	private PrimaryRelay[] myPrimes;

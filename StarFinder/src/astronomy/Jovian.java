@@ -2,11 +2,14 @@ package astronomy;
 
 import java.awt.Toolkit;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.swing.ImageIcon;
 
+import engine.ObjectFiles;
 import map.Sprite;
 import map.color;
+import planetary.Colony;
 import units.sci;
 import units.siacceleration;
 import units.sibrightness;
@@ -32,6 +35,7 @@ public class Jovian extends Planet {
 	public Jovian(Moon[] myMoons, sidensity myAtmosphere, sidistance myRadius, simass myMass,
 			double myEccentricity, sidistance myOrbit, Star myStar, sitime myDay) {
 		super(myMoons, myAtmosphere, myRadius, myMass, myEccentricity, myOrbit, myStar, myDay);
+		myID = UUID.randomUUID().toString();;
 		++total;
 	}
 
@@ -77,6 +81,9 @@ public class Jovian extends Planet {
 		}
 		
 		j.setMyName(SolSystem.randomName());
+		j.setMyColony(Colony.randomJovian((Jovian) j));
+		sitemperature[] temps = Terrestrial.tempitures(random.nextDouble()*5, random.nextDouble(), orbit, orbit.scale(1+scale), orbit.scale(1-scale), star, atmosphere);
+		j.setMyTemps(temps);
 		
 		return j;
 	}
@@ -108,20 +115,82 @@ public class Jovian extends Planet {
 		}
 	}
 
+	String[] moonSaves;
+	String[] satilightSaves;
+	String colonySave;
+	
 	@Override
 	public void loadString(String load) {
-		// TODO Auto-generated method stub
+		String[] loads = StringFundementals.breakByLine(load);
+		myID = loads[0];
+		myName = loads[1];
+		int m = Integer.parseInt(loads[3]);
+		myMoons = new Moon[m];
+		moonSaves = new String[m];
+		for(int i = 0;i < m;i++) {
+			moonSaves[i] = loads[3+i];
+		}
+		int s = Integer.parseInt(loads[3+m]);
+		satilightSaves = new String[s];
+		for(int i = 0;i < s;i++) {
+			satilightSaves[i] = loads[3+m+i];
+		}
+		int measure = 3+m+s;
+		colonySave = loads[measure++];
+		myAtmosphere = new sidensity(Double.parseDouble(loads[measure++]));
+		myDay = new sitime(Double.parseDouble(loads[measure++]));
+		myDensity = new sidensity(Double.parseDouble(loads[measure++]));
+		myEccentricity = (Double.parseDouble(loads[7+m+s]));
+		myGravity = new siacceleration(Double.parseDouble(loads[measure++]));
+		myInnerOrbit = new sidistance(Double.parseDouble(loads[measure++]));
+		myMass = new simass(Double.parseDouble(loads[measure++]));
+		myOrbit = new sidistance(Double.parseDouble(loads[measure++]));
+		myOuterOrbit = new sidistance(Double.parseDouble(loads[measure++]));
+		myRadius = new sidistance(Double.parseDouble(loads[measure++]));
+		myVolume = new sivolume(Double.parseDouble(loads[measure++]));
+		myYear = new sitime(Double.parseDouble(loads[measure++]));
+		for(int i = 0;i < 6;i++) {
+			myTemps[i] = new sitemperature(Double.parseDouble(loads[measure++]));
+		}
 	}
 
+	String myID;
+	
+	@Override
+	public String getID() {
+		return myID;		
+	}
+	
 	@Override
 	public String saveString() {
 		String saver = "";
+		saver += this.myID + StringFundementals.ENDLINE;
 		saver += this.myName + StringFundementals.ENDLINE;
-		saver += StringFundementals.MARK + StringFundementals.ENDLINE;
+		saver += this.getClassIndex() + StringFundementals.ENDLINE;
+		saver += this.myMoons.length +StringFundementals.ENDLINE;
 		for(int i = 0;i < this.myMoons.length;i++) {
-			saver += myMoons[i].getMyName() + StringFundementals.ENDLINE;
+			saver += myMoons[i].getID() + StringFundementals.ENDLINE;
 		}
-		saver += StringFundementals.MARK + StringFundementals.ENDLINE;
+		saver += this.mySatilights.size() + StringFundementals.ENDLINE;
+		for(int i = 0;i < this.mySatilights.size();i++) {
+			saver += this.mySatilights.get(i).getID() + StringFundementals.ENDLINE;
+		}
+		saver += this.myColony.getID() + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myAtmosphere.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myDay.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myDensity.getValue()) + StringFundementals.ENDLINE;
+		saver += this.getMyEccentricity() + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myGravity.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myInnerOrbit.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myMass.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myOrbit.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myOuterOrbit.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myRadius.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myVolume.getValue()) + StringFundementals.ENDLINE;
+		saver += sci.convertToDouble(this.myYear.getValue()) + StringFundementals.ENDLINE;
+		for(int i = 0;i < this.myTemps.length;i++) {
+			saver += sci.convertToDouble(this.myTemps[i].getValue()) + StringFundementals.ENDLINE;
+		}
 		return saver;
 	}
 

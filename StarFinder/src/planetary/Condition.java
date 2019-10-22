@@ -1,5 +1,6 @@
 package planetary;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import astronomy.AstroObject;
@@ -11,7 +12,7 @@ import units.siacceleration;
 import units.sidensity;
 import units.sitemperature;
 
-public class Condition {
+public class Condition  implements Serializable{
 
 	private int GravityIndex;
 	private int TempitureIndex;

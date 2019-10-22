@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import astronomy.Moon;
-import astronomy.OrbitObject;
 import map.MapView;
 
 public class MoonView implements ActionListener {

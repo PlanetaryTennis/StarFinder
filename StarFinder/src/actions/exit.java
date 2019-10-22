@@ -1,5 +1,6 @@
 package actions;
 
+import astronomy.Galaxy;
 import astronomy.Sector;
 import map.MapView;
 
@@ -10,21 +11,20 @@ import map.MapView;
 public class exit extends java.awt.event.WindowAdapter {
 	
 	MapView j;
-	Sector[] mySectors;
+	Galaxy galaxy;
 	
 	/**
 	 * @author PlanetaryTennis
 	 * @param MapView who will be saved.
 	 * @param Sector who will be passed to MapView to be saved.
 	 */
-	public exit(MapView f, Sector[] mySectors){
+	public exit(MapView f){
 		j = f;
-		this.mySectors = mySectors;
+		this.galaxy = f.getGalaxy();
 	}
 	
     public void windowClosing(java.awt.event.WindowEvent e) {
-		System.out.println(mySectors[0].getName());
-//        MapView.save(mySectors);
+        MapView.save(j,galaxy);
     	System.exit(0);
     }
 }

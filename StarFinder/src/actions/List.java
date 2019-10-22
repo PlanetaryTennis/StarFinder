@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 
 import astronomy.Galaxy;
 import engine.EditMenu;
-import relay.RelayNetwork;
 
 public class List implements ActionListener {
 

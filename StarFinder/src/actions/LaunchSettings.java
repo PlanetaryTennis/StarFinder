@@ -100,6 +100,7 @@ public class LaunchSettings implements ActionListener {
 		LS.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		if(b) {
 			MapView v = new MapView("Galaxy Painter",s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,null,r);
+			v.getMyMenus();
 		}else {
 			
 		}

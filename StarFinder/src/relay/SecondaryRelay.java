@@ -95,4 +95,28 @@ public class SecondaryRelay implements Relay {
 		this.myPod = myPod;
 	}
 
+	@Override
+	public void loadString(String load) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String saveString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getClassIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

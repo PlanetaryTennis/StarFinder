@@ -1,9 +1,11 @@
 package planetary;
 
+import java.io.Serializable;
+
 import astronomy.Habitable;
 import astronomy.HabitableMoon;
 
-public class Ecosystem {
+public class Ecosystem  implements Serializable{
 	
 	private Animal ApexPreditor;
 	private Animal Standard;

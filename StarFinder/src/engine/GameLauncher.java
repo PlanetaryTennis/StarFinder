@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import actions.LauncherButton;
+import map.MapView;
 
 public class GameLauncher {
 	JFrame Launcher;
@@ -38,5 +39,9 @@ public class GameLauncher {
 		Launcher.setSize(150, 200);
 		Launcher.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Launcher.setVisible(true);
+	}
+	
+	public static void load(String name) {
+		new MapView();
 	}
 }

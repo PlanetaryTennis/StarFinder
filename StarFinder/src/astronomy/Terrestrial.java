@@ -2,6 +2,8 @@ package astronomy;
 
 import java.awt.Toolkit;
 import java.util.Random;
+import java.util.UUID;
+
 import javax.swing.ImageIcon;
 
 
@@ -42,6 +44,7 @@ public class Terrestrial extends Planet {
 		}if(myTemps[5].greaterOrEqual(boil)||myAtmosphere.lessOrEqual(BAR.scale(0.25))) {
 			this.myWater = 0.0f;
 		}
+		myID = UUID.randomUUID().toString();;
 	}
 	
 	public Terrestrial(Moon[] myMoons, sidensity myAtmosphere, sidistance myRadius,
@@ -58,6 +61,7 @@ public class Terrestrial extends Planet {
 			myWater = 0.0f;
 		}
 		++total;
+		myID = UUID.randomUUID().toString();;
 	}
 
 	public static sitemperature[] tempitures(double GreenHouse, double Albido, sidistance Orbit,
@@ -222,6 +226,30 @@ public class Terrestrial extends Planet {
 				return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.PLANETS+"Rocky Planet.png"));
 			}
 		}
+	}
+
+	@Override
+	public void loadString(String load) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String saveString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getClassIndex() {
+		return 932846;
+	}
+
+	String myID;
+	
+	@Override
+	public String getID() {
+		return myID;
 	}
 
 }

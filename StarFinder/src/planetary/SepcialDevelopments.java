@@ -1,5 +1,7 @@
 package planetary;
 
-public class SepcialDevelopments {
+import java.io.Serializable;
+
+public class SepcialDevelopments  implements Serializable{
 
 }
