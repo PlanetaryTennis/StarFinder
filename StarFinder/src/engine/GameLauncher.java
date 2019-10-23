@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import actions.LauncherButton;
+import astronomy.Galaxy;
 import map.MapView;
 
 public class GameLauncher {
@@ -33,7 +34,7 @@ public class GameLauncher {
 		Launcher.add(NewEdit);
 		
 		JButton LoadEdit = new JButton("Load Galaxy Painter");
-		LoadEdit.setEnabled(false);
+		LoadEdit.addActionListener(new LauncherButton(3,Launcher));
 		Launcher.add(LoadEdit);
 		
 		Launcher.setSize(150, 200);
@@ -41,7 +42,8 @@ public class GameLauncher {
 		Launcher.setVisible(true);
 	}
 	
-	public static void load(String name) {
-		new MapView();
+	public static void load(String name,Galaxy galaxy) {
+		MapView v = new MapView(name, galaxy);
+		v.getClass();
 	}
 }

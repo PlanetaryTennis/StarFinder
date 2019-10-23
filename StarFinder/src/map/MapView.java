@@ -172,7 +172,7 @@ public class MapView extends JFrame{
 		JMenuBar bar = new JMenuBar();
 		
 		galaxy = g;
-		int s = galaxy.getMySectors().length
+		int s = galaxy.getMySectors().length;
 		
 		myMenus = new JMenu[s];
 		mySectors = new Sector[s];
@@ -221,12 +221,17 @@ public class MapView extends JFrame{
 			}
 		}
 	}
+	
+//	public void search(AstroObject o) {
+//		switch(o.getClass()) {
+//		case
+//		}
+//	}
 
 	public static void save(MapView view,Galaxy galaxy) {
 		Cursor c = view.getCursor();
 		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));;
 		ObjectFiles.WriteObjecttoFile(galaxy, galaxy.getMyName());
-		System.out.print("KILLME");
 		view.setCursor(c);
 
 		//		int tracker = 1;
