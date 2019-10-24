@@ -5,11 +5,11 @@ import java.util.Random;
 import java.util.UUID;
 
 import astronomy.AstroObject;
-import astronomy.old.Habitable;
-import astronomy.old.HabitableMoon;
-import astronomy.old.Jovian;
-import astronomy.old.Moon;
-import astronomy.old.Terrestrial;
+import astronomy.planetary.Habitable;
+import astronomy.planetary.HabitableMoon;
+import astronomy.planetary.Jovian;
+import astronomy.planetary.Moon;
+import astronomy.planetary.Terrestrial;
 import engine.Savable;
 import units.sci;
 

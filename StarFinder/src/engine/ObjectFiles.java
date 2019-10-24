@@ -1,35 +1,31 @@
 package engine;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.UUID;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
-import astronomy.AstroObject;
-import astronomy.Star;
-import astronomy.old.BlackHole;
-import astronomy.old.Habitable;
-import astronomy.old.HabitableMoon;
-import astronomy.old.Jovian;
-import astronomy.old.Moon;
-import astronomy.old.Planet;
-import astronomy.old.Sector;
-import astronomy.old.SolSystem;
-import astronomy.old.Terrestrial;
-import map.MapView;
-import map.SettingList;
-import planetary.Colony;
-import planetary.Condition;
-import relay.RelayNetwork;
-import utilities.ARRAY;
-import utilities.ExtendedMathmatics;
+import astronomy.SolSystem;
+import astronomy.planetary.Asteroid;
+import astronomy.planetary.Belt;
+import astronomy.planetary.Habitable;
+import astronomy.planetary.HabitableMoon;
+import astronomy.planetary.Jovian;
+import astronomy.planetary.Moon;
+import astronomy.planetary.Planet;
+import astronomy.planetary.Terrestrial;
+import astronomy.stellar.BlackHole;
+import astronomy.stellar.BrownDwarf;
+import astronomy.stellar.Neutron;
+import astronomy.stellar.Star;
+import astronomy.stellar.WhiteDwarf;
+import utilities.StringFundementals;
 
 public class ObjectFiles {
 	
@@ -37,19 +33,11 @@ public class ObjectFiles {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		Star s = new Star(10,null);
-		System.out.print(s.saveString());
-		s.loadString("d70a7ea2-40c6-4c03-9bde-0ad7f917e167\n"+
-"934201\n"+
-"2.509182465996696E9\n"+
-"1.9086964485981308E15\n"+
-"2.25E21\n"+
-"1.989E30\n"+
-"695500.0\n"+
-"5778.0\n"+
-"7.926884660458244E20");
-		System.out.println();
-		System.out.print(s.saveString());
+		Star s = new Star(2,null);
+		Planet p = Terrestrial.makeRandom(s.getFrostLine(), s);
+		WriteSavabletoFile(p, "test");
+//		System.out.println();
+//		System.out.print(s.saveString());
 //		GameLauncher l = new GameLauncher();
 //		l.getClass();
 //		Scanner sc = new Scanner(System.in);
@@ -64,6 +52,103 @@ public class ObjectFiles {
 //				}
 //			}
 //		}
+	}
+	
+	public static void WriteSavabletoFile(Savable object,String filepath) {
+
+		FileOutputStream fout = null;
+
+		try {
+			File tmpDir = new File("data/saves/"+filepath);
+			boolean exists = tmpDir.exists();
+			if(!exists||!tmpDir.isDirectory()) tmpDir.mkdir();
+			fout = new FileOutputStream("data/saves/"+filepath+"/"+object.getID()+"."+object.getClass().getName());
+			byte[] bs = object.saveString().getBytes();
+			fout.write(bs);
+			fout.flush();
+			fout.close();
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+
+		} finally {
+
+			if (fout != null) {
+				try {
+					fout.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public static Savable ReadSaveableFromFile(String filepath) {
+		 try {
+	            FileInputStream fileIn = new FileInputStream("data/saves/"+filepath);
+	            Savable obj = null;
+	            String read = getFileContent(fileIn);
+	            String[] box = StringFundementals.breakByLine(read);
+	            switch(Integer.parseInt(box[1])) {
+	            case Star.CLASSINDEX:
+	            	obj = new Star(read);
+	            	break;
+	            case WhiteDwarf.CLASSINDEX:
+	            	obj = new WhiteDwarf(read);
+	            	break;
+	            case Neutron.CLASSINDEX:
+	            	obj = new Neutron(read);
+	            	break;
+	            case BrownDwarf.CLASSINDEX:
+	            	obj = new BrownDwarf(read);
+	            	break;
+	            case BlackHole.CLASSINDEX:
+	            	obj = new BlackHole(read);
+	            	break;
+	            case Terrestrial.CLASSINDEX:
+	            	obj = new Terrestrial(read);
+	            	break;
+	            case Moon.CLASSINDEX:
+	            	obj = new Moon(read);
+	            	break;
+	            case Jovian.CLASSINDEX:
+	            	obj = new Jovian(read);
+	            	break;
+	            case HabitableMoon.CLASSINDEX:
+	            	obj = new HabitableMoon(read);
+	            	break;
+	            case Habitable.CLASSINDEX:
+	            	obj = new Habitable(read);
+	            	break;
+	            case Belt.CLASSINDEX:
+	            	obj = new Belt(read);
+	            	break;
+	            case Asteroid.CLASSINDEX:
+	            	obj = new Asteroid(read);
+	            	break;
+	            case SolSystem.CLASSINDEX:
+	            	obj = new SolSystem(read);
+	            	break;
+	            }        
+	            return obj;
+	 
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	            return null;
+	        }
+	}
+	
+	public static String getFileContent(FileInputStream fis) throws IOException {
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(fis))) {
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while(( line = br.readLine()) != null ) {
+				sb.append( line );
+				sb.append( '\n' );
+			}
+			return sb.toString();
+		}
 	}
 	
     public static Object ReadObjectFromFile(String filepath) {

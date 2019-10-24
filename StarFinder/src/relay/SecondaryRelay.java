@@ -5,10 +5,10 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
-import astronomy.old.Planet;
+import astronomy.SolSystem;
 import astronomy.old.Region;
-import astronomy.old.SolSystem;
 import astronomy.old.Zone;
+import astronomy.planetary.Planet;
 import map.Sprite;
 
 public class SecondaryRelay implements Relay {

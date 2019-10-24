@@ -1,4 +1,4 @@
-package astronomy;
+package astronomy.stellar;
 
 import java.awt.Toolkit;
 import java.util.Random;
@@ -6,7 +6,8 @@ import java.util.UUID;
 
 import javax.swing.ImageIcon;
 
-import astronomy.old.SolSystem;
+import astronomy.AstroObject;
+import astronomy.SolSystem;
 import map.Sprite;
 import map.color;
 import utilities.StringFundementals;
@@ -20,6 +21,7 @@ public class Star implements AstroObject {
 
 	public static int total = 0;
 	
+	protected String myName;
 	protected double myMass;
 	protected double myRadius;
 	protected double myDensity;
@@ -32,6 +34,9 @@ public class Star implements AstroObject {
 	
 	private SolSystem mySystem;
 	
+	public Star(String load) {	
+		this.loadString(load);
+	}
 	
 	public Star(double m,SolSystem s){
 		mySystem = s;
@@ -178,6 +183,7 @@ public class Star implements AstroObject {
 		String [] in = StringFundementals.breakByLine(load);
 		int i = 2;
 		this.myID = in[0];
+		this.myName = in[i++];
 		this.myDensity = Double.parseDouble(in[i++]);
 		this.myGravity = Double.parseDouble(in[i++]);
 		this.myLuminosity = Double.parseDouble(in[i++]);
@@ -192,6 +198,7 @@ public class Star implements AstroObject {
 	public String saveString() {
 		String out = "";
 		out += this.myID + "\n";
+		out += this.myName + "\n";
 		out += this.getClassIndex() + "\n";
 		out += this.getMyDensity() + "\n";
 		out += this.getMyGravity() + "\n";
@@ -203,9 +210,11 @@ public class Star implements AstroObject {
 		return out;
 	}
 
+	public static final int CLASSINDEX = 934201;
+	
 	@Override
 	public int getClassIndex() {
-		return 934201;
+		return CLASSINDEX;
 	}
 
 	String myID;

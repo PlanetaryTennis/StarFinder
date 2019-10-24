@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import astronomy.Star;
+import astronomy.SolSystem;
 import astronomy.old.Region;
 import astronomy.old.Sector;
-import astronomy.old.SolSystem;
 import astronomy.old.Zone;
+import astronomy.stellar.Star;
 import map.MapView;
 
 public class NewSystem implements ActionListener {

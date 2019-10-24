@@ -3,10 +3,12 @@ package astronomy.old;
 import java.io.Serializable;
 import java.util.Random;
 
+import astronomy.SolSystem;
+import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
 
-public class Zone implements Serializable{
+public class Zone implements Serializable, Savable{
 	/**
 	 * 
 	 */

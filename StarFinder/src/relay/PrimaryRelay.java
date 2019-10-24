@@ -5,8 +5,8 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
-import astronomy.old.Planet;
-import astronomy.old.SolSystem;
+import astronomy.SolSystem;
+import astronomy.planetary.Planet;
 import map.Sprite;
 
 public class PrimaryRelay implements Relay {

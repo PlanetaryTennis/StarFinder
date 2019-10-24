@@ -3,7 +3,7 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.old.Planet;
+import astronomy.planetary.Planet;
 import map.MapView;
 
 public class SurfaceView implements ActionListener{
