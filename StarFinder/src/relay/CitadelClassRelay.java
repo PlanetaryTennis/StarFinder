@@ -1,7 +1,7 @@
 package relay;
 
 import astronomy.LifeBearing;
-import astronomy.Station;
+import astronomy.old.Station;
 
 public class CitadelClassRelay extends Station implements Relay, LifeBearing {
 

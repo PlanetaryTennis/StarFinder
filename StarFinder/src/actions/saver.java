@@ -3,8 +3,8 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.Galaxy;
-import astronomy.Sector;
+import astronomy.old.Galaxy;
+import astronomy.old.Sector;
 import map.MapView;
 
 public class saver implements ActionListener {

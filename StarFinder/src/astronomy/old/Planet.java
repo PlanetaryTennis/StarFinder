@@ -1,4 +1,4 @@
-package astronomy;
+package astronomy.old;
 
 import units.sci;
 import units.siacceleration;
@@ -13,6 +13,9 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
+import astronomy.AstroObject;
+import astronomy.OrbitObject;
+import astronomy.Star;
 import planetary.Colony;
 
 public abstract class Planet implements AstroObject {

@@ -1,41 +1,46 @@
-package astronomy;
+package astronomy.old;
 
 import java.awt.Toolkit;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+import astronomy.AstroObject;
+import astronomy.Star;
 import map.Sprite;
 import map.color;
-import units.SI;
 import units.sci;
+import units.sibrightness;
 import units.sidensity;
-import units.sidistance;
-import units.sitemperature;
 import units.sivolume;
 
-public class Neutron extends Star {
-	
-	public Neutron(double m, SolSystem s) {
+public class WhiteDwarf extends Star {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8293543740786396101L;
+
+	public WhiteDwarf(double m, SolSystem s) {
 		super(m,s);
-		myRadius = new sidistance(20,SI.KILO).scale(Math.pow(m,1));
-		myTemp = new sitemperature(600,SI.KILO);
+		myRadius = AstroObject.EARTHRADI.scale(Math.pow(m,1));
+		myTemp = AstroObject.CORETEMP.scale(Math.pow(m, 1));
 		myVolume = new sivolume(
 				Math.pow(sci.convertToDouble(myRadius.getValue()),3)*
 				(0.75*Math.PI)*1000);
 		myDensity = new sidensity(
 				sci.convertToDouble(myMass.getValue())/
 				sci.convertToDouble(myVolume.getValue()));
-		myColor = color.WHITE;
+		myColor = color.ORANGE;
 	}
 	
 	static Random ran = new Random(System.currentTimeMillis());
 	
 	public static Star randomStar(SolSystem s) {
-		return new Neutron(ran.nextDouble()*50+1.4,s);
+		return new BrownDwarf(ran.nextDouble()*8+0.5,s);
 	}
 
 	public ImageIcon getIcon() {
-		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Neutron Star.png"));
+		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"White Dwarf.png"));
 	}
 }

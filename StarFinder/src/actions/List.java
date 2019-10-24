@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import astronomy.Galaxy;
+import astronomy.old.Galaxy;
 import engine.EditMenu;
 
 public class List implements ActionListener {

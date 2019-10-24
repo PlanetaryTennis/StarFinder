@@ -3,7 +3,7 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.Moon;
+import astronomy.old.Moon;
 import map.MapView;
 
 public class MoonView implements ActionListener {

@@ -2,8 +2,8 @@ package planetary;
 
 import java.io.Serializable;
 
-import astronomy.Habitable;
-import astronomy.HabitableMoon;
+import astronomy.old.Habitable;
+import astronomy.old.HabitableMoon;
 
 public class Ecosystem  implements Serializable{
 	

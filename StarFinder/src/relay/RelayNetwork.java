@@ -3,7 +3,7 @@ package relay;
 import java.io.Serializable;
 import java.util.Random;
 
-import astronomy.Galaxy;
+import astronomy.old.Galaxy;
 import utilities.ExtendedMathmatics;
 
 public class RelayNetwork implements Serializable{

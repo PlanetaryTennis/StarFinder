@@ -1,9 +1,12 @@
-package astronomy;
+package astronomy.old;
 
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 
+import astronomy.AstroObject;
+import astronomy.OrbitObject;
+import astronomy.Star;
 import map.Sprite;
 import planetary.Colony;
 import units.sci;

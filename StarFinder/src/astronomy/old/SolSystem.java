@@ -1,8 +1,10 @@
-package astronomy;
+package astronomy.old;
 
 import java.io.Serializable;
 import java.util.Random;
 
+import astronomy.AstroObject;
+import astronomy.Star;
 import map.SettingList;
 import units.sidistance;
 import utilities.ARRAY;

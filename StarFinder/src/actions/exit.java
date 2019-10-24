@@ -1,7 +1,7 @@
 package actions;
 
-import astronomy.Galaxy;
-import astronomy.Sector;
+import astronomy.old.Galaxy;
+import astronomy.old.Sector;
 import map.MapView;
 
 /**

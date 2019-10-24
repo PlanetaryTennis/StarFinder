@@ -1,4 +1,4 @@
-package astronomy;
+package astronomy.old;
 
 import java.io.Serializable;
 import java.util.Random;

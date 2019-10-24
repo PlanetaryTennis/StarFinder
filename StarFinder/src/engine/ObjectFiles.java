@@ -13,27 +13,21 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import astronomy.AstroObject;
-import astronomy.BlackHole;
-import astronomy.Habitable;
-import astronomy.HabitableMoon;
-import astronomy.Jovian;
-import astronomy.Moon;
-import astronomy.Planet;
-import astronomy.Sector;
-import astronomy.SolSystem;
 import astronomy.Star;
-import astronomy.Terrestrial;
+import astronomy.old.BlackHole;
+import astronomy.old.Habitable;
+import astronomy.old.HabitableMoon;
+import astronomy.old.Jovian;
+import astronomy.old.Moon;
+import astronomy.old.Planet;
+import astronomy.old.Sector;
+import astronomy.old.SolSystem;
+import astronomy.old.Terrestrial;
 import map.MapView;
 import map.SettingList;
 import planetary.Colony;
 import planetary.Condition;
 import relay.RelayNetwork;
-import units.SI;
-import units.sci;
-import units.sidensity;
-import units.sidistance;
-import units.sitemperature;
-import units.sitime;
 import utilities.ARRAY;
 import utilities.ExtendedMathmatics;
 
@@ -42,7 +36,21 @@ public class ObjectFiles {
 	public static final Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) {
-		GameLauncher l = new GameLauncher();
+		Scanner in = new Scanner(System.in);
+		Star s = new Star(10,null);
+		System.out.print(s.saveString());
+		s.loadString("d70a7ea2-40c6-4c03-9bde-0ad7f917e167\n"+
+"934201\n"+
+"2.509182465996696E9\n"+
+"1.9086964485981308E15\n"+
+"2.25E21\n"+
+"1.989E30\n"+
+"695500.0\n"+
+"5778.0\n"+
+"7.926884660458244E20");
+		System.out.println();
+		System.out.print(s.saveString());
+//		GameLauncher l = new GameLauncher();
 //		l.getClass();
 //		Scanner sc = new Scanner(System.in);
 //		while(true) {

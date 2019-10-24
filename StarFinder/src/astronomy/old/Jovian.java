@@ -1,4 +1,4 @@
-package astronomy;
+package astronomy.old;
 
 import java.awt.Toolkit;
 import java.util.Random;
@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import javax.swing.ImageIcon;
 
+import astronomy.AstroObject;
+import astronomy.Star;
 import engine.ObjectFiles;
 import map.Sprite;
 import map.color;

@@ -3,7 +3,7 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.SolSystem;
+import astronomy.old.SolSystem;
 import map.MapView;
 
 public class SystemPanel implements ActionListener {

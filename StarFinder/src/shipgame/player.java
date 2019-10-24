@@ -1,7 +1,7 @@
 package shipgame;
 
 import astronomy.AstroObject;
-import astronomy.SolSystem;
+import astronomy.old.SolSystem;
 
 public class player {
 	private AstroObject myOrbiting;

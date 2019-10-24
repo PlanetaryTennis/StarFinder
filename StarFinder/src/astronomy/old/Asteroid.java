@@ -1,9 +1,11 @@
-package astronomy;
+package astronomy.old;
 
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 
+import astronomy.OrbitObject;
+import astronomy.Star;
 import units.*;
 import utilities.ExtendedMathmatics;
 

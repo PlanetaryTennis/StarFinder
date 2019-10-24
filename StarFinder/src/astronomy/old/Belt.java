@@ -1,10 +1,11 @@
-package astronomy;
+package astronomy.old;
 
 import java.awt.Toolkit;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+import astronomy.Star;
 import map.Sprite;
 import units.sidistance;
 import utilities.ExtendedMathmatics;

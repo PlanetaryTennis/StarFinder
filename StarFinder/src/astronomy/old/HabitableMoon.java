@@ -1,5 +1,8 @@
-package astronomy;
+package astronomy.old;
 
+import astronomy.LifeBearing;
+import astronomy.OrbitObject;
+import astronomy.Star;
 import planetary.Condition;
 import units.sidensity;
 import units.sidistance;

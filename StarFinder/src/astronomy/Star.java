@@ -2,25 +2,31 @@ package astronomy;
 
 import java.awt.Toolkit;
 import java.util.Random;
+import java.util.UUID;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import astronomy.old.SolSystem;
 import map.Sprite;
 import map.color;
-import units.*;
+import utilities.StringFundementals;
 
 public class Star implements AstroObject {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3744832937120819479L;
+
 	public static int total = 0;
 	
-	protected simass myMass;
-	protected sidistance myRadius;
-	protected sidensity myDensity;
-	protected sitemperature myTemp;
-	protected sivolume myVolume;
-	protected sibrightness myLuminosity;
-	protected siacceleration myGravity;
+	protected double myMass;
+	protected double myRadius;
+	protected double myDensity;
+	protected double myTemp;
+	protected double myVolume;
+	protected double myLuminosity;
+	protected double myGravity;
 	
 	protected color myColor;
 	
@@ -29,22 +35,16 @@ public class Star implements AstroObject {
 	
 	public Star(double m,SolSystem s){
 		mySystem = s;
-		myMass = AstroObject.SOL.scale(m);
-		myLuminosity = AstroObject.SUNLIGHT.scale(Math.pow(m,3));
-		myRadius = AstroObject.SOLRADI.scale(Math.pow(m, 0.74));
-		myTemp = AstroObject.SOLTEMP.scale(Math.pow(m, 0.505));
-		myGravity = new siacceleration(
-				sci.convertToDouble(AstroObject.G)*
-				sci.convertToDouble(myMass.getValue())/
-				sci.convertToDouble(myRadius.getValue()));
-		myVolume = new sivolume(
-				Math.pow(sci.convertToDouble(myRadius.getValue()),3)*
-				(0.75*Math.PI)*1000);
-		myDensity = new sidensity(
-				sci.convertToDouble(myMass.getValue())/
-				sci.convertToDouble(myVolume.getValue()));
-		myColor = StellarClass(sci.convertToDouble(myTemp.getValue()));
+		myMass = SOL*m;
+		myLuminosity = SUNLIGHT*(Math.pow(m,3));
+		myRadius = SOLRADI*(Math.pow(m, 0.74));
+		myTemp = SOLTEMP*(Math.pow(m, 0.505));
+		myGravity = AstroObject.G*myMass/myRadius;
+		myVolume = Math.pow(myRadius,3)*(0.75*Math.PI)*1000;
+		myDensity = myMass/myVolume;
+		myColor = StellarClass(myTemp);
 		++total;
+		myID = UUID.randomUUID().toString();
 	}
 
 	private color StellarClass(Double t) {
@@ -63,29 +63,29 @@ public class Star implements AstroObject {
 		}
 	}
 
-	public simass getMyMass() {
+	public double getMyMass() {
 		return myMass;
 	}
-	public sidistance getMyRadius() {
+	public double getMyRadius() {
 		return myRadius;
 	}
 
-	public sidensity getMyDensity() {
+	public double getMyDensity() {
 		return myDensity;
 	}
 
-	public sitemperature getMyTemp() {
+	public double getMyTemp() {
 		return myTemp;
 	}
 
-	public sivolume getMyVolume() {
+	public double getMyVolume() {
 		return myVolume;
 	}
 
-	public sibrightness getMyLuminosity() {
+	public double getMyLuminosity() {
 		return myLuminosity;
 	}
-	public siacceleration getMyGravity() {
+	public double getMyGravity() {
 		return myGravity;
 	}
 
@@ -126,12 +126,12 @@ public class Star implements AstroObject {
 	public static Star randomStar(SolSystem s, int[] suns) {
 		Random ran = new Random();
 		int die = ran.nextInt(99)+1;
-		if(die < 75) {
-			return new Star(sci.round(ran.nextDouble()+0.01, 3),s);
-		}else if(die < 90) {
-			return new Star(sci.round(ran.nextDouble()*3+1, 3),s);
+		if(die < suns[0]) {
+			return new Star(ran.nextDouble()+0.01,s);
+		}else if(die < suns[1]) {
+			return new Star(ran.nextDouble()*3+1,s);
 		}else {
-			return new Star(sci.round((ran.nextDouble()*3+1)*4, 3),s);
+			return new Star((ran.nextDouble()*3+1)*4,s);
 		}
 	}
 
@@ -139,26 +139,24 @@ public class Star implements AstroObject {
 	static double outerhab = 1.35;
 	static double frost = 4.85;
 	
-	public sidistance[] getHabitablezone() {
-		sidistance[] out = new sidistance[2];
-		double lum = sci.convertToDouble(myLuminosity.getValue());
-		double solar = sci.convertToDouble(AstroObject.SUNLIGHT.getValue());
+	public double[] getHabitablezone() {
+		double[] out = new double[2];
+		double lum = myLuminosity;
+		double solar = AstroObject.SUNLIGHT;
 		double factor = Math.sqrt(lum/solar);
-		out[0] = new sidistance(innerhab*factor*sci.convertToDouble(AstroObject.AU.getValue()));
-		out[1] = new sidistance(outerhab*factor*sci.convertToDouble(AstroObject.AU.getValue()));
+		out[0] = innerhab*factor*AstroObject.AU;
+		out[1] = outerhab*factor*AstroObject.AU;
 		return out;
 	}
 
-	public sidistance getFrostLine() {
-		double lum = sci.convertToDouble(myLuminosity.getValue());
-		double solar = sci.convertToDouble(AstroObject.SUNLIGHT.getValue());
+	public double getFrostLine() {
+		double lum = myLuminosity;
+		double solar = AstroObject.SUNLIGHT;
 		double factor = Math.sqrt(lum/solar);
-		return new sidistance(frost*factor*sci.convertToDouble(AstroObject.AU.getValue()));
+		return frost*factor*AstroObject.AU;
 	}
 
 	public ImageIcon getIcon() {
-		ImageIcon Cody = new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Yellow Star.png"));
-		double scale = (getMyRadius().compair(SOLRADI)+0.1)*4;
 		switch(getMyColor()) {
 		case BLUE:
 			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Blue Star.png"));
@@ -177,25 +175,43 @@ public class Star implements AstroObject {
 
 	@Override
 	public void loadString(String load) {
-		// TODO Auto-generated method stub
-		
+		String [] in = StringFundementals.breakByLine(load);
+		int i = 2;
+		this.myID = in[0];
+		this.myDensity = Double.parseDouble(in[i++]);
+		this.myGravity = Double.parseDouble(in[i++]);
+		this.myLuminosity = Double.parseDouble(in[i++]);
+		this.myMass = Double.parseDouble(in[i++]);
+		this.myRadius = Double.parseDouble(in[i++]);
+		this.myTemp = Double.parseDouble(in[i++]);
+		this.myVolume = Double.parseDouble(in[i++]);
+		myColor = StellarClass(myTemp);		
 	}
 
 	@Override
 	public String saveString() {
-		// TODO Auto-generated method stub
-		return null;
+		String out = "";
+		out += this.myID + "\n";
+		out += this.getClassIndex() + "\n";
+		out += this.getMyDensity() + "\n";
+		out += this.getMyGravity() + "\n";
+		out += this.getMyLuminosity() + "\n";
+		out += this.getMyMass() + "\n";
+		out += this.getMyRadius() + "\n";
+		out += this.getMyTemp() + "\n";
+		out += this.getMyVolume() + "\n";
+		return out;
 	}
 
 	@Override
 	public int getClassIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 934201;
 	}
 
+	String myID;
+	
 	@Override
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return myID;
 	}
 }

@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Random;
 
 import astronomy.AstroObject;
-import astronomy.Habitable;
-import astronomy.HabitableMoon;
-import astronomy.Terrestrial;
+import astronomy.old.Habitable;
+import astronomy.old.HabitableMoon;
+import astronomy.old.Terrestrial;
 import units.sci;
 import units.siacceleration;
 import units.sidensity;

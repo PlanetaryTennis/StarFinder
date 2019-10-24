@@ -1,4 +1,4 @@
-package astronomy;
+package astronomy.old;
 
 import java.awt.Toolkit;
 import java.util.Random;
@@ -6,7 +6,8 @@ import java.util.UUID;
 
 import javax.swing.ImageIcon;
 
-
+import astronomy.AstroObject;
+import astronomy.Star;
 import map.Sprite;
 import planetary.Colony;
 import units.SI;
@@ -44,7 +45,7 @@ public class Terrestrial extends Planet {
 		}if(myTemps[5].greaterOrEqual(boil)||myAtmosphere.lessOrEqual(BAR.scale(0.25))) {
 			this.myWater = 0.0f;
 		}
-		myID = UUID.randomUUID().toString();;
+		myID = UUID.randomUUID().toString();
 	}
 	
 	public Terrestrial(Moon[] myMoons, sidensity myAtmosphere, sidistance myRadius,

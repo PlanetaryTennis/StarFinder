@@ -3,7 +3,7 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.Planet;
+import astronomy.old.Planet;
 import map.MapView;
 
 public class PlanetView implements ActionListener {

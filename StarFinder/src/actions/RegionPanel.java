@@ -3,7 +3,7 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.Region;
+import astronomy.old.Region;
 import map.MapView;
 
 public class RegionPanel implements ActionListener {
