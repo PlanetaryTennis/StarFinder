@@ -2,72 +2,36 @@ package astronomy.old;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.UUID;
+import java.util.Vector;
 
+import astronomy.Zone;
+import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
 
-public class Region implements Serializable {
+public class Region implements Serializable, Savable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Zone [] myZones;
+	private Vector<Zone> myZones;
 	private Sector mySector;
 	private String Name;
-
-	public int Stars;
-	public int Terrestrials;
-	public int Habitables;
-	public int Jovians;
-	public int Belts;
-	public int Moons;
-	public int Asteroids;
-	public int HabMoons;
 	
-	public void count() {
-		Stars = 0;
-		Terrestrials = 0;
-		Habitables = 0;
-		Jovians = 0;
-		Belts = 0;
-		Moons = 0;
-		Asteroids = 0;
-		HabMoons = 0;
-		
-		for(int i = 0;i < myZones.length;i++) {
-			myZones[i].count();
-			
-			Stars += myZones[i].Stars;
-			
-			Terrestrials += myZones[i].Terrestrials;
-			Habitables += myZones[i].Habitables;
-			Jovians += myZones[i].Jovians;
-			Belts += myZones[i].Belts;
-
-			Moons += myZones[i].Moons;
-			Asteroids += myZones[i].Asteroids;
-			HabMoons += myZones[i].HabMoons;
-		}
+	public Region(String load) {
+		this.loadString(load);
 	}
 	
 	public Region(String Name,Sector sector){
 		this.Name = Name;
 		this.mySector = sector;
+		myZones = new Vector<Zone>();
+		myID = UUID.randomUUID().toString();
 	}
 	
 	public void Add(Zone zone) {
-		if(myZones == null) {
-			myZones = new Zone[1];
-			myZones[0] = zone;
-			return;
-		}
-		Zone[] temp = new Zone[myZones.length+1];
-		for(int i = 0;i < myZones.length;i++) {
-			temp[i] = myZones[i];
-		}
-		temp[myZones.length] = zone;
-		zone.setMyRegion(this);
-		myZones = temp;
+		myZones.add(zone);
 	}
 
 	public Sector getMySector() {
@@ -86,7 +50,7 @@ public class Region implements Serializable {
 		Name = name;
 	}
 
-	public Zone[] getMyZones() {
+	public Vector<Zone> getMyZones() {
 		return myZones;
 	}
 
@@ -159,5 +123,31 @@ public class Region implements Serializable {
 			s+=vowels.get();
 		}
 		return s;
+	}
+
+	@Override
+	public void loadString(String load) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String saveString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public static final int CLASSINDEX = 937189;
+
+	@Override
+	public int getClassIndex() {
+		return CLASSINDEX;
+	}
+	
+	String myID;
+
+	@Override
+	public String getID() {
+		return myID;
 	}
 }

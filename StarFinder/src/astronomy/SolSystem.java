@@ -5,7 +5,6 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
-import astronomy.old.Zone;
 import astronomy.planetary.Belt;
 import astronomy.planetary.Jovian;
 import astronomy.planetary.Planet;
@@ -338,7 +337,7 @@ public class SolSystem implements Serializable, Savable{
 	String StarID;
 	String ZoneID;
 	int PlanetNumber;
-	Vector<String> PlanetID;
+	Vector<String> PlanetID = new Vector<String>();
 	
 	@Override
 	public String saveString() {

@@ -75,7 +75,7 @@ public class Belt extends Planet{
 	}
 	
 	protected int MoonNumber;
-	protected Vector<String> MoonIDs;
+	protected Vector<String> MoonIDs = new Vector<String>();
 
 	@Override
 	public String saveString() {

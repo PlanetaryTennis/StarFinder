@@ -1,73 +1,38 @@
-package astronomy.old;
+package astronomy;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.UUID;
+import java.util.Vector;
 
-import astronomy.SolSystem;
+import astronomy.old.Region;
 import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
+import utilities.StringFundementals;
 
 public class Zone implements Serializable, Savable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7375343829370278946L;
-	private SolSystem [] mySystems;
+	private Vector<SolSystem> mySystems;
 	private String myName;
 	private Region myRegion;
 	
-	public int Stars;
-	public int Terrestrials;
-	public int Habitables;
-	public int Jovians;
-	public int Belts;
-	public int Moons;
-	public int Asteroids;
-	public int HabMoons;
-	
-	public void count() {
-		Stars = 0;
-		Terrestrials = 0;
-		Habitables = 0;
-		Jovians = 0;
-		Belts = 0;
-		Moons = 0;
-		Asteroids = 0;
-		HabMoons = 0;
-		
-		for(int i = 0;i < mySystems.length;i++) {
-			mySystems[i].count();
-			Stars += mySystems[i].Stars;
-			
-			Terrestrials += mySystems[i].Terrestrials;
-			Habitables += mySystems[i].Habitables;
-			Jovians += mySystems[i].Jovians;
-			Belts += mySystems[i].Belts;
-
-			Moons += mySystems[i].Moons;
-			Asteroids += mySystems[i].Asteroids;
-			HabMoons += mySystems[i].HabMoons;
-		}
+	public Zone(String load) {
+		this.loadString(load);
 	}
 	
 	public Zone(String name,Region r){
 		myName = name;
 		myRegion = r;
+		mySystems = new Vector<SolSystem>();
+		myID = UUID.randomUUID().toString();
 	}
 	
 	public void Add(SolSystem system) {
-		if(mySystems == null) {
-			mySystems = new SolSystem[1];
-			mySystems[0] = system;
-			return;
-		}
-		SolSystem [] temp = new SolSystem[mySystems.length+1];
-		for(int i = 0;i < mySystems.length;i++) {
-			temp[i] = mySystems[i];
-		}
-		temp[mySystems.length] = system;
-		mySystems = temp;
+		mySystems.add(system);
 	}
 	
 	public String getMyName() {
@@ -82,7 +47,7 @@ public class Zone implements Serializable, Savable{
 	public void setMyRegion(Region myRegion) {
 		this.myRegion = myRegion;
 	}
-	public SolSystem[] getMySystems() {
+	public Vector<SolSystem> getMySystems() {
 		return mySystems;
 	}
 	
@@ -155,5 +120,50 @@ public class Zone implements Serializable, Savable{
 			r.Add(z);
 		}
 		return r;
+	}
+
+	@Override
+	public void loadString(String load) {
+		String[] in = StringFundementals.breakByLine(load);
+		myID = in[0];
+		int k = 2;
+		myName = in[k++];
+		RegionID = in[k++];
+		ZoneNumber = Integer.parseInt(in[k++]);
+		for(int i = 0;i < ZoneNumber;i++) {
+			ZoneIDs.add(in[k++]);
+		}
+	}
+	
+	String RegionID;
+	int ZoneNumber;
+	Vector<String> ZoneIDs;
+
+	@Override
+	public String saveString() {
+		String out = "";
+		out += myID + "\n";
+		out += getClassIndex() + "\n";
+		out += this.getMyName() + "\n";
+		out += this.getMyRegion().getID() + "\n";
+		out += this.getMySystems().size() + "\n";
+		for(int i = 0;i < this.getMySystems().size();i++){
+			out += this.getMySystems().get(i).getID() + "\n";
+		}
+		return out;
+	}
+	
+	public static final int CLASSINDEX = 937173;
+
+	@Override
+	public int getClassIndex() {
+		return CLASSINDEX;
+	}
+	
+	String myID;
+
+	@Override
+	public String getID() {
+		return myID;
 	}
 }

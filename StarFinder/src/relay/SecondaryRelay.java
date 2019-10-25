@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
 import astronomy.SolSystem;
+import astronomy.Zone;
 import astronomy.old.Region;
-import astronomy.old.Zone;
 import astronomy.planetary.Planet;
 import map.Sprite;
 

@@ -145,9 +145,9 @@ public class Jovian extends Planet {
 
 	protected String ColonyID;
 	protected int MoonNumber;
-	protected Vector<String> MoonIDs;
+	protected Vector<String> MoonIDs = new Vector<String>();
 	protected int SatilightNumber;
-	protected Vector<String> SatilightIDs;
+	protected Vector<String> SatilightIDs = new Vector<String>();
 	
 	
 	@Override
