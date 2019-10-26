@@ -4,7 +4,7 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.old.Galaxy;
+import astronomy.Galaxy;
 import engine.EditMenu;
 import relay.RelayNetwork;
 

@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenu;
 
+import astronomy.Region;
+import astronomy.Sector;
 import astronomy.Zone;
-import astronomy.old.Region;
-import astronomy.old.Sector;
 import map.MapView;
 
 public class NewZone implements ActionListener {

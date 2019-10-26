@@ -47,12 +47,12 @@ import actions.exit;
 import actions.saver;
 import actions.viewWorldData;
 import astronomy.AstroObject;
+import astronomy.Galaxy;
 import astronomy.OrbitObject;
+import astronomy.Region;
+import astronomy.Sector;
 import astronomy.SolSystem;
 import astronomy.Zone;
-import astronomy.old.Galaxy;
-import astronomy.old.Region;
-import astronomy.old.Sector;
 import astronomy.planetary.Asteroid;
 import astronomy.planetary.Belt;
 import astronomy.planetary.Habitable;
@@ -70,9 +70,6 @@ import planetary.SepcialDevelopments;
 import relay.PrimaryRelay;
 import relay.RelayNetwork;
 import relay.SecondaryRelay;
-import units.SI;
-import units.sci;
-import units.sitime;
 
 public class MapView extends JFrame{
 

@@ -5,9 +5,9 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
+import astronomy.Region;
 import astronomy.SolSystem;
 import astronomy.Zone;
-import astronomy.old.Region;
 import astronomy.planetary.Planet;
 import map.Sprite;
 

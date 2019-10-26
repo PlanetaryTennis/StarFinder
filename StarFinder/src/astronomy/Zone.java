@@ -5,7 +5,6 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
-import astronomy.old.Region;
 import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;

@@ -1,14 +1,14 @@
-package astronomy.old;
+package astronomy;
 
 import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
-import astronomy.Zone;
 import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
+import utilities.StringFundementals;
 
 public class Region implements Serializable, Savable {
 	/**
@@ -125,19 +125,39 @@ public class Region implements Serializable, Savable {
 		return s;
 	}
 
+
 	@Override
 	public void loadString(String load) {
-		// TODO Auto-generated method stub
-		
+		String[] in = StringFundementals.breakByLine(load);
+		myID = in[0];
+		int k = 2;
+		Name = in[k++];
+		SectorID = in[k++];
+		ZoneNumber = Integer.parseInt(in[k++]);
+		for(int i = 0;i < ZoneNumber;i++) {
+			ZoneIDs.add(in[k++]);
+		}
 	}
+	
+	String SectorID;
+	int ZoneNumber;
+	Vector<String> ZoneIDs;
 
 	@Override
 	public String saveString() {
-		// TODO Auto-generated method stub
-		return null;
+		String out = "";
+		out += myID + "\n";
+		out += getClassIndex() + "\n";
+		out += this.getName() + "\n";
+		out += this.getMySector().getID() + "\n";
+		out += this.getMyZones().size() + "\n";
+		for(int i = 0;i < this.getMyZones().size();i++){
+			out += this.getMyZones().get(i).getID() + "\n";
+		}
+		return out;
 	}
 	
-	public static final int CLASSINDEX = 937189;
+	public static final int CLASSINDEX = 937120;
 
 	@Override
 	public int getClassIndex() {

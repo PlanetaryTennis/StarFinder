@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 import actions.List;
 import actions.RelayGeneration;
-import astronomy.old.Galaxy;
+import astronomy.Galaxy;
 import map.MapView;
 
 public class EditMenu extends JFrame{

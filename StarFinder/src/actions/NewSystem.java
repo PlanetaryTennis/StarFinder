@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import astronomy.Region;
+import astronomy.Sector;
 import astronomy.SolSystem;
 import astronomy.Zone;
-import astronomy.old.Region;
-import astronomy.old.Sector;
 import astronomy.stellar.Star;
 import map.MapView;
 

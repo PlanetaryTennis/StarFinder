@@ -8,7 +8,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-import astronomy.old.Galaxy;
+import astronomy.Galaxy;
 import engine.GameLauncher;
 import engine.ObjectFiles;
 import engine.SettingLauncher;

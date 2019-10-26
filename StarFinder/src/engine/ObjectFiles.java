@@ -11,7 +11,11 @@ import java.io.ObjectOutputStream;
 import java.util.Random;
 import java.util.Scanner;
 
+import astronomy.Galaxy;
+import astronomy.Region;
+import astronomy.Sector;
 import astronomy.SolSystem;
+import astronomy.Zone;
 import astronomy.planetary.Asteroid;
 import astronomy.planetary.Belt;
 import astronomy.planetary.Habitable;
@@ -129,6 +133,18 @@ public class ObjectFiles {
 	            	break;
 	            case SolSystem.CLASSINDEX:
 	            	obj = new SolSystem(read);
+	            	break;
+	            case Zone.CLASSINDEX:
+	            	obj = new Zone(read);
+	            	break;
+	            case Region.CLASSINDEX:
+	            	obj = new Region(read);
+	            	break;
+	            case Sector.CLASSINDEX:
+	            	obj = new Sector(read,0.0d);
+	            	break;
+	            case Galaxy.CLASSINDEX:
+	            	obj = new Galaxy(read);
 	            	break;
 	            }        
 	            return obj;

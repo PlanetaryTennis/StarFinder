@@ -6,6 +6,11 @@ import astronomy.OrbitObject;
 
 public class Station implements OrbitObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6974445769607232915L;
+
 	@Override
 	public String string() {
 		// TODO Auto-generated method stub

@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import actions.LauncherButton;
-import astronomy.old.Galaxy;
+import astronomy.Galaxy;
 import map.MapView;
 
 public class GameLauncher {
