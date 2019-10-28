@@ -34,7 +34,7 @@ public class Sector implements Serializable, Savable{
 	public Sector(String name){
 		myName = name;
 		myRegions = new Vector<Region>();
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".sector";
 	}
 	
 	public void Add(Region region) {
@@ -80,7 +80,7 @@ public class Sector implements Serializable, Savable{
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int k = 2;
@@ -90,6 +90,7 @@ public class Sector implements Serializable, Savable{
 		for(int i = 0;i < getRegionNumber();i++) {
 			getRegionIDs().add(in[k++]);
 		}
+		return k;
 	}
 	
 	String GalaxyID;

@@ -38,7 +38,7 @@ public class BlackHole extends Star {
 
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String [] in = StringFundementals.breakByLine(load);
 		int i = 2;
 		this.myID = in[0];
@@ -50,7 +50,8 @@ public class BlackHole extends Star {
 		this.myRadius = Double.parseDouble(in[i++]);
 		this.myTemp = Double.parseDouble(in[i++]);
 		this.myVolume = Double.parseDouble(in[i++]);
-		myColor = color.BLACK;		
+		myColor = color.BLACK;
+		return i;		
 	}
 
 	@Override

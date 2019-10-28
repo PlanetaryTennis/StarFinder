@@ -39,7 +39,7 @@ public class Condition  implements Serializable, Savable{
 		VarianceIndex = parseVar(world.getMyTemps()[2],world.getMyTemps()[5]);
 		AtmosphericIndex = parseAtmosphere(world.getMyAtmosphere());
 		WaterIndex = parseWater(world.getMyWater());
-		myID = UUID.randomUUID().toString();;
+		myID = UUID.randomUUID().toString()+".Surface";
 	}
 
 	public Condition(HabitableMoon world) {
@@ -50,7 +50,7 @@ public class Condition  implements Serializable, Savable{
 		VarianceIndex = parseVar(world.getMyTemps()[2],world.getMyTemps()[5]);
 		AtmosphericIndex = parseAtmosphere(world.getMyAtmosphere());
 		WaterIndex = parseWater(world.getMyWater());
-		myID = UUID.randomUUID().toString();;
+		myID = UUID.randomUUID().toString()+".Surface";
 	}
 
 	private int parseWater(double w) {
@@ -221,7 +221,7 @@ public class Condition  implements Serializable, Savable{
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int i = 2;
@@ -231,6 +231,7 @@ public class Condition  implements Serializable, Savable{
 		GravityIndex = Integer.parseInt(in[i++]);
 		AtmosphericIndex = Integer.parseInt(in[i++]);
 		AirIndex = Atmosphere.valueOf(in[i++]);
+		return i;
 	}
 
 	@Override
@@ -259,6 +260,6 @@ public class Condition  implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 }

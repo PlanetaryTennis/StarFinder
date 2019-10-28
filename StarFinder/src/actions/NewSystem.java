@@ -33,7 +33,7 @@ public class NewSystem implements ActionListener {
 		if(isRandom) {
 			r = SolSystem.makeRandom(myZone,myView.mySettings);
 		}else {
-			r = new SolSystem(null,SolSystem.randomName(), myZone);
+			r = new SolSystem(null,SolSystem.randomName());
 			r.setMyStar(Star.randomStar(r, null));
 		}
 		myMenu.add(MapView.populateSystemMenu(r, myView));

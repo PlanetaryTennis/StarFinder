@@ -19,7 +19,7 @@ public class Galaxy implements Serializable, Savable{
 	
 	public Galaxy(Vector<Sector> sectors) {
 		mySectors = sectors;
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".galaxy";
 	}
 	
 	public Galaxy(String load) {
@@ -51,7 +51,7 @@ public class Galaxy implements Serializable, Savable{
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int k = 2;
@@ -60,6 +60,7 @@ public class Galaxy implements Serializable, Savable{
 		for(int i = 0;i < getSectorNumber();i++) {
 			getSectorIDs().add(in[k++]);
 		}
+		return k;
 	}
 	
 	private int SectorNumber;
@@ -89,7 +90,7 @@ public class Galaxy implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public int getSectorNumber() {

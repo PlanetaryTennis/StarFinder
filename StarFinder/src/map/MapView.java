@@ -361,7 +361,6 @@ public class MapView extends JFrame{
 		Name.setText(solsystem.getMyName());
 		lastp = null;
 		lastss = solsystem;
-		lastz = solsystem.getMyZone();
 		lastr = lastz.getMyRegion();
 		lasts = lastr.getMySector();
 		myView.removeAll();
@@ -661,7 +660,7 @@ public class MapView extends JFrame{
 		Name.setText(o.getMyName());
 		this.lastp = o.getMyWorld();
 		this.lastss = o.getMySystem();
-		this.lastz = lastss.getMyZone();
+		this.lastz = o.getMyZone();
 		this.lastr = lastz.getMyRegion();
 		this.lasts = lastr.getMySector();
 		
@@ -688,7 +687,7 @@ public class MapView extends JFrame{
 		Name.setText(o.getMyName());
 		this.lastp = o.getMyWorld();
 		this.lastss = o.getMySystem();
-		this.lastz = lastss.getMyZone();
+		this.lastz = o.getMyZone();
 		this.lastr = lastz.getMyRegion();
 		this.lasts = lastr.getMySector();
 		

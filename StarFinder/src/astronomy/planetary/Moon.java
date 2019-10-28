@@ -162,7 +162,7 @@ public class Moon extends Terrestrial implements OrbitObject {
 	}
 	
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int i = 2;
@@ -202,6 +202,7 @@ public class Moon extends Terrestrial implements OrbitObject {
 		}
 		myMonth = Double.parseDouble(in[i++]);
 		myMoonOrbit = Double.parseDouble(in[i++]);
+		return i;
 	}
 	
 	
@@ -232,14 +233,20 @@ public class Moon extends Terrestrial implements OrbitObject {
 		out += getMyVolume() + "\n";
 		out += getMyWater() + "\n";
 		out += getMyYear() + "\n";
-		out += getMyColony().getID() + "\n";
+		out += "{\n";
+		out += getMyColony().saveString() + "\n";
+		out += "}\n";
 		out += getMyMoons().size() + "\n";
 		for(int i = 0;i < getMyMoons().size();i++) {
-			out += getMyMoons().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMyMoons().get(i).saveString() + "\n";
+			out += "}\n";
 		}
 		out += getMySatilights().size() + "\n";
 		for(int i = 0;i < getMySatilights().size();i++) {
-			out += getMySatilights().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMySatilights().get(i).saveString() + "\n";
+			out += "}\n";			
 		}
 		out += getMyMonth() + "\n";
 		out += getMyMoonOrbit() + "\n";

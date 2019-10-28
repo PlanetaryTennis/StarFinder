@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 
 import astronomy.SolSystem;
 import astronomy.stellar.Star;
+import map.SettingList;
 import utilities.ExtendedMathmatics;
 import utilities.StringFundementals;
 
@@ -25,7 +26,7 @@ public class Belt extends Planet{
 	
 	public Belt(Vector<Moon> myMoons,double myEccentricity, double myOrbit, Star star) {
 		super(myMoons, myEccentricity, myOrbit, star);
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".Planet";
 	}
 
 	@Override
@@ -35,14 +36,18 @@ public class Belt extends Planet{
 
 	public static Random ran = new Random(System.currentTimeMillis());
 	
-	public static Planet makeRandom(double orbit, Star star) {
+	public static Planet makeRandom(double orbit, Star star, SettingList sL) {
 		int m = ran.nextInt(30)+25;
 		double d = ExtendedMathmatics.log(ran.nextInt(499)+1, 1000)/8;
 		Vector<Moon> moons = new Vector<Moon>(m);
 		
 		for(int i = 0;i < m;i++) {
 			moons.add(Asteroid.makeRandom(d, orbit, star));
-			moons.get(i).setMyName(nameMoon(i));
+			if(sL.isName()) {
+				moons.get(i).setMyName(SolSystem.randomName());
+			}else {
+				moons.get(i).setMyName(nameMoon(i));				
+			}
 		}
 		
 		Belt b = new Belt(moons, d, orbit, star);
@@ -58,7 +63,7 @@ public class Belt extends Planet{
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int i = 2;
@@ -76,6 +81,7 @@ public class Belt extends Planet{
 		for(int k = 0;k < getSatilightNumber();k++) {
 			getSatilightIDs().add(in[i++]);
 		}
+		return i;
 	}
 	
 	private int MoonNumber;
@@ -96,11 +102,15 @@ public class Belt extends Planet{
 		out += myOuterOrbit + "\n";
 		out += getMyMoons().size() + "\n";
 		for(int i = 0;i < getMyMoons().size();i++) {
-			out += getMyMoons().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMyMoons().get(i).saveString() + "\n";
+			out += "}\n";
 		}
 		out += getMySatilights().size() + "\n";
 		for(int i = 0;i < getMySatilights().size();i++) {
-			out += getMySatilights().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMySatilights().get(i).saveString() + "\n";
+			out += "}\n";			
 		}
 		return out;
 	}
@@ -116,7 +126,7 @@ public class Belt extends Planet{
 	
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public int getMoonNumber() {

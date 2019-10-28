@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import astronomy.AstroObject;
 import astronomy.SolSystem;
 import astronomy.stellar.Star;
+import map.SettingList;
 import map.Sprite;
 import planetary.Colony;
 import utilities.ExtendedMathmatics;
@@ -45,7 +46,7 @@ public class Terrestrial extends Planet {
 		}if(myTemps[5]>=(boil)||myAtmosphere <= BAR*(0.25)) {
 			this.myWater = 0.0f;
 		}
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".Planet";
 	}
 
 	public static double[] tempitures(double GreenHouse, double Albido, double Orbit,
@@ -100,7 +101,7 @@ public class Terrestrial extends Planet {
 	public static final double boil = 373.15;
 	public static final Random random = new Random(System.nanoTime());
 	
-	public static Planet makeRandom(double orbit,Star star) {
+	public static Planet makeRandom(double orbit,Star star, SettingList sL) {
 		int moonnum = random.nextInt(4);
 		Vector<Moon> moons = new Vector<Moon>(moonnum);
 		
@@ -112,7 +113,11 @@ public class Terrestrial extends Planet {
 		
 		for(int i = 0;i < moonnum;i++) {
 			moons.add(Moon.makeRandom(orbit, yearcalculate(star,mass,orbit), mass, radius, scale, star));
-			moons.get(i).setMyName(nameMoon(i));
+			if(sL.isName()) {
+				moons.get(i).setMyName(SolSystem.randomName());
+			}else {
+				moons.get(i).setMyName(nameMoon(i));
+			}
 		}
 
 		
@@ -154,7 +159,11 @@ public class Terrestrial extends Planet {
 		Asteroid a;
 		for(int i = 0;i < y;i++) {
 			a = (Asteroid) Asteroid.makeRandom(p, scale, orbit, star);
-			a.setMyName(nameMoon(moonnum+i));
+			if(sL.isName()) {
+				a.setMyName(SolSystem.randomName());
+			}else {
+				a.setMyName(nameMoon(moonnum+i));
+			}
 			p.getMySatilights().add(a);
 		}
 		
@@ -210,7 +219,7 @@ public class Terrestrial extends Planet {
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int i = 2;
@@ -248,6 +257,7 @@ public class Terrestrial extends Planet {
 		for(int k = 0;k < getMoonNumber();k++) {
 			getSatilightIDs().add(in[i++]);
 		}
+		return i;
 	}
 
 	private String ColonyID;
@@ -284,14 +294,20 @@ public class Terrestrial extends Planet {
 		out += getMyVolume() + "\n";
 		out += getMyWater() + "\n";
 		out += getMyYear() + "\n";
-		out += getMyColony().getID() + "\n";
+		out += "{\n";
+		out += getMyColony().saveString() + "\n";
+		out += "}\n";
 		out += getMyMoons().size() + "\n";
 		for(int i = 0;i < getMyMoons().size();i++) {
-			out += getMyMoons().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMyMoons().get(i).saveString() + "\n";
+			out += "}\n";
 		}
 		out += getMySatilights().size() + "\n";
 		for(int i = 0;i < getMySatilights().size();i++) {
-			out += getMySatilights().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMySatilights().get(i).saveString() + "\n";
+			out += "}\n";			
 		}
 		return out;
 	}
@@ -306,7 +322,7 @@ public class Terrestrial extends Planet {
 	
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public String getColonyID() {

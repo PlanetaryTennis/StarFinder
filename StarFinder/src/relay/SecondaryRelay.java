@@ -97,7 +97,7 @@ public class SecondaryRelay implements Relay {
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		// TODO Auto-generated method stub
 		
 	}

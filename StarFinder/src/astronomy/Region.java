@@ -27,7 +27,7 @@ public class Region implements Serializable, Savable {
 		this.Name = Name;
 		this.mySector = sector;
 		myZones = new Vector<Zone>();
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".region";
 	}
 	
 	public void Add(Zone zone) {
@@ -127,7 +127,7 @@ public class Region implements Serializable, Savable {
 
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int k = 2;
@@ -137,6 +137,7 @@ public class Region implements Serializable, Savable {
 		for(int i = 0;i < getZoneNumber();i++) {
 			getZoneIDs().add(in[k++]);
 		}
+		return k;
 	}
 	
 	String SectorID;

@@ -41,13 +41,17 @@ public class ObjectFiles {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
+		String HOPE = "A. This is a test\n{\nsub block\n}\nShouldn't be sub.\n{\nAnother Sub\n{\nDeeper sub should be seperated.\n}\n}\nEnd of this nonsense.\n";
+		System.out.println(HOPE);
+		Vector<String> test = StringFundementals.unnestString('{', '}', HOPE);
+		System.out.println(test.toString());
 //		Star s = new Star(2,null);
 //		Planet p = Terrestrial.makeRandom(s.getFrostLine(), s);
 //		WriteSavabletoFile(p, "test");
 //		System.out.println();
 //		System.out.print(s.saveString());
-		GameLauncher l = new GameLauncher();
-		l.getClass();
+//		GameLauncher l = new GameLauncher();
+//		l.getClass();
 //		Scanner sc = new Scanner(System.in);
 //		while(true) {
 //			Star s = Star.randomStar(null, null);
@@ -65,129 +69,6 @@ public class ObjectFiles {
 	public static Savable MatrioskaLoad(String galaxy,String filepath){
 		Savable s = ReadSaveableFromFile(galaxy+"/"+filepath);
 		switch(s.getClassIndex()) {
-        case Star.CLASSINDEX:
-        	break;
-        case WhiteDwarf.CLASSINDEX:
-        	break;
-        case Neutron.CLASSINDEX:
-        	break;
-        case BrownDwarf.CLASSINDEX:
-        	break;
-        case BlackHole.CLASSINDEX:
-        	break;
-        case Terrestrial.CLASSINDEX:
-        	Terrestrial obj1 = (Terrestrial)s;
-        	obj1.setMyColony((Colony)MatrioskaLoad(galaxy,obj1.getColonyID()));
-        	int m1 = obj1.getMoonNumber();
-        	Vector<Moon> moons1 = new Vector<Moon>();
-        	for(int i = 0;i < m1;i++) {
-        		moons1.add((Moon)MatrioskaLoad(galaxy,obj1.getMoonIDs().get(i)));
-        	}
-        	obj1.setMyMoons(moons1);
-        	int a1 = obj1.getSatilightNumber();
-        	Vector<OrbitObject> sats1 = new Vector<OrbitObject>();
-        	for(int i = 0;i < a1;i++) {
-        		sats1.add((OrbitObject)MatrioskaLoad(galaxy, obj1.getSatilightIDs().get(i)));
-        	}
-        	obj1.setMySatilights(sats1);
-        	break;
-        case Moon.CLASSINDEX:
-        	Moon obj2 = (Moon)s;
-        	obj2.setMyColony((Colony)MatrioskaLoad(galaxy,obj2.getColonyID()));
-        	int m2 = obj2.getMoonNumber();
-        	Vector<Moon> moons2 = new Vector<Moon>();
-        	for(int i = 0;i < m2;i++) {
-        		moons2.add((Moon)MatrioskaLoad(galaxy,obj2.getMoonIDs().get(i)));
-        	}
-        	obj2.setMyMoons(moons2);
-        	int a2 = obj2.getSatilightNumber();  
-        	Vector<OrbitObject> sats2 = new Vector<OrbitObject>();
-        	for(int i = 0;i < a2;i++) {
-        		sats2.add((OrbitObject)MatrioskaLoad(galaxy, obj2.getSatilightIDs().get(i)));
-        	}
-        	obj2.setMySatilights(sats2);
-        	break;
-        case Jovian.CLASSINDEX:
-        	Jovian obj3 = (Jovian)s;
-        	obj3.setMyColony((Colony)MatrioskaLoad(galaxy,obj3.getColonyID()));
-        	int m3 = obj3.getMoonNumber();
-        	Vector<Moon> moons3 = new Vector<Moon>();
-        	for(int i = 0;i < m3;i++) {
-        		moons3.add((Moon)MatrioskaLoad(galaxy,obj3.getMoonIDs().get(i)));
-        	}
-        	obj3.setMyMoons(moons3);
-        	int a3 = obj3.getSatilightNumber();
-        	Vector<OrbitObject> sats3 = new Vector<OrbitObject>();
-        	for(int i = 0;i < a3;i++) {
-        		sats3.add((OrbitObject)MatrioskaLoad(galaxy, obj3.getSatilightIDs().get(i)));
-        	}
-        	obj3.setMySatilights(sats3);
-        	break;
-        case HabitableMoon.CLASSINDEX:
-        	HabitableMoon obj4 = (HabitableMoon)s;
-        	obj4.setMyColony((Colony)MatrioskaLoad(galaxy,obj4.getColonyID()));
-        	int m4 = obj4.getMoonNumber();
-        	Vector<Moon> moons4 = new Vector<Moon>();
-        	for(int i = 0;i < m4;i++) {
-        		moons4.add((Moon)MatrioskaLoad(galaxy,obj4.getMoonIDs().get(i)));
-        	}
-        	obj4.setMyMoons(moons4);
-        	int a4 = obj4.getSatilightNumber();
-        	Vector<OrbitObject> sats = new Vector<OrbitObject>();
-        	for(int i = 0;i < a4;i++) {
-        		sats.add((OrbitObject)MatrioskaLoad(galaxy, obj4.getSatilightIDs().get(i)));
-        	}
-        	obj4.setMySatilights(sats);
-        	obj4.setMyCondition((Condition)MatrioskaLoad(galaxy, obj4.getConditionID()));
-        	break;
-        case Habitable.CLASSINDEX:
-        	Habitable obj5 = (Habitable)s;
-        	obj5.setMyColony((Colony)MatrioskaLoad(galaxy,obj5.getColonyID()));
-        	int m5 = obj5.getMoonNumber();
-        	Vector<Moon> moons5 = new Vector<Moon>();
-        	for(int i = 0;i < m5;i++) {
-        		moons5.add((Moon)MatrioskaLoad(galaxy,obj5.getMoonIDs().get(i)));
-        	}
-        	obj5.setMyMoons(moons5);
-        	int a5 = obj5.getSatilightNumber();
-        	Vector<OrbitObject> sats5 = new Vector<OrbitObject>();
-        	for(int i = 0;i < a5;i++) {
-        		sats5.add((OrbitObject)MatrioskaLoad(galaxy, obj5.getSatilightIDs().get(i)));
-        	}
-        	obj5.setMySatilights(sats5);
-        	obj5.setMyCondition((Condition)MatrioskaLoad(galaxy, obj5.getConditionID()));
-        	break;
-        case Belt.CLASSINDEX:
-        	Belt obj6 = (Belt)s;
-        	int m6 = obj6.getMoonNumber();
-        	Vector<Moon> moons6 = new Vector<Moon>();
-        	for(int i = 0;i < m6;i++) {
-        		moons6.add((Moon)MatrioskaLoad(galaxy,obj6.getMoonIDs().get(i)));
-        	}
-        	obj6.setMyMoons(moons6);
-        	int a6 = obj6.getSatilightNumber();
-        	Vector<OrbitObject> sats6 = new Vector<OrbitObject>();
-        	for(int i = 0;i < a6;i++) {
-        		sats6.add((OrbitObject)MatrioskaLoad(galaxy, obj6.getSatilightIDs().get(i)));
-        	}
-        	obj6.setMySatilights(sats6);
-        	break;
-        case Asteroid.CLASSINDEX:
-        	Asteroid obj7 = (Asteroid)s;
-        	obj7.setMyColony((Colony)MatrioskaLoad(galaxy,obj7.getColonyID()));
-        	int m7 = obj7.getMoonNumber();
-        	Vector<Moon> moons7 = new Vector<Moon>();
-        	for(int i = 0;i < m7;i++) {
-        		moons7.add((Moon)MatrioskaLoad(galaxy,obj7.getMoonIDs().get(i)));
-        	}
-        	obj7.setMyMoons(moons7);
-        	int a7 = obj7.getSatilightNumber();  
-        	Vector<OrbitObject> sats7 = new Vector<OrbitObject>();
-        	for(int i = 0;i < a7;i++) {
-        		sats7.add((OrbitObject)MatrioskaLoad(galaxy, obj7.getSatilightIDs().get(i)));
-        	}
-        	obj7.setMySatilights(sats7);
-        	break;
         case SolSystem.CLASSINDEX:
         	SolSystem obj8 = (SolSystem)s;
         	obj8.setMyStar((Star)MatrioskaLoad(galaxy, obj8.getStarID()));
@@ -202,7 +83,6 @@ public class ObjectFiles {
         	int s1 = obj9.getSystemNumber();
         	for(int i = 0;i < s1;i++) {
         		obj9.Add((SolSystem)MatrioskaLoad(galaxy, obj9.getSystemIDs().get(i)));
-        		obj9.getMySystems().get(i).setMyZone(obj9);
         	}
         	break;
         case Region.CLASSINDEX:
@@ -231,12 +111,6 @@ public class ObjectFiles {
         	}
         	obj12.setMySectors(sects);
         	break;
-        case Colony.CLASSINDEX:
-        	Colony obj13 = (Colony)s;
-//        	obj13.setMyEcosystem((Ecosystem)MatrioskaLoad(galaxy, obj13.getEcosystemID()));
-        	break;
-        case Condition.CLASSINDEX:
-        	break;
         }     
 		return s;
 	}
@@ -244,84 +118,6 @@ public class ObjectFiles {
 	public static void MatrioskaSave(String galaxy,Savable save) {
 		WriteSavabletoFile(save, galaxy);
 		switch(save.getClassIndex()) {
-        case Terrestrial.CLASSINDEX:
-        	Terrestrial Ter = (Terrestrial)save;
-        	for(int i = 0;i < Ter.getMyMoons().size();i++) {
-        		MatrioskaSave(galaxy,Ter.getMyMoons().get(i));
-        	}
-        	for(int i = 0;i < Ter.getMySatilights().size();i++) {
-        		MatrioskaSave(galaxy, Ter.getMySatilights().get(i));
-        	}
-        	MatrioskaSave(galaxy, Ter.getMyColony());
-        	break;
-        case Moon.CLASSINDEX:
-        	Moon Moo = (Moon)save;
-        	for(int i = 0;i < Moo.getMyMoons().size();i++) {
-        		MatrioskaSave(galaxy,Moo.getMyMoons().get(i));
-        	}
-        	for(int i = 0;i < Moo.getMySatilights().size();i++) {
-        		MatrioskaSave(galaxy, Moo.getMySatilights().get(i));
-        	}
-        	MatrioskaSave(galaxy, Moo.getMyColony());
-        	break;
-        case Jovian.CLASSINDEX:
-        	Jovian Jov = (Jovian)save;
-        	for(int i = 0;i < Jov.getMyMoons().size();i++) {
-        		MatrioskaSave(galaxy,Jov.getMyMoons().get(i));
-        	}
-        	for(int i = 0;i < Jov.getMySatilights().size();i++) {
-        		MatrioskaSave(galaxy, Jov.getMySatilights().get(i));
-        	}
-        	MatrioskaSave(galaxy, Jov.getMyColony());
-        	break;
-        case HabitableMoon.CLASSINDEX:
-        	HabitableMoon HabMoo = (HabitableMoon)save;
-        	for(int i = 0;i < HabMoo.getMyMoons().size();i++) {
-        		MatrioskaSave(galaxy,HabMoo.getMyMoons().get(i));
-        	}
-        	for(int i = 0;i < HabMoo.getMySatilights().size();i++) {
-        		MatrioskaSave(galaxy, HabMoo.getMySatilights().get(i));
-        	}
-        	MatrioskaSave(galaxy, HabMoo.getMyColony());
-        	MatrioskaSave(galaxy, HabMoo.getMyCondition());
-        	break;
-        case Habitable.CLASSINDEX:
-        	Habitable Hab = (Habitable)save;
-        	for(int i = 0;i < Hab.getMyMoons().size();i++) {
-        		MatrioskaSave(galaxy,Hab.getMyMoons().get(i));
-        	}
-        	for(int i = 0;i < Hab.getMySatilights().size();i++) {
-        		MatrioskaSave(galaxy, Hab.getMySatilights().get(i));
-        	}
-        	MatrioskaSave(galaxy, Hab.getMyColony());
-        	MatrioskaSave(galaxy, Hab.getMyCondition());
-        	break;
-        case Belt.CLASSINDEX:
-        	Belt Bel = (Belt)save;
-        	for(int i = 0;i < Bel.getMyMoons().size();i++) {
-        		MatrioskaSave(galaxy,Bel.getMyMoons().get(i));
-        	}
-        	for(int i = 0;i < Bel.getMySatilights().size();i++) {
-        		MatrioskaSave(galaxy, Bel.getMySatilights().get(i));
-        	}
-        	break;
-        case Asteroid.CLASSINDEX:
-        	Asteroid Ast = (Asteroid)save;
-        	for(int i = 0;i < Ast.getMyMoons().size();i++) {
-        		MatrioskaSave(galaxy,Ast.getMyMoons().get(i));
-        	}
-        	for(int i = 0;i < Ast.getMySatilights().size();i++) {
-        		MatrioskaSave(galaxy, Ast.getMySatilights().get(i));
-        	}
-        	MatrioskaSave(galaxy, Ast.getMyColony());
-        	break;
-        case SolSystem.CLASSINDEX:
-        	SolSystem Sol = (SolSystem)save;
-        	MatrioskaSave(galaxy, Sol.getMyStar());
-        	for(int i = 0;i < Sol.getMyObjects().size();i++) {
-        		MatrioskaSave(galaxy, Sol.getMyObjects().get(i));
-        	}
-        	break;
         case Zone.CLASSINDEX:
         	Zone Zon = (Zone)save;
         	for(int i = 0;i < Zon.getMySystems().size();i++) {
@@ -345,8 +141,6 @@ public class ObjectFiles {
         	for(int i = 0;i < Gal.getMySectors().size();i++) {
         		MatrioskaSave(galaxy, Gal.getMySectors().get(i));
         	}
-        	break;
-        case Colony.CLASSINDEX:
         	break;
         }        
 	}

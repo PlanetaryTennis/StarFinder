@@ -49,7 +49,7 @@ public class Star implements AstroObject {
 		myDensity = myMass/myVolume;
 		myColor = StellarClass(myTemp);
 		++total;
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".Star";
 	}
 
 	private color StellarClass(Double t) {
@@ -179,7 +179,7 @@ public class Star implements AstroObject {
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String [] in = StringFundementals.breakByLine(load);
 		int i = 2;
 		this.myID = in[0];
@@ -191,7 +191,8 @@ public class Star implements AstroObject {
 		this.myRadius = Double.parseDouble(in[i++]);
 		this.myTemp = Double.parseDouble(in[i++]);
 		this.myVolume = Double.parseDouble(in[i++]);
-		myColor = StellarClass(myTemp);		
+		myColor = StellarClass(myTemp);
+		return i;		
 	}
 
 	@Override
@@ -221,10 +222,14 @@ public class Star implements AstroObject {
 	
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public void setMySystem(SolSystem solsystem) {
 		mySystem = solsystem;
+	}
+
+	public void setMyName(String name) {
+		myName = name;
 	}
 }

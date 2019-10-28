@@ -27,7 +27,7 @@ public class Zone implements Serializable, Savable{
 		myName = name;
 		myRegion = r;
 		mySystems = new Vector<SolSystem>();
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".zone";
 	}
 	
 	public void Add(SolSystem system) {
@@ -122,7 +122,7 @@ public class Zone implements Serializable, Savable{
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int k = 2;
@@ -132,6 +132,7 @@ public class Zone implements Serializable, Savable{
 		for(int i = 0;i < getSystemNumber();i++) {
 			getSystemIDs().add(in[k++]);
 		}
+		return k;
 	}
 	
 	String RegionID;

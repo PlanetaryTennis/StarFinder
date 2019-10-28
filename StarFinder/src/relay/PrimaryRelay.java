@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
 import astronomy.SolSystem;
+import astronomy.Zone;
 import astronomy.planetary.Planet;
 import map.Sprite;
 
@@ -73,7 +74,7 @@ public class PrimaryRelay implements Relay {
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -92,6 +93,11 @@ public class PrimaryRelay implements Relay {
 
 	@Override
 	public String getID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Zone getMyZone() {
 		// TODO Auto-generated method stub
 		return null;
 	}

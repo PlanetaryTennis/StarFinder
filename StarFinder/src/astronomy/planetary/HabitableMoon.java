@@ -37,7 +37,7 @@ public class HabitableMoon extends Moon implements LifeBearing {
 	}
 	
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int i = 2;
@@ -78,6 +78,7 @@ public class HabitableMoon extends Moon implements LifeBearing {
 		myMonth = Double.parseDouble(in[i++]);
 		myMoonOrbit = Double.parseDouble(in[i++]);
 		setConditionID(in[i++]);
+		return i;
 	}
 
 	private String ConditionID;	
@@ -111,16 +112,26 @@ public class HabitableMoon extends Moon implements LifeBearing {
 		out += getMyYear() + "\n";
 		out += getMyColony().getID() + "\n";
 		out += getMyMoons().size() + "\n";
+		out += "{\n";
+		out += getMyColony().saveString() + "\n";
+		out += "}\n";
+		out += getMyMoons().size() + "\n";
 		for(int i = 0;i < getMyMoons().size();i++) {
-			out += getMyMoons().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMyMoons().get(i).saveString() + "\n";
+			out += "}\n";
 		}
 		out += getMySatilights().size() + "\n";
 		for(int i = 0;i < getMySatilights().size();i++) {
-			out += getMySatilights().get(i).getID() + "\n";
+			out += "{\n";
+			out += getMySatilights().get(i).saveString() + "\n";
+			out += "}\n";			
 		}
 		out += getMyMonth() + "\n";
 		out += getMyMoonOrbit() + "\n";
-		out += getMyCondition().getID() + "\n";
+		out += "{\n";
+		out += getMyCondition().saveString() + "\n";
+		out += "}\n";
 		return out;
 	}
 

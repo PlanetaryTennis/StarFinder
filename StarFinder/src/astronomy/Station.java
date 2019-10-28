@@ -28,7 +28,8 @@ public class Station implements OrbitObject {
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
+		return 0;
 		// TODO Auto-generated method stub
 		
 	}

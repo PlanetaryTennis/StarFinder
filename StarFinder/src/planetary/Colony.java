@@ -51,7 +51,7 @@ public class Colony implements Savable, Serializable{
 		this.hasBio = hasBio;
 		this.myEcosystem = myEcosystem;
 		this.myDevelopments = myDevelopments;
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".Surface";
 	}
 	
 	public Colony(String load) {
@@ -255,7 +255,7 @@ public class Colony implements Savable, Serializable{
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
 		myID = in[0];
 		int i = 2;
@@ -272,6 +272,7 @@ public class Colony implements Savable, Serializable{
 		hasBio  = Boolean.parseBoolean(in[i++]);
 //		EcosystemID  = in[i++];
 //		DevelopmentsID  = in[i++];
+		return i;
 	}
 	
 	private int EcosystemID;
@@ -310,7 +311,7 @@ public class Colony implements Savable, Serializable{
 	
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public int getEcosystemID() {

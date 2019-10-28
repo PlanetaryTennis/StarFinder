@@ -28,19 +28,17 @@ public class SolSystem implements Serializable, Savable{
 	private Star myStar;
 	private Vector<Planet> myObjects;
 	private String myName;
-	private Zone myZone;
 	private String myID;
 
 	public SolSystem(String load) {
 		this.loadString(load);
 	}
 
-	public SolSystem(Star star,String name, Zone s){
+	public SolSystem(Star star,String name){
 		myStar = star;
 		myName = name;
-		myZone = s;
 		myObjects = new Vector<Planet>();
-		myID = UUID.randomUUID().toString();
+		myID = UUID.randomUUID().toString()+".solarsystem";
 	}
 
 	public void Add(Planet planet) {
@@ -71,14 +69,6 @@ public class SolSystem implements Serializable, Savable{
 		this.myName = myName;
 	}
 
-	public Zone getMyZone() {
-		return myZone;
-	}
-
-	public void setMyZone(Zone myZone) {
-		this.myZone = myZone;
-	}
-
 	//static values for generation
 	public static RandomList orbits;
 
@@ -93,7 +83,7 @@ public class SolSystem implements Serializable, Savable{
 
 	public static SolSystem makeRandom(Zone s, SettingList SL) {
 
-		SolSystem r = new SolSystem(null,SolSystem.randomName(),s);
+		SolSystem r = new SolSystem(null,SolSystem.randomName());
 		Random ran = new Random();
 		int special = ran.nextInt(1000);
 		if(SL.getSuns()==null||special <= SL.getSuns()[0]||!SL.isSpecial()) {
@@ -133,44 +123,44 @@ public class SolSystem implements Serializable, Savable{
 			for(int i = 0;i < o.length;i++) {
 				if(o[i]<=(r.myStar.getMyRadius()*(2.0))) {
 				}else if(o[i]==(hab[0])) {
-					put = Belt.makeRandom(o[i],r.getMyStar());
+					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
 					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 					r.Add(put);
 				}else if(o[i]<(hab[0])) {
 					z++;
-					put = Terrestrial.makeRandom(o[i], r.getMyStar());
+					put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
 					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 					r.Add(put);
 				}else if(o[i]==(hab[1])) {
-					put = Belt.makeRandom(o[i],r.getMyStar());
+					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
 					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 					r.Add(put);
 				}else if(o[i]<(hab[1])) {
 					z++;
 					int u = ran.nextInt(100);
 					if(u < 75) {
-						put = Terrestrial.makeRandom(o[i], r.getMyStar());
+						put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
 					}else {
-						put = Jovian.makeRandom(o[i], r.getMyStar());
+						put = Jovian.makeRandom(o[i], r.getMyStar(),SL);
 					}
 					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 					r.Add(put);
 				}else if(o[i]==(frost)) {
-					put = Belt.makeRandom(o[i],r.getMyStar());
+					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
 					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 					r.Add(put);
 				}else if(o[i]<(frost)) {
 					z++;
 					int u = ran.nextInt(100);
 					if(u < 50) {
-						put = Terrestrial.makeRandom(o[i], r.getMyStar());
+						put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
 					}else {
-						put = Jovian.makeRandom(o[i], r.getMyStar());
+						put = Jovian.makeRandom(o[i], r.getMyStar(),SL);
 					}
 					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 					r.Add(put);
 				}else {
-					put = Belt.makeRandom(o[i],r.getMyStar());
+					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
 					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 					r.Add(put);
 				}
@@ -189,26 +179,26 @@ public class SolSystem implements Serializable, Savable{
 			Planet put;
 			for(int i = 0;i < o.length;i++) {
 				if(i==0) {
-					put = Belt.makeRandom(o[i], r.getMyStar());
+					put = Belt.makeRandom(o[i], r.getMyStar(),SL);
 					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 					r.Add(put);
 				}else {
 					int h = ran.nextInt(3);
 					switch(h) {
 					case 0:
-						put = Belt.makeRandom(o[i], r.getMyStar());
+						put = Belt.makeRandom(o[i], r.getMyStar(),SL);
 						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
 						r.Add(put);
 						break;
 					case 1:
 						z++;
-						put = Terrestrial.makeRandom(o[i], r.getMyStar());
+						put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
 						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 						r.Add(put);
 						break;
 					case 2:
 						z++;
-						put = Jovian.makeRandom(o[i], r.getMyStar());
+						put = Jovian.makeRandom(o[i], r.getMyStar(),SL);
 						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
 						r.Add(put);
 						break;
@@ -224,7 +214,7 @@ public class SolSystem implements Serializable, Savable{
 			}			
 			Planet put;
 			for(int i = 0;i < o.length;i++) {
-				put = Belt.makeRandom(o[i],r.getMyStar());
+				put = Belt.makeRandom(o[i],r.getMyStar(),SL);
 				r.Add(put);
 				if(!SL.isName()) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
 			}
@@ -237,7 +227,7 @@ public class SolSystem implements Serializable, Savable{
 			}
 			Planet put;
 			for(int i = 0;i < o.length;i++) {
-				put = Belt.makeRandom(o[i],r.getMyStar());
+				put = Belt.makeRandom(o[i],r.getMyStar(),SL);
 				r.Add(put);
 				if(!SL.isName()) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
 			}			
@@ -252,11 +242,13 @@ public class SolSystem implements Serializable, Savable{
 			}
 			Planet put;
 			for(int i = 0;i < o.length;i++) {
-				put = Belt.makeRandom(o[i],r.getMyStar());
+				put = Belt.makeRandom(o[i],r.getMyStar(),SL);
 				r.Add(put);
 				if(!SL.isName()) put.setMyName((Planet.ALPHA+i)+" Belt");
 			}
 		}
+		r.getMyStar().setMyName(r.getMyName());
+		r.setMyName(r.getMyName()+" System");
 		return r;
 	}
 
@@ -320,17 +312,19 @@ public class SolSystem implements Serializable, Savable{
 	}
 
 	@Override
-	public void loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
+	public int loadString(String load) {
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.elementAt(0));
 		myID = in[0];
 		int i = 2;
 		myName = in[i++];
-		setStarID(in[i++]);
-		ZoneID = in[i++];
+		setMyStar(new Star(object.get(1)));
 		setPlanetNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getPlanetNumber();k++) {
-			getPlanetIDs().add(in[i++]);
+			Add(planet);
+//			getPlanetIDs().add(in[i++]);
 		}
+		return i;
 	}
 
 	private String StarID;
@@ -344,11 +338,14 @@ public class SolSystem implements Serializable, Savable{
 		out += this.myID + "\n";
 		out += this.getClassIndex() + "\n";
 		out += this.getMyName() + "\n";
-		out += this.myStar.getID() + "\n";
-		out += this.myZone.getID() + "\n";
+		out += "{\n";
+		out += this.myStar.saveString() + "\n";
+		out += "}\n";
 		out += this.getMyObjects().size();
 		for(int i = 0;i < myObjects.size();i++) {
-			out += myObjects.get(i) + "\n";
+			out += "{\n";
+			out += myObjects.get(i).saveString() + "\n";
+			out += "}\n";
 		}
 		return out;
 	}
@@ -362,7 +359,7 @@ public class SolSystem implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public String getStarID() {
