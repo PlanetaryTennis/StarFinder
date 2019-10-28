@@ -142,7 +142,7 @@ public class Region implements Serializable, Savable {
 	
 	String SectorID;
 	private int ZoneNumber;
-	private Vector<String> ZoneIDs;
+	private Vector<String> ZoneIDs = new Vector<String>();
 
 	@Override
 	public String saveString() {
@@ -169,7 +169,7 @@ public class Region implements Serializable, Savable {
 
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public int getZoneNumber() {

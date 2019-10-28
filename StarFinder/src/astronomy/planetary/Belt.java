@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
+import astronomy.OrbitObject;
 import astronomy.SolSystem;
 import astronomy.stellar.Star;
 import map.SettingList;
@@ -64,7 +65,8 @@ public class Belt extends Planet{
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.get(0));
 		myID = in[0];
 		int i = 2;
 		myName = in[i++];
@@ -73,13 +75,15 @@ public class Belt extends Planet{
 		myInnerOrbit = Double.parseDouble(in[i++]);
 		myOuterOrbit = Double.parseDouble(in[i++]);
 		setMoonNumber(Integer.parseInt(in[i++]));
-		setMoonIDs(new Vector<String>());
+		int j = 2;
 		for(int k = 0;k < getMoonNumber();k++) {
-			getMoonIDs().add(in[i++]);
+			getMyMoons().add((Moon) Planet.parseLoad(object.get(j)));
+			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getSatilightNumber();k++) {
-			getSatilightIDs().add(in[i++]);
+		for(int k = 0;k < getMoonNumber();k++) {
+			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
+			j++;
 		}
 		return i;
 	}

@@ -5,19 +5,9 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
-import astronomy.Galaxy;
 import astronomy.OrbitObject;
-import astronomy.Region;
-import astronomy.Sector;
-import astronomy.SolSystem;
-import astronomy.Zone;
-import astronomy.stellar.BlackHole;
-import astronomy.stellar.BrownDwarf;
-import astronomy.stellar.Neutron;
 import astronomy.stellar.Star;
-import astronomy.stellar.WhiteDwarf;
 import planetary.Colony;
-import planetary.Condition;
 import utilities.StringFundementals;
 
 public abstract class Planet implements AstroObject {

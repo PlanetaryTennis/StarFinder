@@ -64,7 +64,7 @@ public class Galaxy implements Serializable, Savable{
 	}
 	
 	private int SectorNumber;
-	private Vector<String> SectorIDs;
+	private Vector<String> SectorIDs = new Vector<String>();
 
 	@Override
 	public String saveString() {

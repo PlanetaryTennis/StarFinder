@@ -41,17 +41,17 @@ public class ObjectFiles {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String HOPE = "A. This is a test\n{\nsub block\n}\nShouldn't be sub.\n{\nAnother Sub\n{\nDeeper sub should be seperated.\n}\n}\nEnd of this nonsense.\n";
-		System.out.println(HOPE);
-		Vector<String> test = StringFundementals.unnestString('{', '}', HOPE);
-		System.out.println(test.toString());
+//		String HOPE = "A. This is a test\n{\nsub block\n}\nShouldn't be sub.\n{\nAnother Sub\n{\nDeeper sub should be seperated.\n}\n}\nEnd of this nonsense.\n";
+//		System.out.println(HOPE);
+//		Vector<String> test = StringFundementals.unnestString('{', '}', HOPE);
+//		System.out.println(test.toString());
 //		Star s = new Star(2,null);
 //		Planet p = Terrestrial.makeRandom(s.getFrostLine(), s);
 //		WriteSavabletoFile(p, "test");
 //		System.out.println();
 //		System.out.print(s.saveString());
-//		GameLauncher l = new GameLauncher();
-//		l.getClass();
+		GameLauncher l = new GameLauncher();
+		l.getClass();
 //		Scanner sc = new Scanner(System.in);
 //		while(true) {
 //			Star s = Star.randomStar(null, null);

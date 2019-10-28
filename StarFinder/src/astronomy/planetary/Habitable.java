@@ -3,7 +3,9 @@ package astronomy.planetary;
 import java.util.Vector;
 
 import astronomy.LifeBearing;
+import astronomy.OrbitObject;
 import astronomy.stellar.Star;
+import planetary.Colony;
 import planetary.Condition;
 import utilities.StringFundementals;
 
@@ -39,7 +41,8 @@ public class Habitable extends Terrestrial implements LifeBearing {
 	
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.get(0));
 		myID = in[0];
 		int i = 2;
 		myName = in[i++];
@@ -65,18 +68,19 @@ public class Habitable extends Terrestrial implements LifeBearing {
 		myVolume = Double.parseDouble(in[i++]);
 		myWater = Double.parseDouble(in[i++]);
 		myYear = Double.parseDouble(in[i++]);
-		setColonyID(in[i++]);
+		setMyColony(new Colony(object.get(1)));
 		setMoonNumber(Integer.parseInt(in[i++]));
-		setMoonIDs(new Vector<String>());
+		int j = 2;
 		for(int k = 0;k < getMoonNumber();k++) {
-			getMoonIDs().add(in[i++]);
+			getMyMoons().add((Moon) Planet.parseLoad(object.get(j)));
+			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		setSatilightIDs(new Vector<String>());
 		for(int k = 0;k < getMoonNumber();k++) {
-			getSatilightIDs().add(in[i++]);
+			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
+			j++;
 		}
-		setConditionID(in[i++]);
+		setMyCondition(new Condition(object.get(j)));
 		return i;
 	}
 

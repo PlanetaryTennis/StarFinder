@@ -26,7 +26,7 @@ public class SolSystem implements Serializable, Savable{
 	 */
 	private static final long serialVersionUID = -6219707992537343564L;
 	private Star myStar;
-	private Vector<Planet> myObjects;
+	private Vector<Planet> myObjects = new Vector<Planet>();
 	private String myName;
 	private String myID;
 
@@ -321,7 +321,7 @@ public class SolSystem implements Serializable, Savable{
 		setMyStar(new Star(object.get(1)));
 		setPlanetNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getPlanetNumber();k++) {
-			Add(Planet.parseLoad(object.get(k+1)));
+			Add(Planet.parseLoad(object.get(k+2)));
 //			getPlanetIDs().add(in[i++]);
 		}
 		return i;

@@ -95,7 +95,7 @@ public class Sector implements Serializable, Savable{
 	
 	String GalaxyID;
 	private int RegionNumber;
-	private Vector<String> RegionIDs;
+	private Vector<String> RegionIDs = new Vector<String>();;
 
 	@Override
 	public String saveString() {
@@ -122,7 +122,7 @@ public class Sector implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID+"."+this.getClass().getName();
+		return myID;
 	}
 
 	public int getRegionNumber() {
