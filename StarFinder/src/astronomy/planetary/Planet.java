@@ -5,9 +5,20 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
+import astronomy.Galaxy;
 import astronomy.OrbitObject;
+import astronomy.Region;
+import astronomy.Sector;
+import astronomy.SolSystem;
+import astronomy.Zone;
+import astronomy.stellar.BlackHole;
+import astronomy.stellar.BrownDwarf;
+import astronomy.stellar.Neutron;
 import astronomy.stellar.Star;
+import astronomy.stellar.WhiteDwarf;
 import planetary.Colony;
+import planetary.Condition;
+import utilities.StringFundementals;
 
 public abstract class Planet implements AstroObject {
 	
@@ -248,5 +259,34 @@ public abstract class Planet implements AstroObject {
 	public abstract ImageIcon getIcon();
 	
 	public abstract String string();
+
+	public static Planet parseLoad(String string) {
+		Planet obj = null;
+		String[] box = StringFundementals.breakByLine(string);
+        switch(Integer.parseInt(box[1])) {
+        case Terrestrial.CLASSINDEX:
+        	obj = new Terrestrial(string);
+        	break;
+        case Moon.CLASSINDEX:
+        	obj = new Moon(string);
+        	break;
+        case Jovian.CLASSINDEX:
+        	obj = new Jovian(string);
+        	break;
+        case HabitableMoon.CLASSINDEX:
+        	obj = new HabitableMoon(string);
+        	break;
+        case Habitable.CLASSINDEX:
+        	obj = new Habitable(string);
+        	break;
+        case Belt.CLASSINDEX:
+        	obj = new Belt(string);
+        	break;
+        case Asteroid.CLASSINDEX:
+        	obj = new Asteroid(string);
+        	break;
+        }        
+        return obj;
+	}
 	
 }

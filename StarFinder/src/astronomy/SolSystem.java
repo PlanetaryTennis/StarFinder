@@ -321,7 +321,7 @@ public class SolSystem implements Serializable, Savable{
 		setMyStar(new Star(object.get(1)));
 		setPlanetNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getPlanetNumber();k++) {
-			Add(planet);
+			Add(Planet.parseLoad(object.get(k+1)));
 //			getPlanetIDs().add(in[i++]);
 		}
 		return i;
