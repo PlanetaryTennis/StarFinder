@@ -65,21 +65,21 @@ public class Habitable extends Terrestrial implements LifeBearing {
 		myVolume = Double.parseDouble(in[i++]);
 		myWater = Double.parseDouble(in[i++]);
 		myYear = Double.parseDouble(in[i++]);
-		ColonyID = in[i++];
-		MoonNumber = Integer.parseInt(in[i++]);
-		MoonIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			MoonIDs.add(in[i++]);
+		setColonyID(in[i++]);
+		setMoonNumber(Integer.parseInt(in[i++]));
+		setMoonIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getMoonIDs().add(in[i++]);
 		}
-		SatilightNumber = Integer.parseInt(in[i++]);
-		SatilightIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			SatilightIDs.add(in[i++]);
+		setSatilightNumber(Integer.parseInt(in[i++]));
+		setSatilightIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getSatilightIDs().add(in[i++]);
 		}
-		ConditionID = in[i++];
+		setConditionID(in[i++]);
 	}
 
-	String ConditionID;	
+	private String ConditionID;	
 	
 	@Override
 	public String saveString() {
@@ -117,7 +117,7 @@ public class Habitable extends Terrestrial implements LifeBearing {
 		for(int i = 0;i < getMySatilights().size();i++) {
 			out += getMySatilights().get(i).getID() + "\n";
 		}
-		out += getMyCondition() + "\n";
+		out += getMyCondition().getID() + "\n";
 		return out;
 	}
 
@@ -126,5 +126,13 @@ public class Habitable extends Terrestrial implements LifeBearing {
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
+	}
+
+	public String getConditionID() {
+		return ConditionID;
+	}
+
+	public void setConditionID(String conditionID) {
+		ConditionID = conditionID;
 	}
 }

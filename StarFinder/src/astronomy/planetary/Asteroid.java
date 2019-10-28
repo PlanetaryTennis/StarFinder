@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 
 import astronomy.OrbitObject;
 import astronomy.stellar.Star;
+import planetary.Colony;
 import utilities.ExtendedMathmatics;
 import utilities.StringFundementals;
 
@@ -57,8 +58,12 @@ public class Asteroid extends Moon {
 		double m = LUNE*(Math.pow(d,3));
 		double r = LUNERADI*(d);
 		double day = DAY*(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
+		
+		Moon out = new Asteroid(r, m, eccentricity, orbit, star, day);
+		
+		out.setMyColony(Colony.randomMoon(out));;
 
-		return new Asteroid(r, m, eccentricity, orbit, star, day);
+		return out;
 	}
 	
 	public static OrbitObject makeRandom(Planet planet,double eccentricity, double orbit, Star star) {
@@ -76,6 +81,8 @@ public class Asteroid extends Moon {
 		out.setMyMonth(month);
 		
 		out.setMyYear(planet.myYear);
+		
+		out.setMyColony(Colony.randomMoon(out));;
 		
 		return out;
 	}
@@ -113,16 +120,16 @@ public class Asteroid extends Moon {
 		myVolume = Double.parseDouble(in[i++]);
 		myWater = Double.parseDouble(in[i++]);
 		myYear = Double.parseDouble(in[i++]);
-		ColonyID = in[i++];
-		MoonNumber = Integer.parseInt(in[i++]);
-		MoonIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			MoonIDs.add(in[i++]);
+		setColonyID(in[i++]);
+		setMoonNumber(Integer.parseInt(in[i++]));
+		setMoonIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getMoonIDs().add(in[i++]);
 		}
-		SatilightNumber = Integer.parseInt(in[i++]);
-		SatilightIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			SatilightIDs.add(in[i++]);
+		setSatilightNumber(Integer.parseInt(in[i++]));
+		setSatilightIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getSatilightIDs().add(in[i++]);
 		}
 		myMonth = Double.parseDouble(in[i++]);
 		myMoonOrbit = Double.parseDouble(in[i++]);

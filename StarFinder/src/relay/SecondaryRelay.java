@@ -1,6 +1,7 @@
 package relay;
 
 import java.awt.Toolkit;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -83,7 +84,7 @@ public class SecondaryRelay implements Relay {
 		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.RELAY+"SECONDARYRELAY.png"));
 	}
 
-	public SecondaryRelay[] getPod() {
+	public Vector<SecondaryRelay> getPod() {
 		return myPod;
 	}
 

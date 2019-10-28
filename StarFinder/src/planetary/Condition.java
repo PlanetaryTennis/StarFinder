@@ -2,18 +2,20 @@ package planetary;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.UUID;
 
 import astronomy.AstroObject;
 import astronomy.planetary.Habitable;
 import astronomy.planetary.HabitableMoon;
-import astronomy.planetary.Terrestrial;
-import units.sci;
-import units.siacceleration;
-import units.sidensity;
-import units.sitemperature;
+import engine.Savable;
+import utilities.StringFundementals;
 
-public class Condition  implements Serializable{
+public class Condition  implements Serializable, Savable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6385732161636494008L;
 	private int GravityIndex;
 	private int TempitureIndex;
 	private int VarianceIndex;
@@ -25,14 +27,19 @@ public class Condition  implements Serializable{
 	public static Atmosphere[] LIST = new Atmosphere[] {Atmosphere.AMMONIA,Atmosphere.METHANE,Atmosphere.AMMONIA,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN};
 	public static Random ran = new Random(System.currentTimeMillis());
 
+	public Condition(String load) {
+		this.loadString(load);
+	}
+	
 	public Condition(Habitable world) {
 		Dextros = ran.nextBoolean();
 		AirIndex = LIST[ran.nextInt(LIST.length)];
 		GravityIndex = parseGravity(world.getMyGravity());
-		TempitureIndex = parseTempiture(world.getMyTemps()[1].plus(world.getMyTemps()[0]).scale(0.5));
+		TempitureIndex = parseTempiture(world.getMyTemps()[1]+(world.getMyTemps()[0])*(0.5));
 		VarianceIndex = parseVar(world.getMyTemps()[2],world.getMyTemps()[5]);
 		AtmosphericIndex = parseAtmosphere(world.getMyAtmosphere());
 		WaterIndex = parseWater(world.getMyWater());
+		myID = UUID.randomUUID().toString();;
 	}
 
 	public Condition(HabitableMoon world) {
@@ -43,6 +50,7 @@ public class Condition  implements Serializable{
 		VarianceIndex = parseVar(world.getMyTemps()[2],world.getMyTemps()[5]);
 		AtmosphericIndex = parseAtmosphere(world.getMyAtmosphere());
 		WaterIndex = parseWater(world.getMyWater());
+		myID = UUID.randomUUID().toString();;
 	}
 
 	private int parseWater(double w) {
@@ -71,40 +79,40 @@ public class Condition  implements Serializable{
 		}
 	}
 
-	private int parseAtmosphere(sidensity g) {
-		if(AstroObject.BAR.scale(0.1).greaterOrEqual(g)) {
+	private int parseAtmosphere(double g) {
+		if(AstroObject.BAR*(0.1) >= (g)) {
 			return 0;
-		}else if(AstroObject.BAR.scale(0.25).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(0.25) >= (g)) {
 			return 1;
-		}else if(AstroObject.BAR.scale(0.5).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(0.5) >= (g)) {
 			return 2;
-		}else if(AstroObject.BAR.scale(0.75).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(0.75) >= (g)) {
 			return 3;
-		}else if(AstroObject.BAR.greaterOrEqual(g)) {
+		}else if(AstroObject.BAR >= (g)) {
 			return 4;
-		}else if(AstroObject.BAR.scale(1.5).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(1.5) >= (g)) {
 			return 5;
-		}else if(AstroObject.BAR.scale(2.0).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(2.0) >= (g)) {
 			return 6;
-		}else if(AstroObject.BAR.scale(3.0).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(3.0) >= (g)) {
 			return 7;
-		}else if(AstroObject.BAR.scale(4.0).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(4.0) >= (g)) {
 			return 8;
-		}else if(AstroObject.BAR.scale(5.0).greaterOrEqual(g)) {
+		}else if(AstroObject.BAR*(5.0) >= (g)) {
 			return 9;
 		}else {
 			return 10;
 		}
 	}
 
-	private int parseVar(sitemperature sitemperature, sitemperature sitemperature2) {
-		int TempO = parseTempiture(sitemperature);
-		int TempT = parseTempiture(sitemperature2);
+	private int parseVar(double d1, double d2) {
+		int TempO = parseTempiture(d1);
+		int TempT = parseTempiture(d2);
 		return TempO-TempT;
 	}
 
-	private int parseTempiture(sitemperature t) {
-		double d = sci.convertToDouble(t.getValue());
+	private int parseTempiture(double t) {
+		double d = t;
 		if(240.0>=d) {
 			return 0;
 		}else if(260>=d) {
@@ -130,26 +138,26 @@ public class Condition  implements Serializable{
 		}
 	}
 
-	private int parseGravity(siacceleration g) {
-		if(AstroObject.GRAVITYEARTH.scale(0.1).greaterOrEqual(g)) {
+	private int parseGravity(double g) {
+		if(AstroObject.GRAVITYEARTH*(0.1) >= (g)) {
 			return 0;
-		}else if(AstroObject.GRAVITYEARTH.scale(0.25).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(0.25) >= (g)) {
 			return 1;
-		}else if(AstroObject.GRAVITYEARTH.scale(0.5).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(0.5) >= (g)) {
 			return 2;
-		}else if(AstroObject.GRAVITYEARTH.scale(0.75).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(0.75) >= (g)) {
 			return 3;
-		}else if(AstroObject.GRAVITYEARTH.greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH >= (g)) {
 			return 4;
-		}else if(AstroObject.GRAVITYEARTH.scale(1.5).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(1.5) >= (g)) {
 			return 5;
-		}else if(AstroObject.GRAVITYEARTH.scale(2.0).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(2.0) >= (g)) {
 			return 6;
-		}else if(AstroObject.GRAVITYEARTH.scale(3.0).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(3.0) >= (g)) {
 			return 7;
-		}else if(AstroObject.GRAVITYEARTH.scale(4.0).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(4.0) >= (g)) {
 			return 8;
-		}else if(AstroObject.GRAVITYEARTH.scale(5.0).greaterOrEqual(g)) {
+		}else if(AstroObject.GRAVITYEARTH*(5.0) >= (g)) {
 			return 9;
 		}else {
 			return 10;
@@ -210,5 +218,47 @@ public class Condition  implements Serializable{
 
 	public void setDextros(boolean dextros) {
 		Dextros = dextros;
+	}
+
+	@Override
+	public void loadString(String load) {
+		String[] in = StringFundementals.breakByLine(load);
+		myID = in[0];
+		int i = 2;
+		WaterIndex = Integer.parseInt(in[i++]);
+		VarianceIndex = Integer.parseInt(in[i++]);
+		TempitureIndex = Integer.parseInt(in[i++]);
+		GravityIndex = Integer.parseInt(in[i++]);
+		AtmosphericIndex = Integer.parseInt(in[i++]);
+		AirIndex = Atmosphere.valueOf(in[i++]);
+	}
+
+	@Override
+	public String saveString() {
+		String out = "";
+		out += this.getID() + "\n";
+		out += this.getClassIndex() + "\n";
+		out += this.getWaterIndex() + "\n";
+		out += this.getVarianceIndex() + "\n";
+		out += this.getTempitureIndex() + "\n";
+		out += this.getGravityIndex() + "\n";
+		out += this.getAtmosphericIndex() + "\n";
+		out += this.getAirIndex().name() + "\n";
+		return out;
+	}
+
+
+	public static final int CLASSINDEX = 119013;
+	
+	@Override
+	public int getClassIndex() {
+		return CLASSINDEX;
+	}
+	
+	String myID;
+
+	@Override
+	public String getID() {
+		return myID+"."+this.getClass().getName();
 	}
 }

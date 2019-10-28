@@ -1,8 +1,6 @@
-package astronomy.old;
+package astronomy;
 
 import javax.swing.ImageIcon;
-
-import astronomy.OrbitObject;
 
 public class Station implements OrbitObject {
 

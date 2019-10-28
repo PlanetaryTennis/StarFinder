@@ -128,15 +128,15 @@ public class Zone implements Serializable, Savable{
 		int k = 2;
 		myName = in[k++];
 		RegionID = in[k++];
-		ZoneNumber = Integer.parseInt(in[k++]);
-		for(int i = 0;i < ZoneNumber;i++) {
-			ZoneIDs.add(in[k++]);
+		setSystemNumber(Integer.parseInt(in[k++]));
+		for(int i = 0;i < getSystemNumber();i++) {
+			getSystemIDs().add(in[k++]);
 		}
 	}
 	
 	String RegionID;
-	int ZoneNumber;
-	Vector<String> ZoneIDs;
+	private int SystemNumber;
+	private Vector<String> SystemIDs;
 
 	@Override
 	public String saveString() {
@@ -163,6 +163,22 @@ public class Zone implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public int getSystemNumber() {
+		return SystemNumber;
+	}
+
+	public void setSystemNumber(int systemNumber) {
+		SystemNumber = systemNumber;
+	}
+
+	public Vector<String> getSystemIDs() {
+		return SystemIDs;
+	}
+
+	public void setSystemIDs(Vector<String> systemIDs) {
+		SystemIDs = systemIDs;
 	}
 }

@@ -237,24 +237,24 @@ public class Terrestrial extends Planet {
 		myVolume = Double.parseDouble(in[i++]);
 		myWater = Double.parseDouble(in[i++]);
 		myYear = Double.parseDouble(in[i++]);
-		ColonyID = in[i++];
-		MoonNumber = Integer.parseInt(in[i++]);
-		MoonIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			MoonIDs.add(in[i++]);
+		setColonyID(in[i++]);
+		setMoonNumber(Integer.parseInt(in[i++]));
+		setMoonIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getMoonIDs().add(in[i++]);
 		}
-		SatilightNumber = Integer.parseInt(in[i++]);
-		SatilightIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			SatilightIDs.add(in[i++]);
+		setSatilightNumber(Integer.parseInt(in[i++]));
+		setSatilightIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getSatilightIDs().add(in[i++]);
 		}
 	}
 
-	protected String ColonyID;
-	protected int MoonNumber;
-	protected Vector<String> MoonIDs = new Vector<String>();
-	protected int SatilightNumber;
-	protected Vector<String> SatilightIDs = new Vector<String>();
+	private String ColonyID;
+	private int MoonNumber;
+	private Vector<String> MoonIDs = new Vector<String>();
+	private int SatilightNumber;
+	private Vector<String> SatilightIDs = new Vector<String>();
 	
 	
 	@Override
@@ -306,7 +306,47 @@ public class Terrestrial extends Planet {
 	
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public String getColonyID() {
+		return ColonyID;
+	}
+
+	public void setColonyID(String colonyID) {
+		ColonyID = colonyID;
+	}
+
+	public int getMoonNumber() {
+		return MoonNumber;
+	}
+
+	public void setMoonNumber(int moonNumber) {
+		MoonNumber = moonNumber;
+	}
+
+	public int getSatilightNumber() {
+		return SatilightNumber;
+	}
+
+	public void setSatilightNumber(int satilightNumber) {
+		SatilightNumber = satilightNumber;
+	}
+
+	public Vector<String> getMoonIDs() {
+		return MoonIDs;
+	}
+
+	public void setMoonIDs(Vector<String> moonIDs) {
+		MoonIDs = moonIDs;
+	}
+
+	public Vector<String> getSatilightIDs() {
+		return SatilightIDs;
+	}
+
+	public void setSatilightIDs(Vector<String> satilightIDs) {
+		SatilightIDs = satilightIDs;
 	}
 
 }

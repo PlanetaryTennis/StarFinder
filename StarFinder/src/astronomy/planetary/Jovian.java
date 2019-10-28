@@ -196,6 +196,26 @@ public class Jovian extends Planet {
 	
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public int getMoonNumber() {
+		return MoonNumber;
+	}
+
+	public String getColonyID() {
+		return ColonyID;
+	}
+
+	public Vector<String> getSatilightIDs() {
+		return SatilightIDs;
+	}
+
+	public Vector<String> getMoonIDs() {
+		return MoonIDs;
+	}
+
+	public int getSatilightNumber() {
+		return SatilightNumber;
 	}
 }

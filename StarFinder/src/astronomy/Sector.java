@@ -86,15 +86,15 @@ public class Sector implements Serializable, Savable{
 		int k = 2;
 		myName = in[k++];
 		GalaxyID = in[k++];
-		RegionNumber = Integer.parseInt(in[k++]);
-		for(int i = 0;i < RegionNumber;i++) {
-			RegionIDs.add(in[k++]);
+		setRegionNumber(Integer.parseInt(in[k++]));
+		for(int i = 0;i < getRegionNumber();i++) {
+			getRegionIDs().add(in[k++]);
 		}
 	}
 	
 	String GalaxyID;
-	int RegionNumber;
-	Vector<String> RegionIDs;
+	private int RegionNumber;
+	private Vector<String> RegionIDs;
 
 	@Override
 	public String saveString() {
@@ -121,6 +121,22 @@ public class Sector implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public int getRegionNumber() {
+		return RegionNumber;
+	}
+
+	public void setRegionNumber(int regionNumber) {
+		RegionNumber = regionNumber;
+	}
+
+	public Vector<String> getRegionIDs() {
+		return RegionIDs;
+	}
+
+	public void setRegionIDs(Vector<String> regionIDs) {
+		RegionIDs = regionIDs;
 	}
 }

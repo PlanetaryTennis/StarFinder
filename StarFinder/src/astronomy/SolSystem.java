@@ -34,11 +34,12 @@ public class SolSystem implements Serializable, Savable{
 	public SolSystem(String load) {
 		this.loadString(load);
 	}
-	
+
 	public SolSystem(Star star,String name, Zone s){
 		myStar = star;
 		myName = name;
 		myZone = s;
+		myObjects = new Vector<Planet>();
 		myID = UUID.randomUUID().toString();
 	}
 
@@ -89,7 +90,7 @@ public class SolSystem implements Serializable, Savable{
 	public static final int SIZEONESTAR = 5;
 	public static final int SIZETWOSTAR = 6;
 	public static final int SIZETHREESTAR = 7;
-	
+
 	public static SolSystem makeRandom(Zone s, SettingList SL) {
 
 		SolSystem r = new SolSystem(null,SolSystem.randomName(),s);
@@ -108,83 +109,81 @@ public class SolSystem implements Serializable, Savable{
 			if(measure == 0) {
 				measure = (int)(frost*(2.0)/(AstroObject.AU)*1000);
 			}
-			while(r.getMyObjects() == null) {
-				for(int i = 0;i < total;i++) {
-					o[i] = AstroObject.AU*((double)(ran.nextInt(measure)+1)/1000);
-				}
+			for(int i = 0;i < total;i++) {
+				o[i] = AstroObject.AU*((double)(ran.nextInt(measure)+1)/1000);
+			}
 
-				if(k == 3) {
-					sup = new double[]{hab[0],hab[1],frost};
-				}else if(k == 2){
-					sup = new double[]{hab[ran.nextInt(2)],frost};
-				}else {
-					sup = new double[] {frost};
-				}
-
+			if(k == 3) {
+				sup = new double[]{hab[0],hab[1],frost};
+			}else if(k == 2){
+				sup = new double[]{hab[ran.nextInt(2)],frost};
+			}else {
+				sup = new double[] {frost};
+			}
 
 
-				for(int i = 0;i < k;i++) {
-					o[total+i] = sup[i];
-				}
-				o = ARRAY.SORT(o);
 
-				k = 0;
-				int z = 0;
-				for(int i = 0;i < o.length;i++) {
-					if(o[i]<=(r.myStar.getMyRadius()*(2.0))) {
-					}else if(o[i]==(hab[0])) {
-						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
-						r.Add(put);
-					}else if(o[i]<(hab[0])) {
-						z++;
+			for(int i = 0;i < k;i++) {
+				o[total+i] = sup[i];
+			}
+			o = ARRAY.SORT(o);
+
+			k = 0;
+			int z = 0;
+			for(int i = 0;i < o.length;i++) {
+				if(o[i]<=(r.myStar.getMyRadius()*(2.0))) {
+				}else if(o[i]==(hab[0])) {
+					put = Belt.makeRandom(o[i],r.getMyStar());
+					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+					r.Add(put);
+				}else if(o[i]<(hab[0])) {
+					z++;
+					put = Terrestrial.makeRandom(o[i], r.getMyStar());
+					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
+					r.Add(put);
+				}else if(o[i]==(hab[1])) {
+					put = Belt.makeRandom(o[i],r.getMyStar());
+					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+					r.Add(put);
+				}else if(o[i]<(hab[1])) {
+					z++;
+					int u = ran.nextInt(100);
+					if(u < 75) {
 						put = Terrestrial.makeRandom(o[i], r.getMyStar());
-						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
-						r.Add(put);
-					}else if(o[i]==(hab[1])) {
-						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
-						r.Add(put);
-					}else if(o[i]<(hab[1])) {
-						z++;
-						int u = ran.nextInt(100);
-						if(u < 75) {
-							put = Terrestrial.makeRandom(o[i], r.getMyStar());
-						}else {
-							put = Jovian.makeRandom(o[i], r.getMyStar());
-						}
-						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
-						r.Add(put);
-					}else if(o[i]==(frost)) {
-						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
-						r.Add(put);
-					}else if(o[i]<(frost)) {
-						z++;
-						int u = ran.nextInt(100);
-						if(u < 50) {
-							put = Terrestrial.makeRandom(o[i], r.getMyStar());
-						}else {
-							put = Jovian.makeRandom(o[i], r.getMyStar());
-						}
-						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
-						r.Add(put);
 					}else {
-						put = Belt.makeRandom(o[i],r.getMyStar());
-						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
-						r.Add(put);
+						put = Jovian.makeRandom(o[i], r.getMyStar());
 					}
+					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
+					r.Add(put);
+				}else if(o[i]==(frost)) {
+					put = Belt.makeRandom(o[i],r.getMyStar());
+					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+					r.Add(put);
+				}else if(o[i]<(frost)) {
+					z++;
+					int u = ran.nextInt(100);
+					if(u < 50) {
+						put = Terrestrial.makeRandom(o[i], r.getMyStar());
+					}else {
+						put = Jovian.makeRandom(o[i], r.getMyStar());
+					}
+					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
+					r.Add(put);
+				}else {
+					put = Belt.makeRandom(o[i],r.getMyStar());
+					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+					r.Add(put);
 				}
 			}
 		}else if(special <= SL.getSuns()[1]) {
 			r.setMyStar(BrownDwarf.randomStar(r));
 			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			double[] o = new double[total];
-			
+
 			for(int i = 0;i < total;i++) {
 				o[i] = AstroObject.AU*((double)(ran.nextInt(20)+1)/1000);
 			}
-			
+
 			int z = 0;
 			int k = 0;
 			Planet put;
@@ -253,10 +252,10 @@ public class SolSystem implements Serializable, Savable{
 			}
 			Planet put;
 			for(int i = 0;i < o.length;i++) {
-					put = Belt.makeRandom(o[i],r.getMyStar());
-					r.Add(put);
-					if(!SL.isName()) put.setMyName((Planet.ALPHA+i)+" Belt");
-				}
+				put = Belt.makeRandom(o[i],r.getMyStar());
+				r.Add(put);
+				if(!SL.isName()) put.setMyName((Planet.ALPHA+i)+" Belt");
+			}
 		}
 		return r;
 	}
@@ -326,19 +325,19 @@ public class SolSystem implements Serializable, Savable{
 		myID = in[0];
 		int i = 2;
 		myName = in[i++];
-		StarID = in[i++];
+		setStarID(in[i++]);
 		ZoneID = in[i++];
-		PlanetNumber = Integer.parseInt(in[i++]);
-		for(int k = 0;k < PlanetNumber;k++) {
-			PlanetID.add(in[i++]);
+		setPlanetNumber(Integer.parseInt(in[i++]));
+		for(int k = 0;k < getPlanetNumber();k++) {
+			getPlanetIDs().add(in[i++]);
 		}
 	}
 
-	String StarID;
+	private String StarID;
 	String ZoneID;
-	int PlanetNumber;
-	Vector<String> PlanetID = new Vector<String>();
-	
+	private int PlanetNumber;
+	private Vector<String> PlanetIDs = new Vector<String>();
+
 	@Override
 	public String saveString() {
 		String out = "";
@@ -353,7 +352,7 @@ public class SolSystem implements Serializable, Savable{
 		}
 		return out;
 	}
-	
+
 	public static final int CLASSINDEX = 937113;
 
 	@Override
@@ -363,6 +362,30 @@ public class SolSystem implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public String getStarID() {
+		return StarID;
+	}
+
+	public void setStarID(String starID) {
+		StarID = starID;
+	}
+
+	public int getPlanetNumber() {
+		return PlanetNumber;
+	}
+
+	public void setPlanetNumber(int planetNumber) {
+		PlanetNumber = planetNumber;
+	}
+
+	public Vector<String> getPlanetIDs() {
+		return PlanetIDs;
+	}
+
+	public void setPlanetIDs(Vector<String> planetIDs) {
+		PlanetIDs = planetIDs;
 	}
 }

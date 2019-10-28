@@ -221,6 +221,10 @@ public class Star implements AstroObject {
 	
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public void setMySystem(SolSystem solsystem) {
+		mySystem = solsystem;
 	}
 }

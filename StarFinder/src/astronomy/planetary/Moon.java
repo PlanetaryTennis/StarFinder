@@ -78,8 +78,10 @@ public class Moon extends Terrestrial implements OrbitObject {
 				atmosphere<=(BAR*(0.5))||atmosphere>=(BAR*(5))||
 				mass<=(LUNE)||mass>=(EARTH*(5))) {
 			p = new Moon(atmosphere, moonradius, mass, scale, orbit, star, albido, greenhouse, water, day, month, lesserorbit);
+			p.setMyColony(Colony.randomMoon((Moon)p));
 		}else {
 			p = new HabitableMoon(atmosphere, moonradius, mass, scale, orbit, star, albido, greenhouse, water, day, month, lesserorbit);
+			p.setMyColony(Colony.randomHabMoon((HabitableMoon)p));
 		}
 		
 		return p;
@@ -187,16 +189,16 @@ public class Moon extends Terrestrial implements OrbitObject {
 		myVolume = Double.parseDouble(in[i++]);
 		myWater = Double.parseDouble(in[i++]);
 		myYear = Double.parseDouble(in[i++]);
-		ColonyID = in[i++];
-		MoonNumber = Integer.parseInt(in[i++]);
-		MoonIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			MoonIDs.add(in[i++]);
+		setColonyID(in[i++]);
+		setMoonNumber(Integer.parseInt(in[i++]));
+		setMoonIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getMoonIDs().add(in[i++]);
 		}
-		SatilightNumber = Integer.parseInt(in[i++]);
-		SatilightIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			SatilightIDs.add(in[i++]);
+		setSatilightNumber(Integer.parseInt(in[i++]));
+		setSatilightIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getSatilightIDs().add(in[i++]);
 		}
 		myMonth = Double.parseDouble(in[i++]);
 		myMoonOrbit = Double.parseDouble(in[i++]);

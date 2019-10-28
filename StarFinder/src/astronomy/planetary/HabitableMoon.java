@@ -64,23 +64,23 @@ public class HabitableMoon extends Moon implements LifeBearing {
 		myVolume = Double.parseDouble(in[i++]);
 		myWater = Double.parseDouble(in[i++]);
 		myYear = Double.parseDouble(in[i++]);
-		ColonyID = in[i++];
-		MoonNumber = Integer.parseInt(in[i++]);
-		MoonIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			MoonIDs.add(in[i++]);
+		setColonyID(in[i++]);
+		setMoonNumber(Integer.parseInt(in[i++]));
+		setMoonIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getMoonIDs().add(in[i++]);
 		}
-		SatilightNumber = Integer.parseInt(in[i++]);
-		SatilightIDs = new Vector<String>();
-		for(int k = 0;k < MoonNumber;k++) {
-			SatilightIDs.add(in[i++]);
+		setSatilightNumber(Integer.parseInt(in[i++]));
+		setSatilightIDs(new Vector<String>());
+		for(int k = 0;k < getMoonNumber();k++) {
+			getSatilightIDs().add(in[i++]);
 		}
 		myMonth = Double.parseDouble(in[i++]);
 		myMoonOrbit = Double.parseDouble(in[i++]);
-		ConditionID = in[i++];
+		setConditionID(in[i++]);
 	}
 
-	String ConditionID;	
+	private String ConditionID;	
 	
 	@Override
 	public String saveString() {
@@ -120,7 +120,7 @@ public class HabitableMoon extends Moon implements LifeBearing {
 		}
 		out += getMyMonth() + "\n";
 		out += getMyMoonOrbit() + "\n";
-		out += ConditionID + "\n";
+		out += getMyCondition().getID() + "\n";
 		return out;
 	}
 
@@ -129,5 +129,13 @@ public class HabitableMoon extends Moon implements LifeBearing {
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
+	}
+
+	public String getConditionID() {
+		return ConditionID;
+	}
+
+	public void setConditionID(String conditionID) {
+		ConditionID = conditionID;
 	}
 }

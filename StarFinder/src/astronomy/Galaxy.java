@@ -56,14 +56,14 @@ public class Galaxy implements Serializable, Savable{
 		myID = in[0];
 		int k = 2;
 		myName = in[k++];
-		SectorNumber = Integer.parseInt(in[k++]);
-		for(int i = 0;i < SectorNumber;i++) {
-			SectorIDs.add(in[k++]);
+		setSectorNumber(Integer.parseInt(in[k++]));
+		for(int i = 0;i < getSectorNumber();i++) {
+			getSectorIDs().add(in[k++]);
 		}
 	}
 	
-	int SectorNumber;
-	Vector<String> SectorIDs;
+	private int SectorNumber;
+	private Vector<String> SectorIDs;
 
 	@Override
 	public String saveString() {
@@ -89,6 +89,22 @@ public class Galaxy implements Serializable, Savable{
 
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public int getSectorNumber() {
+		return SectorNumber;
+	}
+
+	public void setSectorNumber(int sectorNumber) {
+		SectorNumber = sectorNumber;
+	}
+
+	public Vector<String> getSectorIDs() {
+		return SectorIDs;
+	}
+
+	public void setSectorIDs(Vector<String> sectorIDs) {
+		SectorIDs = sectorIDs;
 	}
 }

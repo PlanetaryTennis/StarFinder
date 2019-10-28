@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
 
-import astronomy.AstroObject;
 import astronomy.planetary.Habitable;
 import astronomy.planetary.HabitableMoon;
 import astronomy.planetary.Jovian;
 import astronomy.planetary.Moon;
 import astronomy.planetary.Terrestrial;
 import engine.Savable;
-import units.sci;
+import utilities.StringFundementals;
 
 public class Colony implements Savable, Serializable{
 
@@ -52,9 +51,14 @@ public class Colony implements Savable, Serializable{
 		this.hasBio = hasBio;
 		this.myEcosystem = myEcosystem;
 		this.myDevelopments = myDevelopments;
-		myID = UUID.randomUUID().toString();;
+		myID = UUID.randomUUID().toString();
 	}
 	
+	public Colony(String load) {
+		myID = UUID.randomUUID().toString();
+		this.loadString(load);
+	}
+
 	static Random random = new Random(System.currentTimeMillis());
 
 	public static Colony randomTerrestrial(Terrestrial t) {
@@ -131,12 +135,12 @@ public class Colony implements Savable, Serializable{
 
 	public static Colony randomJovian(Jovian j) {	
 		boolean Habitable = false;
-		boolean Water = false;
-		boolean Ezo = false;
+		boolean Water = random.nextBoolean();
+		boolean Ezo = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
-		boolean RareMetal = false;
-		boolean Radio = false;
-		boolean MassMetal = false;
+		boolean RareMetal = random.nextBoolean();
+		boolean Radio = random.nextBoolean();
+		boolean MassMetal = random.nextBoolean();
 		boolean MassGas = true;
 		boolean Life = false;
 		
@@ -252,26 +256,68 @@ public class Colony implements Savable, Serializable{
 
 	@Override
 	public void loadString(String load) {
-		// TODO Auto-generated method stub
-		
+		String[] in = StringFundementals.breakByLine(load);
+		myID = in[0];
+		int i = 2;
+		size  = Integer.parseInt(in[i++]);
+		scale  = Integer.parseInt(in[i++]);
+		isHab  = Boolean.parseBoolean(in[i++]);
+		hasWater  = Boolean.parseBoolean(in[i++]);
+		hasEzo  = Boolean.parseBoolean(in[i++]);
+		hasRareGasses  = Boolean.parseBoolean(in[i++]);
+		hasRareMetals  = Boolean.parseBoolean(in[i++]);
+		hasRadiotropes  = Boolean.parseBoolean(in[i++]);
+		hasMassiveMetal  = Boolean.parseBoolean(in[i++]);
+		hasMassiveGasses  = Boolean.parseBoolean(in[i++]);
+		hasBio  = Boolean.parseBoolean(in[i++]);
+//		EcosystemID  = in[i++];
+//		DevelopmentsID  = in[i++];
 	}
+	
+	private int EcosystemID;
+	int DevelopmentsID;
 
 	@Override
 	public String saveString() {
-		// TODO Auto-generated method stub
-		return null;
+		String out = "";
+		out += myID +"\n";
+		out += getClassIndex() + "\n";
+		out += size + "\n";
+		out += scale + "\n";
+		out += isHab + "\n";
+		out += hasWater + "\n";
+		out += hasEzo + "\n";
+		out += hasRareGasses + "\n";
+		out += hasRareMetals + "\n";
+		out += hasRadiotropes + "\n";
+		out += hasMassiveMetal + "\n";
+		out += hasMassiveGasses + "\n";
+		out += hasBio + "\n";
+//		out += myEcosystem.getID() + "\n";
+//		out += myDevelopments.getID() + "\n";
+		return out;
 	}
 
+
+	public static final int CLASSINDEX = 119017;
+	
 	@Override
 	public int getClassIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return CLASSINDEX;
 	}
 
 	String myID;
 	
 	@Override
 	public String getID() {
-		return myID;
+		return myID+"."+this.getClass().getName();
+	}
+
+	public int getEcosystemID() {
+		return EcosystemID;
+	}
+
+	public void setEcosystemID(int ecosystemID) {
+		EcosystemID = ecosystemID;
 	}
 }
