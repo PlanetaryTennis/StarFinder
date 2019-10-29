@@ -11,6 +11,7 @@ import astronomy.Sector;
 import astronomy.SolSystem;
 import astronomy.Zone;
 import astronomy.stellar.Star;
+import engine.ObjectFiles;
 import map.MapView;
 
 public class NewSystem implements ActionListener {
@@ -37,7 +38,8 @@ public class NewSystem implements ActionListener {
 			r.setMyStar(Star.randomStar(r, null));
 		}
 		myMenu.add(MapView.populateSystemMenu(r, myView));
-		myZone.Add(r);
+		ObjectFiles.WriteSavabletoFile(r, myZone.getMyRegion().getMySector().getMyGalaxy().getMyName());
+		myZone.Add(r.getID());
 	}
 	
 }

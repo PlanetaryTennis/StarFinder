@@ -15,7 +15,7 @@ public class Region implements Serializable, Savable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Vector<Zone> myZones;
+	private Vector<Zone> myZones = new Vector<Zone>();
 	private Sector mySector;
 	private String Name;
 	
@@ -128,14 +128,16 @@ public class Region implements Serializable, Savable {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.get(0));
 		myID = in[0];
 		int k = 2;
 		Name = in[k++];
 		SectorID = in[k++];
 		setZoneNumber(Integer.parseInt(in[k++]));
 		for(int i = 0;i < getZoneNumber();i++) {
-			getZoneIDs().add(in[k++]);
+			myZones.add(new Zone(object.get(i+1)));
+			myZones.get(i).setMyRegion(this);
 		}
 		return k;
 	}
@@ -153,7 +155,9 @@ public class Region implements Serializable, Savable {
 		out += this.getMySector().getID() + "\n";
 		out += this.getMyZones().size() + "\n";
 		for(int i = 0;i < this.getMyZones().size();i++){
-			out += this.getMyZones().get(i).getID() + "\n";
+			out += "{\n";
+			out += myZones.get(i).saveString() + "\n";
+			out += "}\n";
 		}
 		return out;
 	}

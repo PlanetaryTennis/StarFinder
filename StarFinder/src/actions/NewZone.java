@@ -32,7 +32,7 @@ public class NewZone implements ActionListener {
 		}else {
 			r = new Zone(Zone.randomName(), myRegion);
 		}
-		JMenu j = MapView.populateZoneMenu(r,myView);
+		JMenu j = new JMenu(r.getMyName());
 		myMenu.add(j);
 		myRegion.Add(r);
 	}

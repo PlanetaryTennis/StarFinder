@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 import java.util.Vector;
 
+import engine.ObjectFiles;
 import engine.Savable;
 import relay.RelayNetwork;
 import utilities.StringFundementals;
@@ -13,7 +14,7 @@ public class Galaxy implements Serializable, Savable{
 	 * 
 	 */
 	private static final long serialVersionUID = 2209507012552543563L;
-	private Vector<Sector> mySectors;
+	private Vector<Sector> mySectors = new Vector<Sector>();
 	private String myName;
 	private RelayNetwork myNetwork;
 	
@@ -52,13 +53,15 @@ public class Galaxy implements Serializable, Savable{
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.get(0));
 		myID = in[0];
 		int k = 2;
 		myName = in[k++];
 		setSectorNumber(Integer.parseInt(in[k++]));
 		for(int i = 0;i < getSectorNumber();i++) {
-			getSectorIDs().add(in[k++]);
+			mySectors.add(new Sector(object.get(i+1),0.0d));
+			mySectors.get(i).setMyGalaxy(this);
 		}
 		return k;
 	}
@@ -74,7 +77,9 @@ public class Galaxy implements Serializable, Savable{
 		out += this.getMyName() + "\n";
 		out += this.getMySectors().size() + "\n";
 		for(int i = 0;i < this.getMySectors().size();i++){
-			out += this.getMySectors().get(i).getID() + "\n";
+				out += "{\n";
+				out += mySectors.get(i).saveString() + "\n";
+				out += "}\n";;
 		}
 		return out;
 	}

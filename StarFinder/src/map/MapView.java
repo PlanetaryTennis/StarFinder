@@ -85,7 +85,8 @@ public class MapView extends JFrame{
 
 	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms, boolean n, int[] suns, boolean r){
 		super(name);
-		mySettings = new SettingList(s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,suns);
+		String nam = Sector.randomName();
+		mySettings = new SettingList(nam,s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,suns);
 		
 		this.setBackground(Color.BLACK);
 		this.setForeground(Color.BLACK);
@@ -101,7 +102,7 @@ public class MapView extends JFrame{
 		}
 
 		galaxy = new Galaxy(mySectors);
-		galaxy.setMyName(Sector.randomName());
+		galaxy.setMyName(nam);
 		for(int i = 0;i < mySectors.size();i++) {
 			mySectors.get(i).setMyGalaxy(galaxy);
 		}
@@ -132,6 +133,7 @@ public class MapView extends JFrame{
 		save.addActionListener(new saver(this, galaxy));
 		bar.add(save);
 		
+		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
 		this.viewGalaxy();
 		
 		this.setSize(1000, 750);
@@ -205,7 +207,7 @@ public class MapView extends JFrame{
 
 	public static void save(MapView view,Galaxy galaxy) {
 		Cursor c = view.getCursor();
-		ObjectFiles.MatrioskaSave(galaxy.getMyName(), galaxy);
+		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
 		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		view.setCursor(c);
 	}
@@ -236,7 +238,7 @@ public class MapView extends JFrame{
 		view.addActionListener(new RegionPanel(r, myView));
 		region.add(view);
 		for(int i = 0;r.getMyZones() != null&&i < r.getMyZones().size();i++) {
-			JMenu z = MapView.populateZoneMenu(r.getMyZones().get(i), myView);
+			JMenu z = new JMenu(r.getMyZones().get(i).getMyName());
 			region.add(z);
 		}
 		JMenu makeNew = new JMenu("Make New Zone");
@@ -248,25 +250,6 @@ public class MapView extends JFrame{
 		makeNew.add(randNew);
 		region.add(makeNew);
 		return region;
-	}
-
-	public static JMenu populateZoneMenu(Zone z, MapView myView) {
-		JMenu zone = new JMenu(z.getMyName());
-		JMenuItem view = new JMenuItem("View");
-		view.addActionListener(new ZonePanel(z, myView));
-		zone.add(view);
-		for(int i = 0;z.getMySystems() != null&&i < z.getMySystems().size();i++) {
-			JMenuItem s = populateSystemMenu(z.getMySystems().get(i),myView);
-			zone.add(s);
-		}
-		JMenu makeNew = new JMenu("Make New System");
-		JMenuItem randNew = new JMenuItem("Random System");
-		JMenuItem blankNew = new JMenuItem("Blank System");
-		randNew.addActionListener(new NewSystem(true,z,zone,myView));
-		blankNew.addActionListener(new NewSystem(false,z,zone,myView));
-		makeNew.add(randNew);
-		zone.add(makeNew);
-		return zone;
 	}
 
 	public static JMenuItem populateSystemMenu(SolSystem s, MapView myView) {
@@ -335,20 +318,33 @@ public class MapView extends JFrame{
 		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
-		int square = (int) Math.ceil(Math.pow(zone.getMySystems().size(),0.5));
+		int square = (int) Math.ceil(Math.pow(zone.getSystemNumber(),0.5));
 		myView.setLayout(new GridLayout(square,square));
-		
+		boolean same;
+		if(solStore.size()>0&&solStore.get(0).getID().contentEquals(zone.getSystemIDs().get(0))) {
+			same = true;
+		}else {
+			same = false;
+			solStore = new Vector<SolSystem>();
+		}
 		JButton solarsystem;
-		for(int i = 0;i < zone.getMySystems().size();i++) {
-			solarsystem = new JButton(zone.getMySystems().get(i).getMyName());
-			ImageIcon img = zone.getMySystems().get(i).getMyStar().getIcon();
+		SolSystem sol;
+		for(int i = 0;i < zone.getSystemNumber();i++) {
+			if(same) {
+				sol = solStore.get(i);
+			}else {
+				sol = (SolSystem)ObjectFiles.ReadSaveableFromFile(lasts.getMyGalaxy().getMyName()+"/"+zone.getSystemIDs().get(i));
+				solStore.add(sol);
+			}
+			solarsystem = new JButton(sol.getMyName());
+			ImageIcon img = sol.getMyStar().getIcon();
 			solarsystem.setIcon(img);
 			solarsystem.setPreferredSize(new Dimension(img.getIconWidth()+50,img.getIconHeight()));
 			solarsystem.setBackground(Color.BLACK);
 			solarsystem.setBorderPainted(false);
 			solarsystem.setOpaque(false);
 			solarsystem.setForeground(Color.WHITE);
-			solarsystem.addActionListener(new SystemPanel(zone.getMySystems().get(i),this));
+			solarsystem.addActionListener(new SystemPanel(sol,this));
 			myView.add(solarsystem);
 		}
 
@@ -356,6 +352,8 @@ public class MapView extends JFrame{
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 
+	public Vector<SolSystem> solStore = new Vector<SolSystem>();
+	
 	public void viewSystem(SolSystem solsystem) {
 		level = 0;
 		Name.setText(solsystem.getMyName());

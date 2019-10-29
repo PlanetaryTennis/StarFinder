@@ -24,8 +24,11 @@ public class Moon extends Terrestrial implements OrbitObject {
 	protected double myMoonOrbit;
 	
 	public Moon(String load) {
-		super(load);
 		this.loadString(load);
+	}
+	
+	public Moon() {
+		
 	}
 	
 	public Moon(double myAtmosphere, double myRadius, double myMass,
@@ -198,7 +201,7 @@ public class Moon extends Terrestrial implements OrbitObject {
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getMoonNumber();k++) {
+		for(int k = 0;k < getSatilightNumber();k++) {
 			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
 			j++;
 		}

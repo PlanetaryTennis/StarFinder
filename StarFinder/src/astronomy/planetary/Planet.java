@@ -25,7 +25,7 @@ public abstract class Planet implements AstroObject {
 	
 	protected Colony myColony;
 	
-	protected Vector<Moon> myMoons;
+	protected Vector<Moon> myMoons = new Vector<Moon>();
 	
 	protected Vector<OrbitObject> mySatilights = new Vector<OrbitObject>();
 	

@@ -58,7 +58,7 @@ public class Jovian extends Planet {
 			}
 		}
 
-		double day = DAY*(8-ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
+		double day = DAY*(8-ExtendedMathmatics.log(random.nextInt(155) + 1, 2));
 		
 		double volume = Math.pow(radius,3)*(0.75*Math.PI)*1000;
 
@@ -149,7 +149,7 @@ public class Jovian extends Planet {
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getMoonNumber();k++) {
+		for(int k = 0;k < getSatilightNumber();k++) {
 			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
 			j++;
 		}

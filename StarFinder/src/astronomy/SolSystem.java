@@ -11,6 +11,7 @@ import astronomy.planetary.Planet;
 import astronomy.planetary.Terrestrial;
 import astronomy.stellar.BlackHole;
 import astronomy.stellar.BrownDwarf;
+import astronomy.stellar.Nebula;
 import astronomy.stellar.Neutron;
 import astronomy.stellar.Star;
 import astronomy.stellar.WhiteDwarf;
@@ -231,9 +232,8 @@ public class SolSystem implements Serializable, Savable{
 				r.Add(put);
 				if(!SL.isName()) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
 			}			
-		}else{
+		}else if(special<=SL.getSuns()[4]){
 			r.setMyName(r.getMyName()+" Singularity");
-			System.out.println("Black Hole");
 			r.setMyStar(new BlackHole(ran.nextInt(100)+13, r));
 			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			double[] o = new double[total];
@@ -246,6 +246,10 @@ public class SolSystem implements Serializable, Savable{
 				r.Add(put);
 				if(!SL.isName()) put.setMyName((Planet.ALPHA+i)+" Belt");
 			}
+		}else {
+			r.setMyName(r.getMyName()+" Nebula");
+			r.setMyStar(new Nebula(r));
+			r.Add(Belt.makeRandom(0, r.getMyStar(), SL));
 		}
 		r.getMyStar().setMyName(r.getMyName());
 		r.setMyName(r.getMyName()+" System");
@@ -341,7 +345,7 @@ public class SolSystem implements Serializable, Savable{
 		out += "{\n";
 		out += this.myStar.saveString() + "\n";
 		out += "}\n";
-		out += this.getMyObjects().size();
+		out += this.getMyObjects().size() + "\n";
 		for(int i = 0;i < myObjects.size();i++) {
 			out += "{\n";
 			out += myObjects.get(i).saveString() + "\n";

@@ -75,13 +75,13 @@ public class Belt extends Planet{
 		myInnerOrbit = Double.parseDouble(in[i++]);
 		myOuterOrbit = Double.parseDouble(in[i++]);
 		setMoonNumber(Integer.parseInt(in[i++]));
-		int j = 2;
+		int j = 1;
 		for(int k = 0;k < getMoonNumber();k++) {
 			getMyMoons().add((Moon) Planet.parseLoad(object.get(j)));
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getMoonNumber();k++) {
+		for(int k = 0;k < getSatilightNumber();k++) {
 			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
 			j++;
 		}

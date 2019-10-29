@@ -90,7 +90,7 @@ public class LauncherButton implements ActionListener {
 				my.setCursor(save);
 		      	return;
 		    }
-		    Galaxy galaxy = (Galaxy)ObjectFiles.MatrioskaLoad(gal,filepath);
+		    Galaxy galaxy = (Galaxy)ObjectFiles.ReadSaveableFromFile(gal+"/"+filepath);
 			GameLauncher.load("Galaxy Painter", galaxy);
 		}
 		my.setCursor(save);

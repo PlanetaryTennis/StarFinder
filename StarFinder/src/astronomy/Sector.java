@@ -15,7 +15,7 @@ public class Sector implements Serializable, Savable{
 	 * 
 	 */
 	private static final long serialVersionUID = -7823345276729076886L;
-	private Vector<Region> myRegions;
+	private Vector<Region> myRegions = new Vector<Region>();
 	private Galaxy myGalaxy;
 	private String myName;
 	
@@ -81,14 +81,16 @@ public class Sector implements Serializable, Savable{
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.get(0));
 		myID = in[0];
 		int k = 2;
 		myName = in[k++];
 		GalaxyID = in[k++];
 		setRegionNumber(Integer.parseInt(in[k++]));
 		for(int i = 0;i < getRegionNumber();i++) {
-			getRegionIDs().add(in[k++]);
+			myRegions.add(new Region(object.get(i+1)));
+			myRegions.get(i).setMySector(this);
 		}
 		return k;
 	}
@@ -106,7 +108,9 @@ public class Sector implements Serializable, Savable{
 		out += this.getMyGalaxy().getID() + "\n";
 		out += this.getRegions().size() + "\n";
 		for(int i = 0;i < this.getRegions().size();i++){
-			out += this.getRegions().get(i).getID() + "\n";
+			out += "{\n";
+			out += myRegions.get(i).saveString() + "\n";
+			out += "}\n";
 		}
 		return out;
 	}

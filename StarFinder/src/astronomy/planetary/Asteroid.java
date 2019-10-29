@@ -27,7 +27,6 @@ public class Asteroid extends Moon {
 	private static final long serialVersionUID = 3432449119572055711L;
 
 	public Asteroid(String load){
-		super(load);
 		this.loadString(load);
 	}
 	
@@ -54,10 +53,10 @@ public class Asteroid extends Moon {
 	 * @return Newly created Asteroid
 	 */
 	public static Moon makeRandom(double eccentricity, double orbit, Star star) {
-		double d = 8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2);
+		double d = 8 - ExtendedMathmatics.log(random.nextInt(254) + 1, 2);
 		double m = LUNE*(Math.pow(d,3));
 		double r = LUNERADI*(d);
-		double day = DAY*(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
+		double day = DAY*(8 - ExtendedMathmatics.log(random.nextInt(254) + 1, 2));
 		
 		Moon out = new Asteroid(r, m, eccentricity, orbit, star, day);
 		
@@ -67,10 +66,10 @@ public class Asteroid extends Moon {
 	}
 	
 	public static OrbitObject makeRandom(Planet planet,double eccentricity, double orbit, Star star) {
-		double d = 8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2);
+		double d = 8 - ExtendedMathmatics.log(random.nextInt(254) + 1, 2);
 		double m = LUNE*(Math.pow(d,3));
 		double r = LUNERADI*(d);
-		double day = DAY*(8 - ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
+		double day = DAY*(d+random.nextDouble()*2);
 		
 		Asteroid out = new Asteroid(r, m, eccentricity, orbit, star, day);
 		
@@ -129,7 +128,7 @@ public class Asteroid extends Moon {
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getMoonNumber();k++) {
+		for(int k = 0;k < getSatilightNumber();k++) {
 			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
 			j++;
 		}

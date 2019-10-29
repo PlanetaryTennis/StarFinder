@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
+import engine.ObjectFiles;
 import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
@@ -15,7 +16,6 @@ public class Zone implements Serializable, Savable{
 	 * 
 	 */
 	private static final long serialVersionUID = -7375343829370278946L;
-	private Vector<SolSystem> mySystems;
 	private String myName;
 	private Region myRegion;
 	
@@ -26,12 +26,12 @@ public class Zone implements Serializable, Savable{
 	public Zone(String name,Region r){
 		myName = name;
 		myRegion = r;
-		mySystems = new Vector<SolSystem>();
 		myID = UUID.randomUUID().toString()+".zone";
 	}
 	
-	public void Add(SolSystem system) {
-		mySystems.add(system);
+	public void Add(String system) {
+		SystemIDs.add(system);
+		SystemNumber++;
 	}
 	
 	public String getMyName() {
@@ -45,9 +45,6 @@ public class Zone implements Serializable, Savable{
 	}
 	public void setMyRegion(Region myRegion) {
 		this.myRegion = myRegion;
-	}
-	public Vector<SolSystem> getMySystems() {
-		return mySystems;
 	}
 	
 	public static RandomList consonants;
@@ -116,7 +113,8 @@ public class Zone implements Serializable, Savable{
 		for(int i = 0;i < total;i++) {
 			SolSystem z = SolSystem.makeRandom(r,SL);
 			if(!SL.isName())z.setMyName(""+i);
-			r.Add(z);
+			ObjectFiles.WriteSavabletoFile(z, SL.getName());
+			r.Add(z.getID());
 		}
 		return r;
 	}
@@ -137,7 +135,7 @@ public class Zone implements Serializable, Savable{
 	
 	String RegionID;
 	private int SystemNumber;
-	private Vector<String> SystemIDs = new Vector<String>();;
+	private Vector<String> SystemIDs = new Vector<String>();
 
 	@Override
 	public String saveString() {
@@ -146,9 +144,9 @@ public class Zone implements Serializable, Savable{
 		out += getClassIndex() + "\n";
 		out += this.getMyName() + "\n";
 		out += this.getMyRegion().getID() + "\n";
-		out += this.getMySystems().size() + "\n";
-		for(int i = 0;i < this.getMySystems().size();i++){
-			out += this.getMySystems().get(i).getID() + "\n";
+		out += this.SystemIDs.size() + "\n";
+		for(int i = 0;i < this.SystemIDs.size();i++){
+			out += SystemIDs.get(i) + "\n";
 		}
 		return out;
 	}

@@ -12,12 +12,14 @@ public class SettingList {
 	boolean special;
 	boolean multi;
 	boolean name;
+	String myName;
 	
 	int[] suns;
 	
-	public SettingList(int sectors, int regionsmin, int regionsmax, int zonemin, int zonemax, int sysmin, int sysmax,
+	public SettingList(String myName,int sectors, int regionsmin, int regionsmax, int zonemin, int zonemax, int sysmin, int sysmax,
 			int planetmax, boolean special, boolean multi, boolean name,int[] suns) {
 		super();
+		this.myName = myName;
 		this.sectors = sectors;
 		this.regionsmin = regionsmin;
 		this.regionsmax = regionsmax;
@@ -78,6 +80,10 @@ public class SettingList {
 
 	public int[] getSuns() {
 		return suns;
+	}
+
+	public String getName() {
+		return myName;
 	}
 	
 	

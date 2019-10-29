@@ -19,7 +19,6 @@ public class HabitableMoon extends Moon implements LifeBearing {
 	private Condition myCondition;
 	
 	public HabitableMoon(String load) {
-		super(load);
 		this.loadString(load);
 	}
 	
@@ -75,7 +74,7 @@ public class HabitableMoon extends Moon implements LifeBearing {
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getMoonNumber();k++) {
+		for(int k = 0;k < getSatilightNumber();k++) {
 			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
 			j++;
 		}
@@ -114,8 +113,6 @@ public class HabitableMoon extends Moon implements LifeBearing {
 		out += getMyVolume() + "\n";
 		out += getMyWater() + "\n";
 		out += getMyYear() + "\n";
-		out += getMyColony().getID() + "\n";
-		out += getMyMoons().size() + "\n";
 		out += "{\n";
 		out += getMyColony().saveString() + "\n";
 		out += "}\n";

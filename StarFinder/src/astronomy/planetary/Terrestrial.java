@@ -34,6 +34,10 @@ public class Terrestrial extends Planet {
 		this.loadString(load);
 	}
 	
+	public Terrestrial() {
+		
+	}
+	
 	public Terrestrial(Vector<Moon> myMoons, double myAtmosphere, double myRadius,
 			double myMass, double myEccentricity, double myOrbit, Star star, double myAlbido, double myGreenHouse,
 			double myWater,double myDay) {
@@ -130,7 +134,7 @@ public class Terrestrial extends Planet {
 		double[] temps = tempitures(greenhouse, albido, orbit, orbit*(1+scale), orbit*(1-scale), star, atmosphere);
 		Planet p;
 		
-		double day = DAY*(8-ExtendedMathmatics.log(random.nextInt(255) + 1, 2));
+		double day = DAY*(8-ExtendedMathmatics.log(random.nextInt(150) + 1, 2));
 		
 		double water = random.nextDouble();
 		
@@ -256,7 +260,7 @@ public class Terrestrial extends Planet {
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getMoonNumber();k++) {
+		for(int k = 0;k < getSatilightNumber();k++) {
 			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
 			j++;
 		}
