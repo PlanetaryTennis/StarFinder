@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
+import astronomy.Sector;
 import astronomy.SolSystem;
 import astronomy.Zone;
 import astronomy.planetary.Planet;
@@ -98,6 +99,11 @@ public class PrimaryRelay implements Relay {
 	}
 
 	public Zone getMyZone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static PrimaryRelay randomPrime(Sector sector) {
 		// TODO Auto-generated method stub
 		return null;
 	}

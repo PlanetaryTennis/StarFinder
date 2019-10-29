@@ -1,16 +1,17 @@
 package astronomy.stellar;
 
-import java.awt.Toolkit;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
-
 import astronomy.SolSystem;
-import map.Sprite;
 import map.color;
 import utilities.StringFundementals;
 
 public class Nebula extends Star {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -586368306431126608L;
 
 	public Nebula(SolSystem s) {
 		super(0, s);
