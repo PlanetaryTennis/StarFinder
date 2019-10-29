@@ -1,6 +1,7 @@
 package relay;
 
 import java.awt.Toolkit;
+import java.util.UUID;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -10,6 +11,7 @@ import astronomy.Region;
 import astronomy.SolSystem;
 import astronomy.Zone;
 import astronomy.planetary.Planet;
+import engine.ObjectFiles;
 import map.Sprite;
 
 public class SecondaryRelay implements Relay {
@@ -24,11 +26,17 @@ public class SecondaryRelay implements Relay {
 	
 	private Region targetRegion;
 	
-	private RelayNetwork myNetwork;
-	private SecondaryRelay[] myPod;
+	private Vector<SecondaryRelay> myPod;
+	private String myID;
 	
+	public SecondaryRelay() {
+		myID = UUID.randomUUID().toString()+".station";
+	}
 	
-	
+	public SecondaryRelay(String load) {
+		this.loadString(load);
+	}
+
 	public Zone getMyZone() {
 		return myZone;
 	}
@@ -61,14 +69,6 @@ public class SecondaryRelay implements Relay {
 		this.targetRegion = targetRegion;
 	}
 
-	public RelayNetwork getMyNetwork() {
-		return myNetwork;
-	}
-
-	public void setMyNetwork(RelayNetwork myNetwork) {
-		this.myNetwork = myNetwork;
-	}
-
 	@Override
 	public String string() {
 		return getMyName();
@@ -84,22 +84,21 @@ public class SecondaryRelay implements Relay {
 		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.RELAY+"SECONDARYRELAY.png"));
 	}
 
-	public Vector<SecondaryRelay> getPod() {
+	public SecondaryRelay getPod(int i) {
+		return myPod.get(i);
+	}
+
+	public Vector<SecondaryRelay> getMyPod() {
 		return myPod;
 	}
 
-	public SecondaryRelay[] getMyPod() {
-		return myPod;
-	}
-
-	public void setMyPod(SecondaryRelay[] myPod) {
-		this.myPod = myPod;
+	public void setMyPod(Vector<SecondaryRelay> out) {
+		this.myPod = out;
 	}
 
 	@Override
 	public int loadString(String load) {
-		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 	@Override
@@ -108,16 +107,24 @@ public class SecondaryRelay implements Relay {
 		return null;
 	}
 
+	public static final int CLASSINDEX = 678804;
+	
 	@Override
 	public int getClassIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return CLASSINDEX;
 	}
 
 	@Override
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return myID;
+	}
+
+	public static SecondaryRelay randomSecond(Zone zone) {
+		SecondaryRelay Relay = new SecondaryRelay();
+		Relay.setMyZone(zone);
+		SolSystem sol = (SolSystem) ObjectFiles.ReadSaveableFromFile(zone.getMyRegion().getMySector().getMyGalaxy().getMyName()+"/"+zone.getSystemIDs().get(0));
+		
+		return Relay;
 	}
 
 }

@@ -1,10 +1,12 @@
 package relay;
 
 import java.awt.Toolkit;
+import java.util.UUID;
 
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
+import astronomy.Region;
 import astronomy.Sector;
 import astronomy.SolSystem;
 import astronomy.Zone;
@@ -19,11 +21,20 @@ public class PrimaryRelay implements Relay {
 	private static final long serialVersionUID = -1650990345049687346L;
 	
 	PrimaryRelay myPartner;
-	RelayNetwork myNetwork;
+	private Zone myZone;
 	private SolSystem mySystem;
 	private Planet myWorld;
+
+	private String myID;
 	
+	public PrimaryRelay() {
+		myID = UUID.randomUUID().toString()+".station";
+	}
 	
+	public PrimaryRelay(String load) {
+		this.loadString(load);
+	}
+
 	public SolSystem getMySystem() {
 		return mySystem;
 	}
@@ -48,14 +59,6 @@ public class PrimaryRelay implements Relay {
 		this.myPartner = myPartner;
 	}
 
-	public RelayNetwork getMyNetwork() {
-		return myNetwork;
-	}
-
-	public void setMyNetwork(RelayNetwork myNetwork) {
-		this.myNetwork = myNetwork;
-	}
-
 	@Override
 	public String string() {
 		return getMyName();
@@ -63,9 +66,9 @@ public class PrimaryRelay implements Relay {
 
 	@Override
 	public String getMyName() {
-		return mySystem.getMyZone().getMyRegion().getName() + " of " + mySystem.getMyZone().getMyRegion().getMySector().getName() +
+		return myZone.getMyRegion().getName() + " of " + myZone.getMyRegion().getMySector().getName() +
 				" to " +
-				myPartner.getMySystem().getMyZone().getMyRegion().getName() + " of " + myPartner.getMySystem().getMyZone().getMyRegion().getMySector().getName() +
+				myPartner.getMyZone().getMyRegion().getName() + " of " + myPartner.getMyZone().getMyRegion().getMySector().getName() +
 				"Relay";
 	}
 
@@ -77,7 +80,7 @@ public class PrimaryRelay implements Relay {
 	@Override
 	public int loadString(String load) {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 	@Override
@@ -86,25 +89,28 @@ public class PrimaryRelay implements Relay {
 		return null;
 	}
 
+	public static final int CLASSINDEX = 678809;
+	
 	@Override
 	public int getClassIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return CLASSINDEX;
 	}
 
 	@Override
 	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+		return myID;
 	}
 
 	public Zone getMyZone() {
-		// TODO Auto-generated method stub
-		return null;
+		return myZone;
+	}
+	
+	public void setMyZone(Zone zone) {
+		myZone = zone;
 	}
 
-	public static PrimaryRelay randomPrime(Sector sector) {
-		// TODO Auto-generated method stub
+	public static PrimaryRelay randomPrime(Region region) {
+		
 		return null;
 	}
 

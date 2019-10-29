@@ -1,6 +1,10 @@
 package map;
 
-public class SettingList {
+import java.util.UUID;
+
+import engine.Savable;
+
+public class SettingList implements Savable{
 	int sectors;
 	int regionsmin;
 	int regionsmax;
@@ -32,6 +36,7 @@ public class SettingList {
 		this.multi = multi;
 		this.name = name;
 		this.suns = suns;
+		myID = UUID.randomUUID().toString()+".settings";
 	}
 
 	public int getSectors() {
@@ -84,6 +89,32 @@ public class SettingList {
 
 	public String getName() {
 		return myName;
+	}
+
+	@Override
+	public int loadString(String load) {
+		int i = 2;
+		return i;
+	}
+
+	@Override
+	public String saveString() {
+		String out = "";
+		return out;
+	}
+
+	public static final int CLASSINDEX = 000001;
+	
+	@Override
+	public int getClassIndex() {
+		return CLASSINDEX;
+	}
+
+	private String myID;
+	
+	@Override
+	public String getID() {
+		return myID;
 	}
 	
 	

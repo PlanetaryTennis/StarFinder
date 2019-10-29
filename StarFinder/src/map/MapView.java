@@ -696,7 +696,7 @@ public class MapView extends JFrame{
 		Print.setEditable(false);
 		String display = o.getMyName();
 
-		Vector<SecondaryRelay> pod = o.getPod();
+		Vector<SecondaryRelay> pod = o.getMyPod();
 		for(int i = 0;i < pod.size();i++) {
 			if(pod.get(i) != o) {
 				JButton Look = new JButton("Jump to the "+pod.get(i).getMyName());
