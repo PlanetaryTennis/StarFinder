@@ -85,8 +85,10 @@ public class PrimaryRelay implements Relay {
 
 	@Override
 	public String saveString() {
-		// TODO Auto-generated method stub
-		return null;
+		String out = "";
+		out += myID;
+		out += getClassIndex();
+		return out;
 	}
 
 	public static final int CLASSINDEX = 678809;
@@ -110,8 +112,9 @@ public class PrimaryRelay implements Relay {
 	}
 
 	public static PrimaryRelay randomPrime(Region region) {
+		PrimaryRelay out = new PrimaryRelay();
 		
-		return null;
+		return out;
 	}
 
 }

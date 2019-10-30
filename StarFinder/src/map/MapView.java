@@ -132,7 +132,8 @@ public class MapView extends JFrame{
 		JMenuItem save = new JMenuItem("Save");
 		save.addActionListener(new saver(this, galaxy));
 		bar.add(save);
-		
+
+		ObjectFiles.WriteSavabletoFile(mySettings, galaxy.getMyName());
 		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
 		this.viewGalaxy();
 		
@@ -182,6 +183,8 @@ public class MapView extends JFrame{
 		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
+
+		ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
 		this.viewGalaxy();
 		
 		this.setSize(1000, 750);

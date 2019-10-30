@@ -36,7 +36,7 @@ public class SettingList implements Savable{
 		this.multi = multi;
 		this.name = name;
 		this.suns = suns;
-		myID = UUID.randomUUID().toString()+".settings";
+		myID = "Map.settings";
 	}
 
 	public int getSectors() {
