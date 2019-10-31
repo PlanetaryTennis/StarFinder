@@ -89,6 +89,7 @@ public class SolSystem implements Serializable, Savable{
 		int special = ran.nextInt(1000);
 		if(SL.getSuns()==null||special <= SL.getSuns()[0]||!SL.isSpecial()) {
 			r.setMyStar(Star.randomStar(r,SL.getSuns()));
+			r.getMyStar().setMyName(r.getMyName());
 			int k = ran.nextInt(3)+1;
 			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			double[] o = new double[total+k];
@@ -168,6 +169,7 @@ public class SolSystem implements Serializable, Savable{
 			}
 		}else if(special <= SL.getSuns()[1]) {
 			r.setMyStar(BrownDwarf.randomStar(r));
+			r.getMyStar().setMyName(r.getMyName());
 			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			double[] o = new double[total];
 
@@ -208,6 +210,7 @@ public class SolSystem implements Serializable, Savable{
 			}
 		}else if(special <= SL.getSuns()[2]) {
 			r.setMyStar(WhiteDwarf.randomStar(r));
+			r.getMyStar().setMyName(r.getMyName());
 			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			double[] o = new double[total];
 			for(int i = 0;i < total;i++) {
@@ -221,6 +224,7 @@ public class SolSystem implements Serializable, Savable{
 			}
 		}else if(special<=SL.getSuns()[3]){
 			r.setMyStar(Neutron.randomStar(r));
+			r.getMyStar().setMyName(r.getMyName());
 			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
 			double[] o = new double[total];
 			for(int i = 0;i < total;i++) {
@@ -251,7 +255,6 @@ public class SolSystem implements Serializable, Savable{
 			r.setMyStar(new Nebula(r));
 			r.Add(Belt.makeRandom(0, r.getMyStar(), SL));
 		}
-		r.getMyStar().setMyName(r.getMyName());
 		r.setMyName(r.getMyName()+" System");
 		return r;
 	}
@@ -299,6 +302,7 @@ public class SolSystem implements Serializable, Savable{
 		consonants.add(4,"tr");
 		consonants.add(3,"cr");
 		consonants.add(2,"ch");
+		consonants.add(2,"ck");
 		vowels.add(1,"y");
 		vowels.add(1,"'");
 	}
@@ -323,6 +327,7 @@ public class SolSystem implements Serializable, Savable{
 		int i = 2;
 		myName = in[i++];
 		setMyStar(new Star(object.get(1)));
+		myStar.setMySystem(this);
 		setPlanetNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getPlanetNumber();k++) {
 			Add(Planet.parseLoad(object.get(k+2)));

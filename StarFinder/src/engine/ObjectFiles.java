@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import astronomy.Galaxy;
+import astronomy.LifeBearing;
 import astronomy.OrbitObject;
 import astronomy.Region;
 import astronomy.Sector;
@@ -31,6 +32,7 @@ import astronomy.stellar.BrownDwarf;
 import astronomy.stellar.Neutron;
 import astronomy.stellar.Star;
 import astronomy.stellar.WhiteDwarf;
+import map.SettingList;
 import planetary.Colony;
 import planetary.Condition;
 import utilities.StringFundementals;
@@ -41,15 +43,17 @@ public class ObjectFiles {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-//		String HOPE = "A. This is a test\n{\nsub block\n}\nShouldn't be sub.\n{\nAnother Sub\n{\nDeeper sub should be seperated.\n}\n}\nEnd of this nonsense.\n";
-//		System.out.println(HOPE);
-//		Vector<String> test = StringFundementals.unnestString('{', '}', HOPE);
-//		System.out.println(test.toString());
-//		Star s = new Star(2,null);
-//		Planet p = Terrestrial.makeRandom(s.getFrostLine(), s);
-//		WriteSavabletoFile(p, "test");
-//		System.out.println();
-//		System.out.print(s.saveString());
+//		SolSystem s;
+//		Habitable h;
+//		while(true) {
+//			s = SolSystem.makeRandom(null, new SettingList("TEST", 0, 0, 0, 0, 0, 0, 0, 12, false, false, true, new int[] {80,90,100,100}));
+//			for(int i = 0;i < s.getMyObjects().size();i++)
+//				if(s.getMyObjects().get(i).getClass()==Habitable.class) {
+//					h = (Habitable) s.getMyObjects().get(i);
+//					System.out.println(h.saveString());
+//					in.nextLine();
+//				}
+//		}
 		GameLauncher l = new GameLauncher();
 		l.getClass();
 //		Scanner sc = new Scanner(System.in);

@@ -3,6 +3,7 @@ package planetary;
 import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 
 import astronomy.planetary.Habitable;
 import astronomy.planetary.HabitableMoon;
@@ -256,7 +257,8 @@ public class Colony implements Savable, Serializable{
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
+		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(parse.get(0));
 		myID = in[0];
 		int i = 2;
 		size  = Integer.parseInt(in[i++]);
@@ -270,8 +272,10 @@ public class Colony implements Savable, Serializable{
 		hasMassiveMetal  = Boolean.parseBoolean(in[i++]);
 		hasMassiveGasses  = Boolean.parseBoolean(in[i++]);
 		hasBio  = Boolean.parseBoolean(in[i++]);
-//		EcosystemID  = in[i++];
 //		DevelopmentsID  = in[i++];
+		boolean eco = Boolean.parseBoolean(in[i++]);
+		if(eco)
+			myEcosystem = new Ecosystem(parse.get(1));
 		return i;
 	}
 	
@@ -294,8 +298,15 @@ public class Colony implements Savable, Serializable{
 		out += hasMassiveMetal + "\n";
 		out += hasMassiveGasses + "\n";
 		out += hasBio + "\n";
-//		out += myEcosystem.getID() + "\n";
 //		out += myDevelopments.getID() + "\n";
+		if(myEcosystem!=null) {
+			out += true + "\n";
+			out += "{\n";
+			out += myEcosystem.saveString() + "\n";
+			out += "}\n";
+		}else {
+			out += false + "\n";
+		}
 		return out;
 	}
 

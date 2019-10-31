@@ -18,6 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import actions.AnimalView;
+import actions.Biolook;
 import actions.MoonView;
 import actions.NewRegion;
 import actions.NewSystem;
@@ -184,7 +186,7 @@ public class MapView extends JFrame{
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 
-		ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
+//		ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
 		this.viewGalaxy();
 		
 		this.setSize(1000, 750);
@@ -210,8 +212,13 @@ public class MapView extends JFrame{
 
 	public static void save(MapView view,Galaxy galaxy) {
 		Cursor c = view.getCursor();
-		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
 		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
+		if(galaxy.getMyNetwork()!=null)
+			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
+		if(view.lastss != null)
+			ObjectFiles.WriteSavabletoFile(view.lastss, galaxy.getMyName());
+		ObjectFiles.WriteSavabletoFile(view.mySettings, galaxy.getMyName());
 		view.setCursor(c);
 	}
 
@@ -634,6 +641,8 @@ public class MapView extends JFrame{
 			viewPlanet(lastp);
 		}else if(level == 3) {
 			viewWorldData(lastp);
+		}else if(level == 4) {
+			viewSurface(lastp);
 		}
 	}
 
@@ -776,6 +785,59 @@ public class MapView extends JFrame{
 		Print.setText(display);
 		myView.add(Print);
 
+		if(colony.isHasBio()) {
+			JButton ViewBio = new JButton("View Biosphere");
+			ViewBio.addActionListener(new Biolook(colony,c,this));
+			myView.add(ViewBio);
+		}
+		
+		this.setSize(this.getWidth()+1, this.getHeight()+1);
+		this.setSize(this.getWidth()-1, this.getHeight()-1);
+	}
+	
+	public void viewBiosphere(Colony col, Condition con) {
+		level = 4;
+		myView.removeAll();
+		myView.repaint();
+		myView.setLayout(new FlowLayout());
+		JTextArea Print = new JTextArea();
+		String display = "";
+		display += "Gravity Index "+con.getGravityIndex()+"\n";
+		display += "Tempiture Index "+con.getTempitureIndex()+"\n";
+		display += "Tempiture Variations "+con.getVarianceIndex()+"\n";
+		display += "Pressure Index "+con.getAtmosphericIndex()+"\n";
+		display += "Water Index "+con.getWaterIndex()+"\n";
+		display += "Atmosphere Type ";
+		switch(con.getAirIndex()) {
+		case AMMONIA:
+			display += "Ammonia";
+			break;
+		case METHANE:
+			display += "Methane";
+			break;
+		default:
+			display += "Nitrogen";
+			break;
+		}
+		display += "\n";
+		display += con.isDextros() ? "Dextro":"Levo";
+		display += "-amino acid Biology";
+
+		Print.setText(display);
+		myView.add(Print);
+
+		JButton Apex = new JButton("Apex Preditor");
+		Apex.addActionListener(new AnimalView(col.getMyEcosystem().getApexPreditor()));
+		myView.add(Apex);
+
+		JButton Stand = new JButton("Main Animal");
+		Stand.addActionListener(new AnimalView(col.getMyEcosystem().getStandard()));
+		myView.add(Stand);
+
+		JButton Pest = new JButton("Local Pest");
+		Pest.addActionListener(new AnimalView(col.getMyEcosystem().getPest()));
+		myView.add(Pest);
+		
 		this.setSize(this.getWidth()+1, this.getHeight()+1);
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}

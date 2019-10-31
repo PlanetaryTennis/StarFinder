@@ -2,7 +2,9 @@ package planetary;
 
 import java.io.Serializable;
 
-public class Life  implements Serializable{
+import engine.Savable;
+
+public abstract class Life  implements Serializable, Savable{
 
 	/**
 	 * 
