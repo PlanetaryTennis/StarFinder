@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
+import astronomy.AstroObject;
 import astronomy.Galaxy;
 import astronomy.LifeBearing;
 import astronomy.OrbitObject;
@@ -43,6 +44,10 @@ public class ObjectFiles {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
+//		Star s = new Star(1,null);
+//		Planet p = Terrestrial.makeRandom(AstroObject.AU, s, new SettingList("TEST", 0, 0, 0, 0, 0, 0, 0, 0, false, false, true, new int[] {75,90,100}));
+//		System.out.println(p.getMyColony().calculateMaxSize(p));
+		
 //		SolSystem s;
 //		Habitable h;
 //		while(true) {

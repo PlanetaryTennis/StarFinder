@@ -744,6 +744,7 @@ public class MapView extends JFrame{
 		display += "Rare Metals Present: " + colony.isHasRareMetals() + "\n";
 		display += "Rare Gasses Present: " + colony.isHasRareGasses() + "\n";
 		display += "\n";
+		display += "Max Population " + (colony.getMaxSize()*3+1) + "\n";
 		display += "Has a colony " + (colony.getSize()>0) + "\n";
 		if(colony.getSize()>0) {
 			display += "Colony Size: " + colony.getSize() + "\n";

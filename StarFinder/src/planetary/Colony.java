@@ -9,6 +9,7 @@ import astronomy.planetary.Habitable;
 import astronomy.planetary.HabitableMoon;
 import astronomy.planetary.Jovian;
 import astronomy.planetary.Moon;
+import astronomy.planetary.Planet;
 import astronomy.planetary.Terrestrial;
 import engine.Savable;
 import utilities.StringFundementals;
@@ -31,6 +32,7 @@ public class Colony implements Savable, Serializable{
 	private boolean hasMassiveMetal;
 	private boolean hasMassiveGasses;
 	private boolean hasBio;
+	private int maxSize;
 	
 	private Ecosystem myEcosystem;
 	private SepcialDevelopments myDevelopments;
@@ -76,6 +78,7 @@ public class Colony implements Savable, Serializable{
 		Colony c = new Colony(0,0, Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null, null);
+		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;		
 	}
 
@@ -95,6 +98,7 @@ public class Colony implements Savable, Serializable{
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				biosphere, null);
+		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;		
 	}
 
@@ -114,6 +118,7 @@ public class Colony implements Savable, Serializable{
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				biosphere, null);
+		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;		
 	}
 
@@ -131,6 +136,7 @@ public class Colony implements Savable, Serializable{
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null, null);
+		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;				
 	}
 
@@ -148,7 +154,21 @@ public class Colony implements Savable, Serializable{
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null, null);
+		c.setMaxSize(Colony.calculateMaxSize(j.getMyRadius()/10));
 		return c;		
+	}
+	
+	public static int calculateMaxSize(double r) {
+		double radius = r/1000;
+		return (int)Math.ceil((5+Math.sqrt(251*radius+58006))/251-0.5);
+	}
+	
+	public int getMaxSize() {
+		return maxSize;
+	}
+
+	public void setMaxSize(int maxSize) {
+		this.maxSize = maxSize;
 	}
 
 	public int getSize() {
@@ -272,6 +292,7 @@ public class Colony implements Savable, Serializable{
 		hasMassiveMetal  = Boolean.parseBoolean(in[i++]);
 		hasMassiveGasses  = Boolean.parseBoolean(in[i++]);
 		hasBio  = Boolean.parseBoolean(in[i++]);
+		maxSize = Integer.parseInt(in[i++]);
 //		DevelopmentsID  = in[i++];
 		boolean eco = Boolean.parseBoolean(in[i++]);
 		if(eco)
@@ -298,6 +319,7 @@ public class Colony implements Savable, Serializable{
 		out += hasMassiveMetal + "\n";
 		out += hasMassiveGasses + "\n";
 		out += hasBio + "\n";
+		out += maxSize + "\n";
 //		out += myDevelopments.getID() + "\n";
 		if(myEcosystem!=null) {
 			out += true + "\n";
