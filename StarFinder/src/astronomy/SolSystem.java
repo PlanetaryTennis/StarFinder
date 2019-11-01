@@ -86,7 +86,7 @@ public class SolSystem implements Serializable, Savable{
 
 		SolSystem r = new SolSystem(null,SolSystem.randomName());
 		Random ran = new Random();
-		int special = ran.nextInt(1000);
+		int special = ran.nextInt(SL.getSuns()[5]);
 		if(SL.getSuns()==null||special <= SL.getSuns()[0]||!SL.isSpecial()) {
 			r.setMyStar(Star.randomStar(r,SL.getSuns()));
 			r.getMyStar().setMyName(r.getMyName());

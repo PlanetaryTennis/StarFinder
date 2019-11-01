@@ -14,7 +14,7 @@ public class Nebula extends Star {
 	private static final long serialVersionUID = -586368306431126608L;
 
 	public Nebula(SolSystem s) {
-		super(0, s);
+		super(s);
 		myColor = randomColor();
 	}
 	

@@ -38,6 +38,10 @@ public class Star implements AstroObject {
 		this.loadString(load);
 	}
 	
+	public Star(SolSystem s) {
+		mySystem = s;
+	}
+	
 	public Star(double m,SolSystem s){
 		mySystem = s;
 		myMass = SOL*m;
@@ -130,10 +134,10 @@ public class Star implements AstroObject {
 
 	public static Star randomStar(SolSystem s, int[] suns) {
 		Random ran = new Random();
-		int die = ran.nextInt(99)+1;
-		if(die < suns[0]) {
+		int die = ran.nextInt(suns[8]);
+		if(die < suns[6]) {
 			return new Star(ran.nextDouble()+0.01,s);
-		}else if(die < suns[1]) {
+		}else if(die < suns[7]) {
 			return new Star(ran.nextDouble()*3+1,s);
 		}else {
 			return new Star((ran.nextDouble()*3+1)*4,s);

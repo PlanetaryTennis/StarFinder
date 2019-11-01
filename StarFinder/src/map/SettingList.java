@@ -3,6 +3,7 @@ package map;
 import java.util.UUID;
 
 import engine.Savable;
+import utilities.StringFundementals;
 
 public class SettingList implements Savable{
 	int sectors;
@@ -93,13 +94,47 @@ public class SettingList implements Savable{
 
 	@Override
 	public int loadString(String load) {
+		String[] in = StringFundementals.breakByLine(load);
+		myID = in[0];
 		int i = 2;
+		 sectors = Integer.parseInt(in[i++]);
+		 regionsmin = Integer.parseInt(in[i++]);
+		 regionsmax = Integer.parseInt(in[i++]);
+		 zonemin = Integer.parseInt(in[i++]);
+		 zonemax = Integer.parseInt(in[i++]);
+		 sysmin = Integer.parseInt(in[i++]);
+		 sysmax = Integer.parseInt(in[i++]);
+		 planetmax = Integer.parseInt(in[i++]);
+		 special = Boolean.parseBoolean(in[i++]);
+		 multi = Boolean.parseBoolean(in[i++]);
+		 name = Boolean.parseBoolean(in[i++]);
+		 myName = in[i++];
+		 suns = new int[Integer.parseInt(in[i++])];
+		for(int k = 0;i < suns.length;k++)
+			 suns[k] = Integer.parseInt(in[i++]);		
 		return i;
 	}
 
 	@Override
 	public String saveString() {
 		String out = "";
+		out += myID + "\n";
+		out += CLASSINDEX + "\n";
+		out += sectors + "\n";
+		out += regionsmin + "\n";
+		out += regionsmax + "\n";
+		out += zonemin + "\n";
+		out += zonemax + "\n";
+		out += sysmin + "\n";
+		out += sysmax + "\n";
+		out += planetmax + "\n";
+		out += special + "\n";
+		out += multi + "\n";
+		out += name + "\n";
+		out += myName + "\n";
+		out += suns.length + "\n";
+		for(int i = 0;i < suns.length;i++)
+			out += suns[i] + "\n";
 		return out;
 	}
 

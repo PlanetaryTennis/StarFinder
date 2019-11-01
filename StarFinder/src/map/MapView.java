@@ -186,7 +186,7 @@ public class MapView extends JFrame{
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 
-//		ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
+		ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
 		this.viewGalaxy();
 		
 		this.setSize(1000, 750);

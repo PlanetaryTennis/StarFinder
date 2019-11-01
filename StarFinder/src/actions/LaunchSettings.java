@@ -30,6 +30,7 @@ public class LaunchSettings implements ActionListener {
 	JCheckBox name;
 	JCheckBox relays;
 	JFrame LS;
+	private int[] suns;
 
 	/**
 	 * @author PlanetaryTennis
@@ -39,11 +40,12 @@ public class LaunchSettings implements ActionListener {
 	 * @param sectors [JSlider] determines the number of sectors the Galaxy is generated with.
 	 * @param regionsmin [JSlider] determines the minimum number of regions each sector is generated with.
 	 * @param regionsmax [JSlider] determines the number of aditional regions each sector is generated with.
+	 * @param suns 
 	 * 
 	 */
 	public LaunchSettings(JFrame launchSettings, boolean b, JSlider sectors, JSlider regionsmin, JSlider regionsmax, JSlider zonemin,
 			JSlider zonemax, JSlider sysmin, JSlider sysmax, JSlider planetmax, JCheckBox special, JCheckBox multi,
-			JCheckBox name, JCheckBox relays) {
+			JCheckBox name, JCheckBox relays, int[] suns) {
 		super();
 		LS = launchSettings;
 		this.b = b;
@@ -59,6 +61,7 @@ public class LaunchSettings implements ActionListener {
 		this.multi = multi;
 		this.name = name;
 		this.relays = relays;
+		this.suns = suns;
 	}
 
 	@Override
@@ -99,7 +102,7 @@ public class LaunchSettings implements ActionListener {
 		
 		LS.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		if(b) {
-			MapView v = new MapView("Galaxy Painter",s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,new int[]{80,90,100},r);
+			MapView v = new MapView("Galaxy Painter",s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,suns,r);
 			v.getMyMenus();
 		}else {
 			
