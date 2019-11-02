@@ -111,7 +111,14 @@ public class Belt extends Planet{
 			out += "}\n";
 		}
 		out += getMySatilights().size() + "\n";
-		for(int i = 0;i < getMySatilights().size();i++) if(getMySatilights().get(i) != null){
+		for(int i = 0;i < getMySatilights().size();i++){
+			if(getMySatilights().get(i)==null) {
+				break;
+			}
+			String pain = getMySatilights().get(i).saveString();
+			if(pain == null) {
+				break;
+			}
 			out += "{\n";
 			out += getMySatilights().get(i).saveString() + "\n";
 			out += "}\n";			

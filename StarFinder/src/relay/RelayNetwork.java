@@ -48,9 +48,9 @@ public class RelayNetwork implements Serializable, Savable{
 		for(int i = 0;i < myGalaxy.getMySectors().size();i++) {
 			myPrimes.add(PrimaryRelay.randomPrime(myGalaxy.getMySectors().get(i).getRegions().get(0)));
 			if(i < myGalaxy.getMySectors().size()-1) {
-				myPrimes.add(PrimaryRelay.randomPrime(myGalaxy.getMySectors().get(i+1).getRegions().get(random.nextInt(myGalaxy.getMySectors().get(i).getRegions().size()))));
+				myPrimes.add(PrimaryRelay.randomPrime(myGalaxy.getMySectors().get(i+1).getRegions().get(random.nextInt(myGalaxy.getMySectors().get(i+1).getRegions().size()))));
 			}else {
-				myPrimes.add(PrimaryRelay.randomPrime(myGalaxy.getMySectors().get(0).getRegions().get(random.nextInt(myGalaxy.getMySectors().get(i).getRegions().size()))));
+				myPrimes.add(PrimaryRelay.randomPrime(myGalaxy.getMySectors().get(0).getRegions().get(random.nextInt(myGalaxy.getMySectors().get(0).getRegions().size()))));
 			}
 			myPrimes.get(2*i).setMyPartner(myPrimes.get(2*i+1));
 			myPrimes.get(2*i+1).setMyPartner(myPrimes.get(2*i));
