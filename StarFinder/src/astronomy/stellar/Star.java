@@ -42,6 +42,10 @@ public class Star implements AstroObject {
 		mySystem = s;
 	}
 	
+	public Star() {
+		
+	}
+	
 	public Star(double m,SolSystem s){
 		mySystem = s;
 		myMass = SOL*m;

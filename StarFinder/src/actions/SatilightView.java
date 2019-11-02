@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import astronomy.OrbitObject;
 import map.MapView;
+import relay.ImageRelay;
 import relay.PrimaryRelay;
 import relay.Relay;
 import relay.SecondaryRelay;
@@ -22,12 +23,14 @@ public class SatilightView implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		switch(Functions.ClassSwitch(O.getClass(),new Class[]{PrimaryRelay.class,SecondaryRelay.class})) {
+		switch(Functions.ClassSwitch(O.getClass(),new Class[]{ImageRelay.class})) {
 		case 0:
-			map.viewPrimaryRelay((PrimaryRelay) O);
-			break;
-		case 1:
-			map.viewSecondaryRelay((SecondaryRelay) O);
+			ImageRelay IR = (ImageRelay)O;
+			if(IR.getMyRelay().getClass() == PrimaryRelay.class) {
+				map.viewPrimaryRelay((PrimaryRelay) IR.getMyRelay());
+			}else {
+				map.viewSecondaryRelay((SecondaryRelay) IR.getMyRelay());				
+			}
 			break;
 		case -1:
 		default:

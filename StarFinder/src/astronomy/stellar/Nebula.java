@@ -1,8 +1,19 @@
 package astronomy.stellar;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import astronomy.SolSystem;
+import map.Sprite;
 import map.color;
 import utilities.StringFundementals;
 
@@ -18,6 +29,10 @@ public class Nebula extends Star {
 		myColor = randomColor();
 	}
 	
+	public Nebula(String load) {
+		this.loadString(load);
+	}
+
 	private color randomColor() {
 		color c;
 		switch(ran.nextInt(5)) {
@@ -44,6 +59,28 @@ public class Nebula extends Star {
 	
 	public static Star randomStar(SolSystem s) {
 		return new Nebula(s);
+	}
+	
+	public ImageIcon getIcon() {
+		BufferedImage out = null;
+		try {
+			out = ImageIO.read(new File(Sprite.STARS+"Nebula.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Color c = this.myColor.getMyColor();
+		for (int x = 0; x < out.getWidth(); x++) {
+	        for (int y = 0; y < out.getHeight(); y++) {
+	            Color pixelColor = new Color(out.getRGB(x, y), true);
+	            int r = (pixelColor.getRed() + pixelColor.getRed() + c.getRed()) / 3;
+	            int g = (pixelColor.getGreen() + pixelColor.getGreen() + c.getGreen()) / 3;
+	            int b = (pixelColor.getBlue() + pixelColor.getBlue() + c.getBlue()) / 3;
+	            int a = pixelColor.getAlpha();
+	            int rgba = (a << 24) | (r << 16) | (g << 8) | b;
+	            out.setRGB(x, y, rgba);
+	        }
+	    }
+		return new ImageIcon(out);
 	}
 
 	@Override

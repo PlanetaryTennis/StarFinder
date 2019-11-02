@@ -326,14 +326,32 @@ public class SolSystem implements Serializable, Savable{
 		myID = in[0];
 		int i = 2;
 		myName = in[i++];
-		setMyStar(new Star(object.get(1)));
+		setMyStar(StarParse(object.get(1)));
 		myStar.setMySystem(this);
 		setPlanetNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getPlanetNumber();k++) {
 			Add(Planet.parseLoad(object.get(k+2)));
-//			getPlanetIDs().add(in[i++]);
 		}
 		return i;
+	}
+
+	private Star StarParse(String string) {
+		String[] in = StringFundementals.breakByLine(string);
+		switch(Integer.parseInt(in[2])) {
+		case Star.CLASSINDEX:
+			return new Star(string);
+		case BrownDwarf.CLASSINDEX:
+			return new BrownDwarf(string);
+		case BlackHole.CLASSINDEX:
+			return new BlackHole(string);
+		case Nebula.CLASSINDEX:
+			return new Nebula(string);
+		case Neutron.CLASSINDEX:
+			return new Neutron(string);
+		case WhiteDwarf.CLASSINDEX:
+			return new WhiteDwarf(string);
+		}
+		return null;
 	}
 
 	private String StarID;

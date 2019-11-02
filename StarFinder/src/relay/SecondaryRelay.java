@@ -1,28 +1,26 @@
 package relay;
 
 import java.awt.Toolkit;
+import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
-import astronomy.AstroObject;
 import astronomy.Region;
 import astronomy.SolSystem;
 import astronomy.Zone;
 import astronomy.planetary.Planet;
 import engine.ObjectFiles;
 import map.Sprite;
+import utilities.StringFundementals;
 
 public class SecondaryRelay implements Relay {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6115418467272003541L;
 	private Zone myZone;
-	private SolSystem mySystem;
-	private Planet myWorld;
+	private String mySystem;
+	private String myPlanet;
+	private String myGhost;
 	
 	private Region targetRegion;
 	
@@ -43,22 +41,6 @@ public class SecondaryRelay implements Relay {
 
 	public void setMyZone(Zone myZone) {
 		this.myZone = myZone;
-	}
-
-	public SolSystem getMySystem() {
-		return mySystem;
-	}
-
-	public void setMySystem(SolSystem mySystem) {
-		this.mySystem = mySystem;
-	}
-
-	public Planet getMyWorld() {
-		return myWorld;
-	}
-
-	public void setMyWorld(Planet myWorld) {
-		this.myWorld = myWorld;
 	}
 
 	public Region getTargetRegion() {
@@ -98,13 +80,26 @@ public class SecondaryRelay implements Relay {
 
 	@Override
 	public int loadString(String load) {
-		return 0;
+		String[] in = StringFundementals.breakByLine(load);
+		myID = in[0];
+		int i = 2;
+		mySystem = in[i++];
+		myPlanet = in[i++];
+		myGhost = in[i++];
+		ZoneID = in[i++];
+		return i;
 	}
 
 	@Override
 	public String saveString() {
-		// TODO Auto-generated method stub
-		return null;
+		String out = "";
+		out += myID;
+		out += getClassIndex();
+		out += getMySystem() + "\n";
+		out += getMyPlanet() + "\n";
+		out += getMyGhost() + "\n";
+		out += getMyZone().getID() + "\n";
+		return out;
 	}
 
 	public static final int CLASSINDEX = 678804;
@@ -114,17 +109,52 @@ public class SecondaryRelay implements Relay {
 		return CLASSINDEX;
 	}
 
+	String ZoneID;
+	
 	@Override
 	public String getID() {
 		return myID;
 	}
+	
+	static Random ran = new Random(System.currentTimeMillis());
 
 	public static SecondaryRelay randomSecond(Zone zone) {
-		SecondaryRelay Relay = new SecondaryRelay();
-		Relay.setMyZone(zone);
+		SecondaryRelay out = new SecondaryRelay();
+		out.setMyZone(zone);
 		SolSystem sol = (SolSystem) ObjectFiles.ReadSaveableFromFile(zone.getMyRegion().getMySector().getMyGalaxy().getMyName()+"/"+zone.getSystemIDs().get(0));
-		
-		return Relay;
+		int p = ran.nextInt(sol.getMyObjects().size());
+		Planet plan = sol.getMyObjects().get(p);
+		ImageRelay r = new ImageRelay(out);
+		plan.getMySatilights().add(r);
+		out.setMyGhost(r.getID());
+		out.setMyPlanet(plan.getID());
+		out.setMySystem(sol.getID());
+		ObjectFiles.WriteSavabletoFile(sol, zone.getMyRegion().getMySector().getMyGalaxy().getMyName());
+		return out;
+	}
+
+	public String getMyGhost() {
+		return myGhost;
+	}
+
+	public void setMyGhost(String myGhost) {
+		this.myGhost = myGhost;
+	}
+
+	public String getMyPlanet() {
+		return myPlanet;
+	}
+
+	public void setMyPlanet(String myPlanet) {
+		this.myPlanet = myPlanet;
+	}
+
+	public String getMySystem() {
+		return mySystem;
+	}
+
+	public void setMySystem(String mySystem) {
+		this.mySystem = mySystem;
 	}
 
 }

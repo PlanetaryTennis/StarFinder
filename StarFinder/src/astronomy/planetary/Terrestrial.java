@@ -35,7 +35,6 @@ public class Terrestrial extends Planet {
 	}
 	
 	public Terrestrial() {
-		
 	}
 	
 	public Terrestrial(Vector<Moon> myMoons, double myAtmosphere, double myRadius,

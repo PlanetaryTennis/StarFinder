@@ -36,6 +36,7 @@ import astronomy.stellar.WhiteDwarf;
 import map.SettingList;
 import planetary.Colony;
 import planetary.Condition;
+import relay.RelayNetwork;
 import utilities.StringFundementals;
 
 public class ObjectFiles {
@@ -73,6 +74,11 @@ public class ObjectFiles {
 //				}
 //			}
 //		}
+	}
+	
+	public static boolean CheckFile(String filepath) {
+		File tempFile = new File(filepath);
+		return tempFile.exists();
 	}
 	
 	public static void WriteSavabletoFile(Savable object,String filepath) {
@@ -168,6 +174,9 @@ public class ObjectFiles {
 	            	break;
 	            case Condition.CLASSINDEX:
 	            	obj = new Condition(read);
+	            	break;
+	            case RelayNetwork.CLASSINDEX:
+	            	obj = new RelayNetwork(read);
 	            	break;
 	            }        
 	            return obj;

@@ -53,11 +53,14 @@ import astronomy.planetary.Jovian;
 import astronomy.planetary.Moon;
 import astronomy.planetary.Planet;
 import astronomy.planetary.Terrestrial;
+import astronomy.stellar.Nebula;
 import astronomy.stellar.Star;
 import engine.ObjectFiles;
 import planetary.Colony;
 import planetary.Condition;
+import relay.ImageRelay;
 import relay.PrimaryRelay;
+import relay.Relay;
 import relay.RelayNetwork;
 import relay.SecondaryRelay;
 
@@ -185,8 +188,11 @@ public class MapView extends JFrame{
 		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
-
-		ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
+		this.mySettings = (SettingList)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
+		if(ObjectFiles.CheckFile(galaxy.getMyName()+"/Relay.network")) {
+			galaxy.setMyNetwork((RelayNetwork)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Relay.network"));
+			galaxy.getMyNetwork().LinkUp(galaxy);
+		}
 		this.viewGalaxy();
 		
 		this.setSize(1000, 750);
@@ -375,6 +381,7 @@ public class MapView extends JFrame{
 		myView.repaint();
 		myView.setLayout(new FlowLayout());
 
+		if(solsystem.getMyStar().getClass() != Nebula.class) {
 		JButton star = new JButton();
 		ImageIcon img = solsystem.getMyStar().getIcon();
 		star.setIcon(img);
@@ -384,7 +391,8 @@ public class MapView extends JFrame{
 		star.setOpaque(false);
 		star.addActionListener(new StarView(solsystem.getMyStar(), this));
 		myView.add(star);
-
+		}
+		
 		JButton planet;
 		for(int i = 0;i < solsystem.getMyObjects().size();i++) {
 			if(solsystem.getMyObjects().get(i).getClass() != Belt.class) {
@@ -494,19 +502,35 @@ public class MapView extends JFrame{
 		}
 
 		for(int i = 0;i < planet.getMySatilights().size();i++) {
-			moon = new JButton(planet.getMySatilights().get(i).getMyName());
-			ImageIcon moimg = planet.getMySatilights().get(i).getIcon();
-			moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
-			moon.setIcon(moimg);
-			moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
-			moon.setForeground(Color.WHITE);
-			moon.setBackground(Color.BLACK);
-			moon.setBorderPainted(false);
-			moon.setOpaque(false);
-			if(planet.getMySatilights().get(i).getClass()==Asteroid.class) {
-				moon.addActionListener(new MoonView((Moon) planet.getMySatilights().get(i),this));
+			if(planet.getMySatilights().get(i).getClass() == ImageRelay.class) {
+				ImageRelay ir = (ImageRelay)planet.getMySatilights().get(i);
+				Relay relay = galaxy.getMyNetwork().find(ir.getRelayID());
+				ir.setMyRelay(relay);
+				moon = new JButton(relay.getMyName());
+				ImageIcon moimg = relay.getIcon();
+				moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
+				moon.setIcon(moimg);
+				moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
+				moon.setForeground(Color.WHITE);
+				moon.setBackground(Color.BLACK);
+				moon.setBorderPainted(false);
+				moon.setOpaque(false);
+				moon.addActionListener(new SatilightView(ir, this));
 			}else {
-				moon.addActionListener(new SatilightView(planet.getMySatilights().get(i),this));
+				moon = new JButton(planet.getMySatilights().get(i).getMyName());
+				ImageIcon moimg = planet.getMySatilights().get(i).getIcon();
+				moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
+				moon.setIcon(moimg);
+				moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
+				moon.setForeground(Color.WHITE);
+				moon.setBackground(Color.BLACK);
+				moon.setBorderPainted(false);
+				moon.setOpaque(false);
+				if(planet.getMySatilights().get(i).getClass()==Asteroid.class) {
+					moon.addActionListener(new MoonView((Moon) planet.getMySatilights().get(i),this));
+				}else {
+					moon.addActionListener(new SatilightView(planet.getMySatilights().get(i),this));
+				}
 			}
 			
 			myView.add(moon);
@@ -666,10 +690,14 @@ public class MapView extends JFrame{
 	}
 
 	public void viewPrimaryRelay(PrimaryRelay o) {
+		if(!o.getMySystem().equals(lastss.getID())) {
+			this.lastss = (SolSystem)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/"+o.getMySystem());
+			for(int i = 0;i < lastss.getMyObjects().size();i++)
+				if(o.getMyPlanet().equals(lastss.getMyObjects().get(i).getID()))
+					this.lastp = lastss.getMyObjects().get(i);
+		}
 		level = 2;
 		Name.setText(o.getMyName());
-		this.lastp = o.getMyWorld();
-		this.lastss = o.getMySystem();
 		this.lastz = o.getMyZone();
 		this.lastr = lastz.getMyRegion();
 		this.lasts = lastr.getMySector();
@@ -693,10 +721,14 @@ public class MapView extends JFrame{
 	}
 
 	public void viewSecondaryRelay(SecondaryRelay o) {
+		if(!o.getMySystem().equals(lastss.getID())) {
+			this.lastss = (SolSystem)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/"+o.getMySystem());
+			for(int i = 0;i < lastss.getMyObjects().size();i++)
+				if(o.getMyPlanet().equals(lastss.getMyObjects().get(i).getID()))
+					this.lastp = lastss.getMyObjects().get(i);
+		}
 		level = 2;
 		Name.setText(o.getMyName());
-		this.lastp = o.getMyWorld();
-		this.lastss = o.getMySystem();
 		this.lastz = o.getMyZone();
 		this.lastr = lastz.getMyRegion();
 		this.lasts = lastr.getMySector();

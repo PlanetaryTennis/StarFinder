@@ -1,7 +1,16 @@
 package relay;
 
-import astronomy.OrbitObject;
+import javax.swing.ImageIcon;
 
-public interface Relay extends OrbitObject {
+import astronomy.OrbitObject;
+import engine.Savable;
+
+public interface Relay extends Savable {
+
+	String getMyName();
+
+	ImageIcon getIcon();
+
+	String string();
 
 }

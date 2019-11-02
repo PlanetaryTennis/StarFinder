@@ -8,8 +8,11 @@ import java.util.Vector;
 import astronomy.Galaxy;
 import astronomy.OrbitObject;
 import astronomy.Region;
+import astronomy.SolSystem;
+import astronomy.Zone;
 import astronomy.planetary.Moon;
 import astronomy.planetary.Planet;
+import engine.ObjectFiles;
 import engine.Savable;
 import planetary.Colony;
 import utilities.StringFundementals;
@@ -27,9 +30,15 @@ public class RelayNetwork implements Serializable, Savable{
 
 	public RelayNetwork(Galaxy g, int i) {
 		myGalaxy = g;
-		myID = UUID.randomUUID().toString()+".network";
+		myID = "Relay.network";
+		GeneratePrimeNetwork();
+		GenerateSecondNetwork();
 	}
 	
+	public RelayNetwork(String load) {
+		this.loadString(load);
+	}
+
 	Random random = new Random(System.currentTimeMillis());
 
 	private String myID;
@@ -73,6 +82,35 @@ public class RelayNetwork implements Serializable, Savable{
 		return out;
 	}
 
+	public void LinkUp(Galaxy galaxy) {
+		myGalaxy = galaxy;
+		
+		PrimaryRelay p;
+		Zone z = null;
+		for(int i = 0;i < myPrimes.size();i++) {
+			p = myPrimes.get(i);
+			for(int k = 0;k < galaxy.getMySectors().size();k++)
+				for(int j = 0;j < galaxy.getMySectors().get(k).getRegions().size();j++)
+					for(int l = 0;l < galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().size();l++)
+						if(p.ZoneID.equals(galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l).getID()))
+							z = galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l);
+			p.setMyZone(z);
+		}
+		
+		SecondaryRelay s;
+		for(int i =0;i < myPods.size();i++)
+			for(int k = 0;k < myPods.get(i).size();k++) {
+				s = myPods.get(i).get(k);
+					for(int m = 0;m < galaxy.getMySectors().size();m++)
+						for(int j = 0;j < galaxy.getMySectors().get(m).getRegions().size();j++)
+							for(int l = 0;l < galaxy.getMySectors().get(m).getRegions().get(j).getMyZones().size();l++)
+								if(s.ZoneID.equals(galaxy.getMySectors().get(m).getRegions().get(j).getMyZones().get(l).getID()))
+									z = galaxy.getMySectors().get(m).getRegions().get(j).getMyZones().get(l);
+				s.setMyZone(z);
+			}
+			
+	}
+	
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
@@ -138,5 +176,75 @@ public class RelayNetwork implements Serializable, Savable{
 	public String getID() {
 		return myID;
 	}
+
+	public Galaxy getMyGalaxy() {
+		return myGalaxy;
+	}
+
+	public void setMyGalaxy(Galaxy myGalaxy) {
+		this.myGalaxy = myGalaxy;
+	}
+
+	public Vector<PrimaryRelay> getMyPrimes() {
+		return myPrimes;
+	}
+
+	public void setMyPrimes(Vector<PrimaryRelay> myPrimes) {
+		this.myPrimes = myPrimes;
+	}
+
+	public Vector<Vector<SecondaryRelay>> getMyPods() {
+		return myPods;
+	}
+
+	public void setMyPods(Vector<Vector<SecondaryRelay>> myPods) {
+		this.myPods = myPods;
+	}
+
+	public Random getRandom() {
+		return random;
+	}
+
+	public void setRandom(Random random) {
+		this.random = random;
+	}
+
+	public int getPrimeNumber() {
+		return PrimeNumber;
+	}
+
+	public void setPrimeNumber(int primeNumber) {
+		PrimeNumber = primeNumber;
+	}
+
+	public int getPodNumber() {
+		return PodNumber;
+	}
+
+	public void setPodNumber(int podNumber) {
+		PodNumber = podNumber;
+	}
+
+	public Vector<Integer> getPodSize() {
+		return PodSize;
+	}
+
+	public void setPodSize(Vector<Integer> podSize) {
+		PodSize = podSize;
+	}
+
+	public Relay find(String relayID) {
+		for(int i = 0;i < myPrimes.size();i++)
+			if(myPrimes.get(i).getID().equals(relayID))
+				return myPrimes.get(i);
+		
+		for(int i =0;i < myPods.size();i++)
+			for(int k = 0;k < myPods.get(i).size();k++)
+				if(myPods.get(i).get(k).getID().equals(relayID))
+					return myPods.get(i).get(k);
+		
+		return null;
+	}
+	
 	
 }
