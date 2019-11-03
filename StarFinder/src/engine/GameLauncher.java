@@ -21,14 +21,6 @@ public class GameLauncher {
 		name.setEditable(false);
 		Launcher.add(name);
 		
-		JButton New = new JButton("Generate New");
-		New.setEnabled(false);
-		Launcher.add(New);
-		
-		JButton Load = new JButton("Load Galaxy");
-		Load.setEnabled(false);
-		Launcher.add(Load);
-		
 		JButton NewEdit = new JButton("New Galaxy Painter");
 		NewEdit.addActionListener(new LauncherButton(2,Launcher));
 		Launcher.add(NewEdit);

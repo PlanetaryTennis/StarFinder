@@ -116,8 +116,8 @@ public class Ecosystem  implements Serializable, Savable{
 		setApexPreditor(new Animal(proccess.get(1)));
 		setStandard(new Animal(proccess.get(2)));
 		setPest(new Animal(proccess.get(3)));
-//		setPrimary(new Plant(proccess.get(4)));
-//		setSecondary(new Plant(proccess.get(5)));
+		setPrimary(new Plant(proccess.get(4)));
+		setSecondary(new Plant(proccess.get(5)));
 		return 0;
 	}
 
@@ -135,12 +135,12 @@ public class Ecosystem  implements Serializable, Savable{
 		out += "{\n";
 		out += Pest.saveString() + "\n";
 		out += "}\n";
-//		out += "{\n";
-//		out += Primary.saveString() + "\n";
-//		out += "}\n";
-//		out += "{\n";
-//		out += Secondary.saveString() + "\n";
-//		out += "}\n";
+		out += "{\n";
+		out += Primary.saveString() + "\n";
+		out += "}\n";
+		out += "{\n";
+		out += Secondary.saveString() + "\n";
+		out += "}\n";
 		return out;
 	}
 

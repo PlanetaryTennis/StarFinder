@@ -20,11 +20,14 @@ import javax.swing.ScrollPaneConstants;
 
 import actions.AnimalView;
 import actions.Biolook;
+import actions.Colonize;
+import actions.ColonyViewer;
 import actions.MoonView;
 import actions.NewRegion;
 import actions.NewSystem;
 import actions.NewZone;
 import actions.PlanetView;
+import actions.PlantView;
 import actions.PrimeJump;
 import actions.RegionPanel;
 import actions.SatilightView;
@@ -827,6 +830,16 @@ public class MapView extends JFrame{
 			myView.add(ViewBio);
 		}
 		
+		if(colony.getMyColony() != null) {
+			JButton ViewColony = new JButton("View Colony");
+			ViewColony.addActionListener(new ColonyViewer(colony.getMyColony()));
+			myView.add(ViewColony);
+		}else {
+			JButton ViewColony = new JButton("Colonize");
+			ViewColony.addActionListener(new Colonize(colony,this,planet));
+			myView.add(ViewColony);			
+		}
+		
 		this.setSize(this.getWidth()+1, this.getHeight()+1);
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
@@ -873,6 +886,14 @@ public class MapView extends JFrame{
 		JButton Pest = new JButton("Local Pest");
 		Pest.addActionListener(new AnimalView(col.getMyEcosystem().getPest()));
 		myView.add(Pest);
+		
+		JButton Prime = new JButton("Major Plant");
+		Prime.addActionListener(new PlantView(col.getMyEcosystem().getPrimary()));
+		myView.add(Prime);
+		
+		JButton Secondary = new JButton("Submajor Plant");
+		Secondary.addActionListener(new PlantView(col.getMyEcosystem().getSecondary()));
+		myView.add(Secondary);
 		
 		this.setSize(this.getWidth()+1, this.getHeight()+1);
 		this.setSize(this.getWidth()-1, this.getHeight()-1);

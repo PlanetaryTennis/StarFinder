@@ -35,11 +35,11 @@ public class Colony implements Savable, Serializable{
 	private int maxSize;
 	
 	private Ecosystem myEcosystem;
-	private SepcialDevelopments myDevelopments;
+	private Habitation myColony;
 	
 	public Colony(int size, int scale, boolean isHab, boolean hasWater, boolean hasEzo,
 			boolean hasRareGasses, boolean hasRareMetals, boolean hasRadiotropes, boolean hasMassiveMetal,
-			boolean hasMassiveGasses, boolean hasBio, Ecosystem myEcosystem, SepcialDevelopments myDevelopments) {
+			boolean hasMassiveGasses, boolean hasBio, Ecosystem myEcosystem) {
 		super();
 		this.size = size;
 		this.scale = scale;
@@ -53,7 +53,6 @@ public class Colony implements Savable, Serializable{
 		this.hasMassiveGasses = hasMassiveGasses;
 		this.hasBio = hasBio;
 		this.myEcosystem = myEcosystem;
-		this.myDevelopments = myDevelopments;
 		myID = UUID.randomUUID().toString()+".Surface";
 	}
 	
@@ -77,7 +76,7 @@ public class Colony implements Savable, Serializable{
 		
 		Colony c = new Colony(0,0, Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				null, null);
+				null);
 		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;		
 	}
@@ -97,7 +96,7 @@ public class Colony implements Savable, Serializable{
 		
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				biosphere, null);
+				biosphere);
 		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;		
 	}
@@ -117,7 +116,7 @@ public class Colony implements Savable, Serializable{
 		
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				biosphere, null);
+				biosphere);
 		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;		
 	}
@@ -135,7 +134,7 @@ public class Colony implements Savable, Serializable{
 		
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				null, null);
+				null);
 		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;				
 	}
@@ -153,7 +152,7 @@ public class Colony implements Savable, Serializable{
 		
 		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				null, null);
+				null);
 		c.setMaxSize(Colony.calculateMaxSize(j.getMyRadius()/10));
 		return c;		
 	}
@@ -205,6 +204,14 @@ public class Colony implements Savable, Serializable{
 
 	public boolean isHasEzo() {
 		return hasEzo;
+	}
+	
+	public void setMyColony(Habitation myColony) {
+		this.myColony = myColony;
+	}
+	
+	public Habitation getMyColony() {
+		return myColony;
 	}
 
 	public void setHasEzo(boolean hasEzo) {
@@ -267,14 +274,6 @@ public class Colony implements Savable, Serializable{
 		this.myEcosystem = myEcosystem;
 	}
 
-	public SepcialDevelopments getMyDevelopments() {
-		return myDevelopments;
-	}
-
-	public void setMyDevelopments(SepcialDevelopments myDevelopments) {
-		this.myDevelopments = myDevelopments;
-	}
-
 	@Override
 	public int loadString(String load) {
 		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
@@ -293,7 +292,9 @@ public class Colony implements Savable, Serializable{
 		hasMassiveGasses  = Boolean.parseBoolean(in[i++]);
 		hasBio  = Boolean.parseBoolean(in[i++]);
 		maxSize = Integer.parseInt(in[i++]);
-//		DevelopmentsID  = in[i++];
+		boolean dev = Boolean.parseBoolean(in[i++]);
+		if(dev)
+			myColony = new Habitation(parse.get(1));
 		boolean eco = Boolean.parseBoolean(in[i++]);
 		if(eco)
 			myEcosystem = new Ecosystem(parse.get(1));
@@ -320,7 +321,14 @@ public class Colony implements Savable, Serializable{
 		out += hasMassiveGasses + "\n";
 		out += hasBio + "\n";
 		out += maxSize + "\n";
-//		out += myDevelopments.getID() + "\n";
+		if(myColony!=null) {
+			out += true + "\n";
+			out += "{\n";
+			out += myColony.saveString() + "\n";
+			out += "}\n";
+		}else {
+			out += false + "\n";
+		}
 		if(myEcosystem!=null) {
 			out += true + "\n";
 			out += "{\n";

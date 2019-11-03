@@ -61,7 +61,7 @@ public class AnimalView implements ActionListener {
 		display += "The Animal has " + myAnimal.getFineManipulatorPairs()*2 + " fine manipulators\n";
 		display += "The Animal has " + myAnimal.getEyes() + " eyes\n";
 		display += "The Animal bares " + myAnimal.getBirthRate() + " each litter\n";
-		display += "The Animal matrues in " + (double)(myAnimal.getAgeRate())/12.0 + " local years\n";
+		display += "The Animal matrues in " + (double)(myAnimal.getAgeRate()) + " local 12th of years\n";
 		display += "The Animal lives for " + myAnimal.getOldAge() + " local years\n";
 		JTextArea Read = new JTextArea(display);
 		Read.setEditable(false);
