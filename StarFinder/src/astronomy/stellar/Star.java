@@ -43,7 +43,7 @@ public class Star implements AstroObject {
 	}
 	
 	public Star() {
-		
+		myID = UUID.randomUUID().toString()+".Star";
 	}
 	
 	public Star(double m,SolSystem s){

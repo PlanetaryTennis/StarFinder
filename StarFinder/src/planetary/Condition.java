@@ -231,6 +231,7 @@ public class Condition  implements Serializable, Savable{
 		GravityIndex = Integer.parseInt(in[i++]);
 		AtmosphericIndex = Integer.parseInt(in[i++]);
 		AirIndex = Atmosphere.valueOf(in[i++]);
+		Dextros = Boolean.parseBoolean(in[i++]);
 		return i;
 	}
 
@@ -245,6 +246,7 @@ public class Condition  implements Serializable, Savable{
 		out += this.getGravityIndex() + "\n";
 		out += this.getAtmosphericIndex() + "\n";
 		out += this.getAirIndex().name() + "\n";
+		out += this.Dextros + "\n";
 		return out;
 	}
 

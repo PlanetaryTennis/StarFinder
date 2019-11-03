@@ -1,5 +1,6 @@
 package planetary;
 
+import java.util.UUID;
 import java.util.Vector;
 
 import engine.Savable;
@@ -16,6 +17,7 @@ public class Habitation implements Savable {
 
 	public void setMaxDev(int maxDev) {
 		this.maxDev = maxDev;
+		myID = UUID.randomUUID().toString()+".Surface";
 	}
 
 	public static final int CLASSINDEX = 117897;

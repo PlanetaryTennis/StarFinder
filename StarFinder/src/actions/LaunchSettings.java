@@ -79,7 +79,7 @@ public class LaunchSettings implements ActionListener {
 		boolean n = name.isSelected();
 		boolean r = relays.isSelected();
 		
-		if(s>6||rS>8||rE>7||zS>8||zE>7||sS>8||sE>7||p>20)
+		if(s>6||rS>8||rE>7||zS>8||zE>7||sS>8||sE>7||p>20||r)
 		JOptionPane.showMessageDialog(LS, "You options may cause long generation times for your galaxy.", "Warning",
 		        JOptionPane.WARNING_MESSAGE);
 		
