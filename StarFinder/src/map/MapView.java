@@ -132,6 +132,7 @@ public class MapView extends JFrame{
 		
 		if(r) {
 			galaxy.setMyNetwork(new RelayNetwork(galaxy, 0));
+			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
 		}
 
 		JMenuItem save = new JMenuItem("Save");
@@ -225,6 +226,8 @@ public class MapView extends JFrame{
 		if(view.lastss != null)
 			ObjectFiles.WriteSavabletoFile(view.lastss, galaxy.getMyName());
 		ObjectFiles.WriteSavabletoFile(view.mySettings, galaxy.getMyName());
+		if(galaxy.getMyNetwork() != null)
+			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(),galaxy.getMyName());
 		view.setCursor(c);
 	}
 

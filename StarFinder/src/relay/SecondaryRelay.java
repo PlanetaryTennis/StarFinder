@@ -93,8 +93,8 @@ public class SecondaryRelay implements Relay {
 	@Override
 	public String saveString() {
 		String out = "";
-		out += myID;
-		out += getClassIndex();
+		out += myID + "\n";
+		out += getClassIndex() + "\n";
 		out += getMySystem() + "\n";
 		out += getMyPlanet() + "\n";
 		out += getMyGhost() + "\n";

@@ -70,7 +70,7 @@ public class RelayNetwork implements Serializable, Savable{
 	public void GenerateSecondNetwork() {
 		for(int i = 0;i < myGalaxy.getMySectors().size();i++)
 			for(int j = 0;j < myGalaxy.getMySectors().get(i).getRegions().size();j++)
-				myPods.add(randomPod(myGalaxy.getMySectors().get(i).getRegions().get(i)));
+				myPods.add(randomPod(myGalaxy.getMySectors().get(i).getRegions().get(j)));
 	}
 	
 	private Vector<SecondaryRelay> randomPod(Region region) {
@@ -134,6 +134,7 @@ public class RelayNetwork implements Serializable, Savable{
 				temp.add(new SecondaryRelay(object.get(j++)));
 				temp.get(l).setMyPod(temp);
 			}
+			myPods.add(temp);
 		}
 		return i;
 	}
@@ -238,7 +239,7 @@ public class RelayNetwork implements Serializable, Savable{
 			if(myPrimes.get(i).getID().equals(relayID))
 				return myPrimes.get(i);
 		
-		for(int i =0;i < myPods.size();i++)
+		for(int i = 0;i < myPods.size();i++)
 			for(int k = 0;k < myPods.get(i).size();k++)
 				if(myPods.get(i).get(k).getID().equals(relayID))
 					return myPods.get(i).get(k);

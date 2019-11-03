@@ -75,7 +75,7 @@ public class HabitableMoon extends Moon implements LifeBearing {
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getSatilightNumber();k++) {
-			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
+			getMySatilights().add(OrbitObject.parseLoad(object.get(j)));
 			j++;
 		}
 		myMonth = Double.parseDouble(in[i++]);

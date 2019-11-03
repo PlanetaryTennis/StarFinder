@@ -82,7 +82,10 @@ public class Belt extends Planet{
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getSatilightNumber();k++) {
-			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
+			if(j>=object.size()) {
+				break;
+			}
+			getMySatilights().add(OrbitObject.parseLoad(object.get(j)));
 			j++;
 		}
 		return i;
@@ -110,19 +113,19 @@ public class Belt extends Planet{
 			out += getMyMoons().get(i).saveString() + "\n";
 			out += "}\n";
 		}
-		out += getMySatilights().size() + "\n";
-		for(int i = 0;i < getMySatilights().size();i++){
+		int g = 0;
+		String Append = "";
+		for(int i = 0;i < getMySatilights().size();i++) {
 			if(getMySatilights().get(i)==null) {
+				g++;
 				break;
 			}
-			String pain = getMySatilights().get(i).saveString();
-			if(pain == null) {
-				break;
-			}
-			out += "{\n";
-			out += getMySatilights().get(i).saveString() + "\n";
-			out += "}\n";			
+			Append += "{\n";
+			Append += getMySatilights().get(i).saveString() + "\n";
+			Append += "}\n";			
 		}
+		out += getMySatilights().size() - g + "\n";
+		out += Append;
 		return out;
 	}
 	

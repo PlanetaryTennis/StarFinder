@@ -8,6 +8,7 @@ import astronomy.AstroObject;
 import astronomy.OrbitObject;
 import astronomy.stellar.Star;
 import planetary.Colony;
+import relay.ImageRelay;
 import utilities.StringFundementals;
 
 public abstract class Planet implements AstroObject {

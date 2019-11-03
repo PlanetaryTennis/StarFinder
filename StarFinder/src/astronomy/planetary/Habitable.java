@@ -76,7 +76,7 @@ public class Habitable extends Terrestrial implements LifeBearing {
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
 		for(int k = 0;k < getSatilightNumber();k++) {
-			getMySatilights().add((OrbitObject) Planet.parseLoad(object.get(j)));
+			getMySatilights().add(OrbitObject.parseLoad(object.get(j)));
 			j++;
 		}
 		setMyCondition(new Condition(object.get(j)));
@@ -121,12 +121,19 @@ public class Habitable extends Terrestrial implements LifeBearing {
 			out += getMyMoons().get(i).saveString() + "\n";
 			out += "}\n";
 		}
-		out += getMySatilights().size() + "\n";
+		int g = 0;
+		String Append = "";
 		for(int i = 0;i < getMySatilights().size();i++) {
-			out += "{\n";
-			out += getMySatilights().get(i).saveString() + "\n";
-			out += "}\n";			
+			if(getMySatilights().get(i)==null) {
+				g++;
+				break;
+			}
+			Append += "{\n";
+			Append += getMySatilights().get(i).saveString() + "\n";
+			Append += "}\n";			
 		}
+		out += getMySatilights().size() - g + "\n";
+		out += Append;
 		out += "{\n";
 		out += getMyCondition().saveString() + "\n";
 		out += "}\n";

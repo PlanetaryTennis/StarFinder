@@ -20,6 +20,10 @@ public class ImageRelay implements OrbitObject{
 		myID = UUID.randomUUID().toString()+".image";
 	}
 
+	public ImageRelay(String load) {
+		this.loadString(load);
+	}
+
 	@Override
 	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
@@ -33,7 +37,11 @@ public class ImageRelay implements OrbitObject{
 		String out = "";
 		out += myID + "\n";
 		out += CLASSINDEX + "\n";
-		out += myRelay.getID() + "\n";
+		if(myRelay == null) {
+			out += getRelayID() + "\n";
+		}else {
+			out += myRelay.getID() + "\n";
+		}
 		return out;
 	}
 

@@ -77,7 +77,7 @@ public class ObjectFiles {
 	}
 	
 	public static boolean CheckFile(String filepath) {
-		File tempFile = new File(filepath);
+		File tempFile = new File("data/saves/"+filepath);
 		return tempFile.exists();
 	}
 	
