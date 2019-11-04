@@ -10,12 +10,12 @@ public class RegionPanel implements ActionListener {
 
 	MapView myView;
 	Region mySystem;
-	
-	public RegionPanel(Region s,MapView v){
+
+	public RegionPanel(Region s, MapView v) {
 		mySystem = s;
 		myView = v;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		myView.viewRegion(mySystem);

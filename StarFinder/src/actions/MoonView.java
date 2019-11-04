@@ -10,7 +10,7 @@ public class MoonView implements ActionListener {
 
 	Moon myMoon;
 	MapView myView;
-	
+
 	public MoonView(Moon orbitObject, MapView view) {
 		myMoon = orbitObject;
 		myView = view;

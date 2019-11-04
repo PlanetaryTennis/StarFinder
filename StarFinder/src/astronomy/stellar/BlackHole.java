@@ -21,25 +21,24 @@ public class BlackHole extends Star {
 		super(load);
 		this.loadString(load);
 	}
-	
+
 	public BlackHole(double m, SolSystem s) {
 		super(m, s);
 		myLuminosity = 0;
-		myRadius = SOLMASSBH*m;
-		myTemp = SOLTEMP*Math.pow(m, 0.505);
-		myGravity = AstroObject.G*(myMass/myRadius);
+		myRadius = SOLMASSBH * m;
+		myTemp = SOLTEMP * Math.pow(m, 0.505);
+		myGravity = AstroObject.G * (myMass / myRadius);
 		myColor = color.BLACK;
 		++total;
 	}
 
 	public ImageIcon getIcon() {
-		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
+		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Black Hole.png"));
 	}
-
 
 	@Override
 	public int loadString(String load) {
-		String [] in = StringFundementals.breakByLine(load);
+		String[] in = StringFundementals.breakByLine(load);
 		int i = 2;
 		this.myID = in[0];
 		this.myName = in[i++];
@@ -51,7 +50,7 @@ public class BlackHole extends Star {
 		this.myTemp = Double.parseDouble(in[i++]);
 		this.myVolume = Double.parseDouble(in[i++]);
 		myColor = color.BLACK;
-		return i;		
+		return i;
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public class BlackHole extends Star {
 	}
 
 	public static final int CLASSINDEX = 934205;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;

@@ -21,46 +21,48 @@ public class Plant extends Life {
 	private int sizeCatagory;
 	private int posionCatagory;
 	private int venomCatagory;
-	
+
 	private int birthRate;
 	private int ageRate;
 	private int oldAge;
-	
+
 	public static Random ran = new Random(System.currentTimeMillis());
-	
+
 	public Plant() {
-		myID = UUID.randomUUID().toString()+".Life";
+		myID = UUID.randomUUID().toString() + ".Life";
 	}
 
 	public Plant(String load) {
 		this.loadString(load);
 	}
-	
+
 	public static Plant random(Condition c) {
 		Plant out = new Plant();
-		out.doesFruit = ran.nextBoolean()||ran.nextBoolean();
-		out.hasMaterial = ran.nextBoolean()||ran.nextBoolean();		
-		out.isCarnivorous = ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean();
-		if(ran.nextBoolean()&&ran.nextBoolean()) {
+		out.doesFruit = ran.nextBoolean() || ran.nextBoolean();
+		out.hasMaterial = ran.nextBoolean() || ran.nextBoolean();
+		out.isCarnivorous = ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean();
+		if (ran.nextBoolean() && ran.nextBoolean()) {
 			out.setPosionous(true);
-			out.setPosionCatagory((int)Math.ceil(ExtendedMathmatics.log(ran.nextInt(31)+2, 2)-ExtendedMathmatics.log(ran.nextInt(32)+1, 2)+5));
-		}else {
+			out.setPosionCatagory((int) Math.ceil(ExtendedMathmatics.log(ran.nextInt(31) + 2, 2)
+					- ExtendedMathmatics.log(ran.nextInt(32) + 1, 2) + 5));
+		} else {
 			out.setPosionous(false);
 			out.setPosionCatagory(0);
 		}
-		if(ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean()) {
+		if (ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean()) {
 			out.setVenomous(true);
-			out.setVenomCatagory((int)Math.floor(ExtendedMathmatics.log(ran.nextInt(31)+2, 2)-ExtendedMathmatics.log(ran.nextInt(32)+1, 2)+5));
-		}else {
+			out.setVenomCatagory((int) Math.floor(ExtendedMathmatics.log(ran.nextInt(31) + 2, 2)
+					- ExtendedMathmatics.log(ran.nextInt(32) + 1, 2) + 5));
+		} else {
 			out.setVenomous(false);
 			out.setVenomCatagory(0);
 		}
-		out.setCanCamo(ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean());
-		out.setSizeCatagory((int) Math.ceil(ran.nextDouble()*(11-c.getGravityIndex())*10));
-		
-		out.birthRate = ran.nextInt((int) Math.pow(2,ran.nextInt(10)+1))+1;
-		out.oldAge = ran.nextInt((int) Math.pow(2,ran.nextInt(20)+1))+1;
-		out.ageRate = (int) (out.oldAge * (double)(ran.nextInt(4)+1)/2);
+		out.setCanCamo(ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean());
+		out.setSizeCatagory((int) Math.ceil(ran.nextDouble() * (11 - c.getGravityIndex()) * 10));
+
+		out.birthRate = ran.nextInt((int) Math.pow(2, ran.nextInt(10) + 1)) + 1;
+		out.oldAge = ran.nextInt((int) Math.pow(2, ran.nextInt(20) + 1)) + 1;
+		out.ageRate = (int) (out.oldAge * (double) (ran.nextInt(4) + 1) / 2);
 		return out;
 	}
 
@@ -105,14 +107,14 @@ public class Plant extends Life {
 	}
 
 	public static final int CLASSINDEX = 112390;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;

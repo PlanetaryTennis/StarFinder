@@ -16,26 +16,26 @@ public class NewSystem implements ActionListener {
 	boolean isRandom;
 	Zone myZone;
 	JMenu myMenu;
-	
-	public NewSystem(boolean r,Zone s,JMenu m, MapView v){
+
+	public NewSystem(boolean r, Zone s, JMenu m, MapView v) {
 		isRandom = r;
 		myZone = s;
 		myMenu = m;
 		myView = v;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		SolSystem r;
-		if(isRandom) {
-			r = SolSystem.makeRandom(myZone,myView.mySettings);
-		}else {
-			r = new SolSystem(null,SolSystem.randomName());
+		if (isRandom) {
+			r = SolSystem.makeRandom(myZone, myView.mySettings);
+		} else {
+			r = new SolSystem(null, SolSystem.randomName());
 			r.setMyStar(Star.randomStar(r, null));
 		}
 		myMenu.add(MapView.populateSystemMenu(r, myView));
 		ObjectFiles.WriteSavabletoFile(r, myZone.getMyRegion().getMySector().getMyGalaxy().getMyName());
 		myZone.Add(r.getID());
 	}
-	
+
 }

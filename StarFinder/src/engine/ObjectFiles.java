@@ -33,7 +33,7 @@ import gate.GateNetwork;
 import utilities.StringFundementals;
 
 public class ObjectFiles {
-	
+
 	public static final Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class ObjectFiles {
 //		Star s = new Star(1,null);
 //		Planet p = Terrestrial.makeRandom(AstroObject.AU, s, new SettingList("TEST", 0, 0, 0, 0, 0, 0, 0, 0, false, false, true, new int[] {75,90,100}));
 //		System.out.println(p.getMyColony().calculateMaxSize(p));
-		
+
 //		SolSystem s;
 //		Habitable h;
 //		while(true) {
@@ -69,21 +69,22 @@ public class ObjectFiles {
 //		}
 		in.close();
 	}
-	
+
 	public static boolean CheckFile(String filepath) {
-		File tempFile = new File("data/saves/"+filepath);
+		File tempFile = new File("data/saves/" + filepath);
 		return tempFile.exists();
 	}
-	
-	public static void WriteSavabletoFile(Savable object,String filepath) {
+
+	public static void WriteSavabletoFile(Savable object, String filepath) {
 
 		FileOutputStream fout = null;
 
 		try {
-			File tmpDir = new File("data/saves/"+filepath);
+			File tmpDir = new File("data/saves/" + filepath);
 			boolean exists = tmpDir.exists();
-			if(!exists||!tmpDir.isDirectory()) tmpDir.mkdir();
-			fout = new FileOutputStream("data/saves/"+filepath+"/"+object.getID());
+			if (!exists || !tmpDir.isDirectory())
+				tmpDir.mkdir();
+			fout = new FileOutputStream("data/saves/" + filepath + "/" + object.getID());
 			byte[] bs = object.saveString().getBytes();
 			fout.write(bs);
 			fout.flush();
@@ -104,119 +105,119 @@ public class ObjectFiles {
 			}
 		}
 	}
-	
+
 	public static Savable ReadSaveableFromFile(String filepath) {
-		 try {
-	            FileInputStream fileIn = new FileInputStream("data/saves/"+filepath);
-	            Savable obj = null;
-	            String read = getFileContent(fileIn);
-	            String[] box = StringFundementals.breakByLine(read);
-	            switch(Integer.parseInt(box[1])) {
-	            case Star.CLASSINDEX:
-	            	obj = new Star(read);
-	            	break;
-	            case WhiteDwarf.CLASSINDEX:
-	            	obj = new WhiteDwarf(read);
-	            	break;
-	            case Neutron.CLASSINDEX:
-	            	obj = new Neutron(read);
-	            	break;
-	            case BrownDwarf.CLASSINDEX:
-	            	obj = new BrownDwarf(read);
-	            	break;
-	            case BlackHole.CLASSINDEX:
-	            	obj = new BlackHole(read);
-	            	break;
-	            case Terrestrial.CLASSINDEX:
-	            	obj = new Terrestrial(read);
-	            	break;
-	            case Moon.CLASSINDEX:
-	            	obj = new Moon(read);
-	            	break;
-	            case Jovian.CLASSINDEX:
-	            	obj = new Jovian(read);
-	            	break;
-	            case HabitableMoon.CLASSINDEX:
-	            	obj = new HabitableMoon(read);
-	            	break;
-	            case Habitable.CLASSINDEX:
-	            	obj = new Habitable(read);
-	            	break;
-	            case Belt.CLASSINDEX:
-	            	obj = new Belt(read);
-	            	break;
-	            case Asteroid.CLASSINDEX:
-	            	obj = new Asteroid(read);
-	            	break;
-	            case SolSystem.CLASSINDEX:
-	            	obj = new SolSystem(read);
-	            	break;
-	            case Zone.CLASSINDEX:
-	            	obj = new Zone(read);
-	            	break;
-	            case Region.CLASSINDEX:
-	            	obj = new Region(read);
-	            	break;
-	            case Sector.CLASSINDEX:
-	            	obj = new Sector(read,0.0d);
-	            	break;
-	            case Galaxy.CLASSINDEX:
-	            	obj = new Galaxy(read);
-	            	break;
-	            case Colony.CLASSINDEX:
-	            	obj = new Colony(read);
-	            	break;
-	            case Condition.CLASSINDEX:
-	            	obj = new Condition(read);
-	            	break;
-	            case GateNetwork.CLASSINDEX:
-	            	obj = new GateNetwork(read);
-	            	break;
-	            }        
-	            return obj;
-	 
-	        } catch (Exception ex) {
-	            ex.printStackTrace();
-	            return null;
-	        }
+		try {
+			FileInputStream fileIn = new FileInputStream("data/saves/" + filepath);
+			Savable obj = null;
+			String read = getFileContent(fileIn);
+			String[] box = StringFundementals.breakByLine(read);
+			switch (Integer.parseInt(box[1])) {
+			case Star.CLASSINDEX:
+				obj = new Star(read);
+				break;
+			case WhiteDwarf.CLASSINDEX:
+				obj = new WhiteDwarf(read);
+				break;
+			case Neutron.CLASSINDEX:
+				obj = new Neutron(read);
+				break;
+			case BrownDwarf.CLASSINDEX:
+				obj = new BrownDwarf(read);
+				break;
+			case BlackHole.CLASSINDEX:
+				obj = new BlackHole(read);
+				break;
+			case Terrestrial.CLASSINDEX:
+				obj = new Terrestrial(read);
+				break;
+			case Moon.CLASSINDEX:
+				obj = new Moon(read);
+				break;
+			case Jovian.CLASSINDEX:
+				obj = new Jovian(read);
+				break;
+			case HabitableMoon.CLASSINDEX:
+				obj = new HabitableMoon(read);
+				break;
+			case Habitable.CLASSINDEX:
+				obj = new Habitable(read);
+				break;
+			case Belt.CLASSINDEX:
+				obj = new Belt(read);
+				break;
+			case Asteroid.CLASSINDEX:
+				obj = new Asteroid(read);
+				break;
+			case SolSystem.CLASSINDEX:
+				obj = new SolSystem(read);
+				break;
+			case Zone.CLASSINDEX:
+				obj = new Zone(read);
+				break;
+			case Region.CLASSINDEX:
+				obj = new Region(read);
+				break;
+			case Sector.CLASSINDEX:
+				obj = new Sector(read, 0.0d);
+				break;
+			case Galaxy.CLASSINDEX:
+				obj = new Galaxy(read);
+				break;
+			case Colony.CLASSINDEX:
+				obj = new Colony(read);
+				break;
+			case Condition.CLASSINDEX:
+				obj = new Condition(read);
+				break;
+			case GateNetwork.CLASSINDEX:
+				obj = new GateNetwork(read);
+				break;
+			}
+			return obj;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
-	
+
 	public static String getFileContent(FileInputStream fis) throws IOException {
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(fis))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(fis))) {
 			StringBuilder sb = new StringBuilder();
 			String line;
-			while(( line = br.readLine()) != null ) {
-				sb.append( line );
-				sb.append( '\n' );
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+				sb.append('\n');
 			}
 			return sb.toString();
 		}
 	}
-	
-    public static Object ReadObjectFromFile(String filepath) {
- 
-        try {
-            FileInputStream fileIn = new FileInputStream("data/"+filepath);
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
- 
-            Object obj = objectIn.readObject();
-            objectIn.close();
-            return obj;
- 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-	
-	public static void WriteObjecttoFile(Object object,String filepath) {
+
+	public static Object ReadObjectFromFile(String filepath) {
+
+		try {
+			FileInputStream fileIn = new FileInputStream("data/" + filepath);
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+			Object obj = objectIn.readObject();
+			objectIn.close();
+			return obj;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+	public static void WriteObjecttoFile(Object object, String filepath) {
 
 		FileOutputStream fout = null;
 		ObjectOutputStream oos = null;
 
 		try {
 
-			fout = new FileOutputStream("data/"+filepath+"."+object.getClass().getName());
+			fout = new FileOutputStream("data/" + filepath + "." + object.getClass().getName());
 			oos = new ObjectOutputStream(fout);
 			oos.writeObject(object);
 

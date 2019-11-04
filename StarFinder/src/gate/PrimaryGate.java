@@ -23,11 +23,11 @@ public class PrimaryGate implements Gate {
 	private String myGhost;
 
 	private String myID;
-	
+
 	public PrimaryGate() {
-		myID = UUID.randomUUID().toString()+".station";
+		myID = UUID.randomUUID().toString() + ".station";
 	}
-	
+
 	public PrimaryGate(String load) {
 		this.loadString(load);
 	}
@@ -55,15 +55,14 @@ public class PrimaryGate implements Gate {
 
 	@Override
 	public String getMyName() {
-		return myZone.getMyRegion().getName() + " of " + myZone.getMyRegion().getMySector().getName() +
-				" to " +
-				myPartner.getMyZone().getMyRegion().getName() + " of " + myPartner.getMyZone().getMyRegion().getMySector().getName() +
-				"Gate";
+		return myZone.getMyRegion().getName() + " of " + myZone.getMyRegion().getMySector().getName() + " to "
+				+ myPartner.getMyZone().getMyRegion().getName() + " of "
+				+ myPartner.getMyZone().getMyRegion().getMySector().getName() + "Gate";
 	}
 
 	@Override
 	public ImageIcon getIcon() {
-		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.Gate+"PRIMARYGate.png"));
+		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.Gate + "PRIMARYGate.png"));
 	}
 
 	@Override
@@ -79,7 +78,7 @@ public class PrimaryGate implements Gate {
 	}
 
 	public String ZoneID;
-	
+
 	@Override
 	public String saveString() {
 		String out = "";
@@ -93,7 +92,7 @@ public class PrimaryGate implements Gate {
 	}
 
 	public static final int CLASSINDEX = 678809;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
@@ -107,18 +106,19 @@ public class PrimaryGate implements Gate {
 	public Zone getMyZone() {
 		return myZone;
 	}
-	
+
 	public void setMyZone(Zone zone) {
 		myZone = zone;
 	}
 
 	static Random ran = new Random(System.currentTimeMillis());
-	
+
 	public static PrimaryGate randomPrime(Region region) {
 		PrimaryGate out = new PrimaryGate();
 		int z = ran.nextInt(region.getMyZones().size());
 		int s = ran.nextInt(region.getMyZones().get(z).getSystemIDs().size());
-		SolSystem sol = (SolSystem)ObjectFiles.ReadSaveableFromFile(region.getMySector().getMyGalaxy().getMyName()+"/"+region.getMyZones().get(z).getSystemIDs().get(s));
+		SolSystem sol = (SolSystem) ObjectFiles.ReadSaveableFromFile(region.getMySector().getMyGalaxy().getMyName()
+				+ "/" + region.getMyZones().get(z).getSystemIDs().get(s));
 		int p = ran.nextInt(sol.getMyObjects().size());
 		Planet plan = sol.getMyObjects().get(p);
 		ImageGate r = new ImageGate(out);

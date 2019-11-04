@@ -7,7 +7,7 @@ import astronomy.planetary.Planet;
 import map.MapView;
 
 public class viewWorldData implements ActionListener {
-	
+
 	private Planet myWorld;
 	private MapView myView;
 

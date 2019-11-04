@@ -15,20 +15,20 @@ public class NewZone implements ActionListener {
 	boolean isRandom;
 	Region myRegion;
 	JMenu myMenu;
-	
-	public NewZone(boolean r,Region s,JMenu m, MapView v){
+
+	public NewZone(boolean r, Region s, JMenu m, MapView v) {
 		isRandom = r;
 		myRegion = s;
 		myMenu = m;
 		myView = v;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Zone r;
-		if(isRandom) {
-			r = Zone.makeRandom(myRegion,myView.mySettings);
-		}else {
+		if (isRandom) {
+			r = Zone.makeRandom(myRegion, myView.mySettings);
+		} else {
 			r = new Zone(Zone.randomName(), myRegion);
 		}
 		JMenu j = new JMenu(r.getMyName());

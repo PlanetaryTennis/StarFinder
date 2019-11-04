@@ -10,8 +10,8 @@ public class StarView implements ActionListener {
 
 	MapView myView;
 	Star myStar;
-	
-	public StarView(Star s,MapView v) {
+
+	public StarView(Star s, MapView v) {
 		myStar = s;
 		myView = v;
 	}

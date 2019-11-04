@@ -24,12 +24,12 @@ public class ColonyViewer implements ActionListener {
 		JFrame look = new JFrame("Colony View");
 		look.setLayout(new FlowLayout());
 		String display = "";
-		
+
 		int i = 0;
-		
+
 		JButton dev;
 		Development d;
-		for(int k = 0;k < myColony.getMyDevelopments().size();k++) {
+		for (int k = 0; k < myColony.getMyDevelopments().size(); k++) {
 			d = myColony.getMyDevelopments().get(k);
 			dev = new JButton(d.getMyName());
 			dev.setToolTipText(d.read());
@@ -37,11 +37,11 @@ public class ColonyViewer implements ActionListener {
 			dev.addActionListener(new DevelopmentViewer(d));
 			look.add(dev);
 		}
-		
+
 		dev = new JButton("Add New Development");
 		dev.addActionListener(new AddDev(myColony));
 		look.add(dev);
-		
+
 		display = i + "/" + myColony.getMaxDev();
 		JTextArea Read = new JTextArea(display);
 		Read.setEditable(false);

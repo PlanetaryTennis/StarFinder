@@ -14,7 +14,7 @@ public class SatilightView implements ActionListener {
 
 	OrbitObject O;
 	MapView map;
-	
+
 	public SatilightView(OrbitObject orbitObject, MapView mapView) {
 		map = mapView;
 		O = orbitObject;
@@ -22,13 +22,13 @@ public class SatilightView implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		switch(Functions.ClassSwitch(O.getClass(),new Class[]{ImageGate.class})) {
+		switch (Functions.ClassSwitch(O.getClass(), new Class[] { ImageGate.class })) {
 		case 0:
-			ImageGate IR = (ImageGate)O;
-			if(IR.getMyGate().getClass() == PrimaryGate.class) {
+			ImageGate IR = (ImageGate) O;
+			if (IR.getMyGate().getClass() == PrimaryGate.class) {
 				map.viewPrimaryGate((PrimaryGate) IR.getMyGate());
-			}else {
-				map.viewSecondaryGate((SecondaryGate) IR.getMyGate());				
+			} else {
+				map.viewSecondaryGate((SecondaryGate) IR.getMyGate());
 			}
 			break;
 		case -1:

@@ -13,26 +13,26 @@ public interface OrbitObject extends AstroObject {
 	String string();
 
 	String getMyName();
-	
+
 	public abstract ImageIcon getIcon();
-	
+
 	public static OrbitObject parseLoad(String string) {
 		OrbitObject obj = null;
-	String[] box = StringFundementals.breakByLine(string);
-    switch(Integer.parseInt(box[1])) {
-    case Moon.CLASSINDEX:
-    	obj = new Moon(string);
-    	break;
-    case HabitableMoon.CLASSINDEX:
-    	obj = new HabitableMoon(string);
-    	break;
-    case Asteroid.CLASSINDEX:
-    	obj = new Asteroid(string);
-    	break;
-    case ImageGate.CLASSINDEX:
-    	obj = new ImageGate(string);
-    	break;
-    }        
-    return obj;
+		String[] box = StringFundementals.breakByLine(string);
+		switch (Integer.parseInt(box[1])) {
+		case Moon.CLASSINDEX:
+			obj = new Moon(string);
+			break;
+		case HabitableMoon.CLASSINDEX:
+			obj = new HabitableMoon(string);
+			break;
+		case Asteroid.CLASSINDEX:
+			obj = new Asteroid(string);
+			break;
+		case ImageGate.CLASSINDEX:
+			obj = new ImageGate(string);
+			break;
+		}
+		return obj;
 	}
 }

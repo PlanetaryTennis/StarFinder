@@ -13,14 +13,14 @@ import map.color;
 import utilities.StringFundementals;
 
 public class Star implements AstroObject {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3744832937120819479L;
 
 	public static int total = 0;
-	
+
 	protected String myName;
 	protected double myMass;
 	protected double myRadius;
@@ -29,49 +29,49 @@ public class Star implements AstroObject {
 	protected double myVolume;
 	protected double myLuminosity;
 	protected double myGravity;
-	
+
 	protected color myColor;
-	
+
 	private SolSystem mySystem;
-	
-	public Star(String load) {	
+
+	public Star(String load) {
 		this.loadString(load);
 	}
-	
+
 	public Star(SolSystem s) {
 		mySystem = s;
 	}
-	
+
 	public Star() {
-		myID = UUID.randomUUID().toString()+".Star";
+		myID = UUID.randomUUID().toString() + ".Star";
 	}
-	
-	public Star(double m,SolSystem s){
+
+	public Star(double m, SolSystem s) {
 		mySystem = s;
-		myMass = SOL*m;
-		myLuminosity = SUNLIGHT*(Math.pow(m,3));
-		myRadius = SOLRADI*(Math.pow(m, 0.74));
-		myTemp = SOLTEMP*(Math.pow(m, 0.505));
-		myGravity = AstroObject.G*myMass/myRadius;
-		myVolume = Math.pow(myRadius,3)*(0.75*Math.PI)*1000;
-		myDensity = myMass/myVolume;
+		myMass = SOL * m;
+		myLuminosity = SUNLIGHT * (Math.pow(m, 3));
+		myRadius = SOLRADI * (Math.pow(m, 0.74));
+		myTemp = SOLTEMP * (Math.pow(m, 0.505));
+		myGravity = AstroObject.G * myMass / myRadius;
+		myVolume = Math.pow(myRadius, 3) * (0.75 * Math.PI) * 1000;
+		myDensity = myMass / myVolume;
 		myColor = StellarClass(myTemp);
 		++total;
-		myID = UUID.randomUUID().toString()+".Star";
+		myID = UUID.randomUUID().toString() + ".Star";
 	}
 
 	private color StellarClass(Double t) {
-		if(t < 3500) {
+		if (t < 3500) {
 			return color.RED;
-		}else if(t < 5000) {
+		} else if (t < 5000) {
 			return color.ORANGE;
-		}else if(t < 6000) {
+		} else if (t < 6000) {
 			return color.YELLOW;
-		}else if(t < 7500) {
+		} else if (t < 7500) {
 			return color.WHITE;
-		}else if(t < 11000){
+		} else if (t < 11000) {
 			return color.CYAN;
-		}else {
+		} else {
 			return color.BLUE;
 		}
 	}
@@ -79,6 +79,7 @@ public class Star implements AstroObject {
 	public double getMyMass() {
 		return myMass;
 	}
+
 	public double getMyRadius() {
 		return myRadius;
 	}
@@ -98,6 +99,7 @@ public class Star implements AstroObject {
 	public double getMyLuminosity() {
 		return myLuminosity;
 	}
+
 	public double getMyGravity() {
 		return myGravity;
 	}
@@ -111,7 +113,7 @@ public class Star implements AstroObject {
 	}
 
 	public String printColor() {
-		switch(myColor) {
+		switch (myColor) {
 		case BLUE:
 			return "Blue";
 		case GREEN:
@@ -139,56 +141,56 @@ public class Star implements AstroObject {
 	public static Star randomStar(SolSystem s, int[] suns) {
 		Random ran = new Random();
 		int die = ran.nextInt(suns[8]);
-		if(die < suns[6]) {
-			return new Star(ran.nextDouble()+0.01,s);
-		}else if(die < suns[7]) {
-			return new Star(ran.nextDouble()*3+1,s);
-		}else {
-			return new Star((ran.nextDouble()*3+1)*4,s);
+		if (die < suns[6]) {
+			return new Star(ran.nextDouble() + 0.01, s);
+		} else if (die < suns[7]) {
+			return new Star(ran.nextDouble() * 3 + 1, s);
+		} else {
+			return new Star((ran.nextDouble() * 3 + 1) * 4, s);
 		}
 	}
 
 	static double innerhab = 0.95;
 	static double outerhab = 1.35;
 	static double frost = 4.85;
-	
+
 	public double[] getHabitablezone() {
 		double[] out = new double[2];
 		double lum = myLuminosity;
 		double solar = AstroObject.SUNLIGHT;
-		double factor = Math.sqrt(lum/solar);
-		out[0] = innerhab*factor*AstroObject.AU;
-		out[1] = outerhab*factor*AstroObject.AU;
+		double factor = Math.sqrt(lum / solar);
+		out[0] = innerhab * factor * AstroObject.AU;
+		out[1] = outerhab * factor * AstroObject.AU;
 		return out;
 	}
 
 	public double getFrostLine() {
 		double lum = myLuminosity;
 		double solar = AstroObject.SUNLIGHT;
-		double factor = Math.sqrt(lum/solar);
-		return frost*factor*AstroObject.AU;
+		double factor = Math.sqrt(lum / solar);
+		return frost * factor * AstroObject.AU;
 	}
 
 	public ImageIcon getIcon() {
-		switch(getMyColor()) {
+		switch (getMyColor()) {
 		case BLUE:
-			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Blue Star.png"));
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Blue Star.png"));
 		case ORANGE:
-			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Orange Star.png"));
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Orange Star.png"));
 		case WHITE:
-			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"White Star.png"));
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "White Star.png"));
 		case YELLOW:
-			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Yellow Star.png"));
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Yellow Star.png"));
 		case RED:
-			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Red Star.png"));
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Red Star.png"));
 		default:
-			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Cyan Star.png"));
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Cyan Star.png"));
 		}
 	}
 
 	@Override
 	public int loadString(String load) {
-		String [] in = StringFundementals.breakByLine(load);
+		String[] in = StringFundementals.breakByLine(load);
 		int i = 1;
 		this.myID = in[0];
 		this.myName = in[i++];
@@ -201,7 +203,7 @@ public class Star implements AstroObject {
 		this.myTemp = Double.parseDouble(in[i++]);
 		this.myVolume = Double.parseDouble(in[i++]);
 		myColor = StellarClass(myTemp);
-		return i;		
+		return i;
 	}
 
 	@Override
@@ -221,14 +223,14 @@ public class Star implements AstroObject {
 	}
 
 	public static final int CLASSINDEX = 934201;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;

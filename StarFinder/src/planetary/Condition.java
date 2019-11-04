@@ -10,7 +10,7 @@ import astronomy.planetary.HabitableMoon;
 import engine.Savable;
 import utilities.StringFundementals;
 
-public class Condition  implements Serializable, Savable{
+public class Condition implements Serializable, Savable {
 
 	/**
 	 * 
@@ -24,22 +24,24 @@ public class Condition  implements Serializable, Savable{
 	private Atmosphere AirIndex;
 	private boolean Dextros;
 
-	public static Atmosphere[] LIST = new Atmosphere[] {Atmosphere.AMMONIA,Atmosphere.METHANE,Atmosphere.AMMONIA,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN,Atmosphere.NIGTORGEN};
+	public static Atmosphere[] LIST = new Atmosphere[] { Atmosphere.AMMONIA, Atmosphere.METHANE, Atmosphere.AMMONIA,
+			Atmosphere.NIGTORGEN, Atmosphere.NIGTORGEN, Atmosphere.NIGTORGEN, Atmosphere.NIGTORGEN,
+			Atmosphere.NIGTORGEN };
 	public static Random ran = new Random(System.currentTimeMillis());
 
 	public Condition(String load) {
 		this.loadString(load);
 	}
-	
+
 	public Condition(Habitable world) {
 		Dextros = ran.nextBoolean();
 		AirIndex = LIST[ran.nextInt(LIST.length)];
 		GravityIndex = parseGravity(world.getMyGravity());
-		TempitureIndex = parseTempiture(world.getMyTemps()[1]+(world.getMyTemps()[0])*(0.5));
-		VarianceIndex = parseVar(world.getMyTemps()[2],world.getMyTemps()[5]);
+		TempitureIndex = parseTempiture(world.getMyTemps()[1] + (world.getMyTemps()[0]) * (0.5));
+		VarianceIndex = parseVar(world.getMyTemps()[2], world.getMyTemps()[5]);
 		AtmosphericIndex = parseAtmosphere(world.getMyAtmosphere());
 		WaterIndex = parseWater(world.getMyWater());
-		myID = UUID.randomUUID().toString()+".Surface";
+		myID = UUID.randomUUID().toString() + ".Surface";
 	}
 
 	public Condition(HabitableMoon world) {
@@ -47,60 +49,60 @@ public class Condition  implements Serializable, Savable{
 		AirIndex = LIST[ran.nextInt(LIST.length)];
 		GravityIndex = parseGravity(world.getMyGravity());
 		TempitureIndex = parseTempiture(world.getMyTemps()[0]);
-		VarianceIndex = parseVar(world.getMyTemps()[2],world.getMyTemps()[5]);
+		VarianceIndex = parseVar(world.getMyTemps()[2], world.getMyTemps()[5]);
 		AtmosphericIndex = parseAtmosphere(world.getMyAtmosphere());
 		WaterIndex = parseWater(world.getMyWater());
-		myID = UUID.randomUUID().toString()+".Surface";
+		myID = UUID.randomUUID().toString() + ".Surface";
 	}
 
 	private int parseWater(double w) {
-		if(w < 0.1) {
+		if (w < 0.1) {
 			return 0;
-		}else if(w < 0.2) {
+		} else if (w < 0.2) {
 			return 1;
-		}else if(w < 0.3) {
+		} else if (w < 0.3) {
 			return 2;
-		}else if(w < 0.4) {
+		} else if (w < 0.4) {
 			return 3;
-		}else if(w < 0.5) {
+		} else if (w < 0.5) {
 			return 4;
-		}else if(w < 0.55) {
+		} else if (w < 0.55) {
 			return 5;
-		}else if(w < 0.6) {
+		} else if (w < 0.6) {
 			return 6;
-		}else if(w < 0.65) {
+		} else if (w < 0.65) {
 			return 7;
-		}else if(w < 0.7) {
+		} else if (w < 0.7) {
 			return 8;
-		}else if(w < 0.8) {
+		} else if (w < 0.8) {
 			return 9;
-		}else {
+		} else {
 			return 10;
 		}
 	}
 
 	private int parseAtmosphere(double g) {
-		if(AstroObject.BAR*(0.1) >= (g)) {
+		if (AstroObject.BAR * (0.1) >= (g)) {
 			return 0;
-		}else if(AstroObject.BAR*(0.25) >= (g)) {
+		} else if (AstroObject.BAR * (0.25) >= (g)) {
 			return 1;
-		}else if(AstroObject.BAR*(0.5) >= (g)) {
+		} else if (AstroObject.BAR * (0.5) >= (g)) {
 			return 2;
-		}else if(AstroObject.BAR*(0.75) >= (g)) {
+		} else if (AstroObject.BAR * (0.75) >= (g)) {
 			return 3;
-		}else if(AstroObject.BAR >= (g)) {
+		} else if (AstroObject.BAR >= (g)) {
 			return 4;
-		}else if(AstroObject.BAR*(1.5) >= (g)) {
+		} else if (AstroObject.BAR * (1.5) >= (g)) {
 			return 5;
-		}else if(AstroObject.BAR*(2.0) >= (g)) {
+		} else if (AstroObject.BAR * (2.0) >= (g)) {
 			return 6;
-		}else if(AstroObject.BAR*(3.0) >= (g)) {
+		} else if (AstroObject.BAR * (3.0) >= (g)) {
 			return 7;
-		}else if(AstroObject.BAR*(4.0) >= (g)) {
+		} else if (AstroObject.BAR * (4.0) >= (g)) {
 			return 8;
-		}else if(AstroObject.BAR*(5.0) >= (g)) {
+		} else if (AstroObject.BAR * (5.0) >= (g)) {
 			return 9;
-		}else {
+		} else {
 			return 10;
 		}
 	}
@@ -108,58 +110,58 @@ public class Condition  implements Serializable, Savable{
 	private int parseVar(double d1, double d2) {
 		int TempO = parseTempiture(d1);
 		int TempT = parseTempiture(d2);
-		return TempO-TempT;
+		return TempO - TempT;
 	}
 
 	private int parseTempiture(double t) {
 		double d = t;
-		if(240.0>=d) {
+		if (240.0 >= d) {
 			return 0;
-		}else if(260>=d) {
+		} else if (260 >= d) {
 			return 1;
-		}else if(270>=d) {
+		} else if (270 >= d) {
 			return 2;
-		}else if(280>=d) {
+		} else if (280 >= d) {
 			return 3;
-		}else if(290>=d) {
+		} else if (290 >= d) {
 			return 4;
-		}else if(300>=d) {
+		} else if (300 >= d) {
 			return 5;
-		}else if(310>=d) {
+		} else if (310 >= d) {
 			return 6;
-		}else if(320>=d) {
+		} else if (320 >= d) {
 			return 7;
-		}else if(330>=d) {
+		} else if (330 >= d) {
 			return 8;
-		}else if(340>=d) {
+		} else if (340 >= d) {
 			return 9;
-		}else {
+		} else {
 			return 10;
 		}
 	}
 
 	private int parseGravity(double g) {
-		if(AstroObject.GRAVITYEARTH*(0.1) >= (g)) {
+		if (AstroObject.GRAVITYEARTH * (0.1) >= (g)) {
 			return 0;
-		}else if(AstroObject.GRAVITYEARTH*(0.25) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (0.25) >= (g)) {
 			return 1;
-		}else if(AstroObject.GRAVITYEARTH*(0.5) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (0.5) >= (g)) {
 			return 2;
-		}else if(AstroObject.GRAVITYEARTH*(0.75) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (0.75) >= (g)) {
 			return 3;
-		}else if(AstroObject.GRAVITYEARTH >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH >= (g)) {
 			return 4;
-		}else if(AstroObject.GRAVITYEARTH*(1.5) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (1.5) >= (g)) {
 			return 5;
-		}else if(AstroObject.GRAVITYEARTH*(2.0) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (2.0) >= (g)) {
 			return 6;
-		}else if(AstroObject.GRAVITYEARTH*(3.0) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (3.0) >= (g)) {
 			return 7;
-		}else if(AstroObject.GRAVITYEARTH*(4.0) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (4.0) >= (g)) {
 			return 8;
-		}else if(AstroObject.GRAVITYEARTH*(5.0) >= (g)) {
+		} else if (AstroObject.GRAVITYEARTH * (5.0) >= (g)) {
 			return 9;
-		}else {
+		} else {
 			return 10;
 		}
 	}
@@ -250,14 +252,13 @@ public class Condition  implements Serializable, Savable{
 		return out;
 	}
 
-
 	public static final int CLASSINDEX = 119013;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
-	
+
 	String myID;
 
 	@Override

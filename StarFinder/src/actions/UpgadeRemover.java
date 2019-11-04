@@ -9,7 +9,7 @@ public class UpgadeRemover implements ActionListener {
 
 	Development dev;
 	int index;
-	
+
 	public UpgadeRemover(Development d, int k) {
 		dev = d;
 		index = k;

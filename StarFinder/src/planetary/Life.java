@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import engine.Savable;
 
-public abstract class Life  implements Serializable, Savable{
+public abstract class Life implements Serializable, Savable {
 
 	/**
 	 * 

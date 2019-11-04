@@ -8,7 +8,7 @@ import engine.Savable;
 import gate.GateNetwork;
 import utilities.StringFundementals;
 
-public class Galaxy implements Serializable, Savable{
+public class Galaxy implements Serializable, Savable {
 	/**
 	 * 
 	 */
@@ -16,12 +16,12 @@ public class Galaxy implements Serializable, Savable{
 	private Vector<Sector> mySectors = new Vector<Sector>();
 	private String myName;
 	private GateNetwork myNetwork;
-	
+
 	public Galaxy(Vector<Sector> sectors) {
 		mySectors = sectors;
-		myID = UUID.randomUUID().toString()+".galaxy";
+		myID = UUID.randomUUID().toString() + ".galaxy";
 	}
-	
+
 	public Galaxy(String load) {
 		this.loadString(load);
 	}
@@ -58,13 +58,13 @@ public class Galaxy implements Serializable, Savable{
 		int k = 2;
 		myName = in[k++];
 		setSectorNumber(Integer.parseInt(in[k++]));
-		for(int i = 0;i < getSectorNumber();i++) {
-			mySectors.add(new Sector(object.get(i+1),0.0d));
+		for (int i = 0; i < getSectorNumber(); i++) {
+			mySectors.add(new Sector(object.get(i + 1), 0.0d));
 			mySectors.get(i).setMyGalaxy(this);
 		}
 		return k;
 	}
-	
+
 	private int SectorNumber;
 	private Vector<String> SectorIDs = new Vector<String>();
 
@@ -75,21 +75,22 @@ public class Galaxy implements Serializable, Savable{
 		out += getClassIndex() + "\n";
 		out += this.getMyName() + "\n";
 		out += this.getMySectors().size() + "\n";
-		for(int i = 0;i < this.getMySectors().size();i++){
-				out += "{\n";
-				out += mySectors.get(i).saveString() + "\n";
-				out += "}\n";;
+		for (int i = 0; i < this.getMySectors().size(); i++) {
+			out += "{\n";
+			out += mySectors.get(i).saveString() + "\n";
+			out += "}\n";
+			;
 		}
 		return out;
 	}
-	
+
 	public static final int CLASSINDEX = 937153;
 
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
-	
+
 	String myID;
 
 	@Override

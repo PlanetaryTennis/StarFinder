@@ -10,12 +10,12 @@ public class ZonePanel implements ActionListener {
 
 	MapView myView;
 	Zone mySystem;
-	
-	public ZonePanel(Zone s,MapView v){
+
+	public ZonePanel(Zone s, MapView v) {
 		mySystem = s;
 		myView = v;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		myView.viewZone(mySystem);

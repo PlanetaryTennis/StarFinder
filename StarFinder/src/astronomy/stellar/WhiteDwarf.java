@@ -22,31 +22,29 @@ public class WhiteDwarf extends Star {
 		super(load);
 		this.loadString(load);
 	}
-	
+
 	public WhiteDwarf(double m, SolSystem s) {
-		super(m,s);
-		myRadius = AstroObject.EARTHRADI*(Math.pow(m,1));
-		myTemp = AstroObject.CORETEMP*(Math.pow(m, 1));
-		myVolume = Math.pow(myRadius,3)*((0.75*Math.PI)*1000);
-		myDensity = myMass/myVolume;
+		super(m, s);
+		myRadius = AstroObject.EARTHRADI * (Math.pow(m, 1));
+		myTemp = AstroObject.CORETEMP * (Math.pow(m, 1));
+		myVolume = Math.pow(myRadius, 3) * ((0.75 * Math.PI) * 1000);
+		myDensity = myMass / myVolume;
 		myColor = color.WHITE;
 	}
-	
+
 	static Random ran = new Random(System.currentTimeMillis());
-	
+
 	public static Star randomStar(SolSystem s) {
-		return new WhiteDwarf(ran.nextDouble()*8+0.5,s);
+		return new WhiteDwarf(ran.nextDouble() * 8 + 0.5, s);
 	}
 
 	public ImageIcon getIcon() {
-		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"White Dwarf.png"));
+		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "White Dwarf.png"));
 	}
-	
-
 
 	@Override
 	public int loadString(String load) {
-		String [] in = StringFundementals.breakByLine(load);
+		String[] in = StringFundementals.breakByLine(load);
 		int i = 2;
 		this.myID = in[0];
 		this.myName = in[i++];
@@ -58,9 +56,9 @@ public class WhiteDwarf extends Star {
 		this.myTemp = Double.parseDouble(in[i++]);
 		this.myVolume = Double.parseDouble(in[i++]);
 		myColor = color.WHITE;
-		return i;		
+		return i;
 	}
-	
+
 	@Override
 	public String saveString() {
 		String out = "";
@@ -78,7 +76,7 @@ public class WhiteDwarf extends Star {
 	}
 
 	public static final int CLASSINDEX = 934202;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;

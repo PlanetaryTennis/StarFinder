@@ -10,12 +10,12 @@ public class SectorPanel implements ActionListener {
 
 	MapView myView;
 	Sector mySystem;
-	
-	public SectorPanel(Sector s,MapView v){
+
+	public SectorPanel(Sector s, MapView v) {
 		mySystem = s;
 		myView = v;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		myView.viewSector(mySystem);
