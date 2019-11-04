@@ -5,25 +5,35 @@ import java.awt.event.ActionListener;
 
 import planetary.Development;
 
+/**
+ * AddDevelopment adds a development to be used by AddDev,
+ * @author PlanetaryTennis
+ * @see AddDev
+ */
 public class AddDevelopment implements ActionListener {
 
 	AddDev dev;
 
+	/**
+	 * Class Constructor that creates the development to be added.
+	 * @param addDev the associated AddDev to get the name, and cost from.
+	 */
 	public AddDevelopment(AddDev addDev) {
 		dev = addDev;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		String n = dev.Name.getText();
-		int c = dev.Cost.getValue();
+		String n = dev.getMyName().getText();
+		int c = dev.getMyCost().getValue();
 
-		switch (dev.type) {
+		switch (dev.getMyIndex()) {
 		case 0:
-			dev.h.getMyDevelopments().add(new Development(n, c));
+			dev.getMyHabitation().getMyDevelopments().add(new Development(n, c));
 			break;
 		case 1:
-			dev.d.add(new Development(n, c));
+			dev.getMyDevelopment().add(new Development(n, c));
+			break;
 		}
 	}
 
