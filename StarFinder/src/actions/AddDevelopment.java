@@ -7,6 +7,7 @@ import planetary.Development;
 
 /**
  * AddDevelopment adds a development to be used by AddDev,
+ * 
  * @author PlanetaryTennis
  * @see AddDev
  */
@@ -16,6 +17,7 @@ public class AddDevelopment implements ActionListener {
 
 	/**
 	 * Class Constructor that creates the development to be added.
+	 * 
 	 * @param addDev the associated AddDev to get the name, and cost from.
 	 */
 	public AddDevelopment(AddDev addDev) {

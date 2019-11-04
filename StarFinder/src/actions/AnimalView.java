@@ -8,10 +8,22 @@ import javax.swing.JTextArea;
 
 import planetary.Animal;
 
+/**
+ * AnimalView adds functionality to create a JFrame with information on the
+ * animal.
+ * 
+ * @author PlanetaryTennis
+ * @see Animal
+ */
 public class AnimalView implements ActionListener {
 
 	Animal myAnimal;
 
+	/**
+	 * Class Constructor
+	 * 
+	 * @param animal Animal to be viewed.
+	 */
 	public AnimalView(Animal animal) {
 		myAnimal = animal;
 	}

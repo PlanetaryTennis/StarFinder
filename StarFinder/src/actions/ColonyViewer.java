@@ -11,10 +11,20 @@ import javax.swing.JTextArea;
 import planetary.Development;
 import planetary.Habitation;
 
+/**
+ * ColonyViewer creates a JFrame to view a Colony.
+ * 
+ * @author PlanetaryTennis
+ */
 public class ColonyViewer implements ActionListener {
 
 	private Habitation myColony;
 
+	/**
+	 * Class Constructor
+	 * 
+	 * @param myColony The colony to be viewed.
+	 */
 	public ColonyViewer(Habitation myColony) {
 		this.myColony = myColony;
 	}
@@ -50,5 +60,4 @@ public class ColonyViewer implements ActionListener {
 		look.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		look.setVisible(true);
 	}
-
 }

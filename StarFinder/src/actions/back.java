@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import map.MapView;
 
 /**
+ * Adds functionality to the return button of the MapView
+ * 
  * @author PlanetaryTennis
- * @see map.MapView.backup()
+ * @see MapView
  */
 
 public class back implements ActionListener {
@@ -15,8 +17,8 @@ public class back implements ActionListener {
 	MapView myView;
 
 	/**
-	 * @author PlanetaryTennis
-	 * @see map.MapView.backup()
+	 * Class Constructor
+	 * 
 	 * @param MapView whose backup function will be called.
 	 */
 	public back(MapView view) {

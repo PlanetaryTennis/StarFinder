@@ -67,6 +67,10 @@ import gate.Gate;
 import gate.GateNetwork;
 import gate.SecondaryGate;
 
+/**
+ * MapView allows one to see and navigate a galaxy.
+ * @author PlanetaryTennis
+ */
 public class MapView extends JFrame {
 
 	/**
@@ -91,6 +95,23 @@ public class MapView extends JFrame {
 
 	public SettingList mySettings;
 
+	/**
+	 * Class Constructor
+	 * @param name The name to be given to the JFrame.
+	 * @param s The number of Sectors to be generated
+	 * @param rS The set number of Regions
+	 * @param rE The maximum random number of Regions
+	 * @param zS The set number of Zones
+	 * @param zE The maximum random number of Zones
+	 * @param sS The set number of Systems
+	 * @param sE The maximum random number of Systems
+	 * @param p The maximum random number of Planets
+	 * @param ss Weather or not Special stars will be created
+	 * @param ms Weather multi stars will be created
+	 * @param n Weather random names will be generated
+	 * @param suns The chance of each type of star to generate
+	 * @param r Weather a relay will be generated
+	 */
 	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms,
 			boolean n, int[] suns, boolean r) {
 		super(name);
