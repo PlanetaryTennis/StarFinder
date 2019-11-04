@@ -166,16 +166,16 @@ public class SettingLauncher {
 		Names.setEnabled(true);
 		LaunchSettings.add(Names);
 		
-		JCheckBox Relays = new JCheckBox("Generate Relay Network");
+		JCheckBox Gates = new JCheckBox("Generate Gate Network");
 		Names.setSelected(false);
-		Names.setToolTipText("This will generate a Relay network at the launch.");
+		Names.setToolTipText("This will generate a Gate network at the launch.");
 		Names.setEnabled(true);
-		LaunchSettings.add(Relays);
+		LaunchSettings.add(Gates);
 		
 		JButton Make = new JButton("Make");
 		Make.addActionListener(new LaunchSettings(LaunchSettings,b,Sectors,RegionsMin,RegionsMax,
 				ZonesMin,ZonesMax,SystemsMin,SystemsMax,PlanetsNum,
-				SpecialStars,MultiStars,Names,Relays,suns));
+				SpecialStars,MultiStars,Names,Gates,suns));
 		LaunchSettings.add(Make);
 		
 		LaunchSettings.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));

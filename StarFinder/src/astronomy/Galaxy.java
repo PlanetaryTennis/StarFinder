@@ -5,7 +5,7 @@ import java.util.UUID;
 import java.util.Vector;
 
 import engine.Savable;
-import relay.RelayNetwork;
+import gate.GateNetwork;
 import utilities.StringFundementals;
 
 public class Galaxy implements Serializable, Savable{
@@ -15,7 +15,7 @@ public class Galaxy implements Serializable, Savable{
 	private static final long serialVersionUID = 2209507012552543563L;
 	private Vector<Sector> mySectors = new Vector<Sector>();
 	private String myName;
-	private RelayNetwork myNetwork;
+	private GateNetwork myNetwork;
 	
 	public Galaxy(Vector<Sector> sectors) {
 		mySectors = sectors;
@@ -26,11 +26,11 @@ public class Galaxy implements Serializable, Savable{
 		this.loadString(load);
 	}
 
-	public RelayNetwork getMyNetwork() {
+	public GateNetwork getMyNetwork() {
 		return myNetwork;
 	}
 
-	public void setMyNetwork(RelayNetwork myNetwork) {
+	public void setMyNetwork(GateNetwork myNetwork) {
 		this.myNetwork = myNetwork;
 	}
 

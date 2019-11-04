@@ -25,7 +25,7 @@ public class Colony implements Savable, Serializable{
 	
 	private boolean isHab;
 	private boolean hasWater;
-	private boolean hasEzo;
+	private boolean hasGravite;
 	private boolean hasRareGasses;
 	private boolean hasRareMetals;
 	private boolean hasRadiotropes;
@@ -37,7 +37,7 @@ public class Colony implements Savable, Serializable{
 	private Ecosystem myEcosystem;
 	private Habitation myColony;
 	
-	public Colony(int size, int scale, boolean isHab, boolean hasWater, boolean hasEzo,
+	public Colony(int size, int scale, boolean isHab, boolean hasWater, boolean hasGravite,
 			boolean hasRareGasses, boolean hasRareMetals, boolean hasRadiotropes, boolean hasMassiveMetal,
 			boolean hasMassiveGasses, boolean hasBio, Ecosystem myEcosystem) {
 		super();
@@ -45,7 +45,7 @@ public class Colony implements Savable, Serializable{
 		this.scale = scale;
 		this.isHab = isHab;
 		this.hasWater = hasWater;
-		this.hasEzo = hasEzo;
+		this.hasGravite = hasGravite;
 		this.hasRareGasses = hasRareGasses;
 		this.hasRareMetals = hasRareMetals;
 		this.hasRadiotropes = hasRadiotropes;
@@ -66,7 +66,7 @@ public class Colony implements Savable, Serializable{
 	public static Colony randomTerrestrial(Terrestrial t) {
 		boolean Habitable = false;
 		boolean Water = t.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -74,7 +74,7 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = false;
 		
-		Colony c = new Colony(0,0, Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0, Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null);
 		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
@@ -86,7 +86,7 @@ public class Colony implements Savable, Serializable{
 		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
 		boolean Habitable = true;
 		boolean Water = p.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -94,7 +94,7 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = true;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				biosphere);
 		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
@@ -106,7 +106,7 @@ public class Colony implements Savable, Serializable{
 		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
 		boolean Habitable = true;
 		boolean Water = p.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -114,7 +114,7 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = true;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				biosphere);
 		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
@@ -124,7 +124,7 @@ public class Colony implements Savable, Serializable{
 	public static Colony randomMoon(Moon t) {	
 		boolean Habitable = false;
 		boolean Water = t.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -132,7 +132,7 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = false;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null);
 		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
@@ -142,7 +142,7 @@ public class Colony implements Savable, Serializable{
 	public static Colony randomJovian(Jovian j) {	
 		boolean Habitable = false;
 		boolean Water = random.nextBoolean();
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -150,7 +150,7 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = true;
 		boolean Life = false;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
 				null);
 		c.setMaxSize(Colony.calculateMaxSize(j.getMyRadius()/10));
@@ -202,8 +202,8 @@ public class Colony implements Savable, Serializable{
 		this.hasWater = hasWater;
 	}
 
-	public boolean isHasEzo() {
-		return hasEzo;
+	public boolean isHasGravite() {
+		return hasGravite;
 	}
 	
 	public void setMyColony(Habitation myColony) {
@@ -214,8 +214,8 @@ public class Colony implements Savable, Serializable{
 		return myColony;
 	}
 
-	public void setHasEzo(boolean hasEzo) {
-		this.hasEzo = hasEzo;
+	public void setHasGravite(boolean hasGravite) {
+		this.hasGravite = hasGravite;
 	}
 
 	public boolean isHasRareGasses() {
@@ -284,7 +284,7 @@ public class Colony implements Savable, Serializable{
 		scale  = Integer.parseInt(in[i++]);
 		isHab  = Boolean.parseBoolean(in[i++]);
 		hasWater  = Boolean.parseBoolean(in[i++]);
-		hasEzo  = Boolean.parseBoolean(in[i++]);
+		hasGravite  = Boolean.parseBoolean(in[i++]);
 		hasRareGasses  = Boolean.parseBoolean(in[i++]);
 		hasRareMetals  = Boolean.parseBoolean(in[i++]);
 		hasRadiotropes  = Boolean.parseBoolean(in[i++]);
@@ -313,7 +313,7 @@ public class Colony implements Savable, Serializable{
 		out += scale + "\n";
 		out += isHab + "\n";
 		out += hasWater + "\n";
-		out += hasEzo + "\n";
+		out += hasGravite + "\n";
 		out += hasRareGasses + "\n";
 		out += hasRareMetals + "\n";
 		out += hasRadiotropes + "\n";

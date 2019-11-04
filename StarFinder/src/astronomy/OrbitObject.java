@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 import astronomy.planetary.Asteroid;
 import astronomy.planetary.HabitableMoon;
 import astronomy.planetary.Moon;
-import relay.ImageRelay;
+import gate.ImageGate;
 import utilities.StringFundementals;
 
 public interface OrbitObject extends AstroObject {
@@ -29,8 +29,8 @@ public interface OrbitObject extends AstroObject {
     case Asteroid.CLASSINDEX:
     	obj = new Asteroid(string);
     	break;
-    case ImageRelay.CLASSINDEX:
-    	obj = new ImageRelay(string);
+    case ImageGate.CLASSINDEX:
+    	obj = new ImageGate(string);
     	break;
     }        
     return obj;

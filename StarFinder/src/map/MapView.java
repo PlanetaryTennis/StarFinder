@@ -63,11 +63,11 @@ import astronomy.stellar.Star;
 import engine.ObjectFiles;
 import planetary.Colony;
 import planetary.Condition;
-import relay.ImageRelay;
-import relay.PrimaryRelay;
-import relay.Relay;
-import relay.RelayNetwork;
-import relay.SecondaryRelay;
+import gate.ImageGate;
+import gate.PrimaryGate;
+import gate.Gate;
+import gate.GateNetwork;
+import gate.SecondaryGate;
 
 public class MapView extends JFrame{
 
@@ -136,7 +136,7 @@ public class MapView extends JFrame{
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		if(r) {
-			galaxy.setMyNetwork(new RelayNetwork(galaxy, 0));
+			galaxy.setMyNetwork(new GateNetwork(galaxy, 0));
 			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
 		}
 
@@ -197,8 +197,8 @@ public class MapView extends JFrame{
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		this.mySettings = (SettingList)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
-		if(ObjectFiles.CheckFile(galaxy.getMyName()+"/Relay.network")) {
-			galaxy.setMyNetwork((RelayNetwork)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Relay.network"));
+		if(ObjectFiles.CheckFile(galaxy.getMyName()+"/Gate.network")) {
+			galaxy.setMyNetwork((GateNetwork)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Gate.network"));
 			galaxy.getMyNetwork().LinkUp(galaxy);
 		}
 		this.viewGalaxy();
@@ -514,12 +514,12 @@ public class MapView extends JFrame{
 		}
 
 		for(int i = 0;i < planet.getMySatilights().size();i++) {
-			if(planet.getMySatilights().get(i).getClass() == ImageRelay.class) {
-				ImageRelay ir = (ImageRelay)planet.getMySatilights().get(i);
-				Relay relay = galaxy.getMyNetwork().find(ir.getRelayID());
-				ir.setMyRelay(relay);
-				moon = new JButton(relay.getMyName());
-				ImageIcon moimg = relay.getIcon();
+			if(planet.getMySatilights().get(i).getClass() == ImageGate.class) {
+				ImageGate ir = (ImageGate)planet.getMySatilights().get(i);
+				Gate Gate = galaxy.getMyNetwork().find(ir.getGateID());
+				ir.setMyGate(Gate);
+				moon = new JButton(Gate.getMyName());
+				ImageIcon moimg = Gate.getIcon();
 				moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
 				moon.setIcon(moimg);
 				moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
@@ -701,7 +701,7 @@ public class MapView extends JFrame{
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 
-	public void viewPrimaryRelay(PrimaryRelay o) {
+	public void viewPrimaryGate(PrimaryGate o) {
 		if(!o.getMySystem().equals(lastss.getID())) {
 			this.lastss = (SolSystem)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/"+o.getMySystem());
 			for(int i = 0;i < lastss.getMyObjects().size();i++)
@@ -732,7 +732,7 @@ public class MapView extends JFrame{
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 
-	public void viewSecondaryRelay(SecondaryRelay o) {
+	public void viewSecondaryGate(SecondaryGate o) {
 		if(!o.getMySystem().equals(lastss.getID())) {
 			this.lastss = (SolSystem)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/"+o.getMySystem());
 			for(int i = 0;i < lastss.getMyObjects().size();i++)
@@ -752,7 +752,7 @@ public class MapView extends JFrame{
 		Print.setEditable(false);
 		String display = o.getMyName();
 
-		Vector<SecondaryRelay> pod = o.getMyPod();
+		Vector<SecondaryGate> pod = o.getMyPod();
 		for(int i = 0;i < pod.size();i++) {
 			if(pod.get(i) != o) {
 				JButton Look = new JButton("Jump to the "+pod.get(i).getMyName());
@@ -781,7 +781,7 @@ public class MapView extends JFrame{
 		display += "Habitable: " + colony.isHab() + "\n";
 		display += "Water Present: " + colony.isHasWater() + "\n";
 		display += "Biosphere Present: " + colony.isHasBio() + "\n";
-		display += "Ezero Present: " + colony.isHasEzo() + "\n";
+		display += "Gravite Present: " + colony.isHasGravite() + "\n";
 		display += "Massive Metal Presence: " + colony.isHasMassiveMetal() + "\n";
 		display += "Massive Gasses Presence: " + colony.isHasMassiveGasses() + "\n";
 		display += "Radiotropics Present: " + colony.isHasRadiotropes() + "\n";

@@ -432,7 +432,7 @@ _________        .__                .__
 /Scale how close to growing to the next size. 1-9.
 /If the planet can host life. [true,false]
 /If the planet has water. [true,false]
-/If the planet has Ezo. [true,false]
+/If the planet has Gravite. [true,false]
 /If the planet has Rare Gasses. [true,false]
 /If the planet has Rare Metals. [true,false]
 /If the planet has Radiotropes. [true,false]
@@ -709,16 +709,16 @@ __________       .__                _______          __                       __
  |____|_  /\___  >____(____  / ____\____|__  /\___  >__|   \/\_/ \____/|__|  |__|_ \
         \/     \/          \/\/            \/     \/                              \/
 ------------------------------------------------------------------------------------
-/Relay.network
+/Gate.network
 /678802
-/Number of Primary Relays
+/Number of Primary Gates
 /{
-//Primary Relay Save, please read the Primary Relay Save info later in the document.
+//Primary Gate Save, please read the Primary Gate Save info later in the document.
 /}
 /Number of Pods
 /Number of Secondary in Pod
 /{
-//Primary Secondary Save, please read the Secondary Relay Save info later in the document.
+//Primary Secondary Save, please read the Secondary Gate Save info later in the document.
 /}
 /End a blank line before returning to the higher level.
 
@@ -732,8 +732,8 @@ __________        .__                             __________       .__
  |____|     |__|  |__|__|_|  (____  /__|   / ____| |____|_  /\___  >____(____  / ____|
                            \/     \/       \/             \/     \/          \/\/     
 --------------------------------------------------------------------------------------
-/Relay UID, this is a String ending in .station, this is how other objecys identifies the Relay.
-/678809 This is the Primary Relay Type IF don't change this it is how the system knows this is a Primary Relay.
+/Gate UID, this is a String ending in .station, this is how other objecys identifies the Gate.
+/678809 This is the Primary Gate Type IF don't change this it is how the system knows this is a Primary Gate.
 /UID of the System it is in.
 /UID of the Planet it orbits.
 /UID of the Ghost is pairs with.
@@ -750,8 +750,8 @@ __________        .__                             __________       .__
 /_______  /\___  >\___  >____/|___|  /\____ |(____  /__|   / ____| |____|_  /\___  >____(____  / ____|
         \/     \/     \/           \/      \/     \/       \/             \/     \/          \/\/     
 ------------------------------------------------------------------------------------------------------
-/Relay UID, this is a String ending in .station, this is how other objecys identifies the Relay.
-/678804 This is the Primary Relay Type ID don't change this it is how the system knows this is a Primary Relay.
+/Gate UID, this is a String ending in .station, this is how other objecys identifies the Gate.
+/678804 This is the Primary Gate Type ID don't change this it is how the system knows this is a Primary Gate.
 /UID of the System it is in.
 /UID of the Planet it orbits.
 /UID of the Ghost is pairs with.
@@ -768,6 +768,6 @@ __________        .__                             __________       .__
  \______  /___|  /\____/____  > |__| |____|_  /\___  >____(____  / ____|
         \/     \/           \/              \/     \/          \/\/     
 ------------------------------------------------------------------------
-/Relay UID, this is a String ending in .station, this is how other objecys identifies the Relay.
-/678809 This is the Ghost Relay Type ID don't change this it is how the system knows this is a Ghost Relay.
-/The UID of the attached Relay.
+/Gate UID, this is a String ending in .station, this is how other objecys identifies the Gate.
+/678809 This is the Ghost Gate Type ID don't change this it is how the system knows this is a Ghost Gate.
+/The UID of the attached Gate.

@@ -36,7 +36,7 @@ import astronomy.stellar.WhiteDwarf;
 import map.SettingList;
 import planetary.Colony;
 import planetary.Condition;
-import relay.RelayNetwork;
+import gate.GateNetwork;
 import utilities.StringFundementals;
 
 public class ObjectFiles {
@@ -175,8 +175,8 @@ public class ObjectFiles {
 	            case Condition.CLASSINDEX:
 	            	obj = new Condition(read);
 	            	break;
-	            case RelayNetwork.CLASSINDEX:
-	            	obj = new RelayNetwork(read);
+	            case GateNetwork.CLASSINDEX:
+	            	obj = new GateNetwork(read);
 	            	break;
 	            }        
 	            return obj;

@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import actions.List;
-import actions.RelayGeneration;
+import actions.GateGeneration;
 import astronomy.Galaxy;
 import map.MapView;
 
@@ -29,8 +29,8 @@ public class EditMenu extends JFrame{
 		RenameSelected.setEnabled(false);
 		this.add(RenameSelected);
 		
-		JButton GenerateNetwork = new JButton("Generate Relay Network");
-		GenerateNetwork.addActionListener(new RelayGeneration(myGalaxy, this));
+		JButton GenerateNetwork = new JButton("Generate Gate Network");
+		GenerateNetwork.addActionListener(new GateGeneration(myGalaxy, this));
 		this.add(GenerateNetwork);
 		
 		JButton List = new JButton("List");

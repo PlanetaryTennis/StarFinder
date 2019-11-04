@@ -28,7 +28,7 @@ public class LaunchSettings implements ActionListener {
 	JCheckBox special;
 	JCheckBox multi;
 	JCheckBox name;
-	JCheckBox relays;
+	JCheckBox Gates;
 	JFrame LS;
 	private int[] suns;
 
@@ -45,7 +45,7 @@ public class LaunchSettings implements ActionListener {
 	 */
 	public LaunchSettings(JFrame launchSettings, boolean b, JSlider sectors, JSlider regionsmin, JSlider regionsmax, JSlider zonemin,
 			JSlider zonemax, JSlider sysmin, JSlider sysmax, JSlider planetmax, JCheckBox special, JCheckBox multi,
-			JCheckBox name, JCheckBox relays, int[] suns) {
+			JCheckBox name, JCheckBox Gates, int[] suns) {
 		super();
 		LS = launchSettings;
 		this.b = b;
@@ -60,7 +60,7 @@ public class LaunchSettings implements ActionListener {
 		this.special = special;
 		this.multi = multi;
 		this.name = name;
-		this.relays = relays;
+		this.Gates = Gates;
 		this.suns = suns;
 	}
 
@@ -77,7 +77,7 @@ public class LaunchSettings implements ActionListener {
 		boolean ss = special.isSelected();
 		boolean ms = multi.isSelected();
 		boolean n = name.isSelected();
-		boolean r = relays.isSelected();
+		boolean r = Gates.isSelected();
 		
 		if(s>6||rS>8||rE>7||zS>8||zE>7||sS>8||sE>7||p>20||r)
 		JOptionPane.showMessageDialog(LS, "You options may cause long generation times for your galaxy.", "Warning",
@@ -94,7 +94,7 @@ public class LaunchSettings implements ActionListener {
 				+ "It Will " + dia[ss? 1:0] + " Special Star Types\n"
 				+ "It Will " + dia[ms? 1:0] + " Multipule Stars in a Single System\n"
 				+ "It Will " + dia[n? 1:0] + " Radom Names\n"
-				+ "It Will " + dia[r? 1:0] + " a Relay Network\n"
+				+ "It Will " + dia[r? 1:0] + " a Gate Network\n"
 				+ "Is This Acceptable?","Continue?",
 				JOptionPane.YES_NO_OPTION)){
 			return;
