@@ -3,15 +3,15 @@ package planetary;
 import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 
-import astronomy.AstroObject;
-import astronomy.Habitable;
-import astronomy.HabitableMoon;
-import astronomy.Jovian;
-import astronomy.Moon;
-import astronomy.Terrestrial;
+import astronomy.planetary.Habitable;
+import astronomy.planetary.HabitableMoon;
+import astronomy.planetary.Jovian;
+import astronomy.planetary.Moon;
+import astronomy.planetary.Terrestrial;
 import engine.Savable;
-import units.sci;
+import utilities.StringFundementals;
 
 public class Colony implements Savable, Serializable{
 
@@ -24,26 +24,27 @@ public class Colony implements Savable, Serializable{
 	
 	private boolean isHab;
 	private boolean hasWater;
-	private boolean hasEzo;
+	private boolean hasGravite;
 	private boolean hasRareGasses;
 	private boolean hasRareMetals;
 	private boolean hasRadiotropes;
 	private boolean hasMassiveMetal;
 	private boolean hasMassiveGasses;
 	private boolean hasBio;
+	private int maxSize;
 	
 	private Ecosystem myEcosystem;
-	private SepcialDevelopments myDevelopments;
+	private Habitation myColony;
 	
-	public Colony(int size, int scale, boolean isHab, boolean hasWater, boolean hasEzo,
+	public Colony(int size, int scale, boolean isHab, boolean hasWater, boolean hasGravite,
 			boolean hasRareGasses, boolean hasRareMetals, boolean hasRadiotropes, boolean hasMassiveMetal,
-			boolean hasMassiveGasses, boolean hasBio, Ecosystem myEcosystem, SepcialDevelopments myDevelopments) {
+			boolean hasMassiveGasses, boolean hasBio, Ecosystem myEcosystem) {
 		super();
 		this.size = size;
 		this.scale = scale;
 		this.isHab = isHab;
 		this.hasWater = hasWater;
-		this.hasEzo = hasEzo;
+		this.hasGravite = hasGravite;
 		this.hasRareGasses = hasRareGasses;
 		this.hasRareMetals = hasRareMetals;
 		this.hasRadiotropes = hasRadiotropes;
@@ -51,16 +52,20 @@ public class Colony implements Savable, Serializable{
 		this.hasMassiveGasses = hasMassiveGasses;
 		this.hasBio = hasBio;
 		this.myEcosystem = myEcosystem;
-		this.myDevelopments = myDevelopments;
-		myID = UUID.randomUUID().toString();;
+		myID = UUID.randomUUID().toString()+".Surface";
 	}
 	
+	public Colony(String load) {
+		myID = UUID.randomUUID().toString();
+		this.loadString(load);
+	}
+
 	static Random random = new Random(System.currentTimeMillis());
 
 	public static Colony randomTerrestrial(Terrestrial t) {
 		boolean Habitable = false;
 		boolean Water = t.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -68,9 +73,10 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = false;
 		
-		Colony c = new Colony(0,0, Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0, Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				null, null);
+				null);
+		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;		
 	}
 
@@ -79,7 +85,7 @@ public class Colony implements Savable, Serializable{
 		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
 		boolean Habitable = true;
 		boolean Water = p.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -87,9 +93,10 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = true;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				biosphere, null);
+				biosphere);
+		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;		
 	}
 
@@ -98,7 +105,7 @@ public class Colony implements Savable, Serializable{
 		Ecosystem biosphere = Ecosystem.randomEcosystem(p);
 		boolean Habitable = true;
 		boolean Water = p.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -106,16 +113,17 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = true;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				biosphere, null);
+				biosphere);
+		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;		
 	}
 
 	public static Colony randomMoon(Moon t) {	
 		boolean Habitable = false;
 		boolean Water = t.getMyWater()>0.05;
-		boolean Ezo = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
 		boolean RareMetal = random.nextBoolean();
 		boolean Radio = random.nextBoolean();
@@ -123,27 +131,42 @@ public class Colony implements Savable, Serializable{
 		boolean MassGas = random.nextBoolean();
 		boolean Life = false;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				null, null);
+				null);
+		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;				
 	}
 
 	public static Colony randomJovian(Jovian j) {	
 		boolean Habitable = false;
-		boolean Water = false;
-		boolean Ezo = false;
+		boolean Water = random.nextBoolean();
+		boolean Gravite = random.nextBoolean();
 		boolean RareGas = random.nextBoolean();
-		boolean RareMetal = false;
-		boolean Radio = false;
-		boolean MassMetal = false;
+		boolean RareMetal = random.nextBoolean();
+		boolean Radio = random.nextBoolean();
+		boolean MassMetal = random.nextBoolean();
 		boolean MassGas = true;
 		boolean Life = false;
 		
-		Colony c = new Colony(0,0,Habitable, Water, Ezo, RareGas, 
+		Colony c = new Colony(0,0,Habitable, Water, Gravite, RareGas, 
 				RareMetal, Radio, MassMetal, MassGas, Life, 
-				null, null);
+				null);
+		c.setMaxSize(Colony.calculateMaxSize(j.getMyRadius()/10));
 		return c;		
+	}
+	
+	public static int calculateMaxSize(double r) {
+		double radius = r/1000;
+		return (int)Math.ceil((5+Math.sqrt(251*radius+58006))/251-0.5);
+	}
+	
+	public int getMaxSize() {
+		return maxSize;
+	}
+
+	public void setMaxSize(int maxSize) {
+		this.maxSize = maxSize;
 	}
 
 	public int getSize() {
@@ -178,12 +201,20 @@ public class Colony implements Savable, Serializable{
 		this.hasWater = hasWater;
 	}
 
-	public boolean isHasEzo() {
-		return hasEzo;
+	public boolean isHasGravite() {
+		return hasGravite;
+	}
+	
+	public void setMyColony(Habitation myColony) {
+		this.myColony = myColony;
+	}
+	
+	public Habitation getMyColony() {
+		return myColony;
 	}
 
-	public void setHasEzo(boolean hasEzo) {
-		this.hasEzo = hasEzo;
+	public void setHasGravite(boolean hasGravite) {
+		this.hasGravite = hasGravite;
 	}
 
 	public boolean isHasRareGasses() {
@@ -242,30 +273,78 @@ public class Colony implements Savable, Serializable{
 		this.myEcosystem = myEcosystem;
 	}
 
-	public SepcialDevelopments getMyDevelopments() {
-		return myDevelopments;
-	}
-
-	public void setMyDevelopments(SepcialDevelopments myDevelopments) {
-		this.myDevelopments = myDevelopments;
-	}
-
 	@Override
-	public void loadString(String load) {
-		// TODO Auto-generated method stub
-		
+	public int loadString(String load) {
+		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(parse.get(0));
+		myID = in[0];
+		int i = 2;
+		size  = Integer.parseInt(in[i++]);
+		scale  = Integer.parseInt(in[i++]);
+		isHab  = Boolean.parseBoolean(in[i++]);
+		hasWater  = Boolean.parseBoolean(in[i++]);
+		hasGravite  = Boolean.parseBoolean(in[i++]);
+		hasRareGasses  = Boolean.parseBoolean(in[i++]);
+		hasRareMetals  = Boolean.parseBoolean(in[i++]);
+		hasRadiotropes  = Boolean.parseBoolean(in[i++]);
+		hasMassiveMetal  = Boolean.parseBoolean(in[i++]);
+		hasMassiveGasses  = Boolean.parseBoolean(in[i++]);
+		hasBio  = Boolean.parseBoolean(in[i++]);
+		maxSize = Integer.parseInt(in[i++]);
+		boolean dev = Boolean.parseBoolean(in[i++]);
+		if(dev)
+			myColony = new Habitation(parse.get(1));
+		boolean eco = Boolean.parseBoolean(in[i++]);
+		if(eco)
+			myEcosystem = new Ecosystem(parse.get(1));
+		return i;
 	}
+	
+	private int EcosystemID;
+	int DevelopmentsID;
 
 	@Override
 	public String saveString() {
-		// TODO Auto-generated method stub
-		return null;
+		String out = "";
+		out += myID +"\n";
+		out += getClassIndex() + "\n";
+		out += size + "\n";
+		out += scale + "\n";
+		out += isHab + "\n";
+		out += hasWater + "\n";
+		out += hasGravite + "\n";
+		out += hasRareGasses + "\n";
+		out += hasRareMetals + "\n";
+		out += hasRadiotropes + "\n";
+		out += hasMassiveMetal + "\n";
+		out += hasMassiveGasses + "\n";
+		out += hasBio + "\n";
+		out += maxSize + "\n";
+		if(myColony!=null) {
+			out += true + "\n";
+			out += "{\n";
+			out += myColony.saveString() + "\n";
+			out += "}\n";
+		}else {
+			out += false + "\n";
+		}
+		if(myEcosystem!=null) {
+			out += true + "\n";
+			out += "{\n";
+			out += myEcosystem.saveString() + "\n";
+			out += "}\n";
+		}else {
+			out += false + "\n";
+		}
+		return out;
 	}
 
+
+	public static final int CLASSINDEX = 119017;
+	
 	@Override
 	public int getClassIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return CLASSINDEX;
 	}
 
 	String myID;
@@ -273,5 +352,13 @@ public class Colony implements Savable, Serializable{
 	@Override
 	public String getID() {
 		return myID;
+	}
+
+	public int getEcosystemID() {
+		return EcosystemID;
+	}
+
+	public void setEcosystemID(int ecosystemID) {
+		EcosystemID = ecosystemID;
 	}
 }

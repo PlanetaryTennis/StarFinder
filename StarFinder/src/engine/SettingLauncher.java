@@ -1,19 +1,23 @@
 package engine;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
 
 import actions.LaunchSettings;
-import map.MapView;
+import actions.StarSetter;
+import actions.UpdateStarNumbers;
+import map.Sprite;
 
 public class SettingLauncher {
 
+	int[] suns = new int[]{700,800,900,920,940,1000,70,90,100};
+	
 	public SettingLauncher(boolean b) {
 		JFrame LaunchSettings = new JFrame("Launch Settings");
 		LaunchSettings.setLayout(new GridLayout(16,3));
@@ -141,87 +145,17 @@ public class SettingLauncher {
 		SpecialStars.setEnabled(true);
 		LaunchSettings.add(SpecialStars);
 		
+		JButton StarSpread = new JButton("Star Chances");
+		StarSpread.addActionListener(new StarSetter(this));
+		SpecialStars.setEnabled(true);
+		LaunchSettings.add(StarSpread);
+		
+		
 		JCheckBox MultiStars = new JCheckBox("Multi Stars");
 		MultiStars.setSelected(false);
 		MultiStars.setToolTipText("This allows Binary, and Trinary stars");
 		MultiStars.setEnabled(false);
 		LaunchSettings.add(MultiStars);
-		
-		JTextPane starspread = new JTextPane();
-		starspread.setEditable(false);
-		starspread.setText("Precent of Stars");
-		starspread.setToolTipText("These are how many stars of a given type are spawned.");
-		JSlider DwarfStar = new JSlider();
-		DwarfStar.setToolTipText("Red Phase Stars");
-		DwarfStar.setPaintLabels(true);
-		DwarfStar.setValue(600);
-		DwarfStar.setMinimum(0);
-		DwarfStar.setMaximum(1000);
-		DwarfStar.setMajorTickSpacing(100);
-		DwarfStar.setMajorTickSpacing(1);
-		DwarfStar.setPaintTicks(true);
-		JSlider ModerateStar = new JSlider();
-		ModerateStar.setToolTipText("Orange Phase Stars");
-		ModerateStar.setPaintLabels(true);
-		ModerateStar.setValue(200);
-		ModerateStar.setMinimum(0);
-		ModerateStar.setMaximum(1000);
-		ModerateStar.setMajorTickSpacing(100);
-		ModerateStar.setMajorTickSpacing(1);
-		ModerateStar.setPaintTicks(true);
-		JSlider GiantStar = new JSlider();
-		GiantStar.setToolTipText("Blue Phase Stars");
-		GiantStar.setPaintLabels(true);
-		GiantStar.setValue(100);
-		GiantStar.setMinimum(0);
-		GiantStar.setMaximum(1000);
-		GiantStar.setMajorTickSpacing(100);
-		GiantStar.setMajorTickSpacing(1);
-		GiantStar.setPaintTicks(true);
-		JSlider BrownDwarf = new JSlider();
-		BrownDwarf.setToolTipText("Brown Phase Stars");
-		BrownDwarf.setPaintLabels(true);
-		BrownDwarf.setValue(50);
-		BrownDwarf.setMinimum(0);
-		BrownDwarf.setMaximum(1000);
-		BrownDwarf.setMajorTickSpacing(100);
-		BrownDwarf.setMajorTickSpacing(1);
-		BrownDwarf.setPaintTicks(true);
-		JSlider WhiteDwarf = new JSlider();
-		WhiteDwarf.setToolTipText("White Phase Stars");
-		WhiteDwarf.setPaintLabels(true);
-		WhiteDwarf.setValue(25);
-		WhiteDwarf.setMinimum(0);
-		WhiteDwarf.setMaximum(1000);
-		WhiteDwarf.setMajorTickSpacing(100);
-		WhiteDwarf.setMajorTickSpacing(1);
-		WhiteDwarf.setPaintTicks(true);
-		JSlider Neutron = new JSlider();
-		Neutron.setToolTipText("Hyper Dense Remnants");
-		Neutron.setPaintLabels(true);
-		Neutron.setValue(20);
-		Neutron.setMinimum(0);
-		Neutron.setMaximum(1000);
-		Neutron.setMajorTickSpacing(100);
-		Neutron.setMajorTickSpacing(1);
-		Neutron.setPaintTicks(true);
-		JSlider BlackHole = new JSlider();
-		BlackHole.setToolTipText("Singularity");
-		BlackHole.setPaintLabels(true);
-		BlackHole.setValue(5);
-		BlackHole.setMinimum(0);
-		BlackHole.setMaximum(1000);
-		BlackHole.setMajorTickSpacing(100);
-		BlackHole.setMajorTickSpacing(1);
-		BlackHole.setPaintTicks(true);
-		LaunchSettings.add(starspread);
-		LaunchSettings.add(DwarfStar);
-		LaunchSettings.add(ModerateStar);
-		LaunchSettings.add(GiantStar);
-		LaunchSettings.add(BrownDwarf);
-		LaunchSettings.add(WhiteDwarf);
-		LaunchSettings.add(Neutron);
-		LaunchSettings.add(BlackHole);
 		
 		JCheckBox Names = new JCheckBox("Random Names");
 		Names.setSelected(false);
@@ -229,20 +163,232 @@ public class SettingLauncher {
 		Names.setEnabled(true);
 		LaunchSettings.add(Names);
 		
-		JCheckBox Relays = new JCheckBox("Generate Relay Network");
+		JCheckBox Gates = new JCheckBox("Generate Gate Network");
 		Names.setSelected(false);
-		Names.setToolTipText("This will generate a Relay network at the launch.");
+		Names.setToolTipText("This will generate a Gate network at the launch.");
 		Names.setEnabled(true);
-		LaunchSettings.add(Relays);
+		LaunchSettings.add(Gates);
 		
 		JButton Make = new JButton("Make");
 		Make.addActionListener(new LaunchSettings(LaunchSettings,b,Sectors,RegionsMin,RegionsMax,
 				ZonesMin,ZonesMax,SystemsMin,SystemsMax,PlanetsNum,
-				SpecialStars,MultiStars,Names,Relays));
+				SpecialStars,MultiStars,Names,Gates,suns));
 		LaunchSettings.add(Make);
 		
+		LaunchSettings.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
 		LaunchSettings.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		LaunchSettings.setSize(600,600);
 		LaunchSettings.setVisible(true);
+	}
+
+	InnerSlider NormalStars;
+	InnerSlider BrownDwarf;
+	InnerSlider WhiteDwarf;
+	InnerSlider NeutronStar;
+	InnerSlider BlackHole;
+	InnerSlider Nebula;
+	InnerSlider Small;
+	InnerSlider Medium;
+	InnerSlider Large;
+	
+	public void SunCalculat(){
+		JFrame StarTypes = new JFrame("Star Types");
+		StarTypes.setLayout(new GridLayout(10,3));
+		int NormalStars = suns[0];
+		int BrownDwarf = suns[1] - suns[0];
+		int WhiteDwarf = suns[2] - suns[1];
+		int NeutronStar = suns[3] - suns[2];
+		int BlackHole = suns[4] - suns[3];
+		int Nebula = suns[5] - suns[4];
+		int Small = suns[6];
+		int Medium = suns[7] - suns[6];;
+		int Large = suns[8] - suns[7];
+		
+		JTextPane NS = new JTextPane();
+		NS.setEditable(false);
+		NS.setText("Normal Stars");
+		NS.setToolTipText("This is the chance out of 1000 that a random star will be a normal star.");
+		this.NormalStars = new InnerSlider(0,1000,0,1000);
+		this.NormalStars.setPaintLabels(true);
+		this.NormalStars.setValue(NormalStars);
+		this.NormalStars.setMajorTickSpacing(100);
+		this.NormalStars.setMajorTickSpacing(10);
+		this.NormalStars.setPaintTicks(true);
+		StarTypes.add(NS);
+		StarTypes.add(this.NormalStars);
+		
+		JTextPane BD = new JTextPane();
+		BD.setEditable(false);
+		BD.setText("Brown Dwarf");
+		BD.setToolTipText("This is the chance out of 1000 that a random star will be a brown dwarf.");
+		this.BrownDwarf = new InnerSlider(0,1000,0,1000);
+		this.BrownDwarf.setPaintLabels(true);
+		this.BrownDwarf.setValue(BrownDwarf);
+		this.BrownDwarf.setMajorTickSpacing(100);
+		this.BrownDwarf.setMajorTickSpacing(10);
+		this.BrownDwarf.setPaintTicks(true);
+		StarTypes.add(BD);
+		StarTypes.add(this.BrownDwarf);
+		
+		JTextPane WD = new JTextPane();
+		WD.setEditable(false);
+		WD.setText("White Dwaf");
+		WD.setToolTipText("This is the chance out of 1000 that a random star will be a white dwarf.");
+		this.WhiteDwarf = new InnerSlider(0,1000,0,1000);
+		this.WhiteDwarf.setPaintLabels(true);
+		this.WhiteDwarf.setValue(WhiteDwarf);
+		this.WhiteDwarf.setMajorTickSpacing(100);
+		this.WhiteDwarf.setMajorTickSpacing(10);
+		this.WhiteDwarf.setPaintTicks(true);
+		StarTypes.add(WD);
+		StarTypes.add(this.WhiteDwarf);
+		
+		JTextPane Nu = new JTextPane();
+		Nu.setEditable(false);
+		Nu.setText("Neutron Stars");
+		Nu.setToolTipText("This is the chance out of 1000 that a random star will be a neutron star.");
+		this.NeutronStar = new InnerSlider(0,1000,0,1000);
+		this.NeutronStar.setPaintLabels(true);
+		this.NeutronStar.setValue(NeutronStar);
+		this.NeutronStar.setMajorTickSpacing(100);
+		this.NeutronStar.setMajorTickSpacing(10);
+		this.NeutronStar.setPaintTicks(true);
+		StarTypes.add(Nu);
+		StarTypes.add(this.NeutronStar);
+		
+		JTextPane BH = new JTextPane();
+		BH.setEditable(false);
+		BH.setText("Black Hole");
+		BH.setToolTipText("This is the chance out of 1000 that a random star will be a Black Hole.");
+		this.BlackHole = new InnerSlider(0,1000,0,1000);
+		this.BlackHole.setPaintLabels(true);
+		this.BlackHole.setValue(BlackHole);
+		this.BlackHole.setMajorTickSpacing(100);
+		this.BlackHole.setMajorTickSpacing(10);
+		this.BlackHole.setPaintTicks(true);
+		StarTypes.add(BH);
+		StarTypes.add(this.BlackHole);
+		
+		JTextPane Neb = new JTextPane();
+		Neb.setEditable(false);
+		Neb.setText("Nebula");
+		Neb.setToolTipText("This is the chance out of 1000 that a random star will be a Nebula.");
+		this.Nebula = new InnerSlider(0,1000,0,1000);
+		this.Nebula.setPaintLabels(true);
+		this.Nebula.setValue(Nebula);
+		this.Nebula.setMajorTickSpacing(100);
+		this.Nebula.setMajorTickSpacing(10);
+		this.Nebula.setPaintTicks(true);
+		StarTypes.add(Neb);
+		StarTypes.add(this.Nebula);
+		
+		JTextPane Sma = new JTextPane();
+		Sma.setEditable(false);
+		Sma.setText("Small Stars");
+		Sma.setToolTipText("This is the chance out of 100 that a normal star will be a small star.");
+		this.Small = new InnerSlider(0,100,0,100);
+		this.Small.setPaintLabels(true);
+		this.Small.setValue(Small);
+		this.Small.setMajorTickSpacing(10);
+		this.Small.setMajorTickSpacing(1);
+		this.Small.setPaintTicks(true);
+		StarTypes.add(Sma);
+		StarTypes.add(this.Small);
+		
+		JTextPane Med = new JTextPane();
+		Med.setEditable(false);
+		Med.setText("Medium Stars");
+		Med.setToolTipText("This is the chance out of 100 that a normal star will be a medium star.");
+		this.Medium = new InnerSlider(0,100,0,100);
+		this.Medium.setPaintLabels(true);
+		this.Medium.setValue(Medium);
+		this.Medium.setMajorTickSpacing(10);
+		this.Medium.setMajorTickSpacing(1);
+		this.Medium.setPaintTicks(true);
+		StarTypes.add(Med);
+		StarTypes.add(this.Medium);
+		
+		JTextPane Lar = new JTextPane();
+		Lar.setEditable(false);
+		Lar.setText("Large Stars");
+		Lar.setToolTipText("This is the chance out of 100 that a normal star will be a large star.");
+		this.Large = new InnerSlider(0,100,0,100);
+		this.Large.setPaintLabels(true);
+		this.Large.setValue(Large);
+		this.Large.setMajorTickSpacing(10);
+		this.Large.setMajorTickSpacing(1);
+		this.Large.setPaintTicks(true);
+		StarTypes.add(Lar);
+		StarTypes.add(this.Large);
+		
+		JButton Proccess = new JButton("Accept");
+		Proccess.addActionListener(new UpdateStarNumbers(this));
+		StarTypes.add(Proccess);
+		
+		StarTypes.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		StarTypes.setSize(800,500);
+		StarTypes.setVisible(true);
+	}
+		
+	public int reCalculateStar(int i){
+		if(NormalStars == null||BrownDwarf == null||WhiteDwarf == null||NeutronStar == null||BlackHole == null||Nebula == null||Small == null||Medium == null||Large == null) {
+			switch(i) {
+			case 0:
+				return suns[0];			
+			case 1:
+				return suns[1]-suns[0];			
+			case 2:
+				return suns[2]-suns[1];			
+			case 3:
+				return suns[3]-suns[2];			
+			case 4:
+				return suns[4]-suns[3];			
+			case 5:
+				return suns[5]-suns[4];
+			case 6:
+				return suns[6];
+			case 7:
+				return suns[7]-suns[6];
+			case 8:
+				return suns[8]-suns[7];
+			}			
+		}
+		switch(i) {
+		case 0:
+			return 1000-BrownDwarf.getValue()-WhiteDwarf.getValue()-NeutronStar.getValue()-BlackHole.getValue()-Nebula.getValue();			
+		case 1:
+			return 1000-NormalStars.getValue()-WhiteDwarf.getValue()-NeutronStar.getValue()-BlackHole.getValue()-Nebula.getValue();			
+		case 2:
+			return 1000-NormalStars.getValue()-BrownDwarf.getValue()-NeutronStar.getValue()-BlackHole.getValue()-Nebula.getValue();			
+		case 3:
+			return 1000-NormalStars.getValue()-BrownDwarf.getValue()-WhiteDwarf.getValue()-BlackHole.getValue()-Nebula.getValue();			
+		case 4:
+			return 1000-NormalStars.getValue()-BrownDwarf.getValue()-WhiteDwarf.getValue()-NeutronStar.getValue()-Nebula.getValue();			
+		case 5:
+			return 1000-NormalStars.getValue()-BrownDwarf.getValue()-WhiteDwarf.getValue()-NeutronStar.getValue()-BlackHole.getValue();
+		case 6:
+			return 100-Medium.getValue()-Large.getValue();
+		case 7:
+			return 100-Small.getValue()-Large.getValue();
+		case 8:
+			return 100-Small.getValue()-Medium.getValue();
+		}
+		return -1;
+	}
+	
+	public void setSuns(){	
+		suns[0] = NormalStars.getValue();
+		suns[1] = BrownDwarf.getValue() + suns[0];
+		suns[2] = WhiteDwarf.getValue() + suns[1];
+		suns[3] = NeutronStar.getValue() + suns[2];
+		suns[4] = BlackHole.getValue() + suns[3];
+		suns[5] = Nebula.getValue() + suns[4];
+		if(suns[5] != 1000)
+			suns[5] = 1000;
+		suns[6] = Small.getValue();
+		suns[7] = Medium.getValue() + suns[6];
+		suns[8] = Large.getValue() + suns[7];
+		if(suns[8] != 100)
+			suns[8] = 100;
 	}
 }

@@ -3,7 +3,7 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import astronomy.Star;
+import astronomy.stellar.Star;
 import map.MapView;
 
 public class StarView implements ActionListener {

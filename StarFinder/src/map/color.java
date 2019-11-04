@@ -10,4 +10,7 @@ public enum color {
 	color(Color c){
 		myColor = c;
 	}
+	public Color getMyColor() {
+		return myColor;
+	}
 }

@@ -1,0 +1,773 @@
+######################################################################################
+#     _________ __                 ___________.__            .___                    #
+#    /   _____//  |______ _______  \_   _____/|__| ____    __| _/___________         #
+#    \_____  \\   __\__  \\_  __ \  |    __)  |  |/    \  / __ |/ __ \_  __ \        #
+#    /        \|  |  / __ \|  | \/  |     \   |  |   |  \/ /_/ \  ___/|  | \/        #
+#   /_______  /|__| (____  /__|     \___  /   |__|___|  /\____ |\___  >__|           #
+#           \/           \/             \/            \/      \/    \/               #
+#     _________                    __________                   .___                 #
+#    /   _____/____ ___  __ ____   \______   \ ____ _____     __| _/_____   ____     #
+#    \_____  \\__  \\  \/ // __ \   |       _// __ \\__  \   / __ |/     \_/ __ \    #
+#    /        \/ __ \\   /\  ___/   |    |   \  ___/ / __ \_/ /_/ |  Y Y  \  ___/    #
+#   /_______  (____  /\_/  \___  >  |____|_  /\___  >____  /\____ |__|_|  /\___  >   #
+#           \/     \/          \/          \/     \/     \/      \/     \/     \/    #
+######################################################################################
+
+
+
+---------------------------------------------------------------------------------------
+  _________      .__                _________               __                         
+ /   _____/ ____ |  | _____ _______/   _____/__.__. _______/  |_  ____   _____   ______
+ \_____  \ /  _ \|  | \__  \\_  __ \_____  <   |  |/  ___/\   __\/ __ \ /     \ /  ___/
+ /        (  <_> )  |__/ __ \|  | \/        \___  |\___ \  |  | \  ___/|  Y Y  \\___ \ 
+/_______  /\____/|____(____  /__| /_______  / ____/____  > |__|  \___  >__|_|  /____  >
+        \/                 \/             \/\/         \/            \/      \/     \/ 
+---------------------------------------------------------------------------------------
+/Solar System UID, this is a String ending in .solarsystem, this is how other objects identify the solar system.
+/937113 The Type ID don't change this it is how the system knows that this is a solar system.
+/Name this is just some one line name that the system is refered to by.
+/{
+//A Star Save, please read the Stars save info later in the document.
+/}
+/The number of planets and belts in the solar system.
+/{
+//A Planet Save, please read the Planet save info later in the document.
+/}
+/End, after all the Planet saves a blank line and the end of the document.
+
+
+
+-------------------------------------
+  _________ __                       
+ /   _____//  |______ _______  ______
+ \_____  \\   __\__  \\_  __ \/  ___/
+ /        \|  |  / __ \|  | \/\___ \ 
+/_______  /|__| (____  /__|  /____  >
+        \/           \/           \/ 
+-------------------------------------
+/Star UID, this is a String ending in .star, this is how other objects identify the star.
+/Name this is just some one line name that the star is refered to by.
+/This is the Stars identifying ID, this depends on the type of the star. [Normal Star 934201][Brown Dwarf 934204][Black Hole 934205][Neutron Star 934203][White Dwarf 934202]
+/Denisty in kg/m^3
+/Gravity in m/s^2
+/Luminosity in candalla
+/Mass in grams
+/Radius in meters
+/Tempiture in kelvin
+/Volume in meters cubed
+/End, a blank line before returning to the higher level.
+
+
+
+-------------------------------
+  _  _     _         _         
+ | \| |___| |__ _  _| |__ _ ___
+ | .` / -_) '_ \ || | / _` (_-<
+ |_|\_\___|_.__/\_,_|_\__,_/__/
+                               
+-------------------------------
+/Star UID, nebulas are treated like stars by the system so it ends in .star, this is how other objects identify the star.
+/Name this is just some one line name that the nebula is refered to by.
+/934275 This is the Nebula Type ID don't change this it is how the system knows this is a nebula.
+/Color, this is the color of the nebula, they can be [YELLOW,RED,ORANGE,WHITE,BLUE,CYAN,GREEN].
+/End a blank line before returning to the higher level.
+
+
+
+-------------------------------------------------
+__________.__                        __          
+\______   \  | _____    ____   _____/  |_  ______
+ |     ___/  | \__  \  /    \_/ __ \   __\/  ___/
+ |    |   |  |__/ __ \|   |  \  ___/|  |  \___ \ 
+ |____|   |____(____  /___|  /\___  >__| /____  >
+                    \/     \/     \/          \/ 
+-------------------------------------------------
+No actual planets exits only sub types.
+
+
+
+------------------------------
+     _         _              
+  _ | |_____ _(_)__ _ _ _  ___
+ | || / _ \ V / / _` | ' \(_-<
+  \__/\___/\_/|_\__,_|_||_/__/
+                              
+------------------------------
+/Planet UID, this is a String ending in .Planet, this is how other objects identify the Jovian.
+/934899 This is the Jovian Type ID don't change this it is how the system knows this is a Jovian.
+/Name this is just some one line name that the Jovian is refered to by.
+/Atmosphereic pressure measured such that one bar is 1200.
+/Day length measured in seconds.
+/Density in kg/m^3
+/Orbital Eccentricity, such that 0 is a circular orbit and 1 is a strait line.
+/Gravity in m/s^2
+/Mean orbital distance in meters.
+/Minimum Orbital distance in meters.
+/Maximum Orbital distance in meters.
+/Mass in grams.
+/Radius in meters.
+/My Average Global Dayside Tempiture in Kelvin.
+/My Average Global Night Tempiture in Kelvin.
+/My Maximum Global Dayside Tempiture in Kelvin.
+/My Maximum Global Nightside Tempiture in Kelvin.
+/My Minimum Global Dayside Tempiture in Kelvin.
+/My Minimum Global Nightside Tempiture in Kelvin.
+/My Volume in Meters cubed.
+/My Year Length in Seconds.
+/{
+//Colony Save, please read the Colony save info later in the document.
+/}
+/Number of moons in orbit of the planet.
+/{
+//Planet Save, please read the Planet save info for the type of moon you wish.
+/}
+/Number of Satilights. This is both artifical satilights and captured asteroids.
+/{
+//Either an Astroid Save please look to the Asteroid Save info later in this document, or Satlight Save please check out the Satilight Save info in the Satilight List Document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+--------------------
+  ___      _ _      
+ | _ ) ___| | |_ ___
+ | _ \/ -_) |  _(_-<
+ |___/\___|_|\__/__/
+                    
+--------------------
+/Plaent UID, this is a String ending .Planet, this is how other object identify the Belt.
+/934892 This is the Belt Type ID don't change this it is how the system knows this is a Belt.
+/Name this is just some one line name that the Belt is refered to by.
+/Orbital Eccentricity, such that 0 is a circular orbit and 1 is a strait line.
+/Mean orbital distance in meters.
+/Minimum Orbital distance in meters.
+/Maximum Orbital distance in meters.
+/Number of objects in the Belt.
+/{
+//Planet Save, please read the Planet save info for the type of moon you wish.
+/}
+/Number of Satilights. This is both artifical satilights.
+/{
+//Satlight Save please check out the Satilight Save info in the Satilight List Document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+----------------------------------------------
+  _____                   _       _      _    
+ |_   _|__ _ _ _ _ ___ __| |_ _ _(_)__ _| |___
+   | |/ -_) '_| '_/ -_|_-<  _| '_| / _` | (_-<
+   |_|\___|_| |_| \___/__/\__|_| |_\__,_|_/__/
+                                              
+----------------------------------------------
+/Planet UID, this is a String ending in .Planet, this is how other objects identify the Terrestrial.
+/934826 This is the Terrestrial Type ID don't change this it is how the system knows this is a Terrestrial.
+/Name this is just some one line name that the Terrestrial is refered to by.
+/Abledo a measure of reflectivity, such that 0 absorbes all light and 1 reflects all light.
+/Atmosphereic pressure measured such that one bar is 1200.
+/Day length measured in seconds.
+/Density in kg/m^3
+/Orbital Eccentricity, such that 0 is a circular orbit and 1 is a strait line.
+/Gravity in m/s^2
+/A Measure of how effective the atmosphere is at trapping heat.
+/Mean orbital distance in meters.
+/Minimum Orbital distance in meters.
+/Maximum Orbital distance in meters.
+/Mass in grams.
+/Radius in meters.
+/My Average Global Dayside Tempiture in Kelvin.
+/My Average Global Night Tempiture in Kelvin.
+/My Maximum Global Dayside Tempiture in Kelvin.
+/My Maximum Global Nightside Tempiture in Kelvin.
+/My Minimum Global Dayside Tempiture in Kelvin.
+/My Minimum Global Nightside Tempiture in Kelvin.
+/My Volume in Meters cubed.
+/Percent of the surface covered in water.
+/My Year Length in Seconds.
+/{
+//Colony Save, please read the Colony save info later in the document.
+/}
+/Number of moons in orbit of the planet.
+/{
+//Planet Save, please read the Planet save info for the type of moon you wish.
+/}
+/Number of Satilights. This is both artifical satilights and captured asteroids.
+/{
+//Either an Astroid Save please look to the Asteroid Save info later in this document, or Satlight Save please check out the Satilight Save info in the Satilight List Document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+--------------------------
+  __  __                  
+ |  \/  |___  ___ _ _  ___
+ | |\/| / _ \/ _ \ ' \(_-<
+ |_|  |_\___/\___/_||_/__/
+                          
+--------------------------
+/Planet UID, this is a String ending in .Planet, this is how other objects identify the Moon.
+/934824 This is the Moon Type ID don't change this it is how the system knows this is a Moon.
+/Name this is just some one line name that the Moon is refered to by.
+/Abledo a measure of reflectivity, such that 0 absorbes all light and 1 reflects all light.
+/Atmosphereic pressure measured such that one bar is 1200.
+/Day length measured in seconds.
+/Density in kg/m^3
+/Orbital Eccentricity, such that 0 is a circular orbit and 1 is a strait line. Should be the same as the host planet.
+/Gravity in m/s^2
+/A Measure of how effective the atmosphere is at trapping heat.
+/Mean orbital distance in meters. Should be the same as the host planet.
+/Minimum Orbital distance in meters. Should be the same as the host planet.
+/Maximum Orbital distance in meters. Should be the same as the host planet.
+/Mass in grams.
+/Radius in meters.
+/My Average Global Dayside Tempiture in Kelvin.
+/My Average Global Night Tempiture in Kelvin.
+/My Maximum Global Dayside Tempiture in Kelvin.
+/My Maximum Global Nightside Tempiture in Kelvin.
+/My Minimum Global Dayside Tempiture in Kelvin.
+/My Minimum Global Nightside Tempiture in Kelvin.
+/My Volume in Meters cubed.
+/Percent of the surface covered in water.
+/My Year Length in Seconds. Should be the same as the host planet.
+/{
+//Colony Save, please read the Colony save info later in the document.
+/}
+/Number of moons in orbit of the moon.
+/{
+//The Moon shouldn't have moons in orbit.
+/}
+/Number of Satilights. This is the number of artifical satilights.
+/{
+//Satlight Save please check out the Satilight Save info in the Satilight List Document.
+/}
+/Lenght of the Moons orbit of the planet in seconds.
+/Distance to the host planet in meters.
+/End a blank line before returning to the higher level.
+
+
+
+--------------------------------------
+    _       _               _    _    
+   /_\   __| |_ ___ _ _ ___(_)__| |___
+  / _ \ (_-<  _/ -_) '_/ _ \ / _` (_-<
+ /_/ \_\/__/\__\___|_| \___/_\__,_/__/
+                                      
+-------------------------------------- 
+/Planet UID, this is a String ending in .Planet, this is how other objects identify the Asteroid.
+/934805 This is the Asteroid Type ID don't change this it is how the system knows this is a Asteroid.
+/Name this is just some one line name that the Asteroid is refered to by.
+/Abledo a measure of reflectivity, such that 0 absorbes all light and 1 reflects all light.
+/Atmosphereic pressure measured such that one bar is 1200.
+/Day length measured in seconds.
+/Density in kg/m^3
+/Orbital Eccentricity, such that 0 is a circular orbit and 1 is a strait line. Should be the same as the host planet.
+/Gravity in m/s^2
+/A Measure of how effective the atmosphere is at trapping heat.
+/Mean orbital distance in meters. Should be the same as the host planet.
+/Minimum Orbital distance in meters. Should be the same as the host planet.
+/Maximum Orbital distance in meters. Should be the same as the host planet.
+/Mass in grams.
+/Radius in meters.
+/My Average Global Dayside Tempiture in Kelvin.
+/My Average Global Night Tempiture in Kelvin.
+/My Maximum Global Dayside Tempiture in Kelvin.
+/My Maximum Global Nightside Tempiture in Kelvin.
+/My Minimum Global Dayside Tempiture in Kelvin.
+/My Minimum Global Nightside Tempiture in Kelvin.
+/My Volume in Meters cubed.
+/Percent of the surface covered in water.
+/My Year Length in Seconds. Should be the same as the host planet.
+/{
+//Colony Save, please read the Colony save info later in the document.
+/}
+/Number of moons in orbit of the Asteroid.
+/{
+//The Asteroid shouldn't have moons in orbit.
+/}
+/Number of Satilights. This is the number of artifical satilights.
+/{
+//Satlight Save please check out the Satilight Save info in the Satilight List Document.
+/}
+/Lenght of the Moons orbit of the planet in seconds. 0 For belt Asteroids.
+/Distance to the host planet in meters. 0 For belt Asteroids.
+/End a blank line before returning to the higher level.
+
+
+
+---------------------------------------
+  _  _      _    _ _        _    _     
+ | || |__ _| |__(_) |_ __ _| |__| |___ 
+ | __ / _` | '_ \ |  _/ _` | '_ \ / -_)
+ |_||_\__,_|_.__/_|\__\__,_|_.__/_\___|
+                                       
+---------------------------------------
+/Planet UID, this is a String ending in .Planet, this is how other objects identify the Habitable.
+/9348476 This is the Habitable Type ID don't change this it is how the system knows this is a Habitable.
+/Name this is just some one line name that the Habitable is refered to by.
+/Abledo a measure of reflectivity, such that 0 absorbes all light and 1 reflects all light.
+/Atmosphereic pressure measured such that one bar is 1200.
+/Day length measured in seconds.
+/Density in kg/m^3
+/Orbital Eccentricity, such that 0 is a circular orbit and 1 is a strait line.
+/Gravity in m/s^2
+/A Measure of how effective the atmosphere is at trapping heat.
+/Mean orbital distance in meters.
+/Minimum Orbital distance in meters.
+/Maximum Orbital distance in meters.
+/Mass in grams.
+/Radius in meters.
+/My Average Global Dayside Tempiture in Kelvin.
+/My Average Global Night Tempiture in Kelvin.
+/My Maximum Global Dayside Tempiture in Kelvin.
+/My Maximum Global Nightside Tempiture in Kelvin.
+/My Minimum Global Dayside Tempiture in Kelvin.
+/My Minimum Global Nightside Tempiture in Kelvin.
+/My Volume in Meters cubed.
+/Percent of the surface covered in water.
+/My Year Length in Seconds.
+/{
+//Colony Save, please read the Colony save info later in the document.
+/}
+/Number of moons in orbit of the planet.
+/{
+//Planet Save, please read the Planet save info for the type of moon you wish.
+/}
+/Number of Satilights. This is both artifical satilights and captured asteroids.
+/{
+//Either an Astroid Save please look to the Asteroid Save info Ealier in this document, or Satlight Save please check out the Satilight Save info in the Satilight List Document.
+/}
+/{
+//Condition Save, please read the Condition Save info later in the document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------------------
+  _  _      _    _ _        _    _     __  __               
+ | || |__ _| |__(_) |_ __ _| |__| |___|  \/  |___  ___ _ _  
+ | __ / _` | '_ \ |  _/ _` | '_ \ / -_) |\/| / _ \/ _ \ ' \ 
+ |_||_\__,_|_.__/_|\__\__,_|_.__/_\___|_|  |_\___/\___/_||_|
+                                                            
+------------------------------------------------------------
+/Planet UID, this is a String ending in .Planet, this is how other objects identify the Moon.
+/934832 This is the HabitableMoon Type ID don't change this it is how the system knows this is a HabitableMoon.
+/Name this is just some one line name that the Moon is refered to by.
+/Abledo a measure of reflectivity, such that 0 absorbes all light and 1 reflects all light.
+/Atmosphereic pressure measured such that one bar is 1200.
+/Day length measured in seconds.
+/Density in kg/m^3
+/Orbital Eccentricity, such that 0 is a circular orbit and 1 is a strait line. Should be the same as the host planet.
+/Gravity in m/s^2
+/A Measure of how effective the atmosphere is at trapping heat.
+/Mean orbital distance in meters. Should be the same as the host planet.
+/Minimum Orbital distance in meters. Should be the same as the host planet.
+/Maximum Orbital distance in meters. Should be the same as the host planet.
+/Mass in grams.
+/Radius in meters.
+/My Average Global Dayside Tempiture in Kelvin.
+/My Average Global Night Tempiture in Kelvin.
+/My Maximum Global Dayside Tempiture in Kelvin.
+/My Maximum Global Nightside Tempiture in Kelvin.
+/My Minimum Global Dayside Tempiture in Kelvin.
+/My Minimum Global Nightside Tempiture in Kelvin.
+/My Volume in Meters cubed.
+/Percent of the surface covered in water.
+/My Year Length in Seconds. Should be the same as the host planet.
+/{
+//Colony Save, please read the Colony save info later in the document.
+/}
+/Number of moons in orbit of the moon.
+/{
+//The Moon shouldn't have moons in orbit.
+/}
+/Number of Satilights. This is the number of artifical satilights.
+/{
+//Satlight Save please check out the Satilight Save info in the Satilight List Document.
+/}
+/Lenght of the Moons orbit of the planet in seconds.
+/Distance to the host planet in meters.
+/{
+//Condition Save, please read the Condition Save info later in the document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------------------
+_________                    .___.__  __  .__               
+\_   ___ \  ____   ____    __| _/|__|/  |_|__| ____   ____  
+/    \  \/ /  _ \ /    \  / __ | |  \   __\  |/  _ \ /    \ 
+\     \___(  <_> )   |  \/ /_/ | |  ||  | |  (  <_> )   |  \
+ \______  /\____/|___|  /\____ | |__||__| |__|\____/|___|  /
+        \/            \/      \/                         \/ 
+------------------------------------------------------------
+/Condition UID, this is a String ending in .Surface, this is how other objects identify the Condition.
+/119013 This is the Condition Type ID don't change this it is how the system knows this is a Condition.
+/Scale of 0-10 on how much water their is. [0|<10%,1|<20%,2|<30%,3|<40%,4|<50%,5|<55%,6|<60%,7|<75%,8|<70%,9|<80%,10|>80%]
+/Scale of how much the tempiture varies subtract the lowest tempiture's index from the highest tempiture's index.
+/Scale of 0-10 on how hot the surface is. [0|<240K,1|<260K,2|<270K,3|<280K,4|<290K,5|<300K,6|<310K,7|<320K,8|<330K,9|<340K,10|>340K]
+/Scale of 0-10 on how much gravity the surface is under. [0|<0.1G,1|<0.25G,2|<0.5G,3|<0.75G,4|<1G,5|<1.5G,6|<2G,7|<3G,8|<4G,9|5G,10|>5G]
+/Scale of 0-10 on how much pressure is at sea level under the atmosphere. [0|<0.1Bar,1|<0.25Bar,2|<0.5Bar,3|<0.75Bar,4|<1Bar,5|<1.5Bar,6|<2Bar,7|<3Bar,8|<4Bar,9|5Bar,10|>5Bar]
+/The Type of Atmosphere. [NIGTORGEN,AMMONIA,METHANE]
+/If this planet is Dextro, or Levo acid. [true,false]
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------------
+_________        .__                .__               
+\_   ___ \  ____ |  |   ____   ____ |__| ____   ______
+/    \  \/ /  _ \|  |  /  _ \ /    \|  |/ __ \ /  ___/
+\     \___(  <_> )  |_(  <_> )   |  \  \  ___/ \___ \ 
+ \______  /\____/|____/\____/|___|  /__|\___  >____  >
+        \/                        \/        \/     \/ 
+------------------------------------------------------
+/Colony UID, this is a String ending in .Surface, this is how other objects identify the Colony.
+/119017 This is the Colony Type ID don't change this it is how the system knows this is a Colony.
+/Size of the inhabitation of the colony. Measured in 10^n population.
+/Scale how close to growing to the next size. 1-9.
+/If the planet can host life. [true,false]
+/If the planet has water. [true,false]
+/If the planet has Gravite. [true,false]
+/If the planet has Rare Gasses. [true,false]
+/If the planet has Rare Metals. [true,false]
+/If the planet has Radiotropes. [true,false]
+/If the planet has Massive Amounts of Metals. [true,false]
+/If the planet has Massive Amounts of Gases. [true,false]
+/If the planet had a Biosphere. [true,false]
+/Max size of the colony. Cacluated by ceil{(5+sqrt[251*radius+58006])/251-0.5}
+/If the planet has developments. [true,false]
+/{
+//Habitation Save, please read the Habitation Save info later in the document.
+/}
+/If the planet has an ecosystem. [true,false]
+/{
+//Ecosystem Save, please read the Ecosystem Save info later in the document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+---------------------------------------------------------------------
+  ___ ___       ___.   .__  __          __  .__                      
+ /   |   \_____ \_ |__ |__|/  |______ _/  |_|__| ____   ____   ______
+/    ~    \__  \ | __ \|  \   __\__  \\   __\  |/  _ \ /    \ /  ___/
+\    Y    // __ \| \_\ \  ||  |  / __ \|  | |  (  <_> )   |  \\___ \ 
+ \___|_  /(____  /___  /__||__| (____  /__| |__|\____/|___|  /____  >
+       \/      \/    \/              \/                    \/     \/ 
+---------------------------------------------------------------------
+/Habitaion UID, this is a String ending in .Surface, this is how other objects identify the Habitation.
+/117897 This is the Habitation Type ID don't change this it is how the system knows this is a Habitation.
+/Max Development calcuated from 3*([Maxsize*3+1]^2+1)
+/Number of Developments
+/{
+//Development Save, please read the Development Save info later in the document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+-----------------------------------------------------------------------------------
+________                     .__                                       __          
+\______ \   _______  __ ____ |  |   ____ ______   _____   ____   _____/  |_  ______
+ |    |  \_/ __ \  \/ // __ \|  |  /  _ \\____ \ /     \_/ __ \ /    \   __\/  ___/
+ |    `   \  ___/\   /\  ___/|  |_(  <_> )  |_> >  Y Y  \  ___/|   |  \  |  \___ \ 
+/_______  /\___  >\_/  \___  >____/\____/|   __/|__|_|  /\___  >___|  /__| /____  >
+        \/     \/          \/            |__|         \/     \/     \/          \/ 
+-----------------------------------------------------------------------------------
+/Developments UID, this is a String ending in .Surface, this is how other objects identify the Development.
+/119417 This is the Development Type ID don't change this it is how the system knows this is a Development.
+/Name this is just some one line name that the Development is refered to by.
+/Cost a number representive of the Development.
+/Number of upgrades.
+/{
+//Development Save, the same as this perferably with no upgrades of its own.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+-------------------------------------------------------------------------
+___________                                   __                         
+\_   _____/ ____  ____  _________.__. _______/  |_  ____   _____   ______
+ |    __)__/ ___\/  _ \/  ___<   |  |/  ___/\   __\/ __ \ /     \ /  ___/
+ |        \  \__(  <_> )___ \ \___  |\___ \  |  | \  ___/|  Y Y  \\___ \ 
+/_______  /\___  >____/____  >/ ____/____  > |__|  \___  >__|_|  /____  >
+        \/     \/          \/ \/         \/            \/      \/     \/ 
+-------------------------------------------------------------------------
+/Ecosystem UID, this is a String ending in .Surface, this is how other objects identify the Ecosystem.
+/112377 This is the Ecosystem Type ID don't change this it is how the system knows this is a Ecosystem.
+/{
+//Animal Save, please read the Animal Save info later in the document. 
+/}
+/{
+//Animal Save, please read the Animal Save info later in the document. 
+/}
+/{
+//Animal Save, please read the Animal Save info later in the document. 
+/}
+/{
+//Plant Save, please read the Plant Save info later in the document. 
+/}
+/{
+//Plant Save, please read the Plant Save info later in the document. 
+/}
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------
+   _____         .__               .__          
+  /  _  \   ____ |__| _____ _____  |  |   ______
+ /  /_\  \ /    \|  |/     \\__  \ |  |  /  ___/
+/    |    \   |  \  |  Y Y  \/ __ \|  |__\___ \ 
+\____|__  /___|  /__|__|_|  (____  /____/____  >
+        \/     \/         \/     \/          \/ 
+------------------------------------------------
+/Animal UID, this is a String ending in .Surface, this is how other objects identify the Animal.
+/112345 This is the Animal Type ID don't change this it is how the system knows this is a Animal.
+/If it can walk. [true,false]
+/If it can swim. [true,false]
+/If it can fly. [true,false]
+/If it can burrow. [true,false]
+/If it can see. [true,false]
+/If it can hear. [true,false]
+/If it can smell. [true,false]
+/If it can work. [true,false]
+/If it can lay eggs. [true,false]
+/If it can make milk. [true,false]
+/If it has a thick hide. [true,false]
+/If it is Posionous. [true,false]
+/If it is Venomous. [true,false]
+/If it can camoflague. [true,false]
+/Measure of Size larger numbers are bigger.
+/Measure of how posionous the animal is. 0-10.
+/Measure of how venomous the animal is. 0-10.
+/If it eats meat. [true,false]
+/If it eats plants. [true,false]
+/If it eats metals. [true,false]
+/Number of pairs of legs.
+/Number of pairs of wings.
+/Number of pairs of heavy manipulators.
+/Number of pairs of manipulators.
+/Number of pairs of fine manipulators.
+/Number of eyes.
+/Number of childern per brood.
+/Number of 12th local years before sextual maturity.
+/Number of local years before death.
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------
+__________.__                 __          
+\______   \  | _____    _____/  |_  ______
+ |     ___/  | \__  \  /    \   __\/  ___/
+ |    |   |  |__/ __ \|   |  \  |  \___ \ 
+ |____|   |____(____  /___|  /__| /____  >
+                    \/     \/          \/ 
+------------------------------------------
+/Animal UID, this is a String ending in .Surface, this is how other objects identify the Animal.
+/112345 This is the Animal Type ID don't change this it is how the system knows this is a Animal.
+/If it can bare fruit. [true,false]
+/If it has usable materials. [true,false]
+/If it is carnivorous. [true,false]
+/If it is Posionous. [true,false]
+/If it is Venomous. [true,false]
+/If it can camoflague. [true,false]
+/Measure of Size larger numbers are bigger.
+/Measure of how posionous the animal is. 0-10.
+/Measure of how venomous the animal is. 0-10.
+/Number of childern per brood.
+/Number of 12th local years before sextual maturity.
+/Number of local years before death.
+/End a blank line before returning to the higher level.
+
+
+
+--------------------------------------------
+  ________       .__                        
+ /  _____/_____  |  | _____  ___  ______.__.
+/   \  ___\__  \ |  | \__  \ \  \/  <   |  |
+\    \_\  \/ __ \|  |__/ __ \_>    < \___  |
+ \______  (____  /____(____  /__/\_ \/ ____|
+        \/     \/          \/      \/\/     
+--------------------------------------------
+/Galaxy UID, this is a String ending in .galaxy, this is how other objects identify the Galaxy.
+/937153 This is the Galaxy Type ID don't change this it is how the system knows this is a Galaxy.
+/Name this is just some one line name that the Galaxy is refered to by.
+/Number of sectors in the galaxy.
+/{
+//Sector Save, please read the Sector Save info later in the document.
+/}
+/End a blank line before the end of the document.
+
+
+
+--------------------------------------------------
+  _________              __                       
+ /   _____/ ____   _____/  |_  ___________  ______
+ \_____  \_/ __ \_/ ___\   __\/  _ \_  __ \/  ___/
+ /        \  ___/\  \___|  | (  <_> )  | \/\___ \ 
+/_______  /\___  >\___  >__|  \____/|__|  /____  >
+        \/     \/     \/                       \/ 
+--------------------------------------------------
+/Sector UID, this is a String ending in .sector, this is how other objecys identifies the Sector.
+/937184 This is the Sector Type IF don't change this it is how the system knows this is a Sector.
+/Name this is just some one line name that the Sector is refered to by.
+/The UID of the Galaxy that owns this.
+/Number of Regions in the sector.
+/{
+//Region Save, please read the Region Save info later in the document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+-------------------------------------------------
+__________              .__                      
+\______   \ ____   ____ |__| ____   ____   ______
+ |       _// __ \ / ___\|  |/  _ \ /    \ /  ___/
+ |    |   \  ___// /_/  >  (  <_> )   |  \\___ \ 
+ |____|_  /\___  >___  /|__|\____/|___|  /____  >
+        \/     \/_____/                \/     \/ 
+-------------------------------------------------
+/Region UID, this is a String ending in .region, this is how other objecys identifies the Region.
+/937120 This is the Region Type IF don't change this it is how the system knows this is a Region.
+/Name this is just some one line name that the Regions is refered to by.
+/The UID of the Sector that owns this.
+/Number of Zones in the region.
+/{
+//Zone Save, please read the Zone Save info later in the document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+-------------------------------------
+__________                           
+\____    /____   ____   ____   ______
+  /     //  _ \ /    \_/ __ \ /  ___/
+ /     /(  <_> )   |  \  ___/ \___ \ 
+/_______ \____/|___|  /\___  >____  >
+        \/          \/     \/     \/ 
+-------------------------------------
+/Zone UID, this is a String ending in .region, this is how other objecys identifies the Zone.
+/937173 This is the Zone Type IF don't change this it is how the system knows this is a Zone.
+/Name this is just some one line name that the Zone is refered to by.
+/The UID of the Region that owns this.
+/Number of Systems in the zone.
+/UID for each system in the zone.
+/End a blank line before returning to the higher level.
+
+
+
+-----------------------------------------------------
+  _________       __    __  .__                      
+ /   _____/ _____/  |__/  |_|__| ____    ____  ______
+ \_____  \_/ __ \   __\   __\  |/    \  / ___\/  ___/
+ /        \  ___/|  |  |  | |  |   |  \/ /_/  >___ \ 
+/_______  /\___  >__|  |__| |__|___|  /\___  /____  >
+        \/     \/                   \//_____/     \/ 
+-----------------------------------------------------
+/Map.settings
+/000001
+/Number of Sectors
+/Minimum number of regions.
+/Maximum number of random regions.
+/Minimum number of zones.
+/Maximum number of random zones.
+/Minimum number of systems.
+/Maximum number of random systems.
+/Maximum number of planets.
+/If special stars will be generated. [true,false]
+/If binary/trinary stars will be generated. [true,false]
+/If random names will be generated. [true,false]
+/Name of the Galaxy
+/Number of normal stars.
+/Number of brown dwarfs.
+/Number of white dwarfs.
+/Number of neutron stars.
+/Number of black holes.
+/Number of nebulas.
+/Number of small stars.
+/Number of medium stars.
+/Number of large stars.
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------------------------------------------
+__________       .__                _______          __                       __    
+\______   \ ____ |  | _____  ___.__.\      \   _____/  |___  _  _____________|  | __
+ |       _// __ \|  | \__  \<   |  |/   |   \_/ __ \   __\ \/ \/ /  _ \_  __ \  |/ /
+ |    |   \  ___/|  |__/ __ \\___  /    |    \  ___/|  |  \     (  <_> )  | \/    < 
+ |____|_  /\___  >____(____  / ____\____|__  /\___  >__|   \/\_/ \____/|__|  |__|_ \
+        \/     \/          \/\/            \/     \/                              \/
+------------------------------------------------------------------------------------
+/Gate.network
+/678802
+/Number of Primary Gates
+/{
+//Primary Gate Save, please read the Primary Gate Save info later in the document.
+/}
+/Number of Pods
+/Number of Secondary in Pod
+/{
+//Primary Secondary Save, please read the Secondary Gate Save info later in the document.
+/}
+/End a blank line before returning to the higher level.
+
+
+
+--------------------------------------------------------------------------------------
+__________        .__                             __________       .__                
+\______   \_______|__| _____ _____ _______ ___.__.\______   \ ____ |  | _____  ___.__.
+ |     ___/\_  __ \  |/     \\__  \\_  __ <   |  | |       _// __ \|  | \__  \<   |  |
+ |    |     |  | \/  |  Y Y  \/ __ \|  | \/\___  | |    |   \  ___/|  |__/ __ \\___  |
+ |____|     |__|  |__|__|_|  (____  /__|   / ____| |____|_  /\___  >____(____  / ____|
+                           \/     \/       \/             \/     \/          \/\/     
+--------------------------------------------------------------------------------------
+/Gate UID, this is a String ending in .station, this is how other objecys identifies the Gate.
+/678809 This is the Primary Gate Type IF don't change this it is how the system knows this is a Primary Gate.
+/UID of the System it is in.
+/UID of the Planet it orbits.
+/UID of the Ghost is pairs with.
+/UID of the Zone it is in.
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------------------------------------------------------------
+  _________                               .___                    __________       .__                
+ /   _____/ ____   ____  ____   ____    __| _/____ _______ ___.__.\______   \ ____ |  | _____  ___.__.
+ \_____  \_/ __ \_/ ___\/  _ \ /    \  / __ |\__  \\_  __ <   |  | |       _// __ \|  | \__  \<   |  |
+ /        \  ___/\  \__(  <_> )   |  \/ /_/ | / __ \|  | \/\___  | |    |   \  ___/|  |__/ __ \\___  |
+/_______  /\___  >\___  >____/|___|  /\____ |(____  /__|   / ____| |____|_  /\___  >____(____  / ____|
+        \/     \/     \/           \/      \/     \/       \/             \/     \/          \/\/     
+------------------------------------------------------------------------------------------------------
+/Gate UID, this is a String ending in .station, this is how other objecys identifies the Gate.
+/678804 This is the Primary Gate Type ID don't change this it is how the system knows this is a Primary Gate.
+/UID of the System it is in.
+/UID of the Planet it orbits.
+/UID of the Ghost is pairs with.
+/UID of the Zone it is in.
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------------------------------
+  ________.__                    __ __________       .__                
+ /  _____/|  |__   ____  _______/  |\______   \ ____ |  | _____  ___.__.
+/   \  ___|  |  \ /  _ \/  ___/\   __\       _// __ \|  | \__  \<   |  |
+\    \_\  \   Y  (  <_> )___ \  |  | |    |   \  ___/|  |__/ __ \\___  |
+ \______  /___|  /\____/____  > |__| |____|_  /\___  >____(____  / ____|
+        \/     \/           \/              \/     \/          \/\/     
+------------------------------------------------------------------------
+/Gate UID, this is a String ending in .station, this is how other objecys identifies the Gate.
+/678809 This is the Ghost Gate Type ID don't change this it is how the system knows this is a Ghost Gate.
+/The UID of the attached Gate.

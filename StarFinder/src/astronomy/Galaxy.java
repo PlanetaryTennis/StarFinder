@@ -1,135 +1,44 @@
 package astronomy;
 
 import java.io.Serializable;
+import java.util.UUID;
+import java.util.Vector;
 
-import relay.RelayNetwork;
+import engine.Savable;
+import gate.GateNetwork;
+import utilities.StringFundementals;
 
-public class Galaxy implements Serializable{
+public class Galaxy implements Serializable, Savable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2209507012552543563L;
-	private Sector[] mySectors;
+	private Vector<Sector> mySectors = new Vector<Sector>();
 	private String myName;
-	private RelayNetwork myNetwork;
+	private GateNetwork myNetwork;
 	
-	public int Stars;
-	public int Terrestrials;
-	public int Habitables;
-	public int Jovians;
-	public int Belts;
-	public int Moons;
-	public int Asteroids;
-	public int HabMoons;
-	
-	public Galaxy(Sector[] mySectors){
-		this.mySectors = mySectors;
-		myName = Sector.randomName();
+	public Galaxy(Vector<Sector> sectors) {
+		mySectors = sectors;
+		myID = UUID.randomUUID().toString()+".galaxy";
 	}
 	
-	public void count(){
-		Stars = 0;
-		Terrestrials = 0;
-		Habitables = 0;
-		Jovians = 0;
-		Belts = 0;
-		Moons = 0;
-		Asteroids = 0;
-		HabMoons = 0;
-		
-		for(int i = 0;i < mySectors.length;i++) {
-			mySectors[i].count();
-			
-			Stars += mySectors[i].Stars;
-			
-			Terrestrials += mySectors[i].Terrestrials;
-			Habitables += mySectors[i].Habitables;
-			Jovians += mySectors[i].Jovians;
-			Belts += mySectors[i].Belts;
-
-			Moons += mySectors[i].Moons;
-			Asteroids += mySectors[i].Asteroids;
-			HabMoons += mySectors[i].HabMoons;
-		}
+	public Galaxy(String load) {
+		this.loadString(load);
 	}
 
-	public RelayNetwork getMyNetwork() {
+	public GateNetwork getMyNetwork() {
 		return myNetwork;
 	}
 
-	public void setMyNetwork(RelayNetwork myNetwork) {
+	public void setMyNetwork(GateNetwork myNetwork) {
 		this.myNetwork = myNetwork;
 	}
 
-	public int getStars() {
-		return Stars;
-	}
-
-	public void setStars(int stars) {
-		Stars = stars;
-	}
-
-	public int getTerrestrials() {
-		return Terrestrials;
-	}
-
-	public void setTerrestrials(int terrestrials) {
-		Terrestrials = terrestrials;
-	}
-
-	public int getHabitables() {
-		return Habitables;
-	}
-
-	public void setHabitables(int habitables) {
-		Habitables = habitables;
-	}
-
-	public int getJovians() {
-		return Jovians;
-	}
-
-	public void setJovians(int jovians) {
-		Jovians = jovians;
-	}
-
-	public int getBelts() {
-		return Belts;
-	}
-
-	public void setBelts(int belts) {
-		Belts = belts;
-	}
-
-	public int getMoons() {
-		return Moons;
-	}
-
-	public void setMoons(int moons) {
-		Moons = moons;
-	}
-
-	public int getAsteroids() {
-		return Asteroids;
-	}
-
-	public void setAsteroids(int asteroids) {
-		Asteroids = asteroids;
-	}
-
-	public int getHabMoons() {
-		return HabMoons;
-	}
-
-	public void setHabMoons(int habMoons) {
-		HabMoons = habMoons;
-	}
-
-	public Sector[] getMySectors() {
+	public Vector<Sector> getMySectors() {
 		return mySectors;
 	}
 
-	public void setMySectors(Sector[] mySectors) {
+	public void setMySectors(Vector<Sector> mySectors) {
 		this.mySectors = mySectors;
 	}
 
@@ -139,5 +48,68 @@ public class Galaxy implements Serializable{
 
 	public void setMyName(String myName) {
 		this.myName = myName;
+	}
+
+	@Override
+	public int loadString(String load) {
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.get(0));
+		myID = in[0];
+		int k = 2;
+		myName = in[k++];
+		setSectorNumber(Integer.parseInt(in[k++]));
+		for(int i = 0;i < getSectorNumber();i++) {
+			mySectors.add(new Sector(object.get(i+1),0.0d));
+			mySectors.get(i).setMyGalaxy(this);
+		}
+		return k;
+	}
+	
+	private int SectorNumber;
+	private Vector<String> SectorIDs = new Vector<String>();
+
+	@Override
+	public String saveString() {
+		String out = "";
+		out += myID + "\n";
+		out += getClassIndex() + "\n";
+		out += this.getMyName() + "\n";
+		out += this.getMySectors().size() + "\n";
+		for(int i = 0;i < this.getMySectors().size();i++){
+				out += "{\n";
+				out += mySectors.get(i).saveString() + "\n";
+				out += "}\n";;
+		}
+		return out;
+	}
+	
+	public static final int CLASSINDEX = 937153;
+
+	@Override
+	public int getClassIndex() {
+		return CLASSINDEX;
+	}
+	
+	String myID;
+
+	@Override
+	public String getID() {
+		return myID;
+	}
+
+	public int getSectorNumber() {
+		return SectorNumber;
+	}
+
+	public void setSectorNumber(int sectorNumber) {
+		SectorNumber = sectorNumber;
+	}
+
+	public Vector<String> getSectorIDs() {
+		return SectorIDs;
+	}
+
+	public void setSectorIDs(Vector<String> sectorIDs) {
+		SectorIDs = sectorIDs;
 	}
 }

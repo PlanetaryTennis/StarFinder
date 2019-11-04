@@ -2,72 +2,36 @@ package astronomy;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.UUID;
+import java.util.Vector;
 
+import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
+import utilities.StringFundementals;
 
-public class Region implements Serializable {
+public class Region implements Serializable, Savable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Zone [] myZones;
+	private Vector<Zone> myZones = new Vector<Zone>();
 	private Sector mySector;
 	private String Name;
-
-	public int Stars;
-	public int Terrestrials;
-	public int Habitables;
-	public int Jovians;
-	public int Belts;
-	public int Moons;
-	public int Asteroids;
-	public int HabMoons;
 	
-	public void count() {
-		Stars = 0;
-		Terrestrials = 0;
-		Habitables = 0;
-		Jovians = 0;
-		Belts = 0;
-		Moons = 0;
-		Asteroids = 0;
-		HabMoons = 0;
-		
-		for(int i = 0;i < myZones.length;i++) {
-			myZones[i].count();
-			
-			Stars += myZones[i].Stars;
-			
-			Terrestrials += myZones[i].Terrestrials;
-			Habitables += myZones[i].Habitables;
-			Jovians += myZones[i].Jovians;
-			Belts += myZones[i].Belts;
-
-			Moons += myZones[i].Moons;
-			Asteroids += myZones[i].Asteroids;
-			HabMoons += myZones[i].HabMoons;
-		}
+	public Region(String load) {
+		this.loadString(load);
 	}
 	
 	public Region(String Name,Sector sector){
 		this.Name = Name;
 		this.mySector = sector;
+		myZones = new Vector<Zone>();
+		myID = UUID.randomUUID().toString()+".region";
 	}
 	
 	public void Add(Zone zone) {
-		if(myZones == null) {
-			myZones = new Zone[1];
-			myZones[0] = zone;
-			return;
-		}
-		Zone[] temp = new Zone[myZones.length+1];
-		for(int i = 0;i < myZones.length;i++) {
-			temp[i] = myZones[i];
-		}
-		temp[myZones.length] = zone;
-		zone.setMyRegion(this);
-		myZones = temp;
+		myZones.add(zone);
 	}
 
 	public Sector getMySector() {
@@ -86,7 +50,7 @@ public class Region implements Serializable {
 		Name = name;
 	}
 
-	public Zone[] getMyZones() {
+	public Vector<Zone> getMyZones() {
 		return myZones;
 	}
 
@@ -159,5 +123,72 @@ public class Region implements Serializable {
 			s+=vowels.get();
 		}
 		return s;
+	}
+
+
+	@Override
+	public int loadString(String load) {
+		Vector<String> object = StringFundementals.unnestString('{', '}', load);
+		String[] in = StringFundementals.breakByLine(object.get(0));
+		myID = in[0];
+		int k = 2;
+		Name = in[k++];
+		SectorID = in[k++];
+		setZoneNumber(Integer.parseInt(in[k++]));
+		for(int i = 0;i < getZoneNumber();i++) {
+			myZones.add(new Zone(object.get(i+1)));
+			myZones.get(i).setMyRegion(this);
+		}
+		return k;
+	}
+	
+	String SectorID;
+	private int ZoneNumber;
+	private Vector<String> ZoneIDs = new Vector<String>();
+
+	@Override
+	public String saveString() {
+		String out = "";
+		out += myID + "\n";
+		out += getClassIndex() + "\n";
+		out += this.getName() + "\n";
+		out += this.getMySector().getID() + "\n";
+		out += this.getMyZones().size() + "\n";
+		for(int i = 0;i < this.getMyZones().size();i++){
+			out += "{\n";
+			out += myZones.get(i).saveString() + "\n";
+			out += "}\n";
+		}
+		return out;
+	}
+	
+	public static final int CLASSINDEX = 937120;
+
+	@Override
+	public int getClassIndex() {
+		return CLASSINDEX;
+	}
+	
+	String myID;
+
+	@Override
+	public String getID() {
+		return myID;
+	}
+
+	public int getZoneNumber() {
+		return ZoneNumber;
+	}
+
+	public void setZoneNumber(int zoneNumber) {
+		ZoneNumber = zoneNumber;
+	}
+
+	public Vector<String> getZoneIDs() {
+		return ZoneIDs;
+	}
+
+	public void setZoneIDs(Vector<String> zoneIDs) {
+		ZoneIDs = zoneIDs;
 	}
 }

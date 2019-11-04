@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import astronomy.OrbitObject;
 import map.MapView;
-import relay.PrimaryRelay;
-import relay.Relay;
-import relay.SecondaryRelay;
+import gate.ImageGate;
+import gate.PrimaryGate;
+import gate.SecondaryGate;
 import utilities.Functions;
 
 public class SatilightView implements ActionListener {
@@ -22,12 +22,14 @@ public class SatilightView implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		switch(Functions.ClassSwitch(O.getClass(),new Class[]{PrimaryRelay.class,SecondaryRelay.class})) {
+		switch(Functions.ClassSwitch(O.getClass(),new Class[]{ImageGate.class})) {
 		case 0:
-			map.viewPrimaryRelay((PrimaryRelay) O);
-			break;
-		case 1:
-			map.viewSecondaryRelay((SecondaryRelay) O);
+			ImageGate IR = (ImageGate)O;
+			if(IR.getMyGate().getClass() == PrimaryGate.class) {
+				map.viewPrimaryGate((PrimaryGate) IR.getMyGate());
+			}else {
+				map.viewSecondaryGate((SecondaryGate) IR.getMyGate());				
+			}
 			break;
 		case -1:
 		default:

@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 
 import astronomy.Region;
-import astronomy.Sector;
 import astronomy.Zone;
 import map.MapView;
 
@@ -32,7 +31,7 @@ public class NewZone implements ActionListener {
 		}else {
 			r = new Zone(Zone.randomName(), myRegion);
 		}
-		JMenu j = MapView.populateZoneMenu(r,myView);
+		JMenu j = new JMenu(r.getMyName());
 		myMenu.add(j);
 		myRegion.Add(r);
 	}

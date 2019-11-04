@@ -4,12 +4,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.Vector;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,17 +19,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-//import org.apache.poi.ss.usermodel.Cell;
-//import org.apache.poi.ss.usermodel.Row;
-//import org.apache.poi.ss.usermodel.Sheet;
-//import org.apache.poi.ss.usermodel.Workbook;
-//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import actions.AnimalView;
+import actions.Biolook;
+import actions.Colonize;
+import actions.ColonyViewer;
 import actions.MoonView;
 import actions.NewRegion;
-import actions.NewSystem;
 import actions.NewZone;
 import actions.PlanetView;
+import actions.PlantView;
 import actions.PrimeJump;
 import actions.RegionPanel;
 import actions.SatilightView;
@@ -46,33 +42,30 @@ import actions.editmenu;
 import actions.exit;
 import actions.saver;
 import actions.viewWorldData;
-import astronomy.Asteroid;
 import astronomy.AstroObject;
-import astronomy.Belt;
 import astronomy.Galaxy;
-import astronomy.Habitable;
-import astronomy.HabitableMoon;
-import astronomy.Jovian;
-import astronomy.Moon;
-import astronomy.OrbitObject;
-import astronomy.Planet;
 import astronomy.Region;
 import astronomy.Sector;
 import astronomy.SolSystem;
-import astronomy.Star;
-import astronomy.Terrestrial;
 import astronomy.Zone;
+import astronomy.planetary.Asteroid;
+import astronomy.planetary.Belt;
+import astronomy.planetary.Habitable;
+import astronomy.planetary.HabitableMoon;
+import astronomy.planetary.Jovian;
+import astronomy.planetary.Moon;
+import astronomy.planetary.Planet;
+import astronomy.planetary.Terrestrial;
+import astronomy.stellar.Nebula;
+import astronomy.stellar.Star;
 import engine.ObjectFiles;
 import planetary.Colony;
 import planetary.Condition;
-import planetary.Ecosystem;
-import planetary.SepcialDevelopments;
-import relay.PrimaryRelay;
-import relay.RelayNetwork;
-import relay.SecondaryRelay;
-import units.SI;
-import units.sci;
-import units.sitime;
+import gate.ImageGate;
+import gate.PrimaryGate;
+import gate.Gate;
+import gate.GateNetwork;
+import gate.SecondaryGate;
 
 public class MapView extends JFrame{
 
@@ -81,19 +74,11 @@ public class MapView extends JFrame{
 	 */
 	private static final long serialVersionUID = -3083279752317354841L;
 
-	private static final int TYPEVALUE = 6;
-	private static final int SPVALUE = 5;
-	private static final int POSITIONVALUE = 4;
-	private static final int SYSTEMVALUE = 3;
-	private static final int ZONEVALUE = 2;
-	private static final int REGIONVALUE = 1;
-	private static final int SECTORVALUE = 0;
-	
 	private JPanel myView;
-	private JMenu[] myMenus;
+	private Vector<JMenu> myMenus;
 	private JMenuItem Name;
 
-	private Sector[] mySectors;
+	private Vector<Sector> mySectors;
 
 	private Sector lasts = null;
 	private Region lastr = null;
@@ -108,30 +93,27 @@ public class MapView extends JFrame{
 
 	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms, boolean n, int[] suns, boolean r){
 		super(name);
-		mySettings = new SettingList(s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,suns);
+		String nam = Sector.randomName();
+		mySettings = new SettingList(nam,s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,suns);
 		
 		this.setBackground(Color.BLACK);
 		this.setForeground(Color.BLACK);
 
 		JMenuBar bar = new JMenuBar();
-		myMenus = new JMenu[s];
-		mySectors = new Sector[s];
-		for(int i = 0;i < myMenus.length;i++) {
-			myMenus[i] = new JMenu();
-			mySectors[i] = Sector.makeRandom(mySettings);
-			if(!n)mySectors[i].setName(""+i);
-			myMenus[i] = (populateSectorMenu(mySectors[i], this));
-			bar.add(myMenus[i]);
+		myMenus = new Vector<JMenu>();
+		mySectors = new Vector<Sector>();
+		for(int i = 0;i < s;i++) {
+			mySectors.add(Sector.makeRandom(mySettings));
+			if(!n)mySectors.get(i).setName(""+i);
+			myMenus.add(populateSectorMenu(mySectors.get(i), this));
+			bar.add(myMenus.get(i));
 		}
 
 		galaxy = new Galaxy(mySectors);
-		for(int i = 0;i < mySectors.length;i++) {
-			mySectors[i].setMyGalaxy(galaxy);
+		galaxy.setMyName(nam);
+		for(int i = 0;i < mySectors.size();i++) {
+			mySectors.get(i).setMyGalaxy(galaxy);
 		}
-
-		JMenuItem save = new JMenuItem("Save");
-		save.addActionListener(new saver(this, galaxy));
-		bar.add(save);
 		
 		Name = new JMenuItem(galaxy.getMyName());
 		bar.add(Name);
@@ -152,10 +134,19 @@ public class MapView extends JFrame{
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		if(r) {
-			galaxy.setMyNetwork(new RelayNetwork(galaxy, 0));
+			galaxy.setMyNetwork(new GateNetwork(galaxy, 0));
+			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
 		}
-		
+
+		JMenuItem save = new JMenuItem("Save");
+		save.addActionListener(new saver(this, galaxy));
+		bar.add(save);
+
+		ObjectFiles.WriteSavabletoFile(mySettings, galaxy.getMyName());
+		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
 		this.viewGalaxy();
+		
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
 		
 		this.setSize(1000, 750);
 		this.add(sp);
@@ -172,15 +163,13 @@ public class MapView extends JFrame{
 		JMenuBar bar = new JMenuBar();
 		
 		galaxy = g;
-		int s = galaxy.getMySectors().length;
+		int s = galaxy.getMySectors().size();
 		
-		myMenus = new JMenu[s];
-		mySectors = new Sector[s];
-		for(int i = 0;i < myMenus.length;i++) {
-			myMenus[i] = new JMenu();
-			mySectors[i] = galaxy.getMySectors()[i];
-			myMenus[i] = (populateSectorMenu(mySectors[i], this));
-			bar.add(myMenus[i]);
+		myMenus = new Vector<JMenu>();
+		mySectors = galaxy.getMySectors();
+		for(int i = 0;i < s;i++) {
+			myMenus.add(populateSectorMenu(mySectors.get(i), this));
+			bar.add(myMenus.get(i));
 		}
 
 		JMenuItem save = new JMenuItem("Save");
@@ -205,7 +194,14 @@ public class MapView extends JFrame{
 		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
+		this.mySettings = (SettingList)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Map.settings");
+		if(ObjectFiles.CheckFile(galaxy.getMyName()+"/Gate.network")) {
+			galaxy.setMyNetwork((GateNetwork)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/Gate.network"));
+			galaxy.getMyNetwork().LinkUp(galaxy);
+		}
 		this.viewGalaxy();
+		
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
 		
 		this.setSize(1000, 750);
 		this.add(sp);
@@ -214,10 +210,10 @@ public class MapView extends JFrame{
 	}
 
 	public void review() {
-		for(int i = 0;i < mySectors.length;i++) {
-			Region[] r = mySectors[i].getRegions();
-			for(int j = 0;j < r.length;j++) {
-				populateRegionMenu(r[j],this);
+		for(int i = 0;i < mySectors.size();i++) {
+			Vector<Region> r = mySectors.get(i).getRegions();
+			for(int j = 0;j < r.size();j++) {
+				populateRegionMenu(r.get(j),this);
 			}
 		}
 	}
@@ -230,58 +226,16 @@ public class MapView extends JFrame{
 
 	public static void save(MapView view,Galaxy galaxy) {
 		Cursor c = view.getCursor();
-		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));;
-		ObjectFiles.WriteObjecttoFile(galaxy, galaxy.getMyName());
+		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
+		if(galaxy.getMyNetwork()!=null)
+			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
+		if(view.lastss != null)
+			ObjectFiles.WriteSavabletoFile(view.lastss, galaxy.getMyName());
+		ObjectFiles.WriteSavabletoFile(view.mySettings, galaxy.getMyName());
+		if(galaxy.getMyNetwork() != null)
+			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(),galaxy.getMyName());
 		view.setCursor(c);
-
-		//		int tracker = 1;
-		//		Row row;
-		//		Cell cell;
-		//		for(int i = 0;i < mySectors.length;i++) {
-		//			Region[] reg = mySectors[i].getRegions();
-		//			for(int k = 0;k < reg.length;k++) {
-		//				Zone[] zon = reg[k].getMyZones();
-		//				for(int j = 0;j < zon.length;j++) {
-		//					SolSystem[] sol = zon[j].getMySystems();
-		//					for(int h = 0;h < sol.length;h++) {
-		//						row = sheet.createRow(tracker++);
-		//						cell = row.createCell(SECTORVALUE);
-		//						cell.setCellValue(mySectors[i].getName());
-		//						cell = row.createCell(REGIONVALUE);
-		//						cell.setCellValue(reg[k].getName());
-		//						cell = row.createCell(ZONEVALUE);
-		//						cell.setCellValue(zon[j].getMyName());
-		//						cell = row.createCell(SYSTEMVALUE);
-		//						cell.setCellValue(sol[h].getMyName());
-		//						cell = row.createCell(TYPEVALUE);
-		//						cell.setCellValue("Star");
-		//						AstroObject[] pla = sol[h].getMyObjects();
-		//						for(int g = 0;g < pla.length;g++) {
-		//							row = sheet.createRow(tracker++);
-		//							cell = row.createCell(SECTORVALUE);
-		//							cell.setCellValue(mySectors[i].getName());
-		//							cell = row.createCell(REGIONVALUE);
-		//							cell.setCellValue(reg[k].getName());
-		//							cell = row.createCell(ZONEVALUE);
-		//							cell.setCellValue(zon[j].getMyName());
-		//							cell = row.createCell(SYSTEMVALUE);
-		//							cell.setCellValue(sol[h].getMyName());
-		//							cell = row.createCell(POSITIONVALUE);
-		//							cell.setCellValue((char)(97+g));
-		//							cell = row.createCell(TYPEVALUE);
-		//							cell.setCellValue(pla[g].getClass().getName());
-		//						}
-		//					}
-		//				}
-		//			}
-		//		}
-		//		try {
-		//			ExcelSystem.pushOut(mySave, "save");
-		//		} catch (InvalidFormatException e) {
-		//			e.printStackTrace();
-		//		} catch (IOException e) {
-		//			e.printStackTrace();
-		//		}
 	}
 
 	public static JMenu populateSectorMenu(Sector r, MapView myView) {
@@ -289,8 +243,8 @@ public class MapView extends JFrame{
 		JMenuItem view = new JMenuItem("View");
 		view.addActionListener(new SectorPanel(r, myView));
 		region.add(view);
-		for(int i = 0;r.getRegions() != null&&i < r.getRegions().length;i++) {
-			JMenu z = MapView.populateRegionMenu(r.getRegions()[i], myView);
+		for(int i = 0;r.getRegions() != null&&i < r.getRegions().size();i++) {
+			JMenu z = MapView.populateRegionMenu(r.getRegions().get(i), myView);
 			region.add(z);
 		}
 		JMenu makeNew = new JMenu("Make New Region");
@@ -309,8 +263,8 @@ public class MapView extends JFrame{
 		JMenuItem view = new JMenuItem("View");
 		view.addActionListener(new RegionPanel(r, myView));
 		region.add(view);
-		for(int i = 0;r.getMyZones() != null&&i < r.getMyZones().length;i++) {
-			JMenu z = MapView.populateZoneMenu(r.getMyZones()[i], myView);
+		for(int i = 0;r.getMyZones() != null&&i < r.getMyZones().size();i++) {
+			JMenu z = new JMenu(r.getMyZones().get(i).getMyName());
 			region.add(z);
 		}
 		JMenu makeNew = new JMenu("Make New Zone");
@@ -322,25 +276,6 @@ public class MapView extends JFrame{
 		makeNew.add(randNew);
 		region.add(makeNew);
 		return region;
-	}
-
-	public static JMenu populateZoneMenu(Zone z, MapView myView) {
-		JMenu zone = new JMenu(z.getMyName());
-		JMenuItem view = new JMenuItem("View");
-		view.addActionListener(new ZonePanel(z, myView));
-		zone.add(view);
-		for(int i = 0;z.getMySystems() != null&&i < z.getMySystems().length;i++) {
-			JMenuItem s = populateSystemMenu(z.getMySystems()[i],myView);
-			zone.add(s);
-		}
-		JMenu makeNew = new JMenu("Make New System");
-		JMenuItem randNew = new JMenuItem("Random System");
-		JMenuItem blankNew = new JMenuItem("Blank System");
-		randNew.addActionListener(new NewSystem(true,z,zone,myView));
-		blankNew.addActionListener(new NewSystem(false,z,zone,myView));
-		makeNew.add(randNew);
-		zone.add(makeNew);
-		return zone;
 	}
 
 	public static JMenuItem populateSystemMenu(SolSystem s, MapView myView) {
@@ -359,14 +294,14 @@ public class MapView extends JFrame{
 		lasts = sector;
 		myView.removeAll();
 		myView.repaint();
-		int square = (int) Math.ceil(Math.pow(sector.getRegions().length,0.5));
+		int square = (int) Math.ceil(Math.pow(sector.getRegions().size(),0.5));
 		myView.setLayout(new GridLayout(square,square));
 
 		JButton zone;
-		for(int i = 0;i < sector.getRegions().length;i++) {
-			zone = new JButton(sector.getRegions()[i].getName());
+		for(int i = 0;i < sector.getRegions().size();i++) {
+			zone = new JButton(sector.getRegions().get(i).getName());
 			zone.setPreferredSize(new Dimension(100, 100));
-			zone.addActionListener(new RegionPanel(sector.getRegions()[i],this));
+			zone.addActionListener(new RegionPanel(sector.getRegions().get(i),this));
 			myView.add(zone);
 		}
 
@@ -384,14 +319,14 @@ public class MapView extends JFrame{
 		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
-		int square = (int) Math.ceil(Math.pow(region.getMyZones().length,0.5));
+		int square = (int) Math.ceil(Math.pow(region.getMyZones().size(),0.5));
 		myView.setLayout(new GridLayout(square,square));
 
 		JButton zone;
-		for(int i = 0;i < region.getMyZones().length;i++) {
-			zone = new JButton(region.getMyZones()[i].getMyName());
+		for(int i = 0;i < region.getMyZones().size();i++) {
+			zone = new JButton(region.getMyZones().get(i).getMyName());
 			zone.setPreferredSize(new Dimension(100, 100));
-			zone.addActionListener(new ZonePanel(region.getMyZones()[i],this));
+			zone.addActionListener(new ZonePanel(region.getMyZones().get(i),this));
 			myView.add(zone);
 		}
 
@@ -409,20 +344,33 @@ public class MapView extends JFrame{
 		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
-		int square = (int) Math.ceil(Math.pow(zone.getMySystems().length,0.5));
+		int square = (int) Math.ceil(Math.pow(zone.getSystemNumber(),0.5));
 		myView.setLayout(new GridLayout(square,square));
-		
+		boolean same;
+		if(solStore.size()>0&&solStore.get(0).getID().contentEquals(zone.getSystemIDs().get(0))) {
+			same = true;
+		}else {
+			same = false;
+			solStore = new Vector<SolSystem>();
+		}
 		JButton solarsystem;
-		for(int i = 0;i < zone.getMySystems().length;i++) {
-			solarsystem = new JButton(zone.getMySystems()[i].getMyName());
-			ImageIcon img = zone.getMySystems()[i].getMyStar().getIcon();
+		SolSystem sol;
+		for(int i = 0;i < zone.getSystemNumber();i++) {
+			if(same) {
+				sol = solStore.get(i);
+			}else {
+				sol = (SolSystem)ObjectFiles.ReadSaveableFromFile(lasts.getMyGalaxy().getMyName()+"/"+zone.getSystemIDs().get(i));
+				solStore.add(sol);
+			}
+			solarsystem = new JButton(sol.getMyName());
+			ImageIcon img = sol.getMyStar().getIcon();
 			solarsystem.setIcon(img);
 			solarsystem.setPreferredSize(new Dimension(img.getIconWidth()+50,img.getIconHeight()));
 			solarsystem.setBackground(Color.BLACK);
 			solarsystem.setBorderPainted(false);
 			solarsystem.setOpaque(false);
 			solarsystem.setForeground(Color.WHITE);
-			solarsystem.addActionListener(new SystemPanel(zone.getMySystems()[i],this));
+			solarsystem.addActionListener(new SystemPanel(sol,this));
 			myView.add(solarsystem);
 		}
 
@@ -430,18 +378,20 @@ public class MapView extends JFrame{
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 
+	public Vector<SolSystem> solStore = new Vector<SolSystem>();
+	
 	public void viewSystem(SolSystem solsystem) {
 		level = 0;
 		Name.setText(solsystem.getMyName());
 		lastp = null;
 		lastss = solsystem;
-		lastz = solsystem.getMyZone();
 		lastr = lastz.getMyRegion();
 		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
 		myView.setLayout(new FlowLayout());
 
+		if(solsystem.getMyStar().getClass() != Nebula.class) {
 		JButton star = new JButton();
 		ImageIcon img = solsystem.getMyStar().getIcon();
 		star.setIcon(img);
@@ -451,16 +401,17 @@ public class MapView extends JFrame{
 		star.setOpaque(false);
 		star.addActionListener(new StarView(solsystem.getMyStar(), this));
 		myView.add(star);
-
+		}
+		
 		JButton planet;
-		for(int i = 0;i < solsystem.getMyObjects().length;i++) {
-			if(solsystem.getMyObjects()[i].getClass() != Belt.class) {
-				planet = new JButton(solsystem.getMyObjects()[i].getMyName());
+		for(int i = 0;i < solsystem.getMyObjects().size();i++) {
+			if(solsystem.getMyObjects().get(i).getClass() != Belt.class) {
+				planet = new JButton(solsystem.getMyObjects().get(i).getMyName());
 			}else {
-				planet = new JButton(""+solsystem.getMyObjects()[i].getMyName().charAt(0));				
+				planet = new JButton(""+solsystem.getMyObjects().get(i).getMyName().charAt(0));				
 			}
-			planet.addActionListener(new PlanetView(solsystem.getMyObjects()[i],this));
-			ImageIcon plimg = solsystem.getMyObjects()[i].getIcon();
+			planet.addActionListener(new PlanetView(solsystem.getMyObjects().get(i),this));
+			ImageIcon plimg = solsystem.getMyObjects().get(i).getIcon();
 			planet.setIcon(plimg);
 			planet.setPreferredSize(new Dimension(plimg.getIconWidth()+50,plimg.getIconHeight()));
 			planet.setForeground(Color.WHITE);
@@ -468,22 +419,22 @@ public class MapView extends JFrame{
 			planet.setBorderPainted(false);
 			planet.setOpaque(false);
 			
-//			planet.setToolTipText("<html><p width=\"500\">" + solsystem.getMyObjects()[i].string() + "</p></html>");
+//			planet.setToolTipText("<html><p width=\"500\">" + solsystem.getMyObjects().get(i).string() + "</p></html>");
 //			Color c;
-//			if(solsystem.getMyObjects()[i].getClass()==Jovian.class) {
-//				if(solsystem.getMyObjects()[i].getMyMass().greaterOrEqual(AstroObject.JOVIAN.scale(0.5))) {
+//			if(solsystem.getMyObjects().get(i).getClass()==Jovian.class) {
+//				if(solsystem.getMyObjects().get(i).getMyMass().greaterOrEqual(AstroObject.JOVIAN*(0.5))) {
 //					c = Color.yellow;
 //				}else {
 //					c = Color.cyan;
 //				}
-//			}else if(solsystem.getMyObjects()[i].getClass()==Habitable.class) {
-//				if(((Habitable) solsystem.getMyObjects()[i]).getMyWater()<=0.4) {
+//			}else if(solsystem.getMyObjects().get(i).getClass()==Habitable.class) {
+//				if(((Habitable) solsystem.getMyObjects().get(i)).getMyWater()<=0.4) {
 //					c = Color.green;
 //				}else {
 //					c = Color.blue;
 //				}
-//			}else if(solsystem.getMyObjects()[i].getClass()==Terrestrial.class){
-//				if(((Terrestrial)solsystem.getMyObjects()[i]).isFrozen()) {
+//			}else if(solsystem.getMyObjects().get(i).getClass()==Terrestrial.class){
+//				if(((Terrestrial)solsystem.getMyObjects().get(i)).isFrozen()) {
 //					c = Color.white;
 //				}else {
 //					c = Color.LIGHT_GRAY;
@@ -509,14 +460,14 @@ public class MapView extends JFrame{
 		JTextArea Print = new JTextArea();
 		Print.setEditable(false);
 		String display = star.getMySystem().getMyName() + "\n";
-		display += "Inner Habitable Zone " + sci.round(sci.convertToDouble(star.getHabitablezone()[0].getValue())/sci.convertToDouble(AstroObject.AU.getValue()),4) + " AU\n";
-		display += "Outer Habitable Zone " + sci.round(sci.convertToDouble(star.getHabitablezone()[1].getValue())/sci.convertToDouble(AstroObject.AU.getValue()),4) + " AU\n";
-		display += "Frost Line " + sci.round(sci.convertToDouble(star.getFrostLine().getValue())/sci.convertToDouble(AstroObject.AU.getValue()),4) + " AU\n";
+		display += "Inner Habitable Zone " + star.getHabitablezone()[0]/AstroObject.AU + " AU\n";
+		display += "Outer Habitable Zone " + star.getHabitablezone()[1]/AstroObject.AU + " AU\n";
+		display += "Frost Line " + star.getFrostLine()/AstroObject.AU + " AU\n";
 		display += "Color " + star.getMyColor().toString() + "\n";
-		display += "Radius " + sci.round(sci.convertToDouble(star.getMyRadius().getValue())/sci.convertToDouble(AstroObject.SOLRADI.getValue()),4) + " Sols\n";
-		display += "Brightness "+ sci.round(sci.convertToDouble(star.getMyLuminosity().getValue())/sci.convertToDouble(AstroObject.SUNLIGHT.getValue()),4) + " Sols\n";
-		display += "Mass " + sci.round(sci.convertToDouble(star.getMyMass().getValue())/sci.convertToDouble(AstroObject.SOL.getValue()),4) + " Sols\n";
-		display += "Temperature " + sci.round(sci.convertToDouble(star.getMyTemp().getValue())/sci.convertToDouble(AstroObject.SOLTEMP.getValue()),4) + " Sols";
+		display += "Radius " + star.getMyRadius()/AstroObject.SOLRADI + " Sols\n";
+		display += "Brightness "+ star.getMyLuminosity()/AstroObject.SUNLIGHT + " Sols\n";
+		display += "Mass " + star.getMyMass()/AstroObject.SOL + " Sols\n";
+		display += "Temperature " + star.getMyTemp()/AstroObject.SOLTEMP + " Sols";
 		Print.setText(display);
 
 		myView.add(Print);
@@ -546,34 +497,50 @@ public class MapView extends JFrame{
 			myView.add(main);
 		JButton moon;
 		
-		for(int i = 0;i < planet.getMyMoons().length;i++) {
-			moon = new JButton(planet.getMyMoons()[i].getMyName());
-			ImageIcon moimg = planet.getMyMoons()[i].getIcon();
+		for(int i = 0;i < planet.getMyMoons().size();i++) {
+			moon = new JButton(planet.getMyMoons().get(i).getMyName());
+			ImageIcon moimg = planet.getMyMoons().get(i).getIcon();
 			moon.setIcon(moimg);
 			moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
 			moon.setForeground(Color.WHITE);
 			moon.setBackground(Color.BLACK);
 			moon.setBorderPainted(false);
 			moon.setOpaque(false);
-			moon.addActionListener(new MoonView((Moon) planet.getMyMoons()[i],this));
+			moon.addActionListener(new MoonView((Moon) planet.getMyMoons().get(i),this));
 
 			myView.add(moon);
 		}
 
 		for(int i = 0;i < planet.getMySatilights().size();i++) {
-			moon = new JButton(planet.getMySatilights().get(i).getMyName());
-			ImageIcon moimg = planet.getMySatilights().get(i).getIcon();
-			moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
-			moon.setIcon(moimg);
-			moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
-			moon.setForeground(Color.WHITE);
-			moon.setBackground(Color.BLACK);
-			moon.setBorderPainted(false);
-			moon.setOpaque(false);
-			if(planet.getMySatilights().get(i).getClass()==Asteroid.class) {
-				moon.addActionListener(new MoonView((Moon) planet.getMySatilights().get(i),this));
+			if(planet.getMySatilights().get(i).getClass() == ImageGate.class) {
+				ImageGate ir = (ImageGate)planet.getMySatilights().get(i);
+				Gate Gate = galaxy.getMyNetwork().find(ir.getGateID());
+				ir.setMyGate(Gate);
+				moon = new JButton(Gate.getMyName());
+				ImageIcon moimg = Gate.getIcon();
+				moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
+				moon.setIcon(moimg);
+				moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
+				moon.setForeground(Color.WHITE);
+				moon.setBackground(Color.BLACK);
+				moon.setBorderPainted(false);
+				moon.setOpaque(false);
+				moon.addActionListener(new SatilightView(ir, this));
 			}else {
-				moon.addActionListener(new SatilightView(planet.getMySatilights().get(i),this));
+				moon = new JButton(planet.getMySatilights().get(i).getMyName());
+				ImageIcon moimg = planet.getMySatilights().get(i).getIcon();
+				moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
+				moon.setIcon(moimg);
+				moon.setPreferredSize(new Dimension(moimg.getIconWidth()+50,moimg.getIconHeight()));
+				moon.setForeground(Color.WHITE);
+				moon.setBackground(Color.BLACK);
+				moon.setBorderPainted(false);
+				moon.setOpaque(false);
+				if(planet.getMySatilights().get(i).getClass()==Asteroid.class) {
+					moon.addActionListener(new MoonView((Moon) planet.getMySatilights().get(i),this));
+				}else {
+					moon.addActionListener(new SatilightView(planet.getMySatilights().get(i),this));
+				}
 			}
 			
 			myView.add(moon);
@@ -596,14 +563,14 @@ public class MapView extends JFrame{
 		String display = planet.getMyName() + "\n";
 
 		if(planet.getClass() == Jovian.class) {
-			display += "Radius " + planet.getMyRadius().compair(AstroObject.JOVIANRADI) + " Jupiters\n";
-			display += "Mass " + planet.getMyMass().compair(AstroObject.JOVIAN) + " Jupiters\n";
+			display += "Radius " + planet.getMyRadius()/AstroObject.JOVIANRADI + " Jupiters\n";
+			display += "Mass " + planet.getMyMass()/(AstroObject.JOVIAN) + " Jupiters\n";
 		}else if(planet.getClass() == Habitable.class){
 			Habitable world = (Habitable) planet;
-			display += "Radius " + world.getMyRadius().compair(AstroObject.EARTHRADI) + " Earths\n";
-			display += "Mass " + world.getMyMass().compair(AstroObject.EARTH) + " Earths\n";
+			display += "Radius " + world.getMyRadius()/(AstroObject.EARTHRADI) + " Earths\n";
+			display += "Mass " + world.getMyMass()/(AstroObject.EARTH) + " Earths\n";
 			display += "Water Coverage " + world.getMyWater()*100 + "%\n";
-			display += "Atmospheric Density " + world.getMyAtmosphere().compair(AstroObject.BAR) + " Earths\n";
+			display += "Atmospheric Density " + world.getMyAtmosphere()/(AstroObject.BAR) + " Earths\n";
 			display += "Maxium Day Tempiture " + world.getMyTemps()[2] + "\n";
 			display += "Minimum Day Tempiture " + world.getMyTemps()[4] + "\n";
 			display += "Maxium Night Tempiture " + world.getMyTemps()[3] + "\n";
@@ -614,10 +581,10 @@ public class MapView extends JFrame{
 			display += "This world is habitable\n";
 		}else if(planet.getClass() == HabitableMoon.class){
 			HabitableMoon world = (HabitableMoon) planet;
-			display += "Radius " + world.getMyRadius().compair(AstroObject.EARTHRADI) + " Earths\n";
-			display += "Mass " + world.getMyMass().compair(AstroObject.EARTH) + " Earths\n";
+			display += "Radius " + world.getMyRadius()/(AstroObject.EARTHRADI) + " Earths\n";
+			display += "Mass " + world.getMyMass()/(AstroObject.EARTH) + " Earths\n";
 			display += "Water Coverage " + world.getMyWater()*100 + "%\n";
-			display += "Atmospheric Density " + world.getMyAtmosphere().compair(AstroObject.BAR) + " Earths\n";
+			display += "Atmospheric Density " + world.getMyAtmosphere()/(AstroObject.BAR) + " Earths\n";
 			display += "Maxium Day Tempiture " + world.getMyTemps()[2] + "\n";
 			display += "Minimum Day Tempiture " + world.getMyTemps()[4] + "\n";
 			display += "Maxium Night Tempiture " + world.getMyTemps()[3] + "\n";
@@ -627,16 +594,16 @@ public class MapView extends JFrame{
 			display += "Greenhouse " + world.getMyGreenHouse() + "\n";
 			display += "This world is habitable\n";
 			Moon moon = (Moon) planet;
-			display += "Month " + moon.getMyMonth().compair(AstroObject.MONTH) + " months\n";
+			display += "Month " + moon.getMyMonth()/(AstroObject.MONTH) + " months\n";
 			display += "Distant to world " + moon
 					.getMyMoonOrbit()
-			.compair(AstroObject.LIGHTSECOND) + " light seconds\n";
+			/(AstroObject.LIGHTSECOND) + " light seconds\n";
 		}else {
 			Terrestrial world = (Terrestrial) planet;
-			display += "Radius " + world.getMyRadius().compair(AstroObject.EARTHRADI) + " Earths\n";
-			display += "Mass " + world.getMyMass().compair(AstroObject.EARTH) + " Earths\n";
+			display += "Radius " + world.getMyRadius()/(AstroObject.EARTHRADI) + " Earths\n";
+			display += "Mass " + world.getMyMass()/(AstroObject.EARTH) + " Earths\n";
 			display += "Water Coverage " + world.getMyWater()*100 + "%\n";
-			display += "Atmospheric Density " + world.getMyAtmosphere().compair(AstroObject.BAR) + " Earths\n";
+			display += "Atmospheric Density " + world.getMyAtmosphere()/(AstroObject.BAR) + " Earths\n";
 			display += "Maxium Day Tempiture " + world.getMyTemps()[2] + "\n";
 			display += "Minimum Day Tempiture " + world.getMyTemps()[4] + "\n";
 			display += "Maxium Night Tempiture " + world.getMyTemps()[3] + "\n";
@@ -646,41 +613,41 @@ public class MapView extends JFrame{
 			display += "Greenhouse " + world.getMyGreenHouse() + "\n";	
 			if(planet.getClass() == Moon.class) {
 				Moon moon = (Moon) planet;
-				display += "Month " + moon.getMyMonth().compair(AstroObject.MONTH) + " months\n";
+				display += "Month " + moon.getMyMonth()/(AstroObject.MONTH) + " months\n";
 				display += "Distant to world " + moon
 						.getMyMoonOrbit()
-				.compair(AstroObject.LIGHTSECOND) + " light seconds\n";
+				/(AstroObject.LIGHTSECOND) + " light seconds\n";
 			}
 		}
 
 		//Add year data
-		if(planet.getMyYear().compair(AstroObject.YEAR.scale(3.0))>1.0) {
-			display += "Year " + planet.getMyYear().compair(AstroObject.YEAR) + " years\n";
-		}else if(planet.getMyYear().compair(AstroObject.MONTH.scale(3.0))>1.0) {
-			display += "Year " + planet.getMyYear().compair(AstroObject.MONTH) + " months\n";
+		if(planet.getMyYear()/(AstroObject.YEAR*(3.0))>1.0) {
+			display += "Year " + planet.getMyYear()/(AstroObject.YEAR) + " years\n";
+		}else if(planet.getMyYear()/(AstroObject.MONTH*(3.0))>1.0) {
+			display += "Year " + planet.getMyYear()/(AstroObject.MONTH) + " months\n";
 		}else {
-			display += "Year " + planet.getMyYear().compair(AstroObject.DAY) + " days\n";
+			display += "Year " + planet.getMyYear()/(AstroObject.DAY) + " days\n";
 		}
 
 		//Add day data
-		if(planet.getMyDay().compair(AstroObject.YEAR.scale(3.0))>1.0) {
-			display += "Day " + planet.getMyDay().compair(AstroObject.YEAR) + " years\n";
-		}else if(planet.getMyDay().compair(AstroObject.MONTH.scale(3.0))>1.0) {
-			display += "Day " + planet.getMyDay().compair(AstroObject.MONTH) + " months\n";
-		}else if(planet.getMyDay().compair(AstroObject.DAY.scale(3.0))>1.0) {
-			display += "Day " + planet.getMyDay().compair(AstroObject.DAY) + " days\n";
-		}else if(planet.getMyDay().compair(AstroObject.HOUR.scale(3.0))>1.0) {
-			display += "Day " + planet.getMyDay().compair(AstroObject.HOUR) + " hours\n";			
+		if(planet.getMyDay()/(AstroObject.YEAR*(3.0))>1.0) {
+			display += "Day " + planet.getMyDay()/(AstroObject.YEAR) + " years\n";
+		}else if(planet.getMyDay()/(AstroObject.MONTH*(3.0))>1.0) {
+			display += "Day " + planet.getMyDay()/(AstroObject.MONTH) + " months\n";
+		}else if(planet.getMyDay()/(AstroObject.DAY*(3.0))>1.0) {
+			display += "Day " + planet.getMyDay()/(AstroObject.DAY) + " days\n";
+		}else if(planet.getMyDay()/(AstroObject.HOUR*(3.0))>1.0) {
+			display += "Day " + planet.getMyDay()/(AstroObject.HOUR) + " hours\n";			
 		}else {
-			display += "Day " + planet.getMyDay().compair(new sitime(60,SI.BASE)) + " minutes\n";			
+			display += "Day " + planet.getMyDay()/60 + " minutes\n";			
 		}
 
-		display += "Gravity " + planet.getMyGravity().compair(AstroObject.GRAVITYEARTH) + " G's\n";
+		display += "Gravity " + planet.getMyGravity()/(AstroObject.GRAVITYEARTH) + " G's\n";
 
 		//Add orbit data
-		display += "Average Orbit " + planet.getMyOrbit().compair(AstroObject.AU) + " AU\n";
-		display += "Inner Orbit " + planet.getMyInnerOrbit().compair(AstroObject.AU) + " AU\n";
-		display += "Outer Orbit " + planet.getMyOuterOrbit().compair(AstroObject.AU) + " AU";
+		display += "Average Orbit " + planet.getMyOrbit()/(AstroObject.AU) + " AU\n";
+		display += "Inner Orbit " + planet.getMyInnerOrbit()/(AstroObject.AU) + " AU\n";
+		display += "Outer Orbit " + planet.getMyOuterOrbit()/(AstroObject.AU) + " AU";
 
 		JButton Look = new JButton("Surface");
 		Look.addActionListener(new SurfaceView(planet, this));
@@ -708,6 +675,8 @@ public class MapView extends JFrame{
 			viewPlanet(lastp);
 		}else if(level == 3) {
 			viewWorldData(lastp);
+		}else if(level == 4) {
+			viewSurface(lastp);
 		}
 	}
 
@@ -719,10 +688,10 @@ public class MapView extends JFrame{
 		myView.repaint();
 		myView.setLayout(new GridLayout(2,2));
 
-		for(int i = 0;i < myMenus.length;i++) {
-			Sector = new JButton(mySectors[i].getName());
+		for(int i = 0;i < myMenus.size();i++) {
+			Sector = new JButton(mySectors.get(i).getName());
 			Sector.setPreferredSize(new Dimension(100, 100));
-			Sector.addActionListener(new SectorPanel(mySectors[i],this));
+			Sector.addActionListener(new SectorPanel(mySectors.get(i),this));
 			myView.add(Sector);
 		}
 
@@ -730,12 +699,16 @@ public class MapView extends JFrame{
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 
-	public void viewPrimaryRelay(PrimaryRelay o) {
+	public void viewPrimaryGate(PrimaryGate o) {
+		if(!o.getMySystem().equals(lastss.getID())) {
+			this.lastss = (SolSystem)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/"+o.getMySystem());
+			for(int i = 0;i < lastss.getMyObjects().size();i++)
+				if(o.getMyPlanet().equals(lastss.getMyObjects().get(i).getID()))
+					this.lastp = lastss.getMyObjects().get(i);
+		}
 		level = 2;
 		Name.setText(o.getMyName());
-		this.lastp = o.getMyWorld();
-		this.lastss = o.getMySystem();
-		this.lastz = lastss.getMyZone();
+		this.lastz = o.getMyZone();
 		this.lastr = lastz.getMyRegion();
 		this.lasts = lastr.getMySector();
 		
@@ -757,12 +730,16 @@ public class MapView extends JFrame{
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 
-	public void viewSecondaryRelay(SecondaryRelay o) {
+	public void viewSecondaryGate(SecondaryGate o) {
+		if(!o.getMySystem().equals(lastss.getID())) {
+			this.lastss = (SolSystem)ObjectFiles.ReadSaveableFromFile(galaxy.getMyName()+"/"+o.getMySystem());
+			for(int i = 0;i < lastss.getMyObjects().size();i++)
+				if(o.getMyPlanet().equals(lastss.getMyObjects().get(i).getID()))
+					this.lastp = lastss.getMyObjects().get(i);
+		}
 		level = 2;
 		Name.setText(o.getMyName());
-		this.lastp = o.getMyWorld();
-		this.lastss = o.getMySystem();
-		this.lastz = lastss.getMyZone();
+		this.lastz = o.getMyZone();
 		this.lastr = lastz.getMyRegion();
 		this.lasts = lastr.getMySector();
 		
@@ -773,11 +750,11 @@ public class MapView extends JFrame{
 		Print.setEditable(false);
 		String display = o.getMyName();
 
-		SecondaryRelay[] pod = o.getPod();
-		for(int i = 0;i < pod.length;i++) {
-			if(pod[i] != o) {
-				JButton Look = new JButton("Jump to the "+pod[i].getMyName());
-				Look.addActionListener(new SecondaryJump(pod[i],this));
+		Vector<SecondaryGate> pod = o.getMyPod();
+		for(int i = 0;i < pod.size();i++) {
+			if(pod.get(i) != o) {
+				JButton Look = new JButton("Jump to the "+pod.get(i).getMyName());
+				Look.addActionListener(new SecondaryJump(pod.get(i),this));
 				myView.add(Look);
 			}
 		}
@@ -802,13 +779,14 @@ public class MapView extends JFrame{
 		display += "Habitable: " + colony.isHab() + "\n";
 		display += "Water Present: " + colony.isHasWater() + "\n";
 		display += "Biosphere Present: " + colony.isHasBio() + "\n";
-		display += "Ezero Present: " + colony.isHasEzo() + "\n";
+		display += "Gravite Present: " + colony.isHasGravite() + "\n";
 		display += "Massive Metal Presence: " + colony.isHasMassiveMetal() + "\n";
 		display += "Massive Gasses Presence: " + colony.isHasMassiveGasses() + "\n";
 		display += "Radiotropics Present: " + colony.isHasRadiotropes() + "\n";
 		display += "Rare Metals Present: " + colony.isHasRareMetals() + "\n";
 		display += "Rare Gasses Present: " + colony.isHasRareGasses() + "\n";
 		display += "\n";
+		display += "Max Population " + (colony.getMaxSize()*3+1) + "\n";
 		display += "Has a colony " + (colony.getSize()>0) + "\n";
 		if(colony.getSize()>0) {
 			display += "Colony Size: " + colony.getSize() + "\n";
@@ -850,11 +828,82 @@ public class MapView extends JFrame{
 		Print.setText(display);
 		myView.add(Print);
 
+		if(colony.isHasBio()) {
+			JButton ViewBio = new JButton("View Biosphere");
+			ViewBio.addActionListener(new Biolook(colony,c,this));
+			myView.add(ViewBio);
+		}
+		
+		if(colony.getMyColony() != null) {
+			JButton ViewColony = new JButton("View Colony");
+			ViewColony.addActionListener(new ColonyViewer(colony.getMyColony()));
+			myView.add(ViewColony);
+		}else {
+			JButton ViewColony = new JButton("Colonize");
+			ViewColony.addActionListener(new Colonize(colony,this,planet));
+			myView.add(ViewColony);			
+		}
+		
 		this.setSize(this.getWidth()+1, this.getHeight()+1);
 		this.setSize(this.getWidth()-1, this.getHeight()-1);
 	}
 	
-	public Sector[] getMySectors() {
+	public void viewBiosphere(Colony col, Condition con) {
+		level = 4;
+		myView.removeAll();
+		myView.repaint();
+		myView.setLayout(new FlowLayout());
+		JTextArea Print = new JTextArea();
+		String display = "";
+		display += "Gravity Index "+con.getGravityIndex()+"\n";
+		display += "Tempiture Index "+con.getTempitureIndex()+"\n";
+		display += "Tempiture Variations "+con.getVarianceIndex()+"\n";
+		display += "Pressure Index "+con.getAtmosphericIndex()+"\n";
+		display += "Water Index "+con.getWaterIndex()+"\n";
+		display += "Atmosphere Type ";
+		switch(con.getAirIndex()) {
+		case AMMONIA:
+			display += "Ammonia";
+			break;
+		case METHANE:
+			display += "Methane";
+			break;
+		default:
+			display += "Nitrogen";
+			break;
+		}
+		display += "\n";
+		display += con.isDextros() ? "Dextro":"Levo";
+		display += "-amino acid Biology";
+
+		Print.setText(display);
+		myView.add(Print);
+
+		JButton Apex = new JButton("Apex Preditor");
+		Apex.addActionListener(new AnimalView(col.getMyEcosystem().getApexPreditor()));
+		myView.add(Apex);
+
+		JButton Stand = new JButton("Main Animal");
+		Stand.addActionListener(new AnimalView(col.getMyEcosystem().getStandard()));
+		myView.add(Stand);
+
+		JButton Pest = new JButton("Local Pest");
+		Pest.addActionListener(new AnimalView(col.getMyEcosystem().getPest()));
+		myView.add(Pest);
+		
+		JButton Prime = new JButton("Major Plant");
+		Prime.addActionListener(new PlantView(col.getMyEcosystem().getPrimary()));
+		myView.add(Prime);
+		
+		JButton Secondary = new JButton("Submajor Plant");
+		Secondary.addActionListener(new PlantView(col.getMyEcosystem().getSecondary()));
+		myView.add(Secondary);
+		
+		this.setSize(this.getWidth()+1, this.getHeight()+1);
+		this.setSize(this.getWidth()-1, this.getHeight()-1);
+	}
+	
+	public Vector<Sector> getMySectors() {
 		return mySectors;
 	}
 	
@@ -866,29 +915,13 @@ public class MapView extends JFrame{
 		this.myView = myView;
 	}
 
-	public JMenu[] getMyMenus() {
+	public Vector<JMenu> getMyMenus() {
 		return myMenus;
 	}
 
-	public void setMyMenus(JMenu[] myMenus) {
+	public void setMyMenus(Vector<JMenu> myMenus) {
 		this.myMenus = myMenus;
 	}
-
-//	public Workbook getMySave() {
-//		return mySave;
-//	}
-//
-//	public void setMySave(Workbook mySave) {
-//		this.mySave = mySave;
-//	}
-//
-//	public Sheet getSheet() {
-//		return sheet;
-//	}
-//
-//	public void setSheet(Sheet sheet) {
-//		this.sheet = sheet;
-//	}
 
 	public Sector getLasts() {
 		return lasts;
@@ -946,7 +979,7 @@ public class MapView extends JFrame{
 		this.galaxy = galaxy;
 	}
 
-	public void setMySectors(Sector[] mySectors) {
+	public void setMySectors(Vector<Sector> mySectors) {
 		this.mySectors = mySectors;
 	}
 }

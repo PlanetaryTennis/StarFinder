@@ -1,26 +1,6 @@
 package utilities;
 
-import units.sidistance;
-
 public class ARRAY {
-
-	public static sidistance[] SORT(sidistance[] o) {
-		sidistance[] p = new sidistance[o.length];
-		sidistance c;
-		sidistance t;
-		for(int i = 0;i < p.length;i++) {
-			c = o[i];
-			for(int k = i;k < o.length;k++) {
-				if(c.greaterThan(o[k])) {
-					t = c;
-					c = o[k];
-					o[k] = t;
-				}
-			}
-			p[i] = c;
-		}
-		return p;		
-	}
 
 	public static int[] SORT(int[] o) {
 		int [] p = new int[o.length];
@@ -57,6 +37,24 @@ public class ARRAY {
 			if(i != in.length-1)out += dim;
 		}
 		return out;
+	}
+
+	public static double[] SORT(double[] o) {
+		double [] p = new double[o.length];
+		double c;
+		double t;
+		for(int i = 0;i < p.length;i++) {
+			c = o[i];
+			for(int k = i;k < o.length;k++) {
+				if(c > o[k]) {
+					t = c;
+					c = o[k];
+					o[k] = t;
+				}
+			}
+			p[i] = c;
+		}
+		return p;	
 	}
 
 }

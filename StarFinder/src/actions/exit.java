@@ -1,7 +1,6 @@
 package actions;
 
 import astronomy.Galaxy;
-import astronomy.Sector;
 import map.MapView;
 
 /**
@@ -24,7 +23,7 @@ public class exit extends java.awt.event.WindowAdapter {
 	}
 	
     public void windowClosing(java.awt.event.WindowEvent e) {
-        MapView.save(j,galaxy);
+//        MapView.save(j,galaxy);
     	System.exit(0);
     }
 }

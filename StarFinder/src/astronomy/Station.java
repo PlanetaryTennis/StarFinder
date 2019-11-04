@@ -4,6 +4,11 @@ import javax.swing.ImageIcon;
 
 public class Station implements OrbitObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6974445769607232915L;
+
 	@Override
 	public String string() {
 		// TODO Auto-generated method stub
@@ -23,7 +28,8 @@ public class Station implements OrbitObject {
 	}
 
 	@Override
-	public void loadString(String load) {
+	public int loadString(String load) {
+		return 0;
 		// TODO Auto-generated method stub
 		
 	}

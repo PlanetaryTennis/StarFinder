@@ -28,8 +28,9 @@ public class LaunchSettings implements ActionListener {
 	JCheckBox special;
 	JCheckBox multi;
 	JCheckBox name;
-	JCheckBox relays;
+	JCheckBox Gates;
 	JFrame LS;
+	private int[] suns;
 
 	/**
 	 * @author PlanetaryTennis
@@ -39,11 +40,12 @@ public class LaunchSettings implements ActionListener {
 	 * @param sectors [JSlider] determines the number of sectors the Galaxy is generated with.
 	 * @param regionsmin [JSlider] determines the minimum number of regions each sector is generated with.
 	 * @param regionsmax [JSlider] determines the number of aditional regions each sector is generated with.
+	 * @param suns 
 	 * 
 	 */
 	public LaunchSettings(JFrame launchSettings, boolean b, JSlider sectors, JSlider regionsmin, JSlider regionsmax, JSlider zonemin,
 			JSlider zonemax, JSlider sysmin, JSlider sysmax, JSlider planetmax, JCheckBox special, JCheckBox multi,
-			JCheckBox name, JCheckBox relays) {
+			JCheckBox name, JCheckBox Gates, int[] suns) {
 		super();
 		LS = launchSettings;
 		this.b = b;
@@ -58,7 +60,8 @@ public class LaunchSettings implements ActionListener {
 		this.special = special;
 		this.multi = multi;
 		this.name = name;
-		this.relays = relays;
+		this.Gates = Gates;
+		this.suns = suns;
 	}
 
 	@Override
@@ -74,9 +77,9 @@ public class LaunchSettings implements ActionListener {
 		boolean ss = special.isSelected();
 		boolean ms = multi.isSelected();
 		boolean n = name.isSelected();
-		boolean r = relays.isSelected();
+		boolean r = Gates.isSelected();
 		
-		if(s>6||rS>8||rE>7||zS>8||zE>7||sS>8||sE>7||p>20)
+		if(s>6||rS>8||rE>7||zS>8||zE>7||sS>8||sE>7||p>20||r)
 		JOptionPane.showMessageDialog(LS, "You options may cause long generation times for your galaxy.", "Warning",
 		        JOptionPane.WARNING_MESSAGE);
 		
@@ -91,7 +94,7 @@ public class LaunchSettings implements ActionListener {
 				+ "It Will " + dia[ss? 1:0] + " Special Star Types\n"
 				+ "It Will " + dia[ms? 1:0] + " Multipule Stars in a Single System\n"
 				+ "It Will " + dia[n? 1:0] + " Radom Names\n"
-				+ "It Will " + dia[r? 1:0] + " a Relay Network\n"
+				+ "It Will " + dia[r? 1:0] + " a Gate Network\n"
 				+ "Is This Acceptable?","Continue?",
 				JOptionPane.YES_NO_OPTION)){
 			return;
@@ -99,7 +102,7 @@ public class LaunchSettings implements ActionListener {
 		
 		LS.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		if(b) {
-			MapView v = new MapView("Galaxy Painter",s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,null,r);
+			MapView v = new MapView("Galaxy Painter",s,rS,rE,zS,zE,sS,sE,p,ss,ms,n,suns,r);
 			v.getMyMenus();
 		}else {
 			

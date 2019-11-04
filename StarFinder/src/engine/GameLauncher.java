@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.JTextArea;
 import actions.LauncherButton;
 import astronomy.Galaxy;
 import map.MapView;
+import map.Sprite;
 
 public class GameLauncher {
 	JFrame Launcher;
@@ -21,14 +23,6 @@ public class GameLauncher {
 		name.setEditable(false);
 		Launcher.add(name);
 		
-		JButton New = new JButton("Generate New");
-		New.setEnabled(false);
-		Launcher.add(New);
-		
-		JButton Load = new JButton("Load Galaxy");
-		Load.setEnabled(false);
-		Launcher.add(Load);
-		
 		JButton NewEdit = new JButton("New Galaxy Painter");
 		NewEdit.addActionListener(new LauncherButton(2,Launcher));
 		Launcher.add(NewEdit);
@@ -36,7 +30,8 @@ public class GameLauncher {
 		JButton LoadEdit = new JButton("Load Galaxy Painter");
 		LoadEdit.addActionListener(new LauncherButton(3,Launcher));
 		Launcher.add(LoadEdit);
-		
+
+		Launcher.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
 		Launcher.setSize(150, 200);
 		Launcher.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Launcher.setVisible(true);

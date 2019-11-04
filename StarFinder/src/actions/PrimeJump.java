@@ -4,21 +4,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import map.MapView;
-import relay.PrimaryRelay;
+import gate.PrimaryGate;
 
 public class PrimeJump implements ActionListener {
 	
 	MapView myMap;
-	PrimaryRelay partner;
+	PrimaryGate partner;
 	
-	public PrimeJump(PrimaryRelay myPartner,MapView myMap) {
+	public PrimeJump(PrimaryGate myPartner,MapView myMap) {
 		partner = myPartner;
 		this.myMap = myMap;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		myMap.viewPrimaryRelay(partner);
+		myMap.viewPrimaryGate(partner);
 	}
 
 }
