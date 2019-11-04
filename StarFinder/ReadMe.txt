@@ -132,7 +132,7 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 
 #####################################################################################################
 #                                                                                                   #
-# To activate Starfinder one must click the StarFinder.jar contained in the folder with this        #
+# To activate StarFinder one must click the StarFinder.jar contained in the folder with this        #
 # document. This opens the menu, in V.0-1:A two options are provided New Galaxy Painter, and Load   #
 # Galaxy Painter.                                                                                   #
 #                                                                                                   #
@@ -144,5 +144,9 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 #                                                                                                   #
 # After thes Galaxy Painter Buttons are availble to allow one to navigate around the generated      #
 # galaxy.                                                                                           #
+#                                                                                                   #
+# For StarFinder to work the data folder is to be left in the foler containing the Starfinder.jar   #
+# the data folder must also contain the sprites folder and all the contents there in must be left   #
+# in the origional order to prevent failure when StarFinder is running.                             # 
 #                                                                                                   #
 #####################################################################################################
