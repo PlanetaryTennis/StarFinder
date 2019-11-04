@@ -8,6 +8,10 @@ import utilities.StringFundementals;
 
 public class Animal extends Life {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2775509875562709159L;
 	//Motion
 	private boolean canWalk;
 	private boolean canSwim;

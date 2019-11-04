@@ -1,7 +1,5 @@
 package map;
 
-import java.awt.Image;
-
 import javax.swing.ImageIcon;
 
 public class Sprite extends ImageIcon {

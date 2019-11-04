@@ -9,7 +9,6 @@ import astronomy.planetary.Habitable;
 import astronomy.planetary.HabitableMoon;
 import astronomy.planetary.Jovian;
 import astronomy.planetary.Moon;
-import astronomy.planetary.Planet;
 import astronomy.planetary.Terrestrial;
 import engine.Savable;
 import utilities.StringFundementals;

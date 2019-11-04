@@ -1,7 +1,5 @@
 package map;
 
-import java.util.UUID;
-
 import engine.Savable;
 import utilities.StringFundementals;
 

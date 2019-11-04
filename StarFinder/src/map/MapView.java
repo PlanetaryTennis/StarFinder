@@ -5,7 +5,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Vector;
 
@@ -26,7 +25,6 @@ import actions.Colonize;
 import actions.ColonyViewer;
 import actions.MoonView;
 import actions.NewRegion;
-import actions.NewSystem;
 import actions.NewZone;
 import actions.PlanetView;
 import actions.PlantView;

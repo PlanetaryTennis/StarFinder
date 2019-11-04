@@ -8,6 +8,10 @@ import utilities.StringFundementals;
 
 public class Plant extends Life {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7778789757735703999L;
 	private boolean doesFruit;
 	private boolean hasMaterial;
 	private boolean isCarnivorous;

@@ -7,7 +7,6 @@ import astronomy.OrbitObject;
 import map.MapView;
 import gate.ImageGate;
 import gate.PrimaryGate;
-import gate.Gate;
 import gate.SecondaryGate;
 import utilities.Functions;
 

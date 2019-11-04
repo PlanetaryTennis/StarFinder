@@ -125,15 +125,15 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 #                                                                                                   #
 # New Galaxy Painter brings up a setting menu, the menu contains options to change the amount of    #
 # Sectors, Regions, Zones, and Planets. As well as options to turn on special stars, random names,  #
-# and generation of a Gate network. Options to alter the pervalance of Star types.                 #
+# and generation of a Gate network. Options to alter the prevalence of Star types.                  #
 #                                                                                                   #
 # Load Galaxy Painter brings up a loading menu that allows one to select a pregenerated galaxy.     #
 #                                                                                                   #
-# After thes Galaxy Painter Buttons are availble to allow one to navigate around the generated      #
+# After this Galaxy Painter Buttons are available to allow one to navigate around the generated     #
 # galaxy.                                                                                           #
 #                                                                                                   #
-# For StarFinder to work the data folder is to be left in the foler containing the Starfinder.jar   #
+# For StarFinder to work the data folder is to be left in the folder containing the Starfinder.jar  #
 # the data folder must also contain the sprites folder and all the contents there in must be left   #
-# in the origional order to prevent failure when StarFinder is running.                             # 
+# in the original order to prevent failure when StarFinder is running.                              # 
 #                                                                                                   #
 #####################################################################################################

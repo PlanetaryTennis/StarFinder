@@ -6,15 +6,12 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
 
 import actions.LaunchSettings;
 import actions.StarSetter;
 import actions.UpdateStarNumbers;
-import astronomy.stellar.Neutron;
-import map.MapView;
 import map.Sprite;
 
 public class SettingLauncher {

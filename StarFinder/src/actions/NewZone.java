@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 
 import astronomy.Region;
-import astronomy.Sector;
 import astronomy.Zone;
 import map.MapView;
 

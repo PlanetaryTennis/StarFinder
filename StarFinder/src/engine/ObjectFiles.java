@@ -10,12 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Vector;
-
-import astronomy.AstroObject;
 import astronomy.Galaxy;
-import astronomy.LifeBearing;
-import astronomy.OrbitObject;
 import astronomy.Region;
 import astronomy.Sector;
 import astronomy.SolSystem;
@@ -26,14 +21,12 @@ import astronomy.planetary.Habitable;
 import astronomy.planetary.HabitableMoon;
 import astronomy.planetary.Jovian;
 import astronomy.planetary.Moon;
-import astronomy.planetary.Planet;
 import astronomy.planetary.Terrestrial;
 import astronomy.stellar.BlackHole;
 import astronomy.stellar.BrownDwarf;
 import astronomy.stellar.Neutron;
 import astronomy.stellar.Star;
 import astronomy.stellar.WhiteDwarf;
-import map.SettingList;
 import planetary.Colony;
 import planetary.Condition;
 import gate.GateNetwork;
@@ -74,6 +67,7 @@ public class ObjectFiles {
 //				}
 //			}
 //		}
+		in.close();
 	}
 	
 	public static boolean CheckFile(String filepath) {

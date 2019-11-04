@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import map.MapView;
-import gate.PrimaryGate;
 import gate.SecondaryGate;
 
 public class SecondaryJump implements ActionListener {
