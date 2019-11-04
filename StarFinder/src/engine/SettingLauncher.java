@@ -329,7 +329,7 @@ public class SettingLauncher {
 		StarTypes.add(this.Large);
 
 		JButton Proccess = new JButton("Accept");
-		Proccess.addActionListener(new UpdateStarNumbers(this));
+		Proccess.addActionListener(new UpdateStarNumbers(this, StarTypes));
 		StarTypes.add(Proccess);
 
 		StarTypes.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
