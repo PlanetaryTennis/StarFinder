@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -14,6 +15,7 @@ import actions.StarSetter;
 import actions.UpdateStarNumbers;
 import astronomy.stellar.Neutron;
 import map.MapView;
+import map.Sprite;
 
 public class SettingLauncher {
 
@@ -176,6 +178,7 @@ public class SettingLauncher {
 				SpecialStars,MultiStars,Names,Relays,suns));
 		LaunchSettings.add(Make);
 		
+		LaunchSettings.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
 		LaunchSettings.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		LaunchSettings.setSize(600,600);
 		LaunchSettings.setVisible(true);

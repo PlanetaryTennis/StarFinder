@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -146,6 +148,8 @@ public class MapView extends JFrame{
 		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
 		this.viewGalaxy();
 		
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
+		
 		this.setSize(1000, 750);
 		this.add(sp);
 		this.addWindowListener(new exit(this));
@@ -198,6 +202,8 @@ public class MapView extends JFrame{
 			galaxy.getMyNetwork().LinkUp(galaxy);
 		}
 		this.viewGalaxy();
+		
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS+"Black Hole.png"));
 		
 		this.setSize(1000, 750);
 		this.add(sp);
