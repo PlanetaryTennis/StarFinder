@@ -7,11 +7,11 @@ import map.MapView;
 import gate.PrimaryGate;
 
 public class PrimeJump implements ActionListener {
-	
+
 	MapView myMap;
 	PrimaryGate partner;
-	
-	public PrimeJump(PrimaryGate myPartner,MapView myMap) {
+
+	public PrimeJump(PrimaryGate myPartner, MapView myMap) {
 		partner = myPartner;
 		this.myMap = myMap;
 	}

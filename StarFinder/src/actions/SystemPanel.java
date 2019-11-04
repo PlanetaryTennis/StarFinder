@@ -10,12 +10,12 @@ public class SystemPanel implements ActionListener {
 
 	MapView myView;
 	SolSystem mySystem;
-	
-	public SystemPanel(SolSystem s,MapView v){
+
+	public SystemPanel(SolSystem s, MapView v) {
 		mySystem = s;
 		myView = v;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		myView.viewSystem(mySystem);

@@ -21,7 +21,7 @@ import utilities.ARRAY;
 import utilities.RandomList;
 import utilities.StringFundementals;
 
-public class SolSystem implements Serializable, Savable{
+public class SolSystem implements Serializable, Savable {
 	/**
 	 * 
 	 */
@@ -35,11 +35,11 @@ public class SolSystem implements Serializable, Savable{
 		this.loadString(load);
 	}
 
-	public SolSystem(Star star,String name){
+	public SolSystem(Star star, String name) {
 		myStar = star;
 		myName = name;
 		myObjects = new Vector<Planet>();
-		myID = UUID.randomUUID().toString()+".solarsystem";
+		myID = UUID.randomUUID().toString() + ".solarsystem";
 	}
 
 	public void Add(Planet planet) {
@@ -70,7 +70,7 @@ public class SolSystem implements Serializable, Savable{
 		this.myName = myName;
 	}
 
-	//static values for generation
+	// static values for generation
 	public static RandomList orbits;
 
 	public static final int NORMALSTAR = 0;
@@ -84,237 +84,251 @@ public class SolSystem implements Serializable, Savable{
 
 	public static SolSystem makeRandom(Zone s, SettingList SL) {
 
-		SolSystem r = new SolSystem(null,SolSystem.randomName());
+		SolSystem r = new SolSystem(null, SolSystem.randomName());
 		Random ran = new Random();
 		int special = ran.nextInt(SL.getSuns()[5]);
-		if(SL.getSuns()==null||special <= SL.getSuns()[0]||!SL.isSpecial()) {
-			r.setMyStar(Star.randomStar(r,SL.getSuns()));
+		if (SL.getSuns() == null || special <= SL.getSuns()[0] || !SL.isSpecial()) {
+			r.setMyStar(Star.randomStar(r, SL.getSuns()));
 			r.getMyStar().setMyName(r.getMyName());
-			int k = ran.nextInt(3)+1;
-			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
-			double[] o = new double[total+k];
+			int k = ran.nextInt(3) + 1;
+			int total = ran.nextInt(SL.getPlanetmax() + 1) + 1;
+			double[] o = new double[total + k];
 			Planet put;
 			double[] hab = r.myStar.getHabitablezone();
 			double frost = r.myStar.getFrostLine();
 			double[] sup;
-			int measure = (int)(frost*(2.0)/(AstroObject.AU)*1000);
-			if(measure == 0) {
-				measure = (int)(frost*(2.0)/(AstroObject.AU)*1000);
+			int measure = (int) (frost * (2.0) / (AstroObject.AU) * 1000);
+			if (measure == 0) {
+				measure = (int) (frost * (2.0) / (AstroObject.AU) * 1000);
 			}
-			for(int i = 0;i < total;i++) {
-				o[i] = AstroObject.AU*((double)(ran.nextInt(measure)+1)/1000);
-			}
-
-			if(k == 3) {
-				sup = new double[]{hab[0],hab[1],frost};
-			}else if(k == 2){
-				sup = new double[]{hab[ran.nextInt(2)],frost};
-			}else {
-				sup = new double[] {frost};
+			for (int i = 0; i < total; i++) {
+				o[i] = AstroObject.AU * ((double) (ran.nextInt(measure) + 1) / 1000);
 			}
 
+			if (k == 3) {
+				sup = new double[] { hab[0], hab[1], frost };
+			} else if (k == 2) {
+				sup = new double[] { hab[ran.nextInt(2)], frost };
+			} else {
+				sup = new double[] { frost };
+			}
 
-
-			for(int i = 0;i < k;i++) {
-				o[total+i] = sup[i];
+			for (int i = 0; i < k; i++) {
+				o[total + i] = sup[i];
 			}
 			o = ARRAY.SORT(o);
 
 			k = 0;
 			int z = 0;
-			for(int i = 0;i < o.length;i++) {
-				if(o[i]<=(r.myStar.getMyRadius()*(2.0))) {
-				}else if(o[i]==(hab[0])) {
-					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
-					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+			for (int i = 0; i < o.length; i++) {
+				if (o[i] <= (r.myStar.getMyRadius() * (2.0))) {
+				} else if (o[i] == (hab[0])) {
+					put = Belt.makeRandom(o[i], r.getMyStar(), SL);
+					if (!SL.isName())
+						put.setMyName((char) (Planet.ALPHA + i - z) + " Belt");
 					r.Add(put);
-				}else if(o[i]<(hab[0])) {
+				} else if (o[i] < (hab[0])) {
 					z++;
-					put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
-					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
+					put = Terrestrial.makeRandom(o[i], r.getMyStar(), SL);
+					if (!SL.isName())
+						put.setMyName("" + (char) ('a' + k++));
 					r.Add(put);
-				}else if(o[i]==(hab[1])) {
-					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
-					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+				} else if (o[i] == (hab[1])) {
+					put = Belt.makeRandom(o[i], r.getMyStar(), SL);
+					if (!SL.isName())
+						put.setMyName((char) (Planet.ALPHA + i - z) + " Belt");
 					r.Add(put);
-				}else if(o[i]<(hab[1])) {
-					z++;
-					int u = ran.nextInt(100);
-					if(u < 75) {
-						put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
-					}else {
-						put = Jovian.makeRandom(o[i], r.getMyStar(),SL);
-					}
-					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
-					r.Add(put);
-				}else if(o[i]==(frost)) {
-					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
-					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
-					r.Add(put);
-				}else if(o[i]<(frost)) {
+				} else if (o[i] < (hab[1])) {
 					z++;
 					int u = ran.nextInt(100);
-					if(u < 50) {
-						put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
-					}else {
-						put = Jovian.makeRandom(o[i], r.getMyStar(),SL);
+					if (u < 75) {
+						put = Terrestrial.makeRandom(o[i], r.getMyStar(), SL);
+					} else {
+						put = Jovian.makeRandom(o[i], r.getMyStar(), SL);
 					}
-					if(!SL.isName())put.setMyName(""+(char)('a'+k++));
+					if (!SL.isName())
+						put.setMyName("" + (char) ('a' + k++));
 					r.Add(put);
-				}else {
-					put = Belt.makeRandom(o[i],r.getMyStar(),SL);
-					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+				} else if (o[i] == (frost)) {
+					put = Belt.makeRandom(o[i], r.getMyStar(), SL);
+					if (!SL.isName())
+						put.setMyName((char) (Planet.ALPHA + i - z) + " Belt");
+					r.Add(put);
+				} else if (o[i] < (frost)) {
+					z++;
+					int u = ran.nextInt(100);
+					if (u < 50) {
+						put = Terrestrial.makeRandom(o[i], r.getMyStar(), SL);
+					} else {
+						put = Jovian.makeRandom(o[i], r.getMyStar(), SL);
+					}
+					if (!SL.isName())
+						put.setMyName("" + (char) ('a' + k++));
+					r.Add(put);
+				} else {
+					put = Belt.makeRandom(o[i], r.getMyStar(), SL);
+					if (!SL.isName())
+						put.setMyName((char) (Planet.ALPHA + i - z) + " Belt");
 					r.Add(put);
 				}
 			}
-		}else if(special <= SL.getSuns()[1]) {
+		} else if (special <= SL.getSuns()[1]) {
 			r.setMyStar(BrownDwarf.randomStar(r));
 			r.getMyStar().setMyName(r.getMyName());
-			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax() + 1) + 1;
 			double[] o = new double[total];
 
-			for(int i = 0;i < total;i++) {
-				o[i] = AstroObject.AU*((double)(ran.nextInt(20)+1)/1000);
+			for (int i = 0; i < total; i++) {
+				o[i] = AstroObject.AU * ((double) (ran.nextInt(20) + 1) / 1000);
 			}
 
 			int z = 0;
 			int k = 0;
 			Planet put;
-			for(int i = 0;i < o.length;i++) {
-				if(i==0) {
-					put = Belt.makeRandom(o[i], r.getMyStar(),SL);
-					if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+			for (int i = 0; i < o.length; i++) {
+				if (i == 0) {
+					put = Belt.makeRandom(o[i], r.getMyStar(), SL);
+					if (!SL.isName())
+						put.setMyName((char) (Planet.ALPHA + i - z) + " Belt");
 					r.Add(put);
-				}else {
+				} else {
 					int h = ran.nextInt(3);
-					switch(h) {
+					switch (h) {
 					case 0:
-						put = Belt.makeRandom(o[i], r.getMyStar(),SL);
-						if(!SL.isName())put.setMyName((char)(Planet.ALPHA+i-z) + " Belt");
+						put = Belt.makeRandom(o[i], r.getMyStar(), SL);
+						if (!SL.isName())
+							put.setMyName((char) (Planet.ALPHA + i - z) + " Belt");
 						r.Add(put);
 						break;
 					case 1:
 						z++;
-						put = Terrestrial.makeRandom(o[i], r.getMyStar(),SL);
-						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
+						put = Terrestrial.makeRandom(o[i], r.getMyStar(), SL);
+						if (!SL.isName())
+							put.setMyName("" + (char) ('a' + k++));
 						r.Add(put);
 						break;
 					case 2:
 						z++;
-						put = Jovian.makeRandom(o[i], r.getMyStar(),SL);
-						if(!SL.isName())put.setMyName(""+(char)('a'+k++));
+						put = Jovian.makeRandom(o[i], r.getMyStar(), SL);
+						if (!SL.isName())
+							put.setMyName("" + (char) ('a' + k++));
 						r.Add(put);
 						break;
 					}
 				}
 			}
-		}else if(special <= SL.getSuns()[2]) {
+		} else if (special <= SL.getSuns()[2]) {
 			r.setMyStar(WhiteDwarf.randomStar(r));
 			r.getMyStar().setMyName(r.getMyName());
-			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax() + 1) + 1;
 			double[] o = new double[total];
-			for(int i = 0;i < total;i++) {
-				o[i] = AstroObject.AU*((double)(ran.nextInt(100)+1)/1000);
-			}			
-			Planet put;
-			for(int i = 0;i < o.length;i++) {
-				put = Belt.makeRandom(o[i],r.getMyStar(),SL);
-				r.Add(put);
-				if(!SL.isName()) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
+			for (int i = 0; i < total; i++) {
+				o[i] = AstroObject.AU * ((double) (ran.nextInt(100) + 1) / 1000);
 			}
-		}else if(special<=SL.getSuns()[3]){
+			Planet put;
+			for (int i = 0; i < o.length; i++) {
+				put = Belt.makeRandom(o[i], r.getMyStar(), SL);
+				r.Add(put);
+				if (!SL.isName())
+					put.setMyName((char) (Planet.ALPHA + i) + " Belt");
+			}
+		} else if (special <= SL.getSuns()[3]) {
 			r.setMyStar(Neutron.randomStar(r));
 			r.getMyStar().setMyName(r.getMyName());
-			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
+			int total = ran.nextInt(SL.getPlanetmax() + 1) + 1;
 			double[] o = new double[total];
-			for(int i = 0;i < total;i++) {
-				o[i] = AstroObject.AU*((double)(ran.nextInt(500)+1)/1000);
+			for (int i = 0; i < total; i++) {
+				o[i] = AstroObject.AU * ((double) (ran.nextInt(500) + 1) / 1000);
 			}
 			Planet put;
-			for(int i = 0;i < o.length;i++) {
-				put = Belt.makeRandom(o[i],r.getMyStar(),SL);
+			for (int i = 0; i < o.length; i++) {
+				put = Belt.makeRandom(o[i], r.getMyStar(), SL);
 				r.Add(put);
-				if(!SL.isName()) put.setMyName((char)(Planet.ALPHA+i)+" Belt");
-			}			
-		}else if(special<=SL.getSuns()[4]){
-			r.setMyName(r.getMyName()+" Singularity");
-			r.setMyStar(new BlackHole(ran.nextInt(100)+13, r));
-			int total = ran.nextInt(SL.getPlanetmax()+1)+1;
+				if (!SL.isName())
+					put.setMyName((char) (Planet.ALPHA + i) + " Belt");
+			}
+		} else if (special <= SL.getSuns()[4]) {
+			r.setMyName(r.getMyName() + " Singularity");
+			r.setMyStar(new BlackHole(ran.nextInt(100) + 13, r));
+			int total = ran.nextInt(SL.getPlanetmax() + 1) + 1;
 			double[] o = new double[total];
-			for(int i = 0;i < total;i++) {
-				o[i] = AstroObject.AU*((double)(ran.nextInt(500)+1)/1000);
+			for (int i = 0; i < total; i++) {
+				o[i] = AstroObject.AU * ((double) (ran.nextInt(500) + 1) / 1000);
 			}
 			Planet put;
-			for(int i = 0;i < o.length;i++) {
-				put = Belt.makeRandom(o[i],r.getMyStar(),SL);
+			for (int i = 0; i < o.length; i++) {
+				put = Belt.makeRandom(o[i], r.getMyStar(), SL);
 				r.Add(put);
-				if(!SL.isName()) put.setMyName((Planet.ALPHA+i)+" Belt");
+				if (!SL.isName())
+					put.setMyName((Planet.ALPHA + i) + " Belt");
 			}
-		}else {
-			r.setMyName(r.getMyName()+" Nebula");
+		} else {
+			r.setMyName(r.getMyName() + " Nebula");
 			r.setMyStar(new Nebula(r));
 			r.Add(Belt.makeRandom(0, r.getMyStar(), SL));
 		}
-		r.setMyName(r.getMyName()+" System");
+		r.setMyName(r.getMyName() + " System");
 		return r;
 	}
 
 	public static RandomList consonants;
 	public static RandomList vowels;
+
 	public static void gen() {
 		consonants = new RandomList();
 		vowels = new RandomList();
-		vowels.add(10,"a");
-		consonants.add(12,"b");
-		consonants.add(20,"c");
-		consonants.add(15,"d");
-		vowels.add(7,"e");
-		consonants.add(10,"f");
-		consonants.add(13,"g");
-		consonants.add(20,"h");
-		vowels.add(10,"i");
-		consonants.add(10,"j");
-		consonants.add(12,"k");
-		consonants.add(16,"l");
-		consonants.add(20,"m");
-		consonants.add(20,"n");
-		vowels.add(6,"o");
-		consonants.add(9,"p");
-		consonants.add(2,"q");
-		consonants.add(13,"r");
-		consonants.add(20,"s");
-		consonants.add(20,"t");
-		vowels.add(5,"u");
-		consonants.add(11,"v");
-		consonants.add(5,"w");
-		consonants.add(1,"x");
-		consonants.add(3,"y");
-		consonants.add(1,"z");
-		vowels.add(1,"-");
-		consonants.add(3,"ll");
-		consonants.add(4,"sh");
-		consonants.add(6,"th");
-		consonants.add(1,"wh");
-		vowels.add(3,"oo");
-		vowels.add(4,"ie");
-		vowels.add(2,"ae");
-		vowels.add(3,"ee");
-		consonants.add(4,"tr");
-		consonants.add(3,"cr");
-		consonants.add(2,"ch");
-		consonants.add(2,"ck");
-		vowels.add(1,"y");
-		vowels.add(1,"'");
+		vowels.add(10, "a");
+		consonants.add(12, "b");
+		consonants.add(20, "c");
+		consonants.add(15, "d");
+		vowels.add(7, "e");
+		consonants.add(10, "f");
+		consonants.add(13, "g");
+		consonants.add(20, "h");
+		vowels.add(10, "i");
+		consonants.add(10, "j");
+		consonants.add(12, "k");
+		consonants.add(16, "l");
+		consonants.add(20, "m");
+		consonants.add(20, "n");
+		vowels.add(6, "o");
+		consonants.add(9, "p");
+		consonants.add(2, "q");
+		consonants.add(13, "r");
+		consonants.add(20, "s");
+		consonants.add(20, "t");
+		vowels.add(5, "u");
+		consonants.add(11, "v");
+		consonants.add(5, "w");
+		consonants.add(1, "x");
+		consonants.add(3, "y");
+		consonants.add(1, "z");
+		vowels.add(1, "-");
+		consonants.add(3, "ll");
+		consonants.add(4, "sh");
+		consonants.add(6, "th");
+		consonants.add(1, "wh");
+		vowels.add(3, "oo");
+		vowels.add(4, "ie");
+		vowels.add(2, "ae");
+		vowels.add(3, "ee");
+		consonants.add(4, "tr");
+		consonants.add(3, "cr");
+		consonants.add(2, "ch");
+		consonants.add(2, "ck");
+		vowels.add(1, "y");
+		vowels.add(1, "'");
 	}
 
 	public static String randomName() {
-		if(consonants==null) gen();
+		if (consonants == null)
+			gen();
 		String s = "";
 		Random ran = new Random();
-		int i = ran.nextInt(4)+1;
-		for(;i > 0;i--) {
-			s+=consonants.get();
-			s+=vowels.get();
+		int i = ran.nextInt(4) + 1;
+		for (; i > 0; i--) {
+			s += consonants.get();
+			s += vowels.get();
 		}
 		return s;
 	}
@@ -329,15 +343,15 @@ public class SolSystem implements Serializable, Savable{
 		setMyStar(StarParse(object.get(1)));
 		myStar.setMySystem(this);
 		setPlanetNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getPlanetNumber();k++){
-			Add(Planet.parseLoad(object.get(k+2)));
+		for (int k = 0; k < getPlanetNumber(); k++) {
+			Add(Planet.parseLoad(object.get(k + 2)));
 		}
 		return i;
 	}
 
 	private Star StarParse(String string) {
 		String[] in = StringFundementals.breakByLine(string);
-		switch(Integer.parseInt(in[2])) {
+		switch (Integer.parseInt(in[2])) {
 		case Star.CLASSINDEX:
 			return new Star(string);
 		case BrownDwarf.CLASSINDEX:
@@ -369,7 +383,7 @@ public class SolSystem implements Serializable, Savable{
 		out += this.myStar.saveString() + "\n";
 		out += "}\n";
 		out += this.getMyObjects().size() + "\n";
-		for(int i = 0;i < myObjects.size();i++) {
+		for (int i = 0; i < myObjects.size(); i++) {
 			out += "{\n";
 			out += myObjects.get(i).saveString() + "\n";
 			out += "}\n";

@@ -15,25 +15,25 @@ public class NewRegion implements ActionListener {
 	boolean isRandom;
 	Sector mySector;
 	JMenu myMenu;
-	
-	public NewRegion(boolean r,Sector s,JMenu m,MapView v){
+
+	public NewRegion(boolean r, Sector s, JMenu m, MapView v) {
 		isRandom = r;
 		mySector = s;
 		myMenu = m;
 		myView = v;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Region r;
-		if(isRandom) {
-			r = Region.makeRandom(mySector,myView.mySettings);
-		}else {
-			r = new Region(Region.randomName(),mySector);
+		if (isRandom) {
+			r = Region.makeRandom(mySector, myView.mySettings);
+		} else {
+			r = new Region(Region.randomName(), mySector);
 		}
-		JMenu j = MapView.populateRegionMenu(r,myView);
+		JMenu j = MapView.populateRegionMenu(r, myView);
 		myMenu.add(j);
 		mySector.Add(r);
 	}
-	
+
 }

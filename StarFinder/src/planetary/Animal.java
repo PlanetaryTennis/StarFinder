@@ -7,23 +7,23 @@ import utilities.ExtendedMathmatics;
 import utilities.StringFundementals;
 
 public class Animal extends Life {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2775509875562709159L;
-	//Motion
+	// Motion
 	private boolean canWalk;
 	private boolean canSwim;
 	private boolean canFly;
 	private boolean canBurrow;
-	
-	//Senses
+
+	// Senses
 	private boolean canSee;
 	private boolean canHear;
 	private boolean canSmell;
-	
-	//functions
+
+	// functions
 	private boolean canWork;
 	private boolean laysEggs;
 	private boolean hasMilk;
@@ -34,13 +34,13 @@ public class Animal extends Life {
 	private int sizeCatagory;
 	private int posionCatagory;
 	private int venomCatagory;
-	
-	//Diet
+
+	// Diet
 	private boolean eatsMeat;
 	private boolean eatsPlants;
 	private boolean eatsMetal;
-	
-	//design
+
+	// design
 	private int legPairs;
 	private int wingPairs;
 	private int heavyManipulatorPairs;
@@ -50,26 +50,26 @@ public class Animal extends Life {
 	private int birthRate;
 	private int ageRate;
 	private int oldAge;
-	
+
 	public static Random ran = new Random(System.currentTimeMillis());
-	
+
 	public Animal() {
-		myID = UUID.randomUUID().toString()+".Life";
+		myID = UUID.randomUUID().toString() + ".Life";
 	}
 
 	public Animal(String load) {
 		this.loadString(load);
 	}
-	
+
 	public static Animal randomStandard(Condition c) {
 		Animal out = new Animal();
 		randomMotions(c, out);
 		randomSenses(c, out);
-		randomFunctions(c,out);
-		randomDiet(c,out);
-		randomDesign(c,out);
-		out.setAgeRate((int) (out.getOldAge()*(((double)(ran.nextInt(10)+1)/10)+0.5)));
-		out.setBirthRate(ran.nextInt(12)+1);
+		randomFunctions(c, out);
+		randomDiet(c, out);
+		randomDesign(c, out);
+		out.setAgeRate((int) (out.getOldAge() * (((double) (ran.nextInt(10) + 1) / 10) + 0.5)));
+		out.setBirthRate(ran.nextInt(12) + 1);
 		return out;
 	}
 
@@ -77,11 +77,11 @@ public class Animal extends Life {
 		Animal out = new Animal();
 		randomMotions(c, out);
 		randomSenses(c, out);
-		randomFunctions(c,out);
-		randomDiet(c,out);
-		randomDesign(c,out);
-		out.setAgeRate((int) (out.getOldAge()*(((double)(ran.nextInt(10)+1)/10)+0.5))*12);
-		out.setBirthRate(ran.nextInt(24)+1);
+		randomFunctions(c, out);
+		randomDiet(c, out);
+		randomDesign(c, out);
+		out.setAgeRate((int) (out.getOldAge() * (((double) (ran.nextInt(10) + 1) / 10) + 0.5)) * 12);
+		out.setBirthRate(ran.nextInt(24) + 1);
 		return out;
 	}
 
@@ -89,135 +89,138 @@ public class Animal extends Life {
 		Animal out = new Animal();
 		randomMotions(c, out);
 		randomSenses(c, out);
-		randomFunctions(c,out);
-		randomDiet(c,out);
-		if(!out.isVenomous&&ran.nextBoolean()&&ran.nextBoolean()) {
+		randomFunctions(c, out);
+		randomDiet(c, out);
+		if (!out.isVenomous && ran.nextBoolean() && ran.nextBoolean()) {
 			out.setVenomous(true);
-			out.setVenomCatagory((int)Math.floor(ExtendedMathmatics.log(ran.nextInt(31)+2, 2)-ExtendedMathmatics.log(ran.nextInt(32)+1, 2)+5));
+			out.setVenomCatagory((int) Math.floor(ExtendedMathmatics.log(ran.nextInt(31) + 2, 2)
+					- ExtendedMathmatics.log(ran.nextInt(32) + 1, 2) + 5));
 		}
-		randomDesign(c,out);
+		randomDesign(c, out);
 		out.setEatsMeat(true);
-		out.setAgeRate((int) (out.getOldAge()*(((double)(ran.nextInt(10)+1)/10.0)+0.5)));
-		out.setBirthRate(ran.nextInt(6)+1);
+		out.setAgeRate((int) (out.getOldAge() * (((double) (ran.nextInt(10) + 1) / 10.0) + 0.5)));
+		out.setBirthRate(ran.nextInt(6) + 1);
 		return out;
 	}
 
-
 	private static void randomDesign(Condition c, Animal animal) {
-		if(animal.canWalk) {
-			animal.setLegPairs(ran.nextInt(4)+1);
-		}else {
-			animal.setLegPairs((int) Math.floor(5-ExtendedMathmatics.log(ran.nextInt(31)+2, 2)));
+		if (animal.canWalk) {
+			animal.setLegPairs(ran.nextInt(4) + 1);
+		} else {
+			animal.setLegPairs((int) Math.floor(5 - ExtendedMathmatics.log(ran.nextInt(31) + 2, 2)));
 		}
-		if(animal.canFly) {
-			animal.setWingPairs(ran.nextInt(3)+1);
-		}else {
-			animal.setWingPairs((int) Math.floor((5-ExtendedMathmatics.log(ran.nextInt(31)+2, 2))/2));
+		if (animal.canFly) {
+			animal.setWingPairs(ran.nextInt(3) + 1);
+		} else {
+			animal.setWingPairs((int) Math.floor((5 - ExtendedMathmatics.log(ran.nextInt(31) + 2, 2)) / 2));
 		}
-		if(animal.canBurrow||animal.canBurrow) {
-			animal.setHeavyManipulatorPairs(ran.nextInt(2)*ran.nextInt(3));
-		}else {
-			animal.setHeavyManipulatorPairs(ran.nextInt(2)*ran.nextInt(2));
+		if (animal.canBurrow || animal.canBurrow) {
+			animal.setHeavyManipulatorPairs(ran.nextInt(2) * ran.nextInt(3));
+		} else {
+			animal.setHeavyManipulatorPairs(ran.nextInt(2) * ran.nextInt(2));
 		}
-		animal.setFineManipulatorPairs(ran.nextInt(2)*ran.nextInt(3)*ran.nextInt(2));
-		animal.setManipulatorPairs(ran.nextInt(2)*ran.nextInt(3));
-		if(animal.canSee) {
-			animal.setEyes((ran.nextInt(4)+1)*2+ran.nextInt(2)*ran.nextInt(2)*ran.nextInt(2));
-		}else {
-			animal.setEyes((ran.nextInt(4)*ran.nextInt(2))*2+ran.nextInt(2)*ran.nextInt(2)*ran.nextInt(2));			
+		animal.setFineManipulatorPairs(ran.nextInt(2) * ran.nextInt(3) * ran.nextInt(2));
+		animal.setManipulatorPairs(ran.nextInt(2) * ran.nextInt(3));
+		if (animal.canSee) {
+			animal.setEyes((ran.nextInt(4) + 1) * 2 + ran.nextInt(2) * ran.nextInt(2) * ran.nextInt(2));
+		} else {
+			animal.setEyes((ran.nextInt(4) * ran.nextInt(2)) * 2 + ran.nextInt(2) * ran.nextInt(2) * ran.nextInt(2));
 		}
-		animal.setOldAge((int) Math.ceil(ran.nextInt(400)/(ran.nextInt(200)+1))+1);
+		animal.setOldAge((int) Math.ceil(ran.nextInt(400) / (ran.nextInt(200) + 1)) + 1);
 	}
 
 	private static void randomDiet(Condition c, Animal animal) {
 		animal.setEatsMeat(ran.nextBoolean());
 		animal.setEatsPlants(ran.nextBoolean());
-		if(!animal.isEatsMeat()&&!animal.isEatsPlants()) {
+		if (!animal.isEatsMeat() && !animal.isEatsPlants()) {
 			boolean coin = ran.nextBoolean();
-			if(coin) {
+			if (coin) {
 				animal.setEatsMeat(true);
-			}else {
+			} else {
 				animal.setEatsPlants(true);
 			}
 		}
-		animal.setEatsMetal(ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean());
+		animal.setEatsMetal(
+				ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean());
 	}
-	
-	public static void randomFunctions(Condition c,Animal animal) {
+
+	public static void randomFunctions(Condition c, Animal animal) {
 		animal.setCanWork(ran.nextBoolean());
 		animal.setLaysEggs(ran.nextBoolean());
-		animal.setHasMilk((ran.nextBoolean()&&ran.nextBoolean())||(!animal.laysEggs&&ran.nextBoolean()));
+		animal.setHasMilk((ran.nextBoolean() && ran.nextBoolean()) || (!animal.laysEggs && ran.nextBoolean()));
 		animal.setThickHide(ran.nextBoolean());
-		if(ran.nextBoolean()&&ran.nextBoolean()) {
+		if (ran.nextBoolean() && ran.nextBoolean()) {
 			animal.setPosionous(true);
-			animal.setPosionCatagory((int)Math.ceil(ExtendedMathmatics.log(ran.nextInt(31)+2, 2)-ExtendedMathmatics.log(ran.nextInt(32)+1, 2)+5));
-		}else {
+			animal.setPosionCatagory((int) Math.ceil(ExtendedMathmatics.log(ran.nextInt(31) + 2, 2)
+					- ExtendedMathmatics.log(ran.nextInt(32) + 1, 2) + 5));
+		} else {
 			animal.setPosionous(false);
 			animal.setPosionCatagory(0);
 		}
-		if(ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean()) {
+		if (ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean()) {
 			animal.setVenomous(true);
-			animal.setVenomCatagory((int)Math.floor(ExtendedMathmatics.log(ran.nextInt(31)+2, 2)-ExtendedMathmatics.log(ran.nextInt(32)+1, 2)+5));
-		}else {
+			animal.setVenomCatagory((int) Math.floor(ExtendedMathmatics.log(ran.nextInt(31) + 2, 2)
+					- ExtendedMathmatics.log(ran.nextInt(32) + 1, 2) + 5));
+		} else {
 			animal.setVenomous(false);
 			animal.setVenomCatagory(0);
 		}
-		animal.setCanCamo(ran.nextBoolean()&&ran.nextBoolean()&&ran.nextBoolean());
-		animal.setSizeCatagory((int) Math.ceil(ran.nextDouble()*(11-c.getGravityIndex())*10));
+		animal.setCanCamo(ran.nextBoolean() && ran.nextBoolean() && ran.nextBoolean());
+		animal.setSizeCatagory((int) Math.ceil(ran.nextDouble() * (11 - c.getGravityIndex()) * 10));
 	}
-	
-	public static void randomSenses(Condition c,Animal animal) {
+
+	public static void randomSenses(Condition c, Animal animal) {
 		animal.setCanSee(shouldSee(c));
 		animal.setCanHear(shouldHear(c));
-		animal.setCanSmell(ran.nextBoolean()||ran.nextBoolean());
+		animal.setCanSmell(ran.nextBoolean() || ran.nextBoolean());
 	}
-	
+
 	private static boolean shouldSee(Condition c) {
 		int chance = 0;
-		chance += c.getAtmosphericIndex()*3;
-		return (ran.nextInt(100) > chance);
-	}
-	
-	public static boolean shouldHear(Condition c) {
-		int chance = 0;
-		chance += (10-c.getAtmosphericIndex())*5;
+		chance += c.getAtmosphericIndex() * 3;
 		return (ran.nextInt(100) > chance);
 	}
 
-	public static void randomMotions(Condition c,Animal animal) {
+	public static boolean shouldHear(Condition c) {
+		int chance = 0;
+		chance += (10 - c.getAtmosphericIndex()) * 5;
+		return (ran.nextInt(100) > chance);
+	}
+
+	public static void randomMotions(Condition c, Animal animal) {
 		animal.setCanWalk(shouldWalk(c));
 		animal.setCanSwim(shouldSwim(c));
-		if(!animal.isCanWalk()&&!animal.isCanSwim()) {
+		if (!animal.isCanWalk() && !animal.isCanSwim()) {
 			boolean coin = ran.nextBoolean();
-			if(coin) {
+			if (coin) {
 				animal.setCanSwim(true);
-			}else {
+			} else {
 				animal.setCanWalk(true);
 			}
 		}
 		animal.setCanFly(shouldFly(c));
-		animal.setCanBurrow(ran.nextBoolean()&&ran.nextBoolean());
+		animal.setCanBurrow(ran.nextBoolean() && ran.nextBoolean());
 	}
-	
+
 	private static boolean shouldFly(Condition c) {
 		int chance = 0;
-		chance += (10-c.getAtmosphericIndex())*3;
-		chance += c.getGravityIndex()*7;
+		chance += (10 - c.getAtmosphericIndex()) * 3;
+		chance += c.getGravityIndex() * 7;
 		return (ran.nextInt(100) > chance);
 	}
 
 	private static boolean shouldWalk(Condition c) {
 		int chance = 0;
-		chance += c.getWaterIndex()*8;
+		chance += c.getWaterIndex() * 8;
 		return (ran.nextInt(100) > chance);
 	}
 
 	private static boolean shouldSwim(Condition c) {
 		int chance = 0;
-		chance += (10-c.getWaterIndex())*8;
+		chance += (10 - c.getWaterIndex()) * 8;
 		return (ran.nextInt(100) > chance);
 	}
-	
+
 	public boolean isCanWalk() {
 		return canWalk;
 	}
@@ -525,14 +528,14 @@ public class Animal extends Life {
 	}
 
 	public static final int CLASSINDEX = 112345;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;

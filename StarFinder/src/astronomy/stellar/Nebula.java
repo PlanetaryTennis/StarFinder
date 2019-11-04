@@ -25,14 +25,14 @@ public class Nebula extends Star {
 		super(s);
 		myColor = randomColor();
 	}
-	
+
 	public Nebula(String load) {
 		this.loadString(load);
 	}
 
 	private color randomColor() {
 		color c;
-		switch(ran.nextInt(5)) {
+		switch (ran.nextInt(5)) {
 		case 0:
 			c = color.BLUE;
 			break;
@@ -53,41 +53,41 @@ public class Nebula extends Star {
 	}
 
 	private Random ran = new Random(System.currentTimeMillis());
-	
+
 	public static Star randomStar(SolSystem s) {
 		return new Nebula(s);
 	}
-	
+
 	public ImageIcon getIcon() {
 		BufferedImage out = null;
 		try {
-			out = ImageIO.read(new File(Sprite.STARS+"Nebula.png"));
+			out = ImageIO.read(new File(Sprite.STARS + "Nebula.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		Color c = this.myColor.getMyColor();
 		for (int x = 0; x < out.getWidth(); x++) {
-	        for (int y = 0; y < out.getHeight(); y++) {
-	            Color pixelColor = new Color(out.getRGB(x, y), true);
-	            int r = (pixelColor.getRed() + pixelColor.getRed() + c.getRed()) / 3;
-	            int g = (pixelColor.getGreen() + pixelColor.getGreen() + c.getGreen()) / 3;
-	            int b = (pixelColor.getBlue() + pixelColor.getBlue() + c.getBlue()) / 3;
-	            int a = pixelColor.getAlpha();
-	            int rgba = (a << 24) | (r << 16) | (g << 8) | b;
-	            out.setRGB(x, y, rgba);
-	        }
-	    }
+			for (int y = 0; y < out.getHeight(); y++) {
+				Color pixelColor = new Color(out.getRGB(x, y), true);
+				int r = (pixelColor.getRed() + pixelColor.getRed() + c.getRed()) / 3;
+				int g = (pixelColor.getGreen() + pixelColor.getGreen() + c.getGreen()) / 3;
+				int b = (pixelColor.getBlue() + pixelColor.getBlue() + c.getBlue()) / 3;
+				int a = pixelColor.getAlpha();
+				int rgba = (a << 24) | (r << 16) | (g << 8) | b;
+				out.setRGB(x, y, rgba);
+			}
+		}
 		return new ImageIcon(out);
 	}
 
 	@Override
 	public int loadString(String load) {
-		String [] in = StringFundementals.breakByLine(load);
+		String[] in = StringFundementals.breakByLine(load);
 		int i = 2;
 		this.myID = in[0];
 		this.myName = in[i++];
 		myColor = color.valueOf(in[i++]);
-		return i;		
+		return i;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class Nebula extends Star {
 	}
 
 	public static final int CLASSINDEX = 934275;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;

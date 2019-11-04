@@ -15,13 +15,13 @@ public class Development implements Savable {
 	public Development(String load) {
 		this.loadString(load);
 	}
-	
+
 	public Development(String name, int cost) {
 		myName = name;
 		myCost = cost;
-		myID = UUID.randomUUID().toString()+".Surface";
+		myID = UUID.randomUUID().toString() + ".Surface";
 	}
-	
+
 	public String getMyName() {
 		return myName;
 	}
@@ -50,25 +50,25 @@ public class Development implements Savable {
 		this.myUpgrades.add(dev);
 		myCost = dev.getMyCost();
 	}
-	
+
 	public boolean remove(int i) {
 		return myUpgrades.remove(i) != null;
 	}
-	
+
 	public static final int CLASSINDEX = 119417;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;
 	}
-	
+
 	@Override
 	public int loadString(String load) {
 		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
@@ -78,14 +78,14 @@ public class Development implements Savable {
 		myName = in[k++];
 		myCost = Integer.parseInt(in[k++]);
 		numberUpgrades = Integer.parseInt(in[k++]);
-		for(int i = 0;i < numberUpgrades;i++) {
-			add(new Development(parse.get(1+i)));
+		for (int i = 0; i < numberUpgrades; i++) {
+			add(new Development(parse.get(1 + i)));
 		}
 		return k;
 	}
-	
+
 	int numberUpgrades;
-	
+
 	@Override
 	public String saveString() {
 		String out = "";
@@ -94,7 +94,7 @@ public class Development implements Savable {
 		out += myName + "\n";
 		out += myCost + "\n";
 		out += myUpgrades.size() + "\n";
-		for(int i = 0;i < myUpgrades.size();i++) {
+		for (int i = 0; i < myUpgrades.size(); i++) {
 			out += "{\n";
 			out += myUpgrades.get(i).saveString();
 			out += "}\n";
@@ -105,9 +105,9 @@ public class Development implements Savable {
 	public String read() {
 		String out = "";
 		out += "[";
-		for(int i = 0;i < myUpgrades.size();i++) {
+		for (int i = 0; i < myUpgrades.size(); i++) {
 			out += myUpgrades.get(i).getMyName();
-			if(i+1 != myUpgrades.size())
+			if (i + 1 != myUpgrades.size())
 				out += ", ";
 		}
 		out += "]\n";

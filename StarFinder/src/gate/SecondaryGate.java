@@ -21,16 +21,16 @@ public class SecondaryGate implements Gate {
 	private String mySystem;
 	private String myPlanet;
 	private String myGhost;
-	
+
 	private Region targetRegion;
-	
+
 	private Vector<SecondaryGate> myPod;
 	private String myID;
-	
+
 	public SecondaryGate() {
-		myID = UUID.randomUUID().toString()+".station";
+		myID = UUID.randomUUID().toString() + ".station";
 	}
-	
+
 	public SecondaryGate(String load) {
 		this.loadString(load);
 	}
@@ -58,12 +58,12 @@ public class SecondaryGate implements Gate {
 
 	@Override
 	public String getMyName() {
-		return myZone.getMyName()+" Gate";
+		return myZone.getMyName() + " Gate";
 	}
 
 	@Override
 	public ImageIcon getIcon() {
-		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.Gate+"SECONDARYGate.png"));
+		return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.Gate + "SECONDARYGate.png"));
 	}
 
 	public SecondaryGate getPod(int i) {
@@ -103,25 +103,26 @@ public class SecondaryGate implements Gate {
 	}
 
 	public static final int CLASSINDEX = 678804;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String ZoneID;
-	
+
 	@Override
 	public String getID() {
 		return myID;
 	}
-	
+
 	static Random ran = new Random(System.currentTimeMillis());
 
 	public static SecondaryGate randomSecond(Zone zone) {
 		SecondaryGate out = new SecondaryGate();
 		out.setMyZone(zone);
-		SolSystem sol = (SolSystem) ObjectFiles.ReadSaveableFromFile(zone.getMyRegion().getMySector().getMyGalaxy().getMyName()+"/"+zone.getSystemIDs().get(0));
+		SolSystem sol = (SolSystem) ObjectFiles.ReadSaveableFromFile(
+				zone.getMyRegion().getMySector().getMyGalaxy().getMyName() + "/" + zone.getSystemIDs().get(0));
 		int p = ran.nextInt(sol.getMyObjects().size());
 		Planet plan = sol.getMyObjects().get(p);
 		ImageGate r = new ImageGate(out);

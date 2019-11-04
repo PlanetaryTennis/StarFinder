@@ -10,7 +10,7 @@ public class saver implements ActionListener {
 
 	MapView v;
 	Galaxy galaxy;
-	
+
 	public saver(MapView v, Galaxy galaxy) {
 		this.v = v;
 		this.galaxy = galaxy;

@@ -8,7 +8,7 @@ import planetary.Colony;
 import planetary.Condition;
 
 public class Biolook implements ActionListener {
-	
+
 	Colony Col;
 	Condition Con;
 	MapView m;
@@ -21,7 +21,7 @@ public class Biolook implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		m.viewBiosphere(Col,Con);
+		m.viewBiosphere(Col, Con);
 	}
 
 }

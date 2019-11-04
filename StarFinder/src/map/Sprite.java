@@ -13,5 +13,5 @@ public class Sprite extends ImageIcon {
 	public static final String MOONS = "data/sprites/systems/moons/";
 	public static final String GASGIANT = "data/sprites/systems/gasgiant/";
 	public static final String Gate = "data/sprites/Gate/";
-	
+
 }

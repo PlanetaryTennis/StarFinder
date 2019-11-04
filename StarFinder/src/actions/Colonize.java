@@ -13,8 +13,8 @@ public class Colonize implements ActionListener {
 	Colony colony;
 	MapView myMap;
 	Planet planet;
-	
-	public Colonize(Colony colony,MapView map,Planet p) {
+
+	public Colonize(Colony colony, MapView map, Planet p) {
 		this.colony = colony;
 		this.myMap = map;
 		this.planet = p;

@@ -14,7 +14,7 @@ import map.MapView;
 public class editmenu implements ActionListener {
 
 	MapView myView;
-	
+
 	/**
 	 * @author PlanetaryTennis
 	 * @see engine.EditMenu

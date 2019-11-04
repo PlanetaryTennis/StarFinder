@@ -10,7 +10,7 @@ import planetary.Condition;
 import utilities.StringFundementals;
 
 public class Habitable extends Terrestrial implements LifeBearing {
-	
+
 	/**
 	 * 
 	 */
@@ -20,12 +20,11 @@ public class Habitable extends Terrestrial implements LifeBearing {
 	public Habitable(String load) {
 		this.loadString(load);
 	}
-	
-	public Habitable(Vector<Moon> myMoons, double myAtmosphere, double myRadius,
-			double myMass, double myEccentricity, double myOrbit, Star star, double myAlbido, double myGreenHouse,
-			double myWater,double myDay) {
-		super(myMoons, myAtmosphere, myRadius, myMass, myEccentricity, myOrbit, star, myAlbido, myGreenHouse,
-				myWater, myDay);
+
+	public Habitable(Vector<Moon> myMoons, double myAtmosphere, double myRadius, double myMass, double myEccentricity,
+			double myOrbit, Star star, double myAlbido, double myGreenHouse, double myWater, double myDay) {
+		super(myMoons, myAtmosphere, myRadius, myMass, myEccentricity, myOrbit, star, myAlbido, myGreenHouse, myWater,
+				myDay);
 		myCondition = new Condition(this);
 		++total;
 	}
@@ -37,7 +36,7 @@ public class Habitable extends Terrestrial implements LifeBearing {
 	public void setMyCondition(Condition myCondition) {
 		this.myCondition = myCondition;
 	}
-	
+
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
@@ -70,12 +69,12 @@ public class Habitable extends Terrestrial implements LifeBearing {
 		setMyColony(new Colony(object.get(1)));
 		setMoonNumber(Integer.parseInt(in[i++]));
 		int j = 2;
-		for(int k = 0;k < getMoonNumber();k++) {
+		for (int k = 0; k < getMoonNumber(); k++) {
 			getMyMoons().add((Moon) Planet.parseLoad(object.get(j)));
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getSatilightNumber();k++) {
+		for (int k = 0; k < getSatilightNumber(); k++) {
 			getMySatilights().add(OrbitObject.parseLoad(object.get(j)));
 			j++;
 		}
@@ -83,14 +82,14 @@ public class Habitable extends Terrestrial implements LifeBearing {
 		return i;
 	}
 
-	private String ConditionID;	
-	
+	private String ConditionID;
+
 	@Override
 	public String saveString() {
 		String out = "";
 		out += getID() + "\n";
 		out += getClassIndex() + "\n";
-		out += getMyName()  + "\n";
+		out += getMyName() + "\n";
 		out += getMyAlbido() + "\n";
 		out += getMyAtmosphere() + "\n";
 		out += getMyDay() + "\n";
@@ -116,21 +115,21 @@ public class Habitable extends Terrestrial implements LifeBearing {
 		out += getMyColony().saveString() + "\n";
 		out += "}\n";
 		out += getMyMoons().size() + "\n";
-		for(int i = 0;i < getMyMoons().size();i++) {
+		for (int i = 0; i < getMyMoons().size(); i++) {
 			out += "{\n";
 			out += getMyMoons().get(i).saveString() + "\n";
 			out += "}\n";
 		}
 		int g = 0;
 		String Append = "";
-		for(int i = 0;i < getMySatilights().size();i++) {
-			if(getMySatilights().get(i)==null) {
+		for (int i = 0; i < getMySatilights().size(); i++) {
+			if (getMySatilights().get(i) == null) {
 				g++;
 				break;
 			}
 			Append += "{\n";
 			Append += getMySatilights().get(i).saveString() + "\n";
-			Append += "}\n";			
+			Append += "}\n";
 		}
 		out += getMySatilights().size() - g + "\n";
 		out += Append;
@@ -141,7 +140,7 @@ public class Habitable extends Terrestrial implements LifeBearing {
 	}
 
 	public static final int CLASSINDEX = 9348476;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;

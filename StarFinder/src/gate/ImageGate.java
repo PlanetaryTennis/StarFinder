@@ -7,17 +7,17 @@ import javax.swing.ImageIcon;
 import astronomy.OrbitObject;
 import utilities.StringFundementals;
 
-public class ImageGate implements OrbitObject{
+public class ImageGate implements OrbitObject {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4109516429752633935L;
 	Gate myGate;
-	
+
 	public ImageGate(Gate Gate) {
 		myGate = Gate;
-		myID = UUID.randomUUID().toString()+".image";
+		myID = UUID.randomUUID().toString() + ".image";
 	}
 
 	public ImageGate(String load) {
@@ -37,25 +37,25 @@ public class ImageGate implements OrbitObject{
 		String out = "";
 		out += myID + "\n";
 		out += CLASSINDEX + "\n";
-		if(myGate == null) {
+		if (myGate == null) {
 			out += getGateID() + "\n";
-		}else {
+		} else {
 			out += myGate.getID() + "\n";
 		}
 		return out;
 	}
 
 	String GateID;
-	
+
 	public static final int CLASSINDEX = 678809;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;
@@ -90,6 +90,6 @@ public class ImageGate implements OrbitObject{
 
 	public void setGateID(String GateID) {
 		this.GateID = GateID;
-	}	
-	
+	}
+
 }

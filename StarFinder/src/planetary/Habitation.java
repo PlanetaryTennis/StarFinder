@@ -10,33 +10,33 @@ public class Habitation implements Savable {
 
 	private Vector<Development> myDevelopments = new Vector<Development>();
 	private int maxDev;
-	
+
 	public int getMaxDev() {
 		return maxDev;
 	}
 
 	public void setMaxDev(int maxDev) {
 		this.maxDev = maxDev;
-		myID = UUID.randomUUID().toString()+".Surface";
+		myID = UUID.randomUUID().toString() + ".Surface";
 	}
 
 	public static final int CLASSINDEX = 117897;
-	
-	public Habitation(int size){
-		maxDev = (int) (3*(Math.pow(size*3+1,2)+1));
+
+	public Habitation(int size) {
+		maxDev = (int) (3 * (Math.pow(size * 3 + 1, 2) + 1));
 	}
-	
-	Habitation(String load){
+
+	Habitation(String load) {
 		this.loadString(load);
 	}
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;
@@ -50,14 +50,14 @@ public class Habitation implements Savable {
 		int k = 2;
 		maxDev = Integer.parseInt(in[k++]);
 		numberDevelopments = Integer.parseInt(in[k++]);
-		for(int i = 0;i < numberDevelopments;i++) {
-			myDevelopments.add(new Development(parse.get(1+i)));
+		for (int i = 0; i < numberDevelopments; i++) {
+			myDevelopments.add(new Development(parse.get(1 + i)));
 		}
 		return k;
 	}
 
 	int numberDevelopments;
-	
+
 	@Override
 	public String saveString() {
 		String out = "";
@@ -65,7 +65,7 @@ public class Habitation implements Savable {
 		out += CLASSINDEX + "\n";
 		out += maxDev + "\n";
 		out += myDevelopments.size() + "\n";
-		for(int i = 0;i < myDevelopments.size();i++) {
+		for (int i = 0; i < myDevelopments.size(); i++) {
 			out += "{\n";
 			out += myDevelopments.get(i).saveString();
 			out += "}\n";

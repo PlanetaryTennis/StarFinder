@@ -12,12 +12,12 @@ public class GateGeneration implements ActionListener {
 
 	Galaxy g;
 	EditMenu em;
-	
-	public GateGeneration(Galaxy gal,EditMenu e){
+
+	public GateGeneration(Galaxy gal, EditMenu e) {
 		g = gal;
 		em = e;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Cursor save = em.getCursor();

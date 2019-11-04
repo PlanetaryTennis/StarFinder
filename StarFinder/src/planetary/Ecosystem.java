@@ -9,8 +9,8 @@ import astronomy.planetary.HabitableMoon;
 import engine.Savable;
 import utilities.StringFundementals;
 
-public class Ecosystem  implements Serializable, Savable{
-	
+public class Ecosystem implements Serializable, Savable {
+
 	/**
 	 * 
 	 */
@@ -18,26 +18,26 @@ public class Ecosystem  implements Serializable, Savable{
 	private Animal ApexPreditor;
 	private Animal Standard;
 	private Animal Pest;
-	
+
 	private Plant Primary;
 	private Plant Secondary;
-	
+
 	private Condition myConditions;
-	
-	public Ecosystem(Animal Apex,Animal Stan, Animal Pes, Plant Pri, Plant Sec,Condition con) {
+
+	public Ecosystem(Animal Apex, Animal Stan, Animal Pes, Plant Pri, Plant Sec, Condition con) {
 		ApexPreditor = Apex;
 		Standard = Stan;
 		Pest = Pes;
 		Primary = Pri;
 		Secondary = Sec;
 		myConditions = con;
-		myID = UUID.randomUUID().toString()+".Surface";
+		myID = UUID.randomUUID().toString() + ".Surface";
 	}
-	
+
 	public Ecosystem(String load) {
 		this.loadString(load);
 	}
-	
+
 	public Animal getApexPreditor() {
 		return ApexPreditor;
 	}
@@ -91,7 +91,7 @@ public class Ecosystem  implements Serializable, Savable{
 		Animal AP = Animal.randomApexPreditor(C);
 		Animal S = Animal.randomStandard(C);
 		Animal P = Animal.randomPest(C);
-		
+
 		Plant Pr = Plant.random(C);
 		Plant Sc = Plant.random(C);
 		return new Ecosystem(AP, S, P, Pr, Sc, C);
@@ -102,7 +102,7 @@ public class Ecosystem  implements Serializable, Savable{
 		Animal AP = Animal.randomApexPreditor(C);
 		Animal S = Animal.randomStandard(C);
 		Animal P = Animal.randomPest(C);
-		
+
 		Plant Pr = Plant.random(C);
 		Plant Sc = Plant.random(C);
 		return new Ecosystem(AP, S, P, Pr, Sc, C);
@@ -125,7 +125,7 @@ public class Ecosystem  implements Serializable, Savable{
 	public String saveString() {
 		String out = "";
 		out += myID + "\n";
-		out += CLASSINDEX +"\n";
+		out += CLASSINDEX + "\n";
 		out += "{\n";
 		out += ApexPreditor.saveString() + "\n";
 		out += "}\n";
@@ -145,14 +145,14 @@ public class Ecosystem  implements Serializable, Savable{
 	}
 
 	public static final int CLASSINDEX = 112377;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;

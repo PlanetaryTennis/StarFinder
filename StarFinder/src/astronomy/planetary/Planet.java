@@ -11,47 +11,47 @@ import planetary.Colony;
 import utilities.StringFundementals;
 
 public abstract class Planet implements AstroObject {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1687224618339768870L;
-	public static final char ALPHA = (char)945;
-	public static final char OMEGA = (char)969;
-	public static final char BE = (char)1073;
-	public static final char YA = (char)1103;
+	public static final char ALPHA = (char) 945;
+	public static final char OMEGA = (char) 969;
+	public static final char BE = (char) 1073;
+	public static final char YA = (char) 1103;
 
 	protected String myName;
-	
+
 	protected Colony myColony;
-	
+
 	protected Vector<Moon> myMoons = new Vector<Moon>();
-	
+
 	protected Vector<OrbitObject> mySatilights = new Vector<OrbitObject>();
-	
+
 	protected double myAtmosphere;
 	protected double[] myTemps;
-	
+
 	protected double myRadius;
 	protected double myMass;
 	protected double myGravity;
 	protected double myVolume;
 	protected double myDensity;
-	
+
 	protected double myEccentricity;
 	protected double myOrbit;
 	protected double myInnerOrbit;
 	protected double myOuterOrbit;
-	
+
 	protected double myDay;
 	protected double myYear;
-	
+
 	public Planet() {
-		
+
 	};
-	
-	public Planet(Vector<Moon> myMoons, double myAtmosphere, double myRadius, double myMass,
-			double myEccentricity, double myOrbit,double myDay,Star star) {
+
+	public Planet(Vector<Moon> myMoons, double myAtmosphere, double myRadius, double myMass, double myEccentricity,
+			double myOrbit, double myDay, Star star) {
 		super();
 		this.myMoons = myMoons;
 		this.myAtmosphere = myAtmosphere;
@@ -67,29 +67,27 @@ public abstract class Planet implements AstroObject {
 		this.myMoons = myMoons;
 		this.myEccentricity = myEccentricity;
 		this.myOrbit = myOrbit;
-		myInnerOrbit = myOrbit*(1-myEccentricity);
-		myOuterOrbit = myOrbit*(1+myEccentricity);
+		myInnerOrbit = myOrbit * (1 - myEccentricity);
+		myOuterOrbit = myOrbit * (1 + myEccentricity);
 	}
 
 	private void calculate(Star star) {
-		myGravity = (AstroObject.G)*(myMass)/Math.pow(myRadius,2);
-		myVolume = Math.pow(myRadius,3)*(0.75*Math.PI)*1000;
-		myDensity = myMass/myVolume;
-		myInnerOrbit = myOrbit*(1-myEccentricity);
-		myOuterOrbit = myOrbit*(1+myEccentricity);
-		myYear = yearcalculate(star,myMass,myOrbit);
-		
+		myGravity = (AstroObject.G) * (myMass) / Math.pow(myRadius, 2);
+		myVolume = Math.pow(myRadius, 3) * (0.75 * Math.PI) * 1000;
+		myDensity = myMass / myVolume;
+		myInnerOrbit = myOrbit * (1 - myEccentricity);
+		myOuterOrbit = myOrbit * (1 + myEccentricity);
+		myYear = yearcalculate(star, myMass, myOrbit);
+
 	}
 
 	public static double yearcalculate(Star myStar, double myMass, double myOrbit) {
-		double massfactor = myStar.getMyMass()+myMass;
-		double distancefactor = Math.pow(myOrbit,3);
-		double pifactor = Math.pow(Math.PI, 2)*4;
-		double completefactor = Math.sqrt((pifactor*distancefactor)/
-				(AstroObject.G*massfactor));
+		double massfactor = myStar.getMyMass() + myMass;
+		double distancefactor = Math.pow(myOrbit, 3);
+		double pifactor = Math.pow(Math.PI, 2) * 4;
+		double completefactor = Math.sqrt((pifactor * distancefactor) / (AstroObject.G * massfactor));
 		return completefactor;
 	}
-	
 
 	public Colony getMyColony() {
 		return myColony;
@@ -229,54 +227,54 @@ public abstract class Planet implements AstroObject {
 
 	public static String nameMoon(int i) {
 		String out = "";
-		
-		if(ALPHA+i<=OMEGA) {
-			out += (char) (ALPHA+i);
-		}else {
-			i = (i-OMEGA+ALPHA);
-			if(BE+i<=YA) {
-				out += (char) (BE+i);
+
+		if (ALPHA + i <= OMEGA) {
+			out += (char) (ALPHA + i);
+		} else {
+			i = (i - OMEGA + ALPHA);
+			if (BE + i <= YA) {
+				out += (char) (BE + i);
 			}
 		}
-		
+
 		return out;
 	}
-	
+
 	public String toString() {
 		return this.myName;
 	}
-	
+
 	public abstract ImageIcon getIcon();
-	
+
 	public abstract String string();
 
 	public static Planet parseLoad(String string) {
 		Planet obj = null;
 		String[] box = StringFundementals.breakByLine(string);
-        switch(Integer.parseInt(box[1])) {
-        case Terrestrial.CLASSINDEX:
-        	obj = new Terrestrial(string);
-        	break;
-        case Moon.CLASSINDEX:
-        	obj = new Moon(string);
-        	break;
-        case Jovian.CLASSINDEX:
-        	obj = new Jovian(string);
-        	break;
-        case HabitableMoon.CLASSINDEX:
-        	obj = new HabitableMoon(string);
-        	break;
-        case Habitable.CLASSINDEX:
-        	obj = new Habitable(string);
-        	break;
-        case Belt.CLASSINDEX:
-        	obj = new Belt(string);
-        	break;
-        case Asteroid.CLASSINDEX:
-        	obj = new Asteroid(string);
-        	break;
-        }        
-        return obj;
+		switch (Integer.parseInt(box[1])) {
+		case Terrestrial.CLASSINDEX:
+			obj = new Terrestrial(string);
+			break;
+		case Moon.CLASSINDEX:
+			obj = new Moon(string);
+			break;
+		case Jovian.CLASSINDEX:
+			obj = new Jovian(string);
+			break;
+		case HabitableMoon.CLASSINDEX:
+			obj = new HabitableMoon(string);
+			break;
+		case Habitable.CLASSINDEX:
+			obj = new Habitable(string);
+			break;
+		case Belt.CLASSINDEX:
+			obj = new Belt(string);
+			break;
+		case Asteroid.CLASSINDEX:
+			obj = new Asteroid(string);
+			break;
+		}
+		return obj;
 	}
-	
+
 }

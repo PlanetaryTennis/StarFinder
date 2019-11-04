@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import astronomy.planetary.Planet;
 import map.MapView;
 
-public class SurfaceView implements ActionListener{
-
+public class SurfaceView implements ActionListener {
 
 	private Planet myPlanet;
 	private MapView myView;

@@ -14,7 +14,7 @@ import map.SettingList;
 import utilities.ExtendedMathmatics;
 import utilities.StringFundementals;
 
-public class Belt extends Planet{
+public class Belt extends Planet {
 
 	/**
 	 * 
@@ -24,10 +24,10 @@ public class Belt extends Planet{
 	public Belt(String load) {
 		this.loadString(load);
 	}
-	
-	public Belt(Vector<Moon> myMoons,double myEccentricity, double myOrbit, Star star) {
+
+	public Belt(Vector<Moon> myMoons, double myEccentricity, double myOrbit, Star star) {
 		super(myMoons, myEccentricity, myOrbit, star);
-		myID = UUID.randomUUID().toString()+".Planet";
+		myID = UUID.randomUUID().toString() + ".Planet";
 	}
 
 	@Override
@@ -36,25 +36,25 @@ public class Belt extends Planet{
 	}
 
 	public static Random ran = new Random(System.currentTimeMillis());
-	
+
 	public static Planet makeRandom(double orbit, Star star, SettingList sL) {
-		int m = ran.nextInt(30)+25;
-		double d = ExtendedMathmatics.log(ran.nextInt(499)+1, 1000)/8;
+		int m = ran.nextInt(30) + 25;
+		double d = ExtendedMathmatics.log(ran.nextInt(499) + 1, 1000) / 8;
 		Vector<Moon> moons = new Vector<Moon>(m);
-		
-		for(int i = 0;i < m;i++) {
+
+		for (int i = 0; i < m; i++) {
 			moons.add(Asteroid.makeRandom(d, orbit, star));
-			if(sL.isName()) {
+			if (sL.isName()) {
 				moons.get(i).setMyName(SolSystem.randomName());
-			}else {
-				moons.get(i).setMyName(nameMoon(i));				
+			} else {
+				moons.get(i).setMyName(nameMoon(i));
 			}
 		}
-		
+
 		Belt b = new Belt(moons, d, orbit, star);
-		
+
 		b.setMyName(SolSystem.randomName() + " Belt");
-		
+
 		return b;
 	}
 
@@ -76,13 +76,13 @@ public class Belt extends Planet{
 		myOuterOrbit = Double.parseDouble(in[i++]);
 		setMoonNumber(Integer.parseInt(in[i++]));
 		int j = 1;
-		for(int k = 0;k < getMoonNumber();k++) {
+		for (int k = 0; k < getMoonNumber(); k++) {
 			getMyMoons().add((Moon) Planet.parseLoad(object.get(j)));
 			j++;
 		}
 		setSatilightNumber(Integer.parseInt(in[i++]));
-		for(int k = 0;k < getSatilightNumber();k++) {
-			if(j>=object.size()) {
+		for (int k = 0; k < getSatilightNumber(); k++) {
+			if (j >= object.size()) {
 				break;
 			}
 			getMySatilights().add(OrbitObject.parseLoad(object.get(j)));
@@ -90,12 +90,11 @@ public class Belt extends Planet{
 		}
 		return i;
 	}
-	
+
 	private int MoonNumber;
 	private Vector<String> MoonIDs = new Vector<String>();
 	private int SatilightNumber;
 	private Vector<String> SatilightIDs = new Vector<String>();
-	
 
 	@Override
 	public String saveString() {
@@ -105,39 +104,39 @@ public class Belt extends Planet{
 		out += getMyName() + "\n";
 		out += myEccentricity + "\n";
 		out += myOrbit + "\n";
-		out += myInnerOrbit +"\n";
+		out += myInnerOrbit + "\n";
 		out += myOuterOrbit + "\n";
 		out += getMyMoons().size() + "\n";
-		for(int i = 0;i < getMyMoons().size();i++) {
+		for (int i = 0; i < getMyMoons().size(); i++) {
 			out += "{\n";
 			out += getMyMoons().get(i).saveString() + "\n";
 			out += "}\n";
 		}
 		int g = 0;
 		String Append = "";
-		for(int i = 0;i < getMySatilights().size();i++) {
-			if(getMySatilights().get(i)==null) {
+		for (int i = 0; i < getMySatilights().size(); i++) {
+			if (getMySatilights().get(i) == null) {
 				g++;
 				break;
 			}
 			Append += "{\n";
 			Append += getMySatilights().get(i).saveString() + "\n";
-			Append += "}\n";			
+			Append += "}\n";
 		}
 		out += getMySatilights().size() - g + "\n";
 		out += Append;
 		return out;
 	}
-	
+
 	public static final int CLASSINDEX = 934892;
-	
+
 	@Override
 	public int getClassIndex() {
 		return CLASSINDEX;
 	}
 
 	String myID;
-	
+
 	@Override
 	public String getID() {
 		return myID;

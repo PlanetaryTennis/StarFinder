@@ -10,8 +10,8 @@ public class SecondaryJump implements ActionListener {
 
 	MapView myMap;
 	SecondaryGate partner;
-	
-	public SecondaryJump(SecondaryGate myPartner,MapView myMap) {
+
+	public SecondaryJump(SecondaryGate myPartner, MapView myMap) {
 		partner = myPartner;
 		this.myMap = myMap;
 	}

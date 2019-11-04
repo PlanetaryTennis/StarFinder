@@ -8,7 +8,7 @@ import engine.SettingLauncher;
 public class StarSetter implements ActionListener {
 
 	SettingLauncher SL;
-	
+
 	public StarSetter(SettingLauncher settingLauncher) {
 		SL = settingLauncher;
 	}

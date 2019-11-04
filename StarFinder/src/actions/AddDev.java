@@ -17,10 +17,10 @@ public class AddDev implements ActionListener {
 	Habitation h;
 	Development d;
 	int type;
-	
+
 	JTextArea Name;
 	JSlider Cost;
-	
+
 	public AddDev(Habitation myColony) {
 		h = myColony;
 		type = 0;
@@ -35,10 +35,10 @@ public class AddDev implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JFrame look = new JFrame("Colony View");
 		look.setLayout(new FlowLayout());
-		
+
 		Name = new JTextArea("Name Here");
 		look.add(Name);
-		
+
 		Cost = new JSlider();
 		Cost.setPaintLabels(true);
 		Cost.setValue(1);
@@ -46,11 +46,11 @@ public class AddDev implements ActionListener {
 		Cost.setMaximum(5);
 		Cost.setMajorTickSpacing(1);
 		Cost.setPaintTicks(true);
-		
+
 		JButton Apply = new JButton("Add");
 		Apply.addActionListener(new AddDevelopment(this));
 		look.add(Apply);
-		
+
 		look.setSize(400, 200);
 		look.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		look.setVisible(true);
