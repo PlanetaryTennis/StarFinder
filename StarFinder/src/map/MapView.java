@@ -58,6 +58,7 @@ import astronomy.planetary.Planet;
 import astronomy.planetary.Terrestrial;
 import astronomy.stellar.Nebula;
 import astronomy.stellar.Star;
+import astronomy.stellar.MultiStar;
 import engine.ObjectFiles;
 import planetary.Colony;
 import planetary.Condition;
@@ -241,11 +242,11 @@ public class MapView extends JFrame {
 		}
 	}
 
-//	public void search(AstroObject o) {
-//		switch(o.getClass()) {
-//		case
-//		}
-//	}
+	//	public void search(AstroObject o) {
+	//		switch(o.getClass()) {
+	//		case
+	//		}
+	//	}
 
 	public static void save(MapView view, Galaxy galaxy) {
 		Cursor c = view.getCursor();
@@ -389,7 +390,7 @@ public class MapView extends JFrame {
 			solarsystem = new JButton(sol.getMyName());
 			ImageIcon img = sol.getMyStar().getIcon();
 			solarsystem.setIcon(img);
-			solarsystem.setPreferredSize(new Dimension(img.getIconWidth() + 50, img.getIconHeight()));
+			solarsystem.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth()/4, img.getIconHeight()));
 			solarsystem.setBackground(Color.BLACK);
 			solarsystem.setBorderPainted(false);
 			solarsystem.setOpaque(false);
@@ -419,7 +420,7 @@ public class MapView extends JFrame {
 			JButton star = new JButton();
 			ImageIcon img = solsystem.getMyStar().getIcon();
 			star.setIcon(img);
-			star.setPreferredSize(new Dimension(img.getIconWidth(), img.getIconHeight()));
+			star.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth()/4, img.getIconHeight()));
 			star.setBackground(Color.BLACK);
 			star.setBorderPainted(false);
 			star.setOpaque(false);
@@ -443,31 +444,31 @@ public class MapView extends JFrame {
 			planet.setBorderPainted(false);
 			planet.setOpaque(false);
 
-//			planet.setToolTipText("<html><p width=\"500\">" + solsystem.getMyObjects().get(i).string() + "</p></html>");
-//			Color c;
-//			if(solsystem.getMyObjects().get(i).getClass()==Jovian.class) {
-//				if(solsystem.getMyObjects().get(i).getMyMass().greaterOrEqual(AstroObject.JOVIAN*(0.5))) {
-//					c = Color.yellow;
-//				}else {
-//					c = Color.cyan;
-//				}
-//			}else if(solsystem.getMyObjects().get(i).getClass()==Habitable.class) {
-//				if(((Habitable) solsystem.getMyObjects().get(i)).getMyWater()<=0.4) {
-//					c = Color.green;
-//				}else {
-//					c = Color.blue;
-//				}
-//			}else if(solsystem.getMyObjects().get(i).getClass()==Terrestrial.class){
-//				if(((Terrestrial)solsystem.getMyObjects().get(i)).isFrozen()) {
-//					c = Color.white;
-//				}else {
-//					c = Color.LIGHT_GRAY;
-//				}
-//			}else {
-//				c = Color.DARK_GRAY;
-//				planet.setForeground(Color.white);
-//			}
-//			planet.setBackground(c);
+			//			planet.setToolTipText("<html><p width=\"500\">" + solsystem.getMyObjects().get(i).string() + "</p></html>");
+			//			Color c;
+			//			if(solsystem.getMyObjects().get(i).getClass()==Jovian.class) {
+			//				if(solsystem.getMyObjects().get(i).getMyMass().greaterOrEqual(AstroObject.JOVIAN*(0.5))) {
+			//					c = Color.yellow;
+			//				}else {
+			//					c = Color.cyan;
+			//				}
+			//			}else if(solsystem.getMyObjects().get(i).getClass()==Habitable.class) {
+			//				if(((Habitable) solsystem.getMyObjects().get(i)).getMyWater()<=0.4) {
+			//					c = Color.green;
+			//				}else {
+			//					c = Color.blue;
+			//				}
+			//			}else if(solsystem.getMyObjects().get(i).getClass()==Terrestrial.class){
+			//				if(((Terrestrial)solsystem.getMyObjects().get(i)).isFrozen()) {
+			//					c = Color.white;
+			//				}else {
+			//					c = Color.LIGHT_GRAY;
+			//				}
+			//			}else {
+			//				c = Color.DARK_GRAY;
+			//				planet.setForeground(Color.white);
+			//			}
+			//			planet.setBackground(c);
 			myView.add(planet);
 		}
 
@@ -477,24 +478,41 @@ public class MapView extends JFrame {
 
 	public void viewStar(Star star) {
 		level = 1;
-		Name.setText(star.getMySystem().getMyName());
+		Name.setText(star.getMyName());
 		myView.removeAll();
 		myView.setLayout(new FlowLayout());
 
-		JTextArea Print = new JTextArea();
-		Print.setEditable(false);
-		String display = star.getMySystem().getMyName() + "\n";
-		display += "Inner Habitable Zone " + star.getHabitablezone()[0] / AstroObject.AU + " AU\n";
-		display += "Outer Habitable Zone " + star.getHabitablezone()[1] / AstroObject.AU + " AU\n";
-		display += "Frost Line " + star.getFrostLine() / AstroObject.AU + " AU\n";
-		display += "Color " + star.getMyColor().toString() + "\n";
-		display += "Radius " + star.getMyRadius() / AstroObject.SOLRADI + " Sols\n";
-		display += "Brightness " + star.getMyLuminosity() / AstroObject.SUNLIGHT + " Sols\n";
-		display += "Mass " + star.getMyMass() / AstroObject.SOL + " Sols\n";
-		display += "Temperature " + star.getMyTemp() / AstroObject.SOLTEMP + " Sols";
-		Print.setText(display);
+		if(star.getClass() == MultiStar.class) {
+			Vector<Star> Stars = ((MultiStar)star).getMyStars();
+			JButton st = null;
+			ImageIcon img;
+			for(int i = 0;i < Stars.size();i++) {
+				st = new JButton(Stars.get(i).getMyName());
+				img = Stars.get(i).getIcon();
+				st.setIcon(img);
+				st.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth()/4, img.getIconHeight()));
+				st.setBackground(Color.BLACK);
+				st.setBorderPainted(false);
+				st.setOpaque(false);
+				st.addActionListener(new StarView(Stars.get(i),this));
+				myView.add(st);
+			}
+		}else {
+			JTextArea Print = new JTextArea();
+			Print.setEditable(false);
+			String display = star.getMyName() + "\n";
+			display += "Inner Habitable Zone " + star.getHabitablezone()[0] / AstroObject.AU + " AU\n";
+			display += "Outer Habitable Zone " + star.getHabitablezone()[1] / AstroObject.AU + " AU\n";
+			display += "Frost Line " + star.getFrostLine() / AstroObject.AU + " AU\n";
+			display += "Color " + star.getMyColor().toString() + "\n";
+			display += "Radius " + star.getMyRadius() / AstroObject.SOLRADI + " Sols\n";
+			display += "Brightness " + star.getMyLuminosity() / AstroObject.SUNLIGHT + " Sols\n";
+			display += "Mass " + star.getMyMass() / AstroObject.SOL + " Sols\n";
+			display += "Temperature " + star.getMyTemp() / AstroObject.SOLTEMP + " Sols";
+			Print.setText(display);
 
-		myView.add(Print);
+			myView.add(Print);
+		}
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);

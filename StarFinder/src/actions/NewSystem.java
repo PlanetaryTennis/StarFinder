@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JMenu;
+
 import astronomy.SolSystem;
 import astronomy.Zone;
 import astronomy.stellar.Star;

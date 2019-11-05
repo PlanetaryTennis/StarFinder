@@ -16,7 +16,7 @@ import map.Sprite;
 
 public class SettingLauncher {
 
-	int[] suns = new int[] { 700, 800, 900, 920, 940, 1000, 70, 90, 100 };
+	int[] suns = new int[] { 700, 800, 900, 920, 940, 1000, 70, 90, 100 , 100};
 
 	public SettingLauncher(boolean b) {
 		JFrame LaunchSettings = new JFrame("Launch Settings");
@@ -161,7 +161,7 @@ public class SettingLauncher {
 		JCheckBox MultiStars = new JCheckBox("Multi Stars");
 		MultiStars.setSelected(false);
 		MultiStars.setToolTipText("This allows Binary, and Trinary stars");
-		MultiStars.setEnabled(false);
+		MultiStars.setEnabled(true);
 		LaunchSettings.add(MultiStars);
 
 		JCheckBox Names = new JCheckBox("Random Names");
@@ -196,10 +196,11 @@ public class SettingLauncher {
 	InnerSlider Small;
 	InnerSlider Medium;
 	InnerSlider Large;
+	InnerSlider Multi;
 
 	public void SunCalculat() {
 		JFrame StarTypes = new JFrame("Star Types");
-		StarTypes.setLayout(new GridLayout(10, 3));
+		StarTypes.setLayout(new GridLayout(11, 2));
 		int NormalStars = suns[0];
 		int BrownDwarf = suns[1] - suns[0];
 		int WhiteDwarf = suns[2] - suns[1];
@@ -208,8 +209,8 @@ public class SettingLauncher {
 		int Nebula = suns[5] - suns[4];
 		int Small = suns[6];
 		int Medium = suns[7] - suns[6];
-		;
 		int Large = suns[8] - suns[7];
+		int Multi = suns[9];
 
 		JTextPane NS = new JTextPane();
 		NS.setEditable(false);
@@ -328,6 +329,19 @@ public class SettingLauncher {
 		StarTypes.add(Lar);
 		StarTypes.add(this.Large);
 
+		JTextPane mul = new JTextPane();
+		mul.setEditable(false);
+		mul.setText("Multi Stars System");
+		mul.setToolTipText("This is the chance out of 1000 that Multistar System.");
+		this.Multi = new InnerSlider(0, 1000, 0, 1000);
+		this.Multi.setPaintLabels(true);
+		this.Multi.setValue(Multi);
+		this.Multi.setMajorTickSpacing(100);
+		this.Multi.setMajorTickSpacing(10);
+		this.Multi.setPaintTicks(true);
+		StarTypes.add(mul);
+		StarTypes.add(this.Multi);
+		
 		JButton Proccess = new JButton("Accept");
 		Proccess.addActionListener(new UpdateStarNumbers(this, StarTypes));
 		StarTypes.add(Proccess);
@@ -397,12 +411,9 @@ public class SettingLauncher {
 		suns[3] = NeutronStar.getValue() + suns[2];
 		suns[4] = BlackHole.getValue() + suns[3];
 		suns[5] = Nebula.getValue() + suns[4];
-		if (suns[5] != 1000)
-			suns[5] = 1000;
 		suns[6] = Small.getValue();
 		suns[7] = Medium.getValue() + suns[6];
 		suns[8] = Large.getValue() + suns[7];
-		if (suns[8] != 100)
-			suns[8] = 100;
+		suns[9] = Multi.getValue();
 	}
 }

@@ -40,6 +40,7 @@ public class Star implements AstroObject {
 
 	public Star(SolSystem s) {
 		mySystem = s;
+		myID = UUID.randomUUID().toString() + ".Star";
 	}
 
 	public Star() {
@@ -56,7 +57,6 @@ public class Star implements AstroObject {
 		myVolume = Math.pow(myRadius, 3) * (0.75 * Math.PI) * 1000;
 		myDensity = myMass / myVolume;
 		myColor = StellarClass(myTemp);
-		++total;
 		myID = UUID.randomUUID().toString() + ".Star";
 	}
 
@@ -242,5 +242,9 @@ public class Star implements AstroObject {
 
 	public void setMyName(String name) {
 		myName = name;
+	}
+
+	public String getMyName() {
+		return myName;
 	}
 }

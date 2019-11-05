@@ -32,7 +32,7 @@ public class GameLauncher {
 		Launcher.add(LoadEdit);
 
 		Launcher.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Black Hole.png"));
-		Launcher.setSize(150, 200);
+		Launcher.setSize(200, 200);
 		Launcher.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Launcher.setVisible(true);
 	}

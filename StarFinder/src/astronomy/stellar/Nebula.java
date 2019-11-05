@@ -83,9 +83,10 @@ public class Nebula extends Star {
 	@Override
 	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
-		int i = 2;
+		int i = 1;
 		this.myID = in[0];
 		this.myName = in[i++];
+		i++;
 		myColor = color.valueOf(in[i++]);
 		return i;
 	}
