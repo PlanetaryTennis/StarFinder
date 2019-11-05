@@ -12,6 +12,7 @@ import planetary.Development;
 
 /**
  * DevelopmentViewer allows one to create a JFrame to view a Development.
+ * 
  * @author PlanetaryTennis
  */
 public class DevelopmentViewer implements ActionListener {
@@ -20,6 +21,7 @@ public class DevelopmentViewer implements ActionListener {
 
 	/**
 	 * Class Constructor
+	 * 
 	 * @param d Development to be viewed
 	 */
 	public DevelopmentViewer(Development d) {

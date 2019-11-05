@@ -26,6 +26,7 @@ public class SecondaryGate implements Gate {
 
 	private Vector<SecondaryGate> myPod;
 	private String myID;
+	private String myName;
 
 	public SecondaryGate() {
 		myID = UUID.randomUUID().toString() + ".station";
@@ -58,7 +59,11 @@ public class SecondaryGate implements Gate {
 
 	@Override
 	public String getMyName() {
-		return myZone.getMyName() + " Gate";
+		return myName;
+	}
+
+	public void setMyName(String name) {
+		myName = name;
 	}
 
 	@Override
@@ -87,6 +92,7 @@ public class SecondaryGate implements Gate {
 		myPlanet = in[i++];
 		myGhost = in[i++];
 		ZoneID = in[i++];
+		myName = in[i++];
 		return i;
 	}
 
@@ -99,6 +105,7 @@ public class SecondaryGate implements Gate {
 		out += getMyPlanet() + "\n";
 		out += getMyGhost() + "\n";
 		out += getMyZone().getID() + "\n";
+		out += myName + "\n";
 		return out;
 	}
 

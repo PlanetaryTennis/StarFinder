@@ -16,7 +16,7 @@ import map.Sprite;
 
 public class SettingLauncher {
 
-	int[] suns = new int[] { 700, 800, 900, 920, 940, 1000, 70, 90, 100 , 100};
+	int[] suns = new int[] { 700, 800, 900, 920, 940, 1000, 70, 90, 100, 100 };
 
 	public SettingLauncher(boolean b) {
 		JFrame LaunchSettings = new JFrame("Launch Settings");
@@ -341,7 +341,7 @@ public class SettingLauncher {
 		this.Multi.setPaintTicks(true);
 		StarTypes.add(mul);
 		StarTypes.add(this.Multi);
-		
+
 		JButton Proccess = new JButton("Accept");
 		Proccess.addActionListener(new UpdateStarNumbers(this, StarTypes));
 		StarTypes.add(Proccess);

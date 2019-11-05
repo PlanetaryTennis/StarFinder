@@ -186,7 +186,9 @@ public class Terrestrial extends Planet {
 	public ImageIcon getIcon() {
 		if (this.getClass() == Habitable.class) {
 			Habitable h = (Habitable) this;
-			if (h.getMyWater() > 0.85) {
+			if (h.getMyColony().isWaste()) {
+				return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.PLANETS + "Wasteland Planet.png"));
+			} else if (h.getMyWater() > 0.85) {
 				return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.PLANETS + "Ocean Planet.png"));
 			} else if (h.getMyWater() > 0.5) {
 				return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.PLANETS + "Earth-Like Planet.png"));

@@ -23,6 +23,7 @@ public class PrimaryGate implements Gate {
 	private String myGhost;
 
 	private String myID;
+	private String myName;
 
 	public PrimaryGate() {
 		myID = UUID.randomUUID().toString() + ".station";
@@ -55,9 +56,11 @@ public class PrimaryGate implements Gate {
 
 	@Override
 	public String getMyName() {
-		return myZone.getMyRegion().getName() + " of " + myZone.getMyRegion().getMySector().getName() + " to "
-				+ myPartner.getMyZone().getMyRegion().getName() + " of "
-				+ myPartner.getMyZone().getMyRegion().getMySector().getName() + "Gate";
+		return myName;
+	}
+
+	public void setMyName(String name) {
+		myName = name;
 	}
 
 	@Override
@@ -74,6 +77,7 @@ public class PrimaryGate implements Gate {
 		myPlanet = in[i++];
 		myGhost = in[i++];
 		ZoneID = in[i++];
+		myName = in[i++];
 		return i;
 	}
 
@@ -88,6 +92,7 @@ public class PrimaryGate implements Gate {
 		out += getMyPlanet() + "\n";
 		out += getMyGhost() + "\n";
 		out += getMyZone().getID() + "\n";
+		out += myName + "\n";
 		return out;
 	}
 

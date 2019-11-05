@@ -126,7 +126,7 @@ public class MultiStar extends Star {
 	public static MultiStar randomMultiStar(SolSystem s, SettingList SL) {
 		Random ran = new Random();
 		Vector<Star> out = new Vector<Star>();
-		double d = AstroObject.AU/10;
+		double d = AstroObject.AU / 10;
 		int num = 2;
 		int special;
 		Star star = null;
@@ -206,7 +206,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -225,7 +225,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -247,7 +247,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -266,7 +266,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -285,7 +285,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -307,7 +307,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -326,7 +326,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -345,7 +345,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}
@@ -364,7 +364,7 @@ public class MultiStar extends Star {
 					r = (pixelColor.getRed() + c.getRed());
 					g = (pixelColor.getGreen() + c.getGreen());
 					b = (pixelColor.getBlue() + c.getBlue());
-					a = Math.max(pixelColor.getAlpha(),c.getAlpha());
+					a = Math.max(pixelColor.getAlpha(), c.getAlpha());
 					rgba = (a << 24) | (r << 16) | (g << 8) | b;
 					out.setRGB(x + disx, y + disy, rgba);
 				}

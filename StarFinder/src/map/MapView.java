@@ -1,5 +1,6 @@
 package map;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -30,6 +31,7 @@ import actions.PlanetView;
 import actions.PlantView;
 import actions.PrimeJump;
 import actions.RegionPanel;
+import actions.Rename;
 import actions.SatilightView;
 import actions.SecondaryJump;
 import actions.SectorPanel;
@@ -70,6 +72,7 @@ import gate.SecondaryGate;
 
 /**
  * MapView allows one to see and navigate a galaxy.
+ * 
  * @author PlanetaryTennis
  */
 public class MapView extends JFrame {
@@ -98,20 +101,21 @@ public class MapView extends JFrame {
 
 	/**
 	 * Class Constructor
+	 * 
 	 * @param name The name to be given to the JFrame.
-	 * @param s The number of Sectors to be generated
-	 * @param rS The set number of Regions
-	 * @param rE The maximum random number of Regions
-	 * @param zS The set number of Zones
-	 * @param zE The maximum random number of Zones
-	 * @param sS The set number of Systems
-	 * @param sE The maximum random number of Systems
-	 * @param p The maximum random number of Planets
-	 * @param ss Weather or not Special stars will be created
-	 * @param ms Weather multi stars will be created
-	 * @param n Weather random names will be generated
+	 * @param s    The number of Sectors to be generated
+	 * @param rS   The set number of Regions
+	 * @param rE   The maximum random number of Regions
+	 * @param zS   The set number of Zones
+	 * @param zE   The maximum random number of Zones
+	 * @param sS   The set number of Systems
+	 * @param sE   The maximum random number of Systems
+	 * @param p    The maximum random number of Planets
+	 * @param ss   Weather or not Special stars will be created
+	 * @param ms   Weather multi stars will be created
+	 * @param n    Weather random names will be generated
 	 * @param suns The chance of each type of star to generate
-	 * @param r Weather a relay will be generated
+	 * @param r    Weather a relay will be generated
 	 */
 	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms,
 			boolean n, int[] suns, boolean r) {
@@ -242,11 +246,11 @@ public class MapView extends JFrame {
 		}
 	}
 
-	//	public void search(AstroObject o) {
-	//		switch(o.getClass()) {
-	//		case
-	//		}
-	//	}
+	// public void search(AstroObject o) {
+	// switch(o.getClass()) {
+	// case
+	// }
+	// }
 
 	public static void save(MapView view, Galaxy galaxy) {
 		Cursor c = view.getCursor();
@@ -318,16 +322,26 @@ public class MapView extends JFrame {
 		lasts = sector;
 		myView.removeAll();
 		myView.repaint();
-		int square = (int) Math.ceil(Math.pow(sector.getRegions().size(), 0.5));
-		myView.setLayout(new GridLayout(square, square));
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(sector.getRegions().size())),
+				(int) Math.ceil(Math.sqrt(sector.getRegions().size()))));
+
+		look.setBackground(Color.BLACK);
 
 		JButton zone;
 		for (int i = 0; i < sector.getRegions().size(); i++) {
 			zone = new JButton(sector.getRegions().get(i).getName());
 			zone.setPreferredSize(new Dimension(100, 100));
 			zone.addActionListener(new RegionPanel(sector.getRegions().get(i), this));
-			myView.add(zone);
+			look.add(zone);
 		}
+
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(sector));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -343,16 +357,26 @@ public class MapView extends JFrame {
 		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
-		int square = (int) Math.ceil(Math.pow(region.getMyZones().size(), 0.5));
-		myView.setLayout(new GridLayout(square, square));
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(region.getMyZones().size())),
+				(int) Math.ceil(Math.sqrt(region.getMyZones().size()))));
+
+		look.setBackground(Color.BLACK);
 
 		JButton zone;
 		for (int i = 0; i < region.getMyZones().size(); i++) {
 			zone = new JButton(region.getMyZones().get(i).getMyName());
 			zone.setPreferredSize(new Dimension(100, 100));
 			zone.addActionListener(new ZonePanel(region.getMyZones().get(i), this));
-			myView.add(zone);
+			look.add(zone);
 		}
+
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(region));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -368,8 +392,13 @@ public class MapView extends JFrame {
 		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
-		int square = (int) Math.ceil(Math.pow(zone.getSystemNumber(), 0.5));
-		myView.setLayout(new GridLayout(square, square));
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(zone.getSystemIDs().size())),
+				(int) Math.ceil(Math.sqrt(zone.getSystemIDs().size()))));
+
+		look.setBackground(Color.BLACK);
+
 		boolean same;
 		if (solStore.size() > 0 && solStore.get(0).getID().contentEquals(zone.getSystemIDs().get(0))) {
 			same = true;
@@ -390,14 +419,21 @@ public class MapView extends JFrame {
 			solarsystem = new JButton(sol.getMyName());
 			ImageIcon img = sol.getMyStar().getIcon();
 			solarsystem.setIcon(img);
-			solarsystem.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth()/4, img.getIconHeight()));
+			solarsystem
+					.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth() / 4, img.getIconHeight()));
 			solarsystem.setBackground(Color.BLACK);
 			solarsystem.setBorderPainted(false);
 			solarsystem.setOpaque(false);
 			solarsystem.setForeground(Color.WHITE);
 			solarsystem.addActionListener(new SystemPanel(sol, this));
-			myView.add(solarsystem);
+			look.add(solarsystem);
 		}
+
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(zone));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -414,18 +450,23 @@ public class MapView extends JFrame {
 		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
-		myView.setLayout(new FlowLayout());
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(solsystem.getMyObjects().size())),
+				(int) Math.ceil(Math.sqrt(solsystem.getMyObjects().size()))));
+
+		look.setBackground(Color.BLACK);
 
 		if (solsystem.getMyStar().getClass() != Nebula.class) {
 			JButton star = new JButton();
 			ImageIcon img = solsystem.getMyStar().getIcon();
 			star.setIcon(img);
-			star.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth()/4, img.getIconHeight()));
+			star.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth() / 4, img.getIconHeight()));
 			star.setBackground(Color.BLACK);
 			star.setBorderPainted(false);
 			star.setOpaque(false);
 			star.addActionListener(new StarView(solsystem.getMyStar(), this));
-			myView.add(star);
+			myView.add(star, BorderLayout.WEST);
 		}
 
 		JButton planet;
@@ -443,34 +484,14 @@ public class MapView extends JFrame {
 			planet.setBackground(Color.BLACK);
 			planet.setBorderPainted(false);
 			planet.setOpaque(false);
-
-			//			planet.setToolTipText("<html><p width=\"500\">" + solsystem.getMyObjects().get(i).string() + "</p></html>");
-			//			Color c;
-			//			if(solsystem.getMyObjects().get(i).getClass()==Jovian.class) {
-			//				if(solsystem.getMyObjects().get(i).getMyMass().greaterOrEqual(AstroObject.JOVIAN*(0.5))) {
-			//					c = Color.yellow;
-			//				}else {
-			//					c = Color.cyan;
-			//				}
-			//			}else if(solsystem.getMyObjects().get(i).getClass()==Habitable.class) {
-			//				if(((Habitable) solsystem.getMyObjects().get(i)).getMyWater()<=0.4) {
-			//					c = Color.green;
-			//				}else {
-			//					c = Color.blue;
-			//				}
-			//			}else if(solsystem.getMyObjects().get(i).getClass()==Terrestrial.class){
-			//				if(((Terrestrial)solsystem.getMyObjects().get(i)).isFrozen()) {
-			//					c = Color.white;
-			//				}else {
-			//					c = Color.LIGHT_GRAY;
-			//				}
-			//			}else {
-			//				c = Color.DARK_GRAY;
-			//				planet.setForeground(Color.white);
-			//			}
-			//			planet.setBackground(c);
-			myView.add(planet);
+			look.add(planet);
 		}
+
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(solsystem));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -480,24 +501,28 @@ public class MapView extends JFrame {
 		level = 1;
 		Name.setText(star.getMyName());
 		myView.removeAll();
-		myView.setLayout(new FlowLayout());
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout(2, 2));
 
-		if(star.getClass() == MultiStar.class) {
-			Vector<Star> Stars = ((MultiStar)star).getMyStars();
+		look.setBackground(Color.BLACK);
+
+		if (star.getClass() == MultiStar.class) {
+			Vector<Star> Stars = ((MultiStar) star).getMyStars();
 			JButton st = null;
 			ImageIcon img;
-			for(int i = 0;i < Stars.size();i++) {
+			for (int i = 0; i < Stars.size(); i++) {
 				st = new JButton(Stars.get(i).getMyName());
 				img = Stars.get(i).getIcon();
 				st.setIcon(img);
-				st.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth()/4, img.getIconHeight()));
+				st.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth() / 4, img.getIconHeight()));
 				st.setBackground(Color.BLACK);
 				st.setBorderPainted(false);
 				st.setOpaque(false);
-				st.addActionListener(new StarView(Stars.get(i),this));
-				myView.add(st);
+				st.addActionListener(new StarView(Stars.get(i), this));
+				look.add(st);
 			}
-		}else {
+		} else {
 			JTextArea Print = new JTextArea();
 			Print.setEditable(false);
 			String display = star.getMyName() + "\n";
@@ -511,8 +536,14 @@ public class MapView extends JFrame {
 			display += "Temperature " + star.getMyTemp() / AstroObject.SOLTEMP + " Sols";
 			Print.setText(display);
 
-			myView.add(Print);
+			look.add(Print);
 		}
+
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(star));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -524,7 +555,13 @@ public class MapView extends JFrame {
 		lastp = planet;
 		myView.removeAll();
 		myView.repaint();
-		myView.setLayout(new FlowLayout());
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(
+				new GridLayout((int) Math.ceil(Math.sqrt(planet.getMyMoons().size() + planet.getMySatilights().size())),
+						(int) Math.ceil(Math.sqrt(planet.getMyMoons().size() + planet.getMySatilights().size()))));
+
+		look.setBackground(Color.BLACK);
 
 		JButton main = new JButton(planet.getMyName());
 		ImageIcon plimg = planet.getIcon();
@@ -536,7 +573,7 @@ public class MapView extends JFrame {
 		main.setOpaque(false);
 		main.addActionListener(new viewWorldData(planet, this));
 		if (planet.getClass() != Belt.class)
-			myView.add(main);
+			myView.add(main, BorderLayout.WEST);
 		JButton moon;
 
 		for (int i = 0; i < planet.getMyMoons().size(); i++) {
@@ -550,7 +587,7 @@ public class MapView extends JFrame {
 			moon.setOpaque(false);
 			moon.addActionListener(new MoonView((Moon) planet.getMyMoons().get(i), this));
 
-			myView.add(moon);
+			look.add(moon);
 		}
 
 		for (int i = 0; i < planet.getMySatilights().size(); i++) {
@@ -588,6 +625,12 @@ public class MapView extends JFrame {
 			myView.add(moon);
 		}
 
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(planet));
+		myView.add(rename, BorderLayout.SOUTH);
+
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
 
@@ -598,9 +641,15 @@ public class MapView extends JFrame {
 		Name.setText(planet.getMyName());
 		myView.removeAll();
 		myView.repaint();
-		myView.setLayout(new FlowLayout());
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout(2, 2));
+
+		look.setBackground(Color.BLACK);
+
 		JTextArea Print = new JTextArea();
 		Print.setEditable(false);
+
 		String display = planet.getMyName() + "\n";
 
 		if (planet.getClass() == Jovian.class) {
@@ -688,7 +737,12 @@ public class MapView extends JFrame {
 
 		JButton Look = new JButton("Surface");
 		Look.addActionListener(new SurfaceView(planet, this));
-		myView.add(Look);
+		look.add(Look);
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(planet));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		Print.setText(display);
 		myView.add(Print);
@@ -723,14 +777,25 @@ public class MapView extends JFrame {
 		JButton Sector;
 		myView.removeAll();
 		myView.repaint();
-		myView.setLayout(new GridLayout(2, 2));
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(mySectors.size())),
+				(int) Math.ceil(Math.sqrt(mySectors.size()))));
+
+		look.setBackground(Color.BLACK);
 
 		for (int i = 0; i < myMenus.size(); i++) {
 			Sector = new JButton(mySectors.get(i).getName());
 			Sector.setPreferredSize(new Dimension(100, 100));
 			Sector.addActionListener(new SectorPanel(mySectors.get(i), this));
-			myView.add(Sector);
+			look.add(Sector);
 		}
+
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(galaxy));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -751,17 +816,28 @@ public class MapView extends JFrame {
 
 		myView.removeAll();
 		myView.repaint();
-		myView.setLayout(new FlowLayout());
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout(1, 1));
+
+		look.setBackground(Color.BLACK);
+
 		JTextArea Print = new JTextArea();
 		Print.setEditable(false);
 		String display = o.getMyName();
 
 		JButton Look = new JButton("Jump To Partner");
 		Look.addActionListener(new PrimeJump(o.getMyPartner(), this));
-		myView.add(Look);
+		look.add(Look);
 
 		Print.setText(display);
-		myView.add(Print);
+		look.add(Print);
+
+		myView.add(look, BorderLayout.CENTER);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(o));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -782,7 +858,13 @@ public class MapView extends JFrame {
 
 		myView.removeAll();
 		myView.repaint();
-		myView.setLayout(new FlowLayout());
+		myView.setLayout(new BorderLayout());
+		JPanel look = new JPanel();
+		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(o.getMyPod().size())),
+				(int) Math.ceil(Math.sqrt(o.getMyPod().size()))));
+
+		look.setBackground(Color.BLACK);
+
 		JTextArea Print = new JTextArea();
 		Print.setEditable(false);
 		String display = o.getMyName();
@@ -797,7 +879,12 @@ public class MapView extends JFrame {
 		}
 
 		Print.setText(display);
-		myView.add(Print);
+		look.add(Print);
+		myView.add(look);
+
+		JButton rename = new JButton("Rename");
+		rename.addActionListener(new Rename(o));
+		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);

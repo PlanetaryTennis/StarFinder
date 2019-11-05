@@ -102,7 +102,7 @@ public class SolSystem implements Serializable, Savable {
 			if (measure == 0) {
 				measure = (int) (frost * (2.0) / (AstroObject.AU) * 1000);
 			}
-			if(measure <= 0) {
+			if (measure <= 0) {
 				measure += 1;
 			}
 			for (int i = 0; i < total; i++) {

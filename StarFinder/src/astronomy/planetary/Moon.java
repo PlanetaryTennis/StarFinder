@@ -145,7 +145,9 @@ public class Moon extends Terrestrial implements OrbitObject {
 	public ImageIcon getIcon() {
 		if (this.getClass() == HabitableMoon.class) {
 			HabitableMoon h = (HabitableMoon) this;
-			if (h.getMyWater() > 0.85) {
+			if (h.getMyColony().isWaste()) {
+				return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.MOONS + "Wasteland Moon.png"));
+			} else if (h.getMyWater() > 0.85) {
 				return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.MOONS + "Ocean Moon.png"));
 			} else if (h.getMyWater() > 0.5) {
 				return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.MOONS + "Earth-Like Moon.png"));

@@ -31,6 +31,7 @@ public class Colony implements Savable, Serializable {
 	private boolean hasMassiveMetal;
 	private boolean hasMassiveGasses;
 	private boolean hasBio;
+	private boolean isWaste;
 	private int maxSize;
 
 	private Ecosystem myEcosystem;
@@ -38,7 +39,7 @@ public class Colony implements Savable, Serializable {
 
 	public Colony(int size, int scale, boolean isHab, boolean hasWater, boolean hasGravite, boolean hasRareGasses,
 			boolean hasRareMetals, boolean hasRadiotropes, boolean hasMassiveMetal, boolean hasMassiveGasses,
-			boolean hasBio, Ecosystem myEcosystem) {
+			boolean hasBio, boolean isWaste, Ecosystem myEcosystem) {
 		super();
 		this.size = size;
 		this.scale = scale;
@@ -51,6 +52,7 @@ public class Colony implements Savable, Serializable {
 		this.hasMassiveMetal = hasMassiveMetal;
 		this.hasMassiveGasses = hasMassiveGasses;
 		this.hasBio = hasBio;
+		this.isWaste = isWaste;
 		this.myEcosystem = myEcosystem;
 		myID = UUID.randomUUID().toString() + ".Surface";
 	}
@@ -72,9 +74,10 @@ public class Colony implements Savable, Serializable {
 		boolean MassMetal = random.nextBoolean();
 		boolean MassGas = random.nextBoolean();
 		boolean Life = false;
+		boolean isWaste = false;
 
 		Colony c = new Colony(0, 0, Habitable, Water, Gravite, RareGas, RareMetal, Radio, MassMetal, MassGas, Life,
-				null);
+				isWaste, null);
 		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;
 	}
@@ -91,9 +94,10 @@ public class Colony implements Savable, Serializable {
 		boolean MassMetal = random.nextBoolean();
 		boolean MassGas = random.nextBoolean();
 		boolean Life = true;
+		boolean isWaste = false;
 
 		Colony c = new Colony(0, 0, Habitable, Water, Gravite, RareGas, RareMetal, Radio, MassMetal, MassGas, Life,
-				biosphere);
+				isWaste, biosphere);
 		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;
 	}
@@ -110,9 +114,10 @@ public class Colony implements Savable, Serializable {
 		boolean MassMetal = random.nextBoolean();
 		boolean MassGas = random.nextBoolean();
 		boolean Life = true;
+		boolean isWaste = false;
 
 		Colony c = new Colony(0, 0, Habitable, Water, Gravite, RareGas, RareMetal, Radio, MassMetal, MassGas, Life,
-				biosphere);
+				isWaste, biosphere);
 		c.setMaxSize(Colony.calculateMaxSize(p.getMyRadius()));
 		return c;
 	}
@@ -127,9 +132,10 @@ public class Colony implements Savable, Serializable {
 		boolean MassMetal = random.nextBoolean();
 		boolean MassGas = random.nextBoolean();
 		boolean Life = false;
+		boolean isWaste = false;
 
 		Colony c = new Colony(0, 0, Habitable, Water, Gravite, RareGas, RareMetal, Radio, MassMetal, MassGas, Life,
-				null);
+				isWaste, null);
 		c.setMaxSize(Colony.calculateMaxSize(t.getMyRadius()));
 		return c;
 	}
@@ -144,9 +150,10 @@ public class Colony implements Savable, Serializable {
 		boolean MassMetal = random.nextBoolean();
 		boolean MassGas = true;
 		boolean Life = false;
+		boolean isWaste = false;
 
 		Colony c = new Colony(0, 0, Habitable, Water, Gravite, RareGas, RareMetal, Radio, MassMetal, MassGas, Life,
-				null);
+				isWaste, null);
 		c.setMaxSize(Colony.calculateMaxSize(j.getMyRadius() / 10));
 		return c;
 	}
@@ -182,6 +189,14 @@ public class Colony implements Savable, Serializable {
 
 	public boolean isHab() {
 		return isHab;
+	}
+
+	public boolean isWaste() {
+		return isWaste;
+	}
+
+	public void setWaste(boolean isWaste) {
+		this.isWaste = isWaste;
 	}
 
 	public void setHab(boolean isHab) {
@@ -314,6 +329,7 @@ public class Colony implements Savable, Serializable {
 		out += hasMassiveMetal + "\n";
 		out += hasMassiveGasses + "\n";
 		out += hasBio + "\n";
+		out += isWaste + "\n";
 		out += maxSize + "\n";
 		if (myColony != null) {
 			out += true + "\n";
