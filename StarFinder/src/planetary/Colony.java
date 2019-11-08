@@ -300,6 +300,7 @@ public class Colony implements Savable, Serializable {
 		hasMassiveMetal = Boolean.parseBoolean(in[i++]);
 		hasMassiveGasses = Boolean.parseBoolean(in[i++]);
 		hasBio = Boolean.parseBoolean(in[i++]);
+		isWaste = Boolean.parseBoolean(in[i++]);
 		maxSize = Integer.parseInt(in[i++]);
 		boolean dev = Boolean.parseBoolean(in[i++]);
 		if (dev)

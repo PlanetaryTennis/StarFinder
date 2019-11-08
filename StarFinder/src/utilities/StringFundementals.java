@@ -4,6 +4,18 @@ import java.util.Vector;
 
 public class StringFundementals {
 	public static final String ENDLINE = "\n";
+	
+	public static Vector<Object> read(String[] in,Integer index,char comment){
+		Vector<Object> out = new Vector<Object>();
+		for(int i = index;i < in.length;i++) {
+			if(in[i].charAt(0)!=comment) {
+				out.add(in[i]);
+				out.add(i);
+				return out;
+			}
+		}
+		return null;
+	}
 
 	public static Vector<String> unnestString(char nestStart, char nestEnd, String Prosses) {
 		Vector<String> out = new Vector<String>();

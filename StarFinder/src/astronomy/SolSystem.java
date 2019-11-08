@@ -443,7 +443,7 @@ public class SolSystem implements Serializable, Savable {
 
 	public static Star StarParse(String string) {
 		String[] in = StringFundementals.breakByLine(string);
-		switch (Integer.parseInt(in[2])) {
+		switch (Integer.parseInt(in[1])) {
 		case Star.CLASSINDEX:
 			return new Star(string);
 		case BrownDwarf.CLASSINDEX:

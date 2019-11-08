@@ -45,10 +45,9 @@ public class WhiteDwarf extends Star {
 	@Override
 	public int loadString(String load) {
 		String[] in = StringFundementals.breakByLine(load);
-		int i = 1;
 		this.myID = in[0];
+		int i = 2;
 		this.myName = in[i++];
-		i++;
 		this.myDensity = Double.parseDouble(in[i++]);
 		this.myGravity = Double.parseDouble(in[i++]);
 		this.myLuminosity = Double.parseDouble(in[i++]);
@@ -64,8 +63,8 @@ public class WhiteDwarf extends Star {
 	public String saveString() {
 		String out = "";
 		out += this.myID + "\n";
-		out += this.myName + "\n";
 		out += this.getClassIndex() + "\n";
+		out += this.myName + "\n";
 		out += this.getMyDensity() + "\n";
 		out += this.getMyGravity() + "\n";
 		out += this.getMyLuminosity() + "\n";
