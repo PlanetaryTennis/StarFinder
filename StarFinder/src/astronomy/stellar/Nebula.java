@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -82,11 +83,11 @@ public class Nebula extends Star {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		this.myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		this.myID = in.get(0);
 		int i = 2;
-		this.myName = in[i++];
-		myColor = color.valueOf(in[i++]);
+		this.myName = in.get(i++);
+		myColor = color.valueOf(in.get(i++));
 		return i;
 	}
 

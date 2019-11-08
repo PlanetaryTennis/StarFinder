@@ -1,6 +1,7 @@
 package gate;
 
 import java.util.UUID;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -26,9 +27,9 @@ public class ImageGate implements OrbitObject {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		myID = in[0];
-		GateID = in[2];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		myID = in.get(0);
+		GateID = in.get(2);
 		return 3;
 	}
 

@@ -131,12 +131,12 @@ public class Region implements Serializable, Savable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(object.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(object.get(0));
+		myID = in.get(0);
 		int k = 2;
-		Name = in[k++];
-		SectorID = in[k++];
-		setZoneNumber(Integer.parseInt(in[k++]));
+		Name = in.get(k++);
+		SectorID = in.get(k++);
+		setZoneNumber(Integer.parseInt(in.get(k++)));
 		for (int i = 0; i < getZoneNumber(); i++) {
 			myZones.add(new Zone(object.get(i + 1)));
 			myZones.get(i).setMyRegion(this);

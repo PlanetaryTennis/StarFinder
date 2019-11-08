@@ -53,11 +53,11 @@ public class Galaxy implements Serializable, Savable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(object.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(object.get(0));
+		myID = in.get(0);
 		int k = 2;
-		myName = in[k++];
-		setSectorNumber(Integer.parseInt(in[k++]));
+		myName = in.get(k++);
+		setSectorNumber(Integer.parseInt(in.get(k++)));
 		for (int i = 0; i < getSectorNumber(); i++) {
 			mySectors.add(new Sector(object.get(i + 1), 0.0d));
 			mySectors.get(i).setMyGalaxy(this);

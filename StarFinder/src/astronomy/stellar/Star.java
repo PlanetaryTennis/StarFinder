@@ -3,6 +3,7 @@ package astronomy.stellar;
 import java.awt.Toolkit;
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -190,17 +191,17 @@ public class Star implements AstroObject {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		this.myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		this.myID = in.get(0);
 		int i = 2;
-		this.myName = in[i++];
-		this.myDensity = Double.parseDouble(in[i++]);
-		this.myGravity = Double.parseDouble(in[i++]);
-		this.myLuminosity = Double.parseDouble(in[i++]);
-		this.myMass = Double.parseDouble(in[i++]);
-		this.myRadius = Double.parseDouble(in[i++]);
-		this.myTemp = Double.parseDouble(in[i++]);
-		this.myVolume = Double.parseDouble(in[i++]);
+		this.myName = in.get(i++);
+		this.myDensity = Double.parseDouble(in.get(i++));
+		this.myGravity = Double.parseDouble(in.get(i++));
+		this.myLuminosity = Double.parseDouble(in.get(i++));
+		this.myMass = Double.parseDouble(in.get(i++));
+		this.myRadius = Double.parseDouble(in.get(i++));
+		this.myTemp = Double.parseDouble(in.get(i++));
+		this.myVolume = Double.parseDouble(in.get(i++));
 		myColor = StellarClass(myTemp);
 		return i;
 	}

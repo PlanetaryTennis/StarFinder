@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Vector;
+
 import astronomy.Galaxy;
 import astronomy.Region;
 import astronomy.Sector;
@@ -111,8 +113,8 @@ public class ObjectFiles {
 			FileInputStream fileIn = new FileInputStream("data/saves/" + filepath);
 			Savable obj = null;
 			String read = getFileContent(fileIn);
-			String[] box = StringFundementals.breakByLine(read);
-			switch (Integer.parseInt(box[1])) {
+			Vector<String> box = StringFundementals.breakByLine(read);
+			switch (Integer.parseInt(box.get(1))) {
 			case Star.CLASSINDEX:
 				obj = new Star(read);
 				break;

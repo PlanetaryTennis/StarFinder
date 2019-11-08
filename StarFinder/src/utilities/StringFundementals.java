@@ -4,18 +4,6 @@ import java.util.Vector;
 
 public class StringFundementals {
 	public static final String ENDLINE = "\n";
-	
-	public static Vector<Object> read(String[] in,Integer index,char comment){
-		Vector<Object> out = new Vector<Object>();
-		for(int i = index;i < in.length;i++) {
-			if(in[i].charAt(0)!=comment) {
-				out.add(in[i]);
-				out.add(i);
-				return out;
-			}
-		}
-		return null;
-	}
 
 	public static Vector<String> unnestString(char nestStart, char nestEnd, String Prosses) {
 		Vector<String> out = new Vector<String>();
@@ -51,24 +39,17 @@ public class StringFundementals {
 		return out;
 	}
 
-	public static String[] breakByLine(String in) {
-		int lines = 1;
+	public static Vector<String> breakByLine(String in) {
+		Vector<String> out = new Vector<String>();
+		String part = "";
 		for (int i = 0; i < in.length(); i++) {
 			char c = in.charAt(i);
 			if (c == '\n') {
-				lines++;
-			}
-		}
-		String[] out = new String[lines];
-		int tracker = 0;
-		out[0] = "";
-		for (int i = 0; i < in.length(); i++) {
-			char c = in.charAt(i);
-			if (c == '\n') {
-				tracker++;
-				out[tracker] = "";
+				if(part.length()>0&&part.charAt(0)!='&')
+					out.add(part);
+				part = "";
 			} else {
-				out[tracker] += c;
+				part += c;
 			}
 		}
 		return out;

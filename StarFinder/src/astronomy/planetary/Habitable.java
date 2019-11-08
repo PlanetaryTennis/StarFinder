@@ -40,40 +40,40 @@ public class Habitable extends Terrestrial implements LifeBearing {
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(object.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(object.get(0));
+		myID = in.get(0);
 		int i = 2;
-		myName = in[i++];
-		myAlbido = Double.parseDouble(in[i++]);
-		myAtmosphere = Double.parseDouble(in[i++]);
-		myDay = Double.parseDouble(in[i++]);
-		myDensity = Double.parseDouble(in[i++]);
-		myEccentricity = Double.parseDouble(in[i++]);
-		myGravity = Double.parseDouble(in[i++]);
-		myGreenHouse = Double.parseDouble(in[i++]);
-		myOrbit = Double.parseDouble(in[i++]);
-		myInnerOrbit = Double.parseDouble(in[i++]);
-		myOuterOrbit = Double.parseDouble(in[i++]);
-		myMass = Double.parseDouble(in[i++]);
-		myRadius = Double.parseDouble(in[i++]);
+		myName = in.get(i++);
+		myAlbido = Double.parseDouble(in.get(i++));
+		myAtmosphere = Double.parseDouble(in.get(i++));
+		myDay = Double.parseDouble(in.get(i++));
+		myDensity = Double.parseDouble(in.get(i++));
+		myEccentricity = Double.parseDouble(in.get(i++));
+		myGravity = Double.parseDouble(in.get(i++));
+		myGreenHouse = Double.parseDouble(in.get(i++));
+		myOrbit = Double.parseDouble(in.get(i++));
+		myInnerOrbit = Double.parseDouble(in.get(i++));
+		myOuterOrbit = Double.parseDouble(in.get(i++));
+		myMass = Double.parseDouble(in.get(i++));
+		myRadius = Double.parseDouble(in.get(i++));
 		myTemps = new double[6];
-		myTemps[0] = Double.parseDouble(in[i++]);
-		myTemps[1] = Double.parseDouble(in[i++]);
-		myTemps[2] = Double.parseDouble(in[i++]);
-		myTemps[3] = Double.parseDouble(in[i++]);
-		myTemps[4] = Double.parseDouble(in[i++]);
-		myTemps[5] = Double.parseDouble(in[i++]);
-		myVolume = Double.parseDouble(in[i++]);
-		myWater = Double.parseDouble(in[i++]);
-		myYear = Double.parseDouble(in[i++]);
+		myTemps[0] = Double.parseDouble(in.get(i++));
+		myTemps[1] = Double.parseDouble(in.get(i++));
+		myTemps[2] = Double.parseDouble(in.get(i++));
+		myTemps[3] = Double.parseDouble(in.get(i++));
+		myTemps[4] = Double.parseDouble(in.get(i++));
+		myTemps[5] = Double.parseDouble(in.get(i++));
+		myVolume = Double.parseDouble(in.get(i++));
+		myWater = Double.parseDouble(in.get(i++));
+		myYear = Double.parseDouble(in.get(i++));
 		setMyColony(new Colony(object.get(1)));
-		setMoonNumber(Integer.parseInt(in[i++]));
+		setMoonNumber(Integer.parseInt(in.get(i++)));
 		int j = 2;
 		for (int k = 0; k < getMoonNumber(); k++) {
 			getMyMoons().add((Moon) Planet.parseLoad(object.get(j)));
 			j++;
 		}
-		setSatilightNumber(Integer.parseInt(in[i++]));
+		setSatilightNumber(Integer.parseInt(in.get(i++)));
 		for (int k = 0; k < getSatilightNumber(); k++) {
 			getMySatilights().add(OrbitObject.parseLoad(object.get(j)));
 			j++;

@@ -3,6 +3,7 @@ package gate;
 import java.awt.Toolkit;
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -70,14 +71,14 @@ public class PrimaryGate implements Gate {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		myID = in.get(0);
 		int i = 2;
-		mySystem = in[i++];
-		myPlanet = in[i++];
-		myGhost = in[i++];
-		ZoneID = in[i++];
-		myName = in[i++];
+		mySystem = in.get(i++);
+		myPlanet = in.get(i++);
+		myGhost = in.get(i++);
+		ZoneID = in.get(i++);
+		myName = in.get(i++);
 		return i;
 	}
 

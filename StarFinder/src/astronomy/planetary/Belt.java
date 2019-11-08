@@ -66,21 +66,21 @@ public class Belt extends Planet {
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(object.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(object.get(0));
+		myID = in.get(0);
 		int i = 2;
-		myName = in[i++];
-		myEccentricity = Double.parseDouble(in[i++]);
-		myOrbit = Double.parseDouble(in[i++]);
-		myInnerOrbit = Double.parseDouble(in[i++]);
-		myOuterOrbit = Double.parseDouble(in[i++]);
-		setMoonNumber(Integer.parseInt(in[i++]));
+		myName = in.get(i++);
+		myEccentricity = Double.parseDouble(in.get(i++));
+		myOrbit = Double.parseDouble(in.get(i++));
+		myInnerOrbit = Double.parseDouble(in.get(i++));
+		myOuterOrbit = Double.parseDouble(in.get(i++));
+		setMoonNumber(Integer.parseInt(in.get(i++)));
 		int j = 1;
 		for (int k = 0; k < getMoonNumber(); k++) {
 			getMyMoons().add((Moon) Planet.parseLoad(object.get(j)));
 			j++;
 		}
-		setSatilightNumber(Integer.parseInt(in[i++]));
+		setSatilightNumber(Integer.parseInt(in.get(i++)));
 		for (int k = 0; k < getSatilightNumber(); k++) {
 			if (j >= object.size()) {
 				break;

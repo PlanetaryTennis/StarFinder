@@ -250,8 +250,8 @@ public abstract class Planet implements AstroObject {
 
 	public static Planet parseLoad(String string) {
 		Planet obj = null;
-		String[] box = StringFundementals.breakByLine(string);
-		switch (Integer.parseInt(box[1])) {
+		Vector<String> box = StringFundementals.breakByLine(string);
+		switch (Integer.parseInt(box.get(1))) {
 		case Terrestrial.CLASSINDEX:
 			obj = new Terrestrial(string);
 			break;

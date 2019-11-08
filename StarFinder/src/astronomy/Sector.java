@@ -86,12 +86,12 @@ public class Sector implements Serializable, Savable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(object.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(object.get(0));
+		myID = in.get(0);
 		int k = 2;
-		myName = in[k++];
-		GalaxyID = in[k++];
-		setRegionNumber(Integer.parseInt(in[k++]));
+		myName = in.get(k++);
+		GalaxyID = in.get(k++);
+		setRegionNumber(Integer.parseInt(in.get(k++)));
 		for (int i = 0; i < getRegionNumber(); i++) {
 			myRegions.add(new Region(object.get(i + 1)));
 			myRegions.get(i).setMySector(this);

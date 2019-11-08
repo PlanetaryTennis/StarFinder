@@ -45,11 +45,11 @@ public class Habitation implements Savable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(parse.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(parse.get(0));
+		myID = in.get(0);
 		int k = 2;
-		maxDev = Integer.parseInt(in[k++]);
-		numberDevelopments = Integer.parseInt(in[k++]);
+		maxDev = Integer.parseInt(in.get(k++));
+		numberDevelopments = Integer.parseInt(in.get(k++));
 		for (int i = 0; i < numberDevelopments; i++) {
 			myDevelopments.add(new Development(parse.get(1 + i)));
 		}

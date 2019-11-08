@@ -643,7 +643,7 @@ public class MapView extends JFrame {
 		myView.repaint();
 		myView.setLayout(new BorderLayout());
 		JPanel look = new JPanel();
-		look.setLayout(new GridLayout(2, 2));
+		look.setLayout(new FlowLayout());
 
 		look.setBackground(Color.BLACK);
 
@@ -735,6 +735,10 @@ public class MapView extends JFrame {
 		display += "Inner Orbit " + planet.getMyInnerOrbit() / (AstroObject.AU) + " AU\n";
 		display += "Outer Orbit " + planet.getMyOuterOrbit() / (AstroObject.AU) + " AU";
 
+		JTextArea View = new JTextArea(display);
+		View.setEditable(false);
+		look.add(View);
+		
 		JButton Look = new JButton("Surface");
 		Look.addActionListener(new SurfaceView(planet, this));
 		look.add(Look);
@@ -743,9 +747,6 @@ public class MapView extends JFrame {
 		JButton rename = new JButton("Rename");
 		rename.addActionListener(new Rename(planet));
 		myView.add(rename, BorderLayout.SOUTH);
-
-		Print.setText(display);
-		myView.add(Print);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);

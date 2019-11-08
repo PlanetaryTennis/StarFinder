@@ -1,5 +1,7 @@
 package astronomy;
 
+import java.util.Vector;
+
 import javax.swing.ImageIcon;
 
 import astronomy.planetary.Asteroid;
@@ -18,8 +20,8 @@ public interface OrbitObject extends AstroObject {
 
 	public static OrbitObject parseLoad(String string) {
 		OrbitObject obj = null;
-		String[] box = StringFundementals.breakByLine(string);
-		switch (Integer.parseInt(box[1])) {
+		Vector<String> box = StringFundementals.breakByLine(string);
+		switch (Integer.parseInt(box.get(1))) {
 		case Moon.CLASSINDEX:
 			obj = new Moon(string);
 			break;
