@@ -593,8 +593,13 @@ public class MapView extends JFrame {
 		for (int i = 0; i < planet.getMySatilights().size(); i++) {
 			if (planet.getMySatilights().get(i).getClass() == ImageGate.class) {
 				ImageGate ir = (ImageGate) planet.getMySatilights().get(i);
-				Gate Gate = galaxy.getMyNetwork().find(ir.getGateID());
-				ir.setMyGate(Gate);
+				Gate Gate;
+				if(ir.getMyGate()==null) {
+					Gate = galaxy.getMyNetwork().find(ir.getGateID());
+					ir.setMyGate(Gate);
+				}else {
+					Gate = ir.getMyGate();
+				}
 				moon = new JButton(Gate.getMyName());
 				ImageIcon moimg = Gate.getIcon();
 				moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
@@ -622,7 +627,7 @@ public class MapView extends JFrame {
 				}
 			}
 
-			myView.add(moon);
+			look.add(moon);
 		}
 
 		myView.add(look, BorderLayout.CENTER);
@@ -738,7 +743,7 @@ public class MapView extends JFrame {
 		JTextArea View = new JTextArea(display);
 		View.setEditable(false);
 		look.add(View);
-		
+
 		JButton Look = new JButton("Surface");
 		Look.addActionListener(new SurfaceView(planet, this));
 		look.add(Look);
@@ -875,7 +880,7 @@ public class MapView extends JFrame {
 			if (pod.get(i) != o) {
 				JButton Look = new JButton("Jump to the " + pod.get(i).getMyName());
 				Look.addActionListener(new SecondaryJump(pod.get(i), this));
-				myView.add(Look);
+				look.add(Look);
 			}
 		}
 

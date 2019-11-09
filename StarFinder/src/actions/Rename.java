@@ -25,7 +25,7 @@ public class Rename implements ActionListener {
 	private Planet pl;
 	private PrimaryGate pg;
 	private SecondaryGate sg;
-	
+
 	public Rename(Galaxy galaxy) {
 		index = 0;
 		g = galaxy;

@@ -88,9 +88,10 @@ public class GateNetwork implements Serializable, Savable {
 			for (int k = 0; k < galaxy.getMySectors().size(); k++)
 				for (int j = 0; j < galaxy.getMySectors().get(k).getRegions().size(); j++)
 					for (int l = 0; l < galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().size(); l++)
-						if (p.ZoneID
-								.equals(galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l).getID()))
+						if (p.ZoneID.equals(galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l).getID())) {
 							z = galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l);
+							break;
+						}
 			p.setMyZone(z);
 		}
 
@@ -105,6 +106,7 @@ public class GateNetwork implements Serializable, Savable {
 									galaxy.getMySectors().get(m).getRegions().get(j).getMyZones().get(l).getID()))
 								z = galaxy.getMySectors().get(m).getRegions().get(j).getMyZones().get(l);
 				s.setMyZone(z);
+				s.setTargetRegion(z.getMyRegion());
 			}
 
 	}

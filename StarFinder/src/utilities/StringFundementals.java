@@ -45,7 +45,7 @@ public class StringFundementals {
 		for (int i = 0; i < in.length(); i++) {
 			char c = in.charAt(i);
 			if (c == '\n') {
-				if(part.length()>0&&part.charAt(0)!='&')
+				if (part.length() > 0 && part.charAt(0) != '&')
 					out.add(part);
 				part = "";
 			} else {

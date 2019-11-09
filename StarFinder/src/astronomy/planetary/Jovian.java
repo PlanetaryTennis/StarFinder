@@ -1,10 +1,16 @@
 package astronomy.planetary;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
@@ -102,11 +108,63 @@ public class Jovian extends Planet {
 
 	@Override
 	public ImageIcon getIcon() {
+		if (getRing() == null)
+			return getImage();
+		BufferedImage out = null;
+		try {
+			out = ImageIO.read(new File(getRing()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		BufferedImage bi;
+		Graphics gr;
+		int disx, disy, r, g, b, a, rgba;
+		ImageIcon icon = getImage();
+		bi = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+		gr = bi.createGraphics();
+		icon.paintIcon(null, gr, 0, 0);
+		gr.dispose();
+		for (int x = 0; x < bi.getWidth(); x++) {
+			for (int y = 0; y < bi.getHeight(); y++) {
+				disx = (out.getWidth() - bi.getWidth()) / 2;
+				disy = (out.getHeight() - bi.getHeight()) / 2;
+				Color pixelColor = new Color(out.getRGB(x + disx, y + disy), true);
+				Color c = new Color(bi.getRGB(x, y), true);
+				r = (pixelColor.getRed() + c.getRed());
+				g = (pixelColor.getGreen() + c.getGreen());
+				b = (pixelColor.getBlue() + c.getBlue());
+				a = Math.max(pixelColor.getAlpha(), c.getAlpha());
+				rgba = (a << 24) | (r << 16) | (g << 8) | b;
+				out.setRGB(x + disx, y + disy, rgba);
+			}
+		}
+		return new ImageIcon(out);
+	}
+
+	private ImageIcon getImage() {
 		if (getMyMass() >= (AstroObject.JOVIAN * (0.5))) {
 			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.GASGIANT + "Gas-Giant-Yellow.png"));
-		} else {
+		} else if (getMyMass() >= (AstroObject.JOVIAN * (10))) {
 			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.GASGIANT + "Gas-Giant-Blue.png"));
+		} else {
+			return new ImageIcon(Toolkit.getDefaultToolkit().getImage(Sprite.GASGIANT + "Gas-Giant-Red.png"));
 		}
+	}
+
+	private String getRing() {
+		if (this.getMyColony().isHasGravite()) {
+			return Sprite.GASGIANT + "Rings teal.png";
+		}
+		if (this.getMyColony().isHasRadiotropes()) {
+			return Sprite.GASGIANT + "Rings Red.png";
+		}
+		if (this.getMyColony().isHasRareMetals()) {
+			return Sprite.GASGIANT + "Rings Yellow.png";
+		}
+		if (this.getMyColony().isHasMassiveMetal()) {
+			return Sprite.GASGIANT + "Rings Blue.png";
+		}
+		return null;
 	}
 
 	@Override

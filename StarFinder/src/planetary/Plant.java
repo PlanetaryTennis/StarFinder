@@ -62,7 +62,7 @@ public class Plant extends Life {
 		out.setSizeCatagory((int) Math.ceil(ran.nextDouble() * (11 - c.getGravityIndex()) * 10));
 
 		out.birthRate = ran.nextInt((int) Math.pow(2, ran.nextInt(10) + 1)) + 1;
-		out.oldAge = ran.nextInt((int) Math.pow(2, ran.nextInt(20) + 1)) + 1;
+		out.oldAge = ran.nextInt((int) Math.pow(2, ran.nextInt(10) + 1))/1000 + 1;
 		out.ageRate = (int) (out.oldAge * (double) (ran.nextInt(4) + 1) / 2);
 		return out;
 	}
