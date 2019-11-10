@@ -88,9 +88,10 @@ public class GateNetwork implements Serializable, Savable {
 			for (int k = 0; k < galaxy.getMySectors().size(); k++)
 				for (int j = 0; j < galaxy.getMySectors().get(k).getRegions().size(); j++)
 					for (int l = 0; l < galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().size(); l++)
-						if (p.ZoneID
-								.equals(galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l).getID()))
+						if (p.ZoneID.equals(galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l).getID())) {
 							z = galaxy.getMySectors().get(k).getRegions().get(j).getMyZones().get(l);
+							break;
+						}
 			p.setMyZone(z);
 		}
 
@@ -105,6 +106,7 @@ public class GateNetwork implements Serializable, Savable {
 									galaxy.getMySectors().get(m).getRegions().get(j).getMyZones().get(l).getID()))
 								z = galaxy.getMySectors().get(m).getRegions().get(j).getMyZones().get(l);
 				s.setMyZone(z);
+				s.setTargetRegion(z.getMyRegion());
 			}
 
 	}
@@ -112,21 +114,21 @@ public class GateNetwork implements Serializable, Savable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(object.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(object.get(0));
+		myID = in.get(0);
 		int i = 2;
 		int j = 1;
-		PrimeNumber = Integer.parseInt(in[i++]);
+		PrimeNumber = Integer.parseInt(in.get(i++));
 		for (int k = 0; k < PrimeNumber / 2; k++) {
 			myPrimes.add(new PrimaryGate(object.get(j++)));
 			myPrimes.add(new PrimaryGate(object.get(j++)));
 			myPrimes.get(2 * k).setMyPartner(myPrimes.get(2 * k + 1));
 			myPrimes.get(2 * k + 1).setMyPartner(myPrimes.get(2 * k));
 		}
-		PodNumber = Integer.parseInt(in[i++]);
+		PodNumber = Integer.parseInt(in.get(i++));
 		Vector<SecondaryGate> temp;
 		for (int k = 0; k < PodNumber; k++) {
-			PodSize.add(Integer.parseInt(in[i++]));
+			PodSize.add(Integer.parseInt(in.get(i++)));
 			temp = new Vector<SecondaryGate>();
 			for (int l = 0; l < PodSize.get(k); l++) {
 				temp.add(new SecondaryGate(object.get(j++)));

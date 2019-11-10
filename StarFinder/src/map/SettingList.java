@@ -1,5 +1,7 @@
 package map;
 
+import java.util.Vector;
+
 import engine.Savable;
 import utilities.StringFundementals;
 
@@ -92,24 +94,24 @@ public class SettingList implements Savable {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		myID = in.get(0);
 		int i = 2;
-		sectors = Integer.parseInt(in[i++]);
-		regionsmin = Integer.parseInt(in[i++]);
-		regionsmax = Integer.parseInt(in[i++]);
-		zonemin = Integer.parseInt(in[i++]);
-		zonemax = Integer.parseInt(in[i++]);
-		sysmin = Integer.parseInt(in[i++]);
-		sysmax = Integer.parseInt(in[i++]);
-		planetmax = Integer.parseInt(in[i++]);
-		special = Boolean.parseBoolean(in[i++]);
-		multi = Boolean.parseBoolean(in[i++]);
-		name = Boolean.parseBoolean(in[i++]);
-		myName = in[i++];
-		suns = new int[Integer.parseInt(in[i++])];
+		sectors = Integer.parseInt(in.get(i++));
+		regionsmin = Integer.parseInt(in.get(i++));
+		regionsmax = Integer.parseInt(in.get(i++));
+		zonemin = Integer.parseInt(in.get(i++));
+		zonemax = Integer.parseInt(in.get(i++));
+		sysmin = Integer.parseInt(in.get(i++));
+		sysmax = Integer.parseInt(in.get(i++));
+		planetmax = Integer.parseInt(in.get(i++));
+		special = Boolean.parseBoolean(in.get(i++));
+		multi = Boolean.parseBoolean(in.get(i++));
+		name = Boolean.parseBoolean(in.get(i++));
+		myName = in.get(i++);
+		suns = new int[Integer.parseInt(in.get(i++))];
 		for (int k = 0; i < suns.length; k++)
-			suns[k] = Integer.parseInt(in[i++]);
+			suns[k] = Integer.parseInt(in.get(i++));
 		return i;
 	}
 

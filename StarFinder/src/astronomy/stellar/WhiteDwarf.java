@@ -2,6 +2,7 @@ package astronomy.stellar;
 
 import java.awt.Toolkit;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -44,18 +45,17 @@ public class WhiteDwarf extends Star {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		int i = 1;
-		this.myID = in[0];
-		this.myName = in[i++];
-		i++;
-		this.myDensity = Double.parseDouble(in[i++]);
-		this.myGravity = Double.parseDouble(in[i++]);
-		this.myLuminosity = Double.parseDouble(in[i++]);
-		this.myMass = Double.parseDouble(in[i++]);
-		this.myRadius = Double.parseDouble(in[i++]);
-		this.myTemp = Double.parseDouble(in[i++]);
-		this.myVolume = Double.parseDouble(in[i++]);
+		Vector<String> in = StringFundementals.breakByLine(load);
+		this.myID = in.get(0);
+		int i = 2;
+		this.myName = in.get(i++);
+		this.myDensity = Double.parseDouble(in.get(i++));
+		this.myGravity = Double.parseDouble(in.get(i++));
+		this.myLuminosity = Double.parseDouble(in.get(i++));
+		this.myMass = Double.parseDouble(in.get(i++));
+		this.myRadius = Double.parseDouble(in.get(i++));
+		this.myTemp = Double.parseDouble(in.get(i++));
+		this.myVolume = Double.parseDouble(in.get(i++));
 		myColor = color.WHITE;
 		return i;
 	}
@@ -64,8 +64,8 @@ public class WhiteDwarf extends Star {
 	public String saveString() {
 		String out = "";
 		out += this.myID + "\n";
-		out += this.myName + "\n";
 		out += this.getClassIndex() + "\n";
+		out += this.myName + "\n";
 		out += this.getMyDensity() + "\n";
 		out += this.getMyGravity() + "\n";
 		out += this.getMyLuminosity() + "\n";

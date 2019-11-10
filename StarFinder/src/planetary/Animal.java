@@ -2,6 +2,7 @@ package planetary;
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 
 import utilities.ExtendedMathmatics;
 import utilities.StringFundementals;
@@ -455,38 +456,38 @@ public class Animal extends Life {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		myID = in.get(0);
 		int i = 2;
-		canWalk = Boolean.parseBoolean(in[i++]);
-		canSwim = Boolean.parseBoolean(in[i++]);
-		canFly = Boolean.parseBoolean(in[i++]);
-		canBurrow = Boolean.parseBoolean(in[i++]);
-		canSee = Boolean.parseBoolean(in[i++]);
-		canHear = Boolean.parseBoolean(in[i++]);
-		canSmell = Boolean.parseBoolean(in[i++]);
-		canWork = Boolean.parseBoolean(in[i++]);
-		laysEggs = Boolean.parseBoolean(in[i++]);
-		hasMilk = Boolean.parseBoolean(in[i++]);
-		thickHide = Boolean.parseBoolean(in[i++]);
-		isPosionous = Boolean.parseBoolean(in[i++]);
-		isVenomous = Boolean.parseBoolean(in[i++]);
-		canCamo = Boolean.parseBoolean(in[i++]);
-		sizeCatagory = Integer.parseInt(in[i++]);
-		posionCatagory = Integer.parseInt(in[i++]);
-		venomCatagory = Integer.parseInt(in[i++]);
-		eatsMeat = Boolean.parseBoolean(in[i++]);
-		eatsPlants = Boolean.parseBoolean(in[i++]);
-		eatsMetal = Boolean.parseBoolean(in[i++]);
-		legPairs = Integer.parseInt(in[i++]);
-		wingPairs = Integer.parseInt(in[i++]);
-		heavyManipulatorPairs = Integer.parseInt(in[i++]);
-		manipulatorPairs = Integer.parseInt(in[i++]);
-		fineManipulatorPairs = Integer.parseInt(in[i++]);
-		eyes = Integer.parseInt(in[i++]);
-		birthRate = Integer.parseInt(in[i++]);
-		ageRate = Integer.parseInt(in[i++]);
-		oldAge = Integer.parseInt(in[i++]);
+		canWalk = Boolean.parseBoolean(in.get(i++));
+		canSwim = Boolean.parseBoolean(in.get(i++));
+		canFly = Boolean.parseBoolean(in.get(i++));
+		canBurrow = Boolean.parseBoolean(in.get(i++));
+		canSee = Boolean.parseBoolean(in.get(i++));
+		canHear = Boolean.parseBoolean(in.get(i++));
+		canSmell = Boolean.parseBoolean(in.get(i++));
+		canWork = Boolean.parseBoolean(in.get(i++));
+		laysEggs = Boolean.parseBoolean(in.get(i++));
+		hasMilk = Boolean.parseBoolean(in.get(i++));
+		thickHide = Boolean.parseBoolean(in.get(i++));
+		isPosionous = Boolean.parseBoolean(in.get(i++));
+		isVenomous = Boolean.parseBoolean(in.get(i++));
+		canCamo = Boolean.parseBoolean(in.get(i++));
+		sizeCatagory = Integer.parseInt(in.get(i++));
+		posionCatagory = Integer.parseInt(in.get(i++));
+		venomCatagory = Integer.parseInt(in.get(i++));
+		eatsMeat = Boolean.parseBoolean(in.get(i++));
+		eatsPlants = Boolean.parseBoolean(in.get(i++));
+		eatsMetal = Boolean.parseBoolean(in.get(i++));
+		legPairs = Integer.parseInt(in.get(i++));
+		wingPairs = Integer.parseInt(in.get(i++));
+		heavyManipulatorPairs = Integer.parseInt(in.get(i++));
+		manipulatorPairs = Integer.parseInt(in.get(i++));
+		fineManipulatorPairs = Integer.parseInt(in.get(i++));
+		eyes = Integer.parseInt(in.get(i++));
+		birthRate = Integer.parseInt(in.get(i++));
+		ageRate = Integer.parseInt(in.get(i++));
+		oldAge = Integer.parseInt(in.get(i++));
 		return i;
 	}
 

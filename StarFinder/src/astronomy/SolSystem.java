@@ -429,13 +429,13 @@ public class SolSystem implements Serializable, Savable, Namable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> object = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(object.elementAt(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(object.elementAt(0));
+		myID = in.get(0);
 		int i = 2;
-		myName = in[i++];
+		myName = in.get(i++);
 		setMyStar(StarParse(object.get(1)));
 		myStar.setMySystem(this);
-		setPlanetNumber(Integer.parseInt(in[i++]));
+		setPlanetNumber(Integer.parseInt(in.get(i++)));
 		for (int k = 0; k < getPlanetNumber(); k++) {
 			Add(Planet.parseLoad(object.get(k + 2)));
 		}
@@ -443,8 +443,8 @@ public class SolSystem implements Serializable, Savable, Namable {
 	}
 
 	public static Star StarParse(String string) {
-		String[] in = StringFundementals.breakByLine(string);
-		switch (Integer.parseInt(in[2])) {
+		Vector<String> in = StringFundementals.breakByLine(string);
+		switch (Integer.parseInt(in.get(1))) {
 		case Star.CLASSINDEX:
 			return new Star(string);
 		case BrownDwarf.CLASSINDEX:

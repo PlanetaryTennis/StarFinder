@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -83,8 +84,8 @@ public class LauncherButton implements ActionListener {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				String[] box = StringFundementals.breakByLine(read);
-				gal = box[2];
+				Vector<String> box = StringFundementals.breakByLine(read);
+				gal = box.get(2);
 				filepath = selectedFile.getName();
 			} else {
 				my.setCursor(save);

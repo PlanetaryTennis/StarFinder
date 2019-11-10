@@ -72,12 +72,12 @@ public class Development implements Savable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(parse.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(parse.get(0));
+		myID = in.get(0);
 		int k = 2;
-		myName = in[k++];
-		myCost = Integer.parseInt(in[k++]);
-		numberUpgrades = Integer.parseInt(in[k++]);
+		myName = in.get(k++);
+		myCost = Integer.parseInt(in.get(k++));
+		numberUpgrades = Integer.parseInt(in.get(k++));
 		for (int i = 0; i < numberUpgrades; i++) {
 			add(new Development(parse.get(1 + i)));
 		}

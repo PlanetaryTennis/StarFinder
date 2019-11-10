@@ -2,6 +2,7 @@ package planetary;
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 
 import utilities.ExtendedMathmatics;
 import utilities.StringFundementals;
@@ -61,28 +62,28 @@ public class Plant extends Life {
 		out.setSizeCatagory((int) Math.ceil(ran.nextDouble() * (11 - c.getGravityIndex()) * 10));
 
 		out.birthRate = ran.nextInt((int) Math.pow(2, ran.nextInt(10) + 1)) + 1;
-		out.oldAge = ran.nextInt((int) Math.pow(2, ran.nextInt(20) + 1)) + 1;
+		out.oldAge = ran.nextInt((int) Math.pow(2, ran.nextInt(10) + 1))/1000 + 1;
 		out.ageRate = (int) (out.oldAge * (double) (ran.nextInt(4) + 1) / 2);
 		return out;
 	}
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		myID = in.get(0);
 		int i = 2;
-		doesFruit = Boolean.parseBoolean(in[i++]);
-		hasMaterial = Boolean.parseBoolean(in[i++]);
-		isCarnivorous = Boolean.parseBoolean(in[i++]);
-		isPosionous = Boolean.parseBoolean(in[i++]);
-		isVenomous = Boolean.parseBoolean(in[i++]);
-		canCamo = Boolean.parseBoolean(in[i++]);
-		sizeCatagory = Integer.parseInt(in[i++]);
-		posionCatagory = Integer.parseInt(in[i++]);
-		venomCatagory = Integer.parseInt(in[i++]);
-		birthRate = Integer.parseInt(in[i++]);
-		ageRate = Integer.parseInt(in[i++]);
-		oldAge = Integer.parseInt(in[i++]);
+		doesFruit = Boolean.parseBoolean(in.get(i++));
+		hasMaterial = Boolean.parseBoolean(in.get(i++));
+		isCarnivorous = Boolean.parseBoolean(in.get(i++));
+		isPosionous = Boolean.parseBoolean(in.get(i++));
+		isVenomous = Boolean.parseBoolean(in.get(i++));
+		canCamo = Boolean.parseBoolean(in.get(i++));
+		sizeCatagory = Integer.parseInt(in.get(i++));
+		posionCatagory = Integer.parseInt(in.get(i++));
+		venomCatagory = Integer.parseInt(in.get(i++));
+		birthRate = Integer.parseInt(in.get(i++));
+		ageRate = Integer.parseInt(in.get(i++));
+		oldAge = Integer.parseInt(in.get(i++));
 		return i;
 	}
 

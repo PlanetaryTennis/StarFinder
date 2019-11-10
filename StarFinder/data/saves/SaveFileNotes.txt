@@ -15,6 +15,21 @@
 
 
 
+-------------------------------------------------------------------------------------------------------------------------------------
+___________.__.__             _________ __          .__           .___        _____                            __  .__               
+\_   _____/|__|  |   ____    /   _____//  |_ ___.__.|  |   ____   |   | _____/ ____\___________  _____ _____ _/  |_|__| ____   ____  
+ |    __)  |  |  | _/ __ \   \_____  \\   __<   |  ||  | _/ __ \  |   |/    \   __\/  _ \_  __ \/     \\__  \\   __\  |/  _ \ /    \ 
+ |     \   |  |  |_\  ___/   /        \|  |  \___  ||  |_\  ___/  |   |   |  \  | (  <_> )  | \/  Y Y  \/ __ \|  | |  (  <_> )   |  \
+ \___  /   |__|____/\___  > /_______  /|__|  / ____||____/\___  > |___|___|  /__|  \____/|__|  |__|_|  (____  /__| |__|\____/|___|  /
+     \/                 \/          \/       \/               \/           \/                        \/     \/                    \/ 
+-------------------------------------------------------------------------------------------------------------------------------------
+{,} is used to sperate objects from each other do not use them in comments.
+& is used to mark inline comments in the saves.
+true and false should be left lowercase to allow parsing.
+All Type IDs are 6 digit integers, do not change this.
+
+
+
 ---------------------------------------------------------------------------------------
   _________      .__                _________               __                         
  /   _____/ ____ |  | _____ _______/   _____/__.__. _______/  |_  ____   _____   ______
@@ -46,8 +61,8 @@
         \/           \/           \/ 
 -------------------------------------
 /Star UID, this is a String ending in .star, this is how other objects identify the star.
-/Name this is just some one line name that the star is refered to by.
 /This is the Stars identifying ID, this depends on the type of the star. [Normal Star 934201][Brown Dwarf 934204][Black Hole 934205][Neutron Star 934203][White Dwarf 934202]
+/Name this is just some one line name that the star is refered to by.
 /Denisty in kg/m^3
 /Gravity in m/s^2
 /Luminosity in candalla
@@ -66,10 +81,29 @@
  |_|\_\___|_.__/\_,_|_\__,_/__/
                                
 -------------------------------
-/Star UID, nebulas are treated like stars by the system so it ends in .star, this is how other objects identify the star.
-/Name this is just some one line name that the nebula is refered to by.
+/Star UID, nebulas are treated like stars by the system so it ends in .star, this is how other objects identify the nebula.
 /934275 This is the Nebula Type ID don't change this it is how the system knows this is a nebula.
+/Name this is just some one line name that the nebula is refered to by.
 /Color, this is the color of the nebula, they can be [YELLOW,RED,ORANGE,WHITE,BLUE,CYAN,GREEN].
+/End a blank line before returning to the higher level.
+
+
+
+------------------------------------------------------------------
+   _____        .__   __  .__  _________ __                       
+  /     \  __ __|  |_/  |_|__|/   _____//  |______ _______  ______
+ /  \ /  \|  |  \  |\   __\  |\_____  \\   __\__  \\_  __ \/  ___/
+/    Y    \  |  /  |_|  | |  |/        \|  |  / __ \|  | \/\___ \ 
+\____|__  /____/|____/__| |__/_______  /|__| (____  /__|  /____  >
+        \/                           \/           \/           \/ 
+------------------------------------------------------------------
+/Star UID, multistars are treated like stars by the system so it ends in .star, this is how other objects identify the multistar.
+/934261 This is the MultiStar Type ID don't change this it is how the system knows this is a MultiStar.
+/Name this is just some one line name that the multistar is refered to by.
+/Number of Stars in the multistar.
+/{
+//Star Save Type, please look back to Star Save info, please do not use multistars as part of multistars.
+/}
 /End a blank line before returning to the higher level.
 
 

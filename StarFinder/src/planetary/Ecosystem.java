@@ -111,8 +111,8 @@ public class Ecosystem implements Serializable, Savable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> proccess = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(proccess.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(proccess.get(0));
+		myID = in.get(0);
 		setApexPreditor(new Animal(proccess.get(1)));
 		setStandard(new Animal(proccess.get(2)));
 		setPest(new Animal(proccess.get(3)));

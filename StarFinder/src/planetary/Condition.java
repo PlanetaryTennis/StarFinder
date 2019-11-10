@@ -3,6 +3,7 @@ package planetary;
 import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
+import java.util.Vector;
 
 import astronomy.AstroObject;
 import astronomy.planetary.Habitable;
@@ -224,16 +225,16 @@ public class Condition implements Serializable, Savable {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		myID = in.get(0);
 		int i = 2;
-		WaterIndex = Integer.parseInt(in[i++]);
-		VarianceIndex = Integer.parseInt(in[i++]);
-		TempitureIndex = Integer.parseInt(in[i++]);
-		GravityIndex = Integer.parseInt(in[i++]);
-		AtmosphericIndex = Integer.parseInt(in[i++]);
-		AirIndex = Atmosphere.valueOf(in[i++]);
-		Dextros = Boolean.parseBoolean(in[i++]);
+		WaterIndex = Integer.parseInt(in.get(i++));
+		VarianceIndex = Integer.parseInt(in.get(i++));
+		TempitureIndex = Integer.parseInt(in.get(i++));
+		GravityIndex = Integer.parseInt(in.get(i++));
+		AtmosphericIndex = Integer.parseInt(in.get(i++));
+		AirIndex = Atmosphere.valueOf(in.get(i++));
+		Dextros = Boolean.parseBoolean(in.get(i++));
 		return i;
 	}
 

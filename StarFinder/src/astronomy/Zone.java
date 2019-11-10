@@ -128,14 +128,14 @@ public class Zone implements Serializable, Savable, Namable {
 
 	@Override
 	public int loadString(String load) {
-		String[] in = StringFundementals.breakByLine(load);
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(load);
+		myID = in.get(0);
 		int k = 2;
-		myName = in[k++];
-		RegionID = in[k++];
-		setSystemNumber(Integer.parseInt(in[k++]));
+		myName = in.get(k++);
+		RegionID = in.get(k++);
+		setSystemNumber(Integer.parseInt(in.get(k++)));
 		for (int i = 0; i < getSystemNumber(); i++) {
-			getSystemIDs().add(in[k++]);
+			getSystemIDs().add(in.get(k++));
 		}
 		return k;
 	}

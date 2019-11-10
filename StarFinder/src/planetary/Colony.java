@@ -286,25 +286,26 @@ public class Colony implements Savable, Serializable {
 	@Override
 	public int loadString(String load) {
 		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(parse.get(0));
-		myID = in[0];
+		Vector<String> in = StringFundementals.breakByLine(parse.get(0));
+		myID = in.get(0);
 		int i = 2;
-		size = Integer.parseInt(in[i++]);
-		scale = Integer.parseInt(in[i++]);
-		isHab = Boolean.parseBoolean(in[i++]);
-		hasWater = Boolean.parseBoolean(in[i++]);
-		hasGravite = Boolean.parseBoolean(in[i++]);
-		hasRareGasses = Boolean.parseBoolean(in[i++]);
-		hasRareMetals = Boolean.parseBoolean(in[i++]);
-		hasRadiotropes = Boolean.parseBoolean(in[i++]);
-		hasMassiveMetal = Boolean.parseBoolean(in[i++]);
-		hasMassiveGasses = Boolean.parseBoolean(in[i++]);
-		hasBio = Boolean.parseBoolean(in[i++]);
-		maxSize = Integer.parseInt(in[i++]);
-		boolean dev = Boolean.parseBoolean(in[i++]);
+		size = Integer.parseInt(in.get(i++));
+		scale = Integer.parseInt(in.get(i++));
+		isHab = Boolean.parseBoolean(in.get(i++));
+		hasWater = Boolean.parseBoolean(in.get(i++));
+		hasGravite = Boolean.parseBoolean(in.get(i++));
+		hasRareGasses = Boolean.parseBoolean(in.get(i++));
+		hasRareMetals = Boolean.parseBoolean(in.get(i++));
+		hasRadiotropes = Boolean.parseBoolean(in.get(i++));
+		hasMassiveMetal = Boolean.parseBoolean(in.get(i++));
+		hasMassiveGasses = Boolean.parseBoolean(in.get(i++));
+		hasBio = Boolean.parseBoolean(in.get(i++));
+		isWaste = Boolean.parseBoolean(in.get(i++));
+		maxSize = Integer.parseInt(in.get(i++));
+		boolean dev = Boolean.parseBoolean(in.get(i++));
 		if (dev)
 			myColony = new Habitation(parse.get(1));
-		boolean eco = Boolean.parseBoolean(in[i++]);
+		boolean eco = Boolean.parseBoolean(in.get(i++));
 		if (eco)
 			myEcosystem = new Ecosystem(parse.get(1));
 		return i;

@@ -377,12 +377,11 @@ public class MultiStar extends Star {
 	@Override
 	public int loadString(String load) {
 		Vector<String> parse = StringFundementals.unnestString('{', '}', load);
-		String[] in = StringFundementals.breakByLine(parse.get(0));
-		int i = 1;
-		this.myID = in[0];
-		this.myName = in[i++];
-		i++;
-		NumberStars = Integer.parseInt(in[i++]);
+		Vector<String> in = StringFundementals.breakByLine(parse.get(0));
+		this.myID = in.get(0);
+		int i = 2;
+		this.myName = in.get(i++);
+		NumberStars = Integer.parseInt(in.get(i++));
 		for (int k = 0; k < NumberStars; k++) {
 			myStars.add(SolSystem.StarParse(parse.get(1 + k)));
 		}
@@ -393,8 +392,8 @@ public class MultiStar extends Star {
 	public String saveString() {
 		String out = "";
 		out += this.myID + "\n";
-		out += this.myName + "\n";
 		out += this.getClassIndex() + "\n";
+		out += this.myName + "\n";
 		out += this.getMyStars().size() + "\n";
 		for (int i = 0; i < myStars.size(); i++) {
 			out += "{\n";
