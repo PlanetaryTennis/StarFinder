@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.UUID;
 import java.util.Vector;
 
+import engine.Namable;
 import engine.Savable;
 import gate.GateNetwork;
 import utilities.StringFundementals;
 
-public class Galaxy implements Serializable, Savable {
+public class Galaxy implements Serializable, Savable, Namable {
 	/**
 	 * 
 	 */

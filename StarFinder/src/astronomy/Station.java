@@ -2,7 +2,9 @@ package astronomy;
 
 import javax.swing.ImageIcon;
 
-public class Station implements OrbitObject {
+import engine.Namable;
+
+public class Station implements OrbitObject, Namable {
 
 	/**
 	 * 
@@ -50,6 +52,12 @@ public class Station implements OrbitObject {
 	public String getID() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setMyName(String name) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

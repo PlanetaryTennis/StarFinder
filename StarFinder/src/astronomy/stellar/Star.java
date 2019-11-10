@@ -8,11 +8,12 @@ import javax.swing.ImageIcon;
 
 import astronomy.AstroObject;
 import astronomy.SolSystem;
+import engine.Namable;
 import map.Sprite;
 import map.color;
 import utilities.StringFundementals;
 
-public class Star implements AstroObject {
+public class Star implements AstroObject, Namable {
 
 	/**
 	 * 

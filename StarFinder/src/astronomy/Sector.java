@@ -5,12 +5,13 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
+import engine.Namable;
 import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
 import utilities.StringFundementals;
 
-public class Sector implements Serializable, Savable {
+public class Sector implements Serializable, Savable, Namable {
 	/**
 	 * 
 	 */
@@ -147,5 +148,15 @@ public class Sector implements Serializable, Savable {
 
 	public void setRegionIDs(Vector<String> regionIDs) {
 		RegionIDs = regionIDs;
+	}
+
+	@Override
+	public String getMyName() {
+		return getName();
+	}
+
+	@Override
+	public void setMyName(String name) {
+		setName(name);
 	}
 }

@@ -16,13 +16,14 @@ import astronomy.stellar.Nebula;
 import astronomy.stellar.Neutron;
 import astronomy.stellar.Star;
 import astronomy.stellar.WhiteDwarf;
+import engine.Namable;
 import engine.Savable;
 import map.SettingList;
 import utilities.ARRAY;
 import utilities.RandomList;
 import utilities.StringFundementals;
 
-public class SolSystem implements Serializable, Savable {
+public class SolSystem implements Serializable, Savable, Namable {
 	/**
 	 * 
 	 */

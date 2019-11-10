@@ -5,13 +5,14 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
+import engine.Namable;
 import engine.ObjectFiles;
 import engine.Savable;
 import map.SettingList;
 import utilities.RandomList;
 import utilities.StringFundementals;
 
-public class Zone implements Serializable, Savable {
+public class Zone implements Serializable, Savable, Namable {
 	/**
 	 * 
 	 */

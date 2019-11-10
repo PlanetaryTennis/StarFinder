@@ -7,10 +7,11 @@ import javax.swing.ImageIcon;
 import astronomy.AstroObject;
 import astronomy.OrbitObject;
 import astronomy.stellar.Star;
+import engine.Namable;
 import planetary.Colony;
 import utilities.StringFundementals;
 
-public abstract class Planet implements AstroObject {
+public abstract class Planet implements AstroObject, Namable {
 
 	/**
 	 * 
