@@ -243,7 +243,28 @@ true
 true
 false
 5
-false
+true
+{
+a32feaaf-648a-4fb3-8e74-c975f4e1ec45.Surface
+117897
+771
+2
+{
+d6faefaa-9674-43d8-a5fa-5dbe8b1cb0fa.Surface
+119417
+Farming
+33
+0
+}
+{
+657528da-9c0c-4e0e-bc5c-89038431b0d1.Surface
+119417
+Housing
+22
+0
+}
+
+}
 true
 {
 da1d0d76-c2ea-45ef-bb48-42a9d6e11efa.Surface
@@ -13448,7 +13469,7 @@ false
 {
 094ed364-4089-499d-8956-2e79d822bb85.Planet
 934892
-? Belt
+Vanti Belt
 0.10908533736300385
 9.231816E11
 8.224760237166824E11
