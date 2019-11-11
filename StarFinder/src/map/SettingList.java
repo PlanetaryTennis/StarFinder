@@ -37,7 +37,7 @@ public class SettingList implements Savable {
 		this.multi = multi;
 		this.name = name;
 		this.suns = suns;
-		myID = "Map.settings";
+		myID = "Map.SFS";
 	}
 
 	public int getSectors() {
@@ -150,6 +150,10 @@ public class SettingList implements Savable {
 	@Override
 	public String getID() {
 		return myID;
+	}
+
+	public static SettingList getDefault() {
+		return new SettingList(null, 4, 5, 5, 5, 5, 5, 5, 13, false, false, true, new int[] { 700, 800, 900, 920, 940, 1000, 70, 90, 100, 100 });
 	}
 
 }

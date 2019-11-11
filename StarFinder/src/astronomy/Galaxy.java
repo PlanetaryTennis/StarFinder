@@ -6,10 +6,12 @@ import java.util.Vector;
 
 import engine.Namable;
 import engine.Savable;
+import engine.Subable;
 import gate.GateNetwork;
+import map.SettingList;
 import utilities.StringFundementals;
 
-public class Galaxy implements Serializable, Savable, Namable {
+public class Galaxy implements Serializable, Savable, Namable, Subable {
 	/**
 	 * 
 	 */
@@ -17,6 +19,7 @@ public class Galaxy implements Serializable, Savable, Namable {
 	private Vector<Sector> mySectors = new Vector<Sector>();
 	private String myName;
 	private GateNetwork myNetwork;
+	private SettingList SL;
 
 	public Galaxy(Vector<Sector> sectors) {
 		mySectors = sectors;
@@ -113,5 +116,31 @@ public class Galaxy implements Serializable, Savable, Namable {
 
 	public void setSectorIDs(Vector<String> sectorIDs) {
 		SectorIDs = sectorIDs;
+	}
+	
+	public void setMySettings(SettingList in) {
+		SL = in;
+	}
+
+	public SettingList getMySettings() {
+		return SL;
+	}
+
+	@Override
+	public void newEmptySub() {
+		mySectors.add(new Sector(Sector.randomName()));
+	}
+
+	@Override
+	public void newRandomSub() {
+		mySectors.add(Sector.makeRandom(SL));		
+	}
+
+	@Override
+	public void removeSub(int index) {
+		Sector s = mySectors.elementAt(index);
+		if(mySectors.remove(index) != null)
+			for(int k = 0;k < s.getRegions().size();)
+				s.removeSub(k);
 	}
 }

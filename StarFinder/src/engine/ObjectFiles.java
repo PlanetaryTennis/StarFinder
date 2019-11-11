@@ -12,6 +12,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import astronomy.Galaxy;
 import astronomy.Region;
 import astronomy.Sector;
@@ -246,5 +248,10 @@ public class ObjectFiles {
 			}
 
 		}
+	}
+
+	public static boolean delete(String iD) {
+		File Proccess = new File(iD);
+		return Proccess.delete();
 	}
 }

@@ -24,11 +24,11 @@ public class Rename implements ActionListener {
 		view.setLayout(new BorderLayout());
 
 		JTextArea Name = new JTextArea(myO.getMyName());
-		view.add(Name);
+		view.add(Name, BorderLayout.NORTH);
 		
 		JButton update = new JButton("Change Name");
 		update.addActionListener(new newName(myO,Name));
-		view.add(update);
+		view.add(update, BorderLayout.SOUTH);
 
 		view.setSize(400, 400);
 		view.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

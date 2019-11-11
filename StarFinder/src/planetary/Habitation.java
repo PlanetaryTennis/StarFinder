@@ -17,13 +17,13 @@ public class Habitation implements Savable {
 
 	public void setMaxDev(int maxDev) {
 		this.maxDev = maxDev;
-		myID = UUID.randomUUID().toString() + ".Surface";
 	}
 
 	public static final int CLASSINDEX = 117897;
 
 	public Habitation(int size) {
 		maxDev = (int) (3 * (Math.pow(size * 3 + 1, 2) + 1));
+		myID = UUID.randomUUID().toString() + ".Surface";
 	}
 
 	Habitation(String load) {

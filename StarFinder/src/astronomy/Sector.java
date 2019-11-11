@@ -7,11 +7,12 @@ import java.util.Vector;
 
 import engine.Namable;
 import engine.Savable;
+import engine.Subable;
 import map.SettingList;
 import utilities.RandomList;
 import utilities.StringFundementals;
 
-public class Sector implements Serializable, Savable, Namable {
+public class Sector implements Serializable, Savable, Namable, Subable {
 	/**
 	 * 
 	 */
@@ -158,5 +159,23 @@ public class Sector implements Serializable, Savable, Namable {
 	@Override
 	public void setMyName(String name) {
 		setName(name);
+	}
+
+	@Override
+	public void newEmptySub() {
+		Add(new Region(Region.randomName()));
+	}
+
+	@Override
+	public void newRandomSub() {
+		Add(Region.makeRandom(this, myGalaxy.getMySettings()));
+	}
+
+	@Override
+	public void removeSub(int index) {
+		Region s = myRegions.elementAt(index);
+		if(myRegions.remove(index) != null)
+			for(int k = 0;k < s.getMyZones().size();)
+				s.removeSub(k);
 	}
 }

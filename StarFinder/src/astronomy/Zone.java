@@ -5,14 +5,18 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
+import astronomy.stellar.Star;
 import engine.Namable;
 import engine.ObjectFiles;
 import engine.Savable;
+import engine.Subable;
 import map.SettingList;
 import utilities.RandomList;
 import utilities.StringFundementals;
 
-public class Zone implements Serializable, Savable, Namable {
+public class Zone implements Serializable, Savable, Namable, Subable {
 	/**
 	 * 
 	 */
@@ -186,5 +190,27 @@ public class Zone implements Serializable, Savable, Namable {
 
 	public void setSystemIDs(Vector<String> systemIDs) {
 		SystemIDs = systemIDs;
+	}
+
+	@Override
+	public void newEmptySub() {
+		SolSystem ss = new SolSystem(new Star(), "Unnamed");
+		SystemIDs.add(ss.getID());
+		ObjectFiles.WriteSavabletoFile(ss, myRegion.getMySector().getMyGalaxy().getMyName());
+	}
+
+	@Override
+	public void newRandomSub() {
+		SolSystem ss = SolSystem.makeRandom(this, myRegion.getMySector().getMyGalaxy().getMySettings());
+		ObjectFiles.WriteSavabletoFile(ss, myRegion.getMySector().getMyGalaxy().getMyName());
+		SystemIDs.add(ss.getID());
+	}
+
+	@Override
+	public void removeSub(int index) {
+		String ID = SystemIDs.get(index);
+		if(ObjectFiles.delete("data/saves/"+myRegion.getMySector().getMyGalaxy().getMyName()+"/"+ID)) {
+			SystemIDs.remove(index);
+		}
 	}
 }

@@ -170,6 +170,8 @@ public class MapView extends JFrame {
 		save.addActionListener(new saver(this, galaxy));
 		bar.add(save);
 
+		galaxy.setMySettings(mySettings);
+		
 		ObjectFiles.WriteSavabletoFile(mySettings, galaxy.getMyName());
 		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
 		this.viewGalaxy();
@@ -222,7 +224,13 @@ public class MapView extends JFrame {
 		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		this.mySettings = (SettingList) ObjectFiles.ReadSaveableFromFile(galaxy.getMyName() + "/Map.settings");
+		if (ObjectFiles.CheckFile(galaxy.getMyName() + "/Map.SFS")) {
+			this.mySettings = (SettingList) ObjectFiles.ReadSaveableFromFile(galaxy.getMyName() + "/Map.SFS");
+		}else {
+			this.mySettings = SettingList.getDefault();
+			mySettings.myName = galaxy.getMyName();
+		}
+		galaxy.setMySettings(mySettings);
 		if (ObjectFiles.CheckFile(galaxy.getMyName() + "/Gate.network")) {
 			galaxy.setMyNetwork((GateNetwork) ObjectFiles.ReadSaveableFromFile(galaxy.getMyName() + "/Gate.network"));
 			galaxy.getMyNetwork().LinkUp(galaxy);
@@ -260,9 +268,8 @@ public class MapView extends JFrame {
 			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
 		if (view.lastss != null)
 			ObjectFiles.WriteSavabletoFile(view.lastss, galaxy.getMyName());
-		ObjectFiles.WriteSavabletoFile(view.mySettings, galaxy.getMyName());
-		if (galaxy.getMyNetwork() != null)
-			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
+		if(view.mySettings != null)
+			ObjectFiles.WriteSavabletoFile(view.mySettings, galaxy.getMyName());
 		view.setCursor(c);
 	}
 
@@ -339,9 +346,15 @@ public class MapView extends JFrame {
 
 		myView.add(look, BorderLayout.CENTER);
 
+		JPanel Bottom = new JPanel();
+		Bottom.setLayout(new FlowLayout());
 		JButton rename = new JButton("Rename");
 		rename.addActionListener(new Rename(sector));
-		myView.add(rename, BorderLayout.SOUTH);
+		Bottom.add(rename);
+		JButton Remove = new JButton("Remove");
+//		Remove.addActionListener(new Remover(sector, ));
+		Bottom.add(Remove);
+		myView.add(Bottom, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);

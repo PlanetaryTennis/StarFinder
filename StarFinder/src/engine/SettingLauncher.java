@@ -165,7 +165,7 @@ public class SettingLauncher {
 		LaunchSettings.add(MultiStars);
 
 		JCheckBox Names = new JCheckBox("Random Names");
-		Names.setSelected(false);
+		Names.setSelected(true);
 		Names.setToolTipText("This will generate random names rather than leaving it in a serial form.");
 		Names.setEnabled(true);
 		LaunchSettings.add(Names);
