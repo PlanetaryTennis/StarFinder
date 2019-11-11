@@ -5,8 +5,6 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
-
 import astronomy.stellar.Star;
 import engine.Namable;
 import engine.ObjectFiles;

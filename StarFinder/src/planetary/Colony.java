@@ -302,12 +302,13 @@ public class Colony implements Savable, Serializable {
 		hasBio = Boolean.parseBoolean(in.get(i++));
 		isWaste = Boolean.parseBoolean(in.get(i++));
 		maxSize = Integer.parseInt(in.get(i++));
+		int k = 1;
 		boolean dev = Boolean.parseBoolean(in.get(i++));
 		if (dev)
-			myColony = new Habitation(parse.get(1));
+			myColony = new Habitation(parse.get(k++));
 		boolean eco = Boolean.parseBoolean(in.get(i++));
 		if (eco)
-			myEcosystem = new Ecosystem(parse.get(1));
+			myEcosystem = new Ecosystem(parse.get(k++));
 		return i;
 	}
 

@@ -12,7 +12,6 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -25,8 +24,6 @@ import actions.Biolook;
 import actions.Colonize;
 import actions.ColonyViewer;
 import actions.MoonView;
-import actions.NewRegion;
-import actions.NewZone;
 import actions.PlanetView;
 import actions.PlantView;
 import actions.PrimeJump;
@@ -83,7 +80,6 @@ public class MapView extends JFrame {
 	private static final long serialVersionUID = -3083279752317354841L;
 
 	private JPanel myView;
-	private Vector<JMenu> myMenus;
 	private JMenuItem Name;
 
 	private Vector<Sector> mySectors;
@@ -127,14 +123,11 @@ public class MapView extends JFrame {
 		this.setForeground(Color.BLACK);
 
 		JMenuBar bar = new JMenuBar();
-		myMenus = new Vector<JMenu>();
 		mySectors = new Vector<Sector>();
 		for (int i = 0; i < s; i++) {
 			mySectors.add(Sector.makeRandom(mySettings));
 			if (!n)
 				mySectors.get(i).setName("" + i);
-			myMenus.add(populateSectorMenu(mySectors.get(i), this));
-			bar.add(myMenus.get(i));
 		}
 
 		galaxy = new Galaxy(mySectors);
@@ -193,14 +186,7 @@ public class MapView extends JFrame {
 		JMenuBar bar = new JMenuBar();
 
 		galaxy = g;
-		int s = galaxy.getMySectors().size();
-
-		myMenus = new Vector<JMenu>();
 		mySectors = galaxy.getMySectors();
-		for (int i = 0; i < s; i++) {
-			myMenus.add(populateSectorMenu(mySectors.get(i), this));
-			bar.add(myMenus.get(i));
-		}
 
 		JMenuItem save = new JMenuItem("Save");
 		save.addActionListener(new saver(this, galaxy));
@@ -245,15 +231,6 @@ public class MapView extends JFrame {
 		this.setVisible(true);
 	}
 
-	public void review() {
-		for (int i = 0; i < mySectors.size(); i++) {
-			Vector<Region> r = mySectors.get(i).getRegions();
-			for (int j = 0; j < r.size(); j++) {
-				populateRegionMenu(r.get(j), this);
-			}
-		}
-	}
-
 	// public void search(AstroObject o) {
 	// switch(o.getClass()) {
 	// case
@@ -271,52 +248,6 @@ public class MapView extends JFrame {
 		if(view.mySettings != null)
 			ObjectFiles.WriteSavabletoFile(view.mySettings, galaxy.getMyName());
 		view.setCursor(c);
-	}
-
-	public static JMenu populateSectorMenu(Sector r, MapView myView) {
-		JMenu region = new JMenu(r.getName());
-		JMenuItem view = new JMenuItem("View");
-		view.addActionListener(new SectorPanel(r, myView));
-		region.add(view);
-		for (int i = 0; r.getRegions() != null && i < r.getRegions().size(); i++) {
-			JMenu z = MapView.populateRegionMenu(r.getRegions().get(i), myView);
-			region.add(z);
-		}
-		JMenu makeNew = new JMenu("Make New Region");
-		JMenuItem randNew = new JMenuItem("Random Region");
-		JMenuItem blankNew = new JMenuItem("Blank Region");
-		randNew.addActionListener(new NewRegion(true, r, region, myView));
-		blankNew.addActionListener(new NewRegion(false, r, region, myView));
-		makeNew.add(blankNew);
-		makeNew.add(randNew);
-		region.add(makeNew);
-		return region;
-	}
-
-	public static JMenu populateRegionMenu(Region r, MapView myView) {
-		JMenu region = new JMenu(r.getName());
-		JMenuItem view = new JMenuItem("View");
-		view.addActionListener(new RegionPanel(r, myView));
-		region.add(view);
-		for (int i = 0; r.getMyZones() != null && i < r.getMyZones().size(); i++) {
-			JMenu z = new JMenu(r.getMyZones().get(i).getMyName());
-			region.add(z);
-		}
-		JMenu makeNew = new JMenu("Make New Zone");
-		JMenuItem randNew = new JMenuItem("Random Zone");
-		JMenuItem blankNew = new JMenuItem("Blank Zone");
-		randNew.addActionListener(new NewZone(true, r, region, myView));
-		blankNew.addActionListener(new NewZone(false, r, region, myView));
-		makeNew.add(blankNew);
-		makeNew.add(randNew);
-		region.add(makeNew);
-		return region;
-	}
-
-	public static JMenuItem populateSystemMenu(SolSystem s, MapView myView) {
-		JMenuItem out = new JMenuItem(s.getMyName());
-		out.addActionListener(new SystemPanel(s, myView));
-		return out;
 	}
 
 	public void viewSector(Sector sector) {
@@ -803,7 +734,7 @@ public class MapView extends JFrame {
 
 		look.setBackground(Color.BLACK);
 
-		for (int i = 0; i < myMenus.size(); i++) {
+		for (int i = 0; i < mySectors.size(); i++) {
 			Sector = new JButton(mySectors.get(i).getName());
 			Sector.setPreferredSize(new Dimension(100, 100));
 			Sector.addActionListener(new SectorPanel(mySectors.get(i), this));
@@ -1055,14 +986,6 @@ public class MapView extends JFrame {
 
 	public void setMyView(JPanel myView) {
 		this.myView = myView;
-	}
-
-	public Vector<JMenu> getMyMenus() {
-		return myMenus;
-	}
-
-	public void setMyMenus(Vector<JMenu> myMenus) {
-		this.myMenus = myMenus;
 	}
 
 	public Sector getLasts() {
