@@ -4,14 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import astronomy.stellar.Star;
-import map.MapView;
+import map.StarViewable;
 
 public class StarView implements ActionListener {
 
-	MapView myView;
+	StarViewable myView;
 	Star myStar;
 
-	public StarView(Star s, MapView v) {
+	public StarView(Star s, StarViewable  v) {
 		myStar = s;
 		myView = v;
 	}

@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import actions.LauncherButton;
+import actions.loadSystem;
 import astronomy.Galaxy;
 import map.MapView;
 import map.Sprite;
@@ -30,6 +31,10 @@ public class GameLauncher {
 		JButton LoadEdit = new JButton("Load Galaxy Painter");
 		LoadEdit.addActionListener(new LauncherButton(3, Launcher));
 		Launcher.add(LoadEdit);
+		
+		JButton LoadSystem = new JButton("Load System View");
+		LoadSystem.addActionListener(new loadSystem(Launcher));
+		Launcher.add(LoadSystem);
 
 		Launcher.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Black Hole.png"));
 		Launcher.setSize(200, 200);

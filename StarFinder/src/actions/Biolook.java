@@ -3,7 +3,7 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import map.MapView;
+import map.PlanetViewer;
 import planetary.Colony;
 import planetary.Condition;
 
@@ -16,7 +16,7 @@ public class Biolook implements ActionListener {
 
 	Colony Col;
 	Condition Con;
-	MapView m;
+	PlanetViewer m;
 
 	/**
 	 * Class Constructor
@@ -25,7 +25,7 @@ public class Biolook implements ActionListener {
 	 * @param c       The associated Planetary Condition
 	 * @param mapView The MapView to display the biosphere on
 	 */
-	public Biolook(Colony colony, Condition c, MapView mapView) {
+	public Biolook(Colony colony, Condition c, PlanetViewer mapView) {
 		Col = colony;
 		Con = c;
 		m = mapView;

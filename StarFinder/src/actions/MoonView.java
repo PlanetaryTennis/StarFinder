@@ -4,14 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import astronomy.planetary.Moon;
-import map.MapView;
+import map.PlanetViewer;
 
 public class MoonView implements ActionListener {
 
 	Moon myMoon;
-	MapView myView;
+	PlanetViewer myView;
 
-	public MoonView(Moon orbitObject, MapView view) {
+	public MoonView(Moon orbitObject, PlanetViewer view) {
 		myMoon = orbitObject;
 		myView = view;
 	}

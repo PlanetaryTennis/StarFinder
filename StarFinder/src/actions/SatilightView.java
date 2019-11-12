@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import astronomy.OrbitObject;
-import map.MapView;
+import map.PlanetViewer;
 import gate.ImageGate;
 import gate.PrimaryGate;
 import gate.SecondaryGate;
@@ -13,9 +13,9 @@ import utilities.Functions;
 public class SatilightView implements ActionListener {
 
 	OrbitObject O;
-	MapView map;
+	PlanetViewer map;
 
-	public SatilightView(OrbitObject orbitObject, MapView mapView) {
+	public SatilightView(OrbitObject orbitObject, PlanetViewer mapView) {
 		map = mapView;
 		O = orbitObject;
 	}

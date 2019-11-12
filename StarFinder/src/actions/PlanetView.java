@@ -4,14 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import astronomy.planetary.Planet;
-import map.MapView;
+import map.PlanetViewer;
 
 public class PlanetView implements ActionListener {
 
 	private Planet myPlanet;
-	private MapView myView;
+	private PlanetViewer myView;
 
-	public PlanetView(Planet planet, MapView view) {
+	public PlanetView(Planet planet, PlanetViewer view) {
 		myPlanet = planet;
 		myView = view;
 	}

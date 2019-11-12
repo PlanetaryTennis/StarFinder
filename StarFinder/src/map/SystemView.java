@@ -26,27 +26,16 @@ import actions.ColonyViewer;
 import actions.MoonView;
 import actions.PlanetView;
 import actions.PlantView;
-import actions.PrimeJump;
-import actions.RegionPanel;
 import actions.Rename;
 import actions.SatilightView;
-import actions.SecondaryJump;
-import actions.SectorPanel;
 import actions.StarView;
 import actions.SurfaceView;
-import actions.SystemPanel;
-import actions.ZonePanel;
-import actions.back;
-import actions.editmenu;
-import actions.exit;
-import actions.saver;
+import actions.Systemexit;
+import actions.loadSystem;
+import actions.systemback;
 import actions.viewWorldData;
 import astronomy.AstroObject;
-import astronomy.Galaxy;
-import astronomy.Region;
-import astronomy.Sector;
 import astronomy.SolSystem;
-import astronomy.Zone;
 import astronomy.planetary.Asteroid;
 import astronomy.planetary.Belt;
 import astronomy.planetary.Habitable;
@@ -55,152 +44,50 @@ import astronomy.planetary.Jovian;
 import astronomy.planetary.Moon;
 import astronomy.planetary.Planet;
 import astronomy.planetary.Terrestrial;
+import astronomy.stellar.MultiStar;
 import astronomy.stellar.Nebula;
 import astronomy.stellar.Star;
-import astronomy.stellar.MultiStar;
 import engine.ObjectFiles;
-import planetary.Colony;
-import planetary.Condition;
 import gate.ImageGate;
 import gate.PrimaryGate;
-import gate.Gate;
-import gate.GateNetwork;
 import gate.SecondaryGate;
+import planetary.Colony;
+import planetary.Condition;
 
-/**
- * MapView allows one to see and navigate a galaxy.
- * 
- * @author PlanetaryTennis
- */
-public class MapView extends JFrame implements StarViewable, PlanetViewer {
+public class SystemView extends JFrame implements StarViewable, PlanetViewer{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3083279752317354841L;
-
+	private static final long serialVersionUID = 5416318384934836618L;
 	private JPanel myView;
 	private JMenuItem Name;
-
-	private Vector<Sector> mySectors;
-
-	private Sector lasts = null;
-	private Region lastr = null;
-	private Zone lastz = null;
-	private SolSystem lastss = null;
+	
+	private SolSystem system = null;
 	private Planet lastp = null;
-	private int level = -3;
-
-	private Galaxy galaxy;
+	private int level = 0;
 
 	public SettingList mySettings;
 
-	/**
-	 * Class Constructor
-	 * 
-	 * @param name The name to be given to the JFrame.
-	 * @param s    The number of Sectors to be generated
-	 * @param rS   The set number of Regions
-	 * @param rE   The maximum random number of Regions
-	 * @param zS   The set number of Zones
-	 * @param zE   The maximum random number of Zones
-	 * @param sS   The set number of Systems
-	 * @param sE   The maximum random number of Systems
-	 * @param p    The maximum random number of Planets
-	 * @param ss   Weather or not Special stars will be created
-	 * @param ms   Weather multi stars will be created
-	 * @param n    Weather random names will be generated
-	 * @param suns The chance of each type of star to generate
-	 * @param r    Weather a relay will be generated
-	 */
-	public MapView(String name, int s, int rS, int rE, int zS, int zE, int sS, int sE, int p, boolean ss, boolean ms,
-			boolean n, int[] suns, boolean r) {
+	public SystemView(String name, SolSystem s) {
 		super(name);
-		String nam = Sector.randomName();
-		mySettings = new SettingList(nam, s, rS, rE, zS, zE, sS, sE, p, ss, ms, n, suns);
 
-		this.setBackground(Color.BLACK);
-		this.setForeground(Color.BLACK);
-
-		JMenuBar bar = new JMenuBar();
-		mySectors = new Vector<Sector>();
-		for (int i = 0; i < s; i++) {
-			mySectors.add(Sector.makeRandom(mySettings));
-			if (!n)
-				mySectors.get(i).setName("" + i);
-		}
-
-		galaxy = new Galaxy(mySectors);
-		galaxy.setMyName(nam);
-		for (int i = 0; i < mySectors.size(); i++) {
-			mySectors.get(i).setMyGalaxy(galaxy);
-		}
-
-		Name = new JMenuItem(galaxy.getMyName());
-		bar.add(Name);
-
-		JMenuItem editor = new JMenuItem("Editor");
-		editor.addActionListener(new editmenu(this));
-		bar.add(editor);
-
-		JMenuItem back = new JMenuItem("Back");
-		back.addActionListener(new back(this));
-		bar.add(back);
-
-		this.setJMenuBar(bar);
-		myView = new JPanel();
-		myView.setBackground(Color.BLACK);
-		JScrollPane sp = new JScrollPane(myView);
-		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-		if (r) {
-			galaxy.setMyNetwork(new GateNetwork(galaxy, 0));
-			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
-		}
-
-		JMenuItem save = new JMenuItem("Save");
-		save.addActionListener(new saver(this, galaxy));
-		bar.add(save);
-
-		galaxy.setMySettings(mySettings);
+		system = s;
 		
-		ObjectFiles.WriteSavabletoFile(mySettings, galaxy.getMyName());
-		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
-		this.viewGalaxy();
-
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Black Hole.png"));
-
-		this.setSize(1000, 750);
-		this.add(sp);
-		this.addWindowListener(new exit(this));
-		this.setVisible(true);
-	}
-
-	public MapView(String name, Galaxy g) {
-		super(name);
-
 		this.setBackground(Color.BLACK);
 		this.setForeground(Color.BLACK);
 
 		JMenuBar bar = new JMenuBar();
 
-		galaxy = g;
-		mySectors = galaxy.getMySectors();
-
-		JMenuItem save = new JMenuItem("Save");
-		save.addActionListener(new saver(this, galaxy));
-		bar.add(save);
-
-		Name = new JMenuItem(galaxy.getMyName());
+		Name = new JMenuItem(system.getMyName());
 		bar.add(Name);
-
-		JMenuItem editor = new JMenuItem("Editor");
-		editor.addActionListener(new editmenu(this));
-		bar.add(editor);
+		
+		JMenuItem load = new JMenuItem("Load System");
+		load.addActionListener(new loadSystem(this));
+		bar.add(load);
 
 		JMenuItem back = new JMenuItem("Back");
-		back.addActionListener(new back(this));
+		back.addActionListener(new systemback(this));
 		bar.add(back);
 
 		this.setJMenuBar(bar);
@@ -210,218 +97,62 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		if (ObjectFiles.CheckFile(galaxy.getMyName() + "/Map.SFS")) {
-			this.mySettings = (SettingList) ObjectFiles.ReadSaveableFromFile(galaxy.getMyName() + "/Map.SFS");
-		}else {
-			this.mySettings = SettingList.getDefault();
-			mySettings.myName = galaxy.getMyName();
-		}
-		galaxy.setMySettings(mySettings);
-		if (ObjectFiles.CheckFile(galaxy.getMyName() + "/Gate.network")) {
-			galaxy.setMyNetwork((GateNetwork) ObjectFiles.ReadSaveableFromFile(galaxy.getMyName() + "/Gate.network"));
-			galaxy.getMyNetwork().LinkUp(galaxy);
-		}
-		this.viewGalaxy();
+		this.viewSystem();
 
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Black Hole.png"));
 
 		this.setSize(1000, 750);
 		this.add(sp);
-		this.addWindowListener(new exit(this));
+		this.addWindowListener(new Systemexit(this));
 		this.setVisible(true);
 	}
 
-	// public void search(AstroObject o) {
-	// switch(o.getClass()) {
-	// case
-	// }
-	// }
-
-	public static void save(MapView view, Galaxy galaxy) {
+	public static void save(SystemView view) {
 		Cursor c = view.getCursor();
 		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-		ObjectFiles.WriteSavabletoFile(galaxy, galaxy.getMyName());
-		if (galaxy.getMyNetwork() != null)
-			ObjectFiles.WriteSavabletoFile(galaxy.getMyNetwork(), galaxy.getMyName());
-		if (view.lastss != null)
-			ObjectFiles.WriteSavabletoFile(view.lastss, galaxy.getMyName());
-		if(view.mySettings != null)
-			ObjectFiles.WriteSavabletoFile(view.mySettings, galaxy.getMyName());
+		ObjectFiles.WriteSavabletoFile(view.getSystem(), view.getSystem().getMyName());
 		view.setCursor(c);
 	}
 
-	public void viewSector(Sector sector) {
-		level = -3;
-		Name.setText(sector.getName());
-		lastp = null;
-		lastss = null;
-		lastz = null;
-		lastr = null;
-		lasts = sector;
-		myView.removeAll();
-		myView.repaint();
-		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
-		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(sector.getRegions().size())),
-				(int) Math.ceil(Math.sqrt(sector.getRegions().size()))));
-
-		look.setBackground(Color.BLACK);
-
-		JButton zone;
-		for (int i = 0; i < sector.getRegions().size(); i++) {
-			zone = new JButton(sector.getRegions().get(i).getName());
-			zone.setPreferredSize(new Dimension(100, 100));
-			zone.addActionListener(new RegionPanel(sector.getRegions().get(i), this));
-			look.add(zone);
-		}
-
-		myView.add(look, BorderLayout.CENTER);
-
-		JPanel Bottom = new JPanel();
-		Bottom.setLayout(new FlowLayout());
-		JButton rename = new JButton("Rename");
-		rename.addActionListener(new Rename(sector));
-		Bottom.add(rename);
-		JButton Remove = new JButton("Remove");
-//		Remove.addActionListener(new Remover(sector, ));
-		Bottom.add(Remove);
-		myView.add(Bottom, BorderLayout.SOUTH);
-
-		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
-		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
+	private SolSystem getSystem() {
+		return system;
 	}
+	
 
-	public void viewRegion(Region region) {
-		level = -2;
-		Name.setText(region.getName());
-		lastp = null;
-		lastss = null;
-		lastz = null;
-		lastr = region;
-		lasts = lastr.getMySector();
-		myView.removeAll();
-		myView.repaint();
-		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
-		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(region.getMyZones().size())),
-				(int) Math.ceil(Math.sqrt(region.getMyZones().size()))));
-
-		look.setBackground(Color.BLACK);
-
-		JButton zone;
-		for (int i = 0; i < region.getMyZones().size(); i++) {
-			zone = new JButton(region.getMyZones().get(i).getMyName());
-			zone.setPreferredSize(new Dimension(100, 100));
-			zone.addActionListener(new ZonePanel(region.getMyZones().get(i), this));
-			look.add(zone);
-		}
-
-		myView.add(look, BorderLayout.CENTER);
-
-		JButton rename = new JButton("Rename");
-		rename.addActionListener(new Rename(region));
-		myView.add(rename, BorderLayout.SOUTH);
-
-		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
-		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
-	}
-
-	public void viewZone(Zone zone) {
-		level = -1;
-		Name.setText(zone.getMyName());
-		lastp = null;
-		lastss = null;
-		lastz = zone;
-		lastr = zone.getMyRegion();
-		lasts = lastr.getMySector();
-		myView.removeAll();
-		myView.repaint();
-		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
-		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(zone.getSystemIDs().size())),
-				(int) Math.ceil(Math.sqrt(zone.getSystemIDs().size()))));
-
-		look.setBackground(Color.BLACK);
-
-		boolean same;
-		if (solStore.size() > 0 && solStore.get(0).getID().contentEquals(zone.getSystemIDs().get(0))) {
-			same = true;
-		} else {
-			same = false;
-			solStore = new Vector<SolSystem>();
-		}
-		JButton solarsystem;
-		SolSystem sol;
-		for (int i = 0; i < zone.getSystemNumber(); i++) {
-			if (same) {
-				sol = solStore.get(i);
-			} else {
-				sol = (SolSystem) ObjectFiles
-						.ReadSaveableFromFile(lasts.getMyGalaxy().getMyName() + "/" + zone.getSystemIDs().get(i));
-				solStore.add(sol);
-			}
-			solarsystem = new JButton(sol.getMyName());
-			ImageIcon img = sol.getMyStar().getIcon();
-			solarsystem.setIcon(img);
-			solarsystem
-					.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth() / 4, img.getIconHeight()));
-			solarsystem.setBackground(Color.BLACK);
-			solarsystem.setBorderPainted(false);
-			solarsystem.setOpaque(false);
-			solarsystem.setForeground(Color.WHITE);
-			solarsystem.addActionListener(new SystemPanel(sol, this));
-			look.add(solarsystem);
-		}
-
-		myView.add(look, BorderLayout.CENTER);
-
-		JButton rename = new JButton("Rename");
-		rename.addActionListener(new Rename(zone));
-		myView.add(rename, BorderLayout.SOUTH);
-
-		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
-		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
-	}
-
-	public Vector<SolSystem> solStore = new Vector<SolSystem>();
-
-	public void viewSystem(SolSystem solsystem) {
+	public void viewSystem() {
 		level = 0;
-		Name.setText(solsystem.getMyName());
+		Name.setText(system.getMyName());
 		lastp = null;
-		lastss = solsystem;
-		lastr = lastz.getMyRegion();
-		lasts = lastr.getMySector();
 		myView.removeAll();
 		myView.repaint();
 		myView.setLayout(new BorderLayout());
 		JPanel look = new JPanel();
-		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(solsystem.getMyObjects().size())),
-				(int) Math.ceil(Math.sqrt(solsystem.getMyObjects().size()))));
+		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(system.getMyObjects().size())),
+				(int) Math.ceil(Math.sqrt(system.getMyObjects().size()))));
 
 		look.setBackground(Color.BLACK);
 
-		if (solsystem.getMyStar().getClass() != Nebula.class) {
+		if (system.getMyStar().getClass() != Nebula.class) {
 			JButton star = new JButton();
-			ImageIcon img = solsystem.getMyStar().getIcon();
+			ImageIcon img = system.getMyStar().getIcon();
 			star.setIcon(img);
 			star.setPreferredSize(new Dimension(img.getIconWidth() + img.getIconWidth() / 4, img.getIconHeight()));
 			star.setBackground(Color.BLACK);
 			star.setBorderPainted(false);
 			star.setOpaque(false);
-			star.addActionListener(new StarView(solsystem.getMyStar(), this));
+			star.addActionListener(new StarView(system.getMyStar(), this));
 			myView.add(star, BorderLayout.WEST);
 		}
 
 		JButton planet;
-		for (int i = 0; i < solsystem.getMyObjects().size(); i++) {
-			if (solsystem.getMyObjects().get(i).getClass() != Belt.class) {
-				planet = new JButton(solsystem.getMyObjects().get(i).getMyName());
+		for (int i = 0; i < system.getMyObjects().size(); i++) {
+			if (system.getMyObjects().get(i).getClass() != Belt.class) {
+				planet = new JButton(system.getMyObjects().get(i).getMyName());
 			} else {
-				planet = new JButton("" + solsystem.getMyObjects().get(i).getMyName().charAt(0));
+				planet = new JButton("" + system.getMyObjects().get(i).getMyName().charAt(0));
 			}
-			planet.addActionListener(new PlanetView(solsystem.getMyObjects().get(i), this));
-			ImageIcon plimg = solsystem.getMyObjects().get(i).getIcon();
+			planet.addActionListener(new PlanetView(system.getMyObjects().get(i), this));
+			ImageIcon plimg = system.getMyObjects().get(i).getIcon();
 			planet.setIcon(plimg);
 			planet.setPreferredSize(new Dimension(plimg.getIconWidth() + 50, plimg.getIconHeight()));
 			planet.setForeground(Color.WHITE);
@@ -434,7 +165,7 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		myView.add(look, BorderLayout.CENTER);
 
 		JButton rename = new JButton("Rename");
-		rename.addActionListener(new Rename(solsystem));
+		rename.addActionListener(new Rename(system));
 		myView.add(rename, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
@@ -536,24 +267,12 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 
 		for (int i = 0; i < planet.getMySatilights().size(); i++) {
 			if (planet.getMySatilights().get(i).getClass() == ImageGate.class) {
-				ImageGate ir = (ImageGate) planet.getMySatilights().get(i);
-				Gate Gate;
-				if(ir.getMyGate()==null) {
-					Gate = galaxy.getMyNetwork().find(ir.getGateID());
-					ir.setMyGate(Gate);
-				}else {
-					Gate = ir.getMyGate();
-				}
-				moon = new JButton(Gate.getMyName());
-				ImageIcon moimg = Gate.getIcon();
-				moimg = new ImageIcon(moimg.getImage().getScaledInstance(25, 25, 100));
-				moon.setIcon(moimg);
-				moon.setPreferredSize(new Dimension(moimg.getIconWidth() + 50, moimg.getIconHeight()));
+				moon = new JButton("Relay");
+				moon.setToolTipText("Can not transverse relays in System Viewer.");
 				moon.setForeground(Color.WHITE);
 				moon.setBackground(Color.BLACK);
 				moon.setBorderPainted(false);
 				moon.setOpaque(false);
-				moon.addActionListener(new SatilightView(ir, this));
 			} else {
 				moon = new JButton(planet.getMySatilights().get(i).getMyName());
 				ImageIcon moimg = planet.getMySatilights().get(i).getIcon();
@@ -702,16 +421,8 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 	}
 
 	public void backup() {
-		if (level == -3) {
-			viewGalaxy();
-		} else if (level == -2) {
-			viewSector(lasts);
-		} else if (level == -1) {
-			viewRegion(lastr);
-		} else if (level == 0) {
-			viewZone(lastz);
-		} else if (level == 1) {
-			viewSystem(lastss);
+		if (level == 1) {
+			viewSystem();
 		} else if (level == 2) {
 			viewPlanet(lastp);
 		} else if (level == 3) {
@@ -720,126 +431,7 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 			viewSurface(lastp);
 		}
 	}
-
-	private void viewGalaxy() {
-		level = -3;
-		Name.setText(galaxy.getMyName());
-		JButton Sector;
-		myView.removeAll();
-		myView.repaint();
-		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
-		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(mySectors.size())),
-				(int) Math.ceil(Math.sqrt(mySectors.size()))));
-
-		look.setBackground(Color.BLACK);
-
-		for (int i = 0; i < mySectors.size(); i++) {
-			Sector = new JButton(mySectors.get(i).getName());
-			Sector.setPreferredSize(new Dimension(100, 100));
-			Sector.addActionListener(new SectorPanel(mySectors.get(i), this));
-			look.add(Sector);
-		}
-
-		myView.add(look, BorderLayout.CENTER);
-
-		JButton rename = new JButton("Rename");
-		rename.addActionListener(new Rename(galaxy));
-		myView.add(rename, BorderLayout.SOUTH);
-
-		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
-		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
-	}
-
-	public void viewPrimaryGate(PrimaryGate o) {
-		if (!o.getMySystem().equals(lastss.getID())) {
-			this.lastss = (SolSystem) ObjectFiles.ReadSaveableFromFile(galaxy.getMyName() + "/" + o.getMySystem());
-			for (int i = 0; i < lastss.getMyObjects().size(); i++)
-				if (o.getMyPlanet().equals(lastss.getMyObjects().get(i).getID()))
-					this.lastp = lastss.getMyObjects().get(i);
-		}
-		level = 2;
-		Name.setText(o.getMyName());
-		this.lastz = o.getMyZone();
-		this.lastr = lastz.getMyRegion();
-		this.lasts = lastr.getMySector();
-
-		myView.removeAll();
-		myView.repaint();
-		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
-		look.setLayout(new GridLayout(1, 1));
-
-		look.setBackground(Color.BLACK);
-
-		JTextArea Print = new JTextArea();
-		Print.setEditable(false);
-		String display = o.getMyName();
-
-		JButton Look = new JButton("Jump To Partner");
-		Look.addActionListener(new PrimeJump(o.getMyPartner(), this));
-		look.add(Look);
-
-		Print.setText(display);
-		look.add(Print);
-
-		myView.add(look, BorderLayout.CENTER);
-
-		JButton rename = new JButton("Rename");
-		rename.addActionListener(new Rename(o));
-		myView.add(rename, BorderLayout.SOUTH);
-
-		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
-		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
-	}
-
-	public void viewSecondaryGate(SecondaryGate o) {
-		if (!o.getMySystem().equals(lastss.getID())) {
-			this.lastss = (SolSystem) ObjectFiles.ReadSaveableFromFile(galaxy.getMyName() + "/" + o.getMySystem());
-			for (int i = 0; i < lastss.getMyObjects().size(); i++)
-				if (o.getMyPlanet().equals(lastss.getMyObjects().get(i).getID()))
-					this.lastp = lastss.getMyObjects().get(i);
-		}
-		level = 2;
-		Name.setText(o.getMyName());
-		this.lastz = o.getMyZone();
-		this.lastr = lastz.getMyRegion();
-		this.lasts = lastr.getMySector();
-
-		myView.removeAll();
-		myView.repaint();
-		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
-		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(o.getMyPod().size())),
-				(int) Math.ceil(Math.sqrt(o.getMyPod().size()))));
-
-		look.setBackground(Color.BLACK);
-
-		JTextArea Print = new JTextArea();
-		Print.setEditable(false);
-		String display = o.getMyName();
-
-		Vector<SecondaryGate> pod = o.getMyPod();
-		for (int i = 0; i < pod.size(); i++) {
-			if (pod.get(i) != o) {
-				JButton Look = new JButton("Jump to the " + pod.get(i).getMyName());
-				Look.addActionListener(new SecondaryJump(pod.get(i), this));
-				look.add(Look);
-			}
-		}
-
-		Print.setText(display);
-		look.add(Print);
-		myView.add(look);
-
-		JButton rename = new JButton("Rename");
-		rename.addActionListener(new Rename(o));
-		myView.add(rename, BorderLayout.SOUTH);
-
-		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
-		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
-	}
-
+	
 	public void viewSurface(Planet planet) {
 		Colony colony = planet.getMyColony();
 		level = 3;
@@ -976,10 +568,6 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
 	}
 
-	public Vector<Sector> getMySectors() {
-		return mySectors;
-	}
-
 	public JPanel getMyView() {
 		return myView;
 	}
@@ -988,36 +576,12 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		this.myView = myView;
 	}
 
-	public Sector getLasts() {
-		return lasts;
-	}
-
-	public void setLasts(Sector lasts) {
-		this.lasts = lasts;
-	}
-
-	public Region getLastr() {
-		return lastr;
-	}
-
-	public void setLastr(Region lastr) {
-		this.lastr = lastr;
-	}
-
-	public Zone getLastz() {
-		return lastz;
-	}
-
-	public void setLastz(Zone lastz) {
-		this.lastz = lastz;
-	}
-
 	public SolSystem getLastss() {
-		return lastss;
+		return system;
 	}
 
 	public void setLastss(SolSystem lastss) {
-		this.lastss = lastss;
+		this.system = lastss;
 	}
 
 	public Planet getLastp() {
@@ -1036,15 +600,15 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		this.level = level;
 	}
 
-	public Galaxy getGalaxy() {
-		return galaxy;
+	@Override
+	public void viewPrimaryGate(PrimaryGate myGate) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void setGalaxy(Galaxy galaxy) {
-		this.galaxy = galaxy;
-	}
-
-	public void setMySectors(Vector<Sector> mySectors) {
-		this.mySectors = mySectors;
+	@Override
+	public void viewSecondaryGate(SecondaryGate myGate) {
+		// TODO Auto-generated method stub
+		
 	}
 }
