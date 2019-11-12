@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Vector;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileFilter;
@@ -14,7 +12,6 @@ import javax.swing.filechooser.FileFilter;
 import astronomy.SolSystem;
 import engine.ObjectFiles;
 import map.SystemView;
-import utilities.StringFundementals;
 
 public class loadSystem implements ActionListener {
 
@@ -30,7 +27,7 @@ public class loadSystem implements ActionListener {
 		JFileChooser fileChooser = new JFileChooser();
 		File workingDirectory = new File(System.getProperty("user.dir"));
 		fileChooser.setCurrentDirectory(workingDirectory);
-		String solsystem = "";
+		SolSystem solsystem = null;
 		fileChooser.setFileFilter(new FileFilter() {
 
 			public String getDescription() {
@@ -52,6 +49,7 @@ public class loadSystem implements ActionListener {
 			FileInputStream fileIn = null;
 			try {
 				fileIn = new FileInputStream(selectedFile.getCanonicalPath());
+				filepath = selectedFile.getCanonicalPath();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -61,15 +59,14 @@ public class loadSystem implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			Vector<String> box = StringFundementals.breakByLine(read);
-			solsystem = box.get(2);
-			filepath = selectedFile.getName();
+			if(read == null)
+				return;
+			solsystem = new SolSystem(read);
 		} else {
 			return;
 		}
-		SolSystem System = (SolSystem) ObjectFiles.ReadSaveableFromFile(solsystem + "/" + filepath);
 		
-		new SystemView("System View", System);
+		new SystemView("System View", solsystem, filepath);
 		if(f.getClass() == SystemView.class) {
 			SystemView sv = (SystemView)f;
 			SystemView.save(sv);

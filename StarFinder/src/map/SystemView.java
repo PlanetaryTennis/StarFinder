@@ -6,7 +6,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -60,6 +59,7 @@ public class SystemView extends JFrame implements StarViewable, PlanetViewer{
 	 * 
 	 */
 	private static final long serialVersionUID = 5416318384934836618L;
+	private String Path;
 	private JPanel myView;
 	private JMenuItem Name;
 	
@@ -69,10 +69,11 @@ public class SystemView extends JFrame implements StarViewable, PlanetViewer{
 
 	public SettingList mySettings;
 
-	public SystemView(String name, SolSystem s) {
+	public SystemView(String name, SolSystem s, String path) {
 		super(name);
 
 		system = s;
+		Path = path;
 		
 		this.setBackground(Color.BLACK);
 		this.setForeground(Color.BLACK);
@@ -99,7 +100,7 @@ public class SystemView extends JFrame implements StarViewable, PlanetViewer{
 
 		this.viewSystem();
 
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Sprite.STARS + "Black Hole.png"));
+		this.setIconImage(system.getMyStar().getIcon().getImage());
 
 		this.setSize(1000, 750);
 		this.add(sp);
@@ -110,7 +111,7 @@ public class SystemView extends JFrame implements StarViewable, PlanetViewer{
 	public static void save(SystemView view) {
 		Cursor c = view.getCursor();
 		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-		ObjectFiles.WriteSavabletoFile(view.getSystem(), view.getSystem().getMyName());
+		ObjectFiles.WriteSavabletoFileByCannon(view.getSystem(),view.Path);
 		view.setCursor(c);
 	}
 

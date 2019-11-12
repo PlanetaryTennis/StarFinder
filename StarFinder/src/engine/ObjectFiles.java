@@ -252,4 +252,31 @@ public class ObjectFiles {
 		File Proccess = new File(iD);
 		return Proccess.delete();
 	}
+
+	public static void WriteSavabletoFileByCannon(Savable object, String path) {
+
+		FileOutputStream fout = null;
+
+		try {
+			fout = new FileOutputStream(path);
+			byte[] bs = object.saveString().getBytes();
+			fout.write(bs);
+			fout.flush();
+			fout.close();
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+
+		} finally {
+
+			if (fout != null) {
+				try {
+					fout.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }
