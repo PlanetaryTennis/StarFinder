@@ -6,12 +6,14 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -28,6 +30,7 @@ import actions.PlanetView;
 import actions.PlantView;
 import actions.PrimeJump;
 import actions.RegionPanel;
+import actions.Remover;
 import actions.Rename;
 import actions.SatilightView;
 import actions.SecondaryJump;
@@ -58,6 +61,7 @@ import astronomy.planetary.Terrestrial;
 import astronomy.stellar.Nebula;
 import astronomy.stellar.Star;
 import astronomy.stellar.MultiStar;
+import engine.ImagePanel;
 import engine.ObjectFiles;
 import planetary.Colony;
 import planetary.Condition;
@@ -231,12 +235,6 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		this.setVisible(true);
 	}
 
-	// public void search(AstroObject o) {
-	// switch(o.getClass()) {
-	// case
-	// }
-	// }
-
 	public static void save(MapView view, Galaxy galaxy) {
 		Cursor c = view.getCursor();
 		view.setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -277,13 +275,18 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 
 		myView.add(look, BorderLayout.CENTER);
 
-		JPanel Bottom = new JPanel();
+		JMenuBar Bottom = new JMenuBar();
 		Bottom.setLayout(new FlowLayout());
 		JButton rename = new JButton("Rename");
 		rename.addActionListener(new Rename(sector));
 		Bottom.add(rename);
-		JButton Remove = new JButton("Remove");
-//		Remove.addActionListener(new Remover(sector, ));
+		JMenu Remove = new JMenu("Remove");
+		JMenuItem part;
+		for(int i = 0;i < sector.getRegions().size();i++) {
+			part = new JMenuItem(sector.getRegions().get(i).getMyName());
+			part.addActionListener(new Remover(sector,i,this));
+			Remove.add(part);
+		}
 		Bottom.add(Remove);
 		myView.add(Bottom, BorderLayout.SOUTH);
 
@@ -318,9 +321,21 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 
 		myView.add(look, BorderLayout.CENTER);
 
+		JMenuBar bottom = new JMenuBar();
 		JButton rename = new JButton("Rename");
 		rename.addActionListener(new Rename(region));
-		myView.add(rename, BorderLayout.SOUTH);
+		bottom.add(rename);
+		
+		JMenu Remove = new JMenu("Remove");
+		JMenuItem part;
+		for(int i = 0;i < region.getMyZones().size();i++) {
+			part = new JMenuItem(region.getMyZones().get(i).getMyName());
+			part.addActionListener(new Remover(region,i,this));
+			Remove.add(part);
+		}
+		bottom.add(Remove);
+		
+		myView.add(bottom, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -337,11 +352,10 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		myView.removeAll();
 		myView.repaint();
 		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
+		Image image = Sprite.starField();
+		JPanel look = new ImagePanel(image);
 		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(zone.getSystemIDs().size())),
 				(int) Math.ceil(Math.sqrt(zone.getSystemIDs().size()))));
-
-		look.setBackground(Color.BLACK);
 
 		boolean same;
 		if (solStore.size() > 0 && solStore.get(0).getID().contentEquals(zone.getSystemIDs().get(0))) {
@@ -375,9 +389,21 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 
 		myView.add(look, BorderLayout.CENTER);
 
+		JMenuBar Bottom = new JMenuBar();
 		JButton rename = new JButton("Rename");
 		rename.addActionListener(new Rename(zone));
-		myView.add(rename, BorderLayout.SOUTH);
+		Bottom.add(rename);
+		
+		JMenu Remove = new JMenu("Remove");
+		JMenuItem part;
+		for(int i = 0;i < zone.getSystemIDs().size();i++) {
+			part = new JMenuItem(solStore.get(i).getMyName());
+			part.addActionListener(new Remover(zone,i,this));
+			Remove.add(part);
+		}
+		Bottom.add(Remove);
+		
+		myView.add(Bottom, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
@@ -728,7 +754,8 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		myView.removeAll();
 		myView.repaint();
 		myView.setLayout(new BorderLayout());
-		JPanel look = new JPanel();
+		Image img = galaxy.getIcon();
+		JPanel look = new ImagePanel(img);
 		look.setLayout(new GridLayout((int) Math.ceil(Math.sqrt(mySectors.size())),
 				(int) Math.ceil(Math.sqrt(mySectors.size()))));
 
@@ -737,15 +764,31 @@ public class MapView extends JFrame implements StarViewable, PlanetViewer {
 		for (int i = 0; i < mySectors.size(); i++) {
 			Sector = new JButton(mySectors.get(i).getName());
 			Sector.setPreferredSize(new Dimension(100, 100));
+			Sector.setBackground(Color.BLACK);
+			Sector.setBorderPainted(false);
+			Sector.setOpaque(false);
+			Sector.setForeground(Color.WHITE);
 			Sector.addActionListener(new SectorPanel(mySectors.get(i), this));
 			look.add(Sector);
 		}
-
+		
 		myView.add(look, BorderLayout.CENTER);
 
+		JMenuBar Bottom = new JMenuBar();
 		JButton rename = new JButton("Rename");
 		rename.addActionListener(new Rename(galaxy));
-		myView.add(rename, BorderLayout.SOUTH);
+		Bottom.add(rename);
+		
+		JMenu Remove = new JMenu("Remove");
+		JMenuItem part;
+		for(int i = 0;i < galaxy.getMySectors().size();i++) {
+			part = new JMenuItem(galaxy.getMySectors().get(i).getMyName());
+			part.addActionListener(new Remover(galaxy,i,this));
+			Remove.add(part);
+		}
+		Bottom.add(Remove);
+		
+		myView.add(Bottom, BorderLayout.SOUTH);
 
 		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
 		this.setSize(this.getWidth() - 1, this.getHeight() - 1);

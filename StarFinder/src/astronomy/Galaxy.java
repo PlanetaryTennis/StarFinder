@@ -1,5 +1,7 @@
 package astronomy;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.Serializable;
 import java.util.UUID;
 import java.util.Vector;
@@ -9,6 +11,7 @@ import engine.Savable;
 import engine.Subable;
 import gate.GateNetwork;
 import map.SettingList;
+import map.Sprite;
 import utilities.StringFundementals;
 
 public class Galaxy implements Serializable, Savable, Namable, Subable {
@@ -142,5 +145,9 @@ public class Galaxy implements Serializable, Savable, Namable, Subable {
 		if(mySectors.remove(index) != null)
 			for(int k = 0;k < s.getRegions().size();)
 				s.removeSub(k);
+	}
+
+	public Image getIcon() {
+		return Toolkit.getDefaultToolkit().getImage("data/sprites/background/Galaxy.png");
 	}
 }
